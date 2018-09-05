@@ -47,17 +47,6 @@ body {
   padding: 0;
 }
 
-.button {
-  @include flex(center, center);
-  box-shadow: $button-shadow;
-  background-color: $blue-5;
-  text-transform: capitalize;
-  cursor: pointer;
-  
-  &:hover, &:focus {
-    transition: 0.15s ease-in-out;
-  }
-}
 
 .login-container {
   @include size(400px, auto);
@@ -67,23 +56,42 @@ body {
   box-shadow: $login-container-shadow;
   overflow: hidden;
   padding-top: 10px;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
+  margin-top: 20px;
   
   .title {
     text-transform: capitalize;
     font-size: 1.6em;
     font-weight: 300;
-    padding: 60px 0;
+    padding: 20px 0;
     padding-bottom: 10px;
   }
-  
+  a{
+    width: 100%;  
+    .login-button {
+      @include border-radius(5px, 5px, 5px, 5px);
+      width: 60%;
+      padding: 20px 15px;
+      background-color: $blue-100;
+      color: #fff;
+      letter-spacing: 1px;
+      font-weight: 400;
+      margin-left:20%;
+      line-height: 0;
+      &:hover, &:focus {
+        box-shadow: 0px 3px 20px 3px rgba($blue-100,0.3);
+        background-color: $blue-100;
+        cursor: pointer;
+      }
+    }
+  }
   .login-button {
+    line-height: 0;
     @include border-radius(5px, 5px, 5px, 5px);
     width: 60%;
     padding: 20px 15px;
     background-color: $blue-100;
     color: #fff;
-    text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: 400;
     margin: 5px 0;
@@ -91,48 +99,10 @@ body {
     &:hover, &:focus {
       box-shadow: 0px 3px 20px 3px rgba($blue-100,0.3);
       background-color: $blue-100;
+      cursor: pointer;
     }
   }
 }
-//-----------------------------------------
-.register-container {
-  @include size(400px, auto);
-  @include flex(center, center, column);
-  
-  margin: 0 auto;
-  background-color: white;
-  box-shadow: $login-container-shadow;
-  overflow: hidden;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  
-  .title {
-    text-transform: capitalize;
-    font-size: 1.6em;
-    font-weight: 300;
-    padding: 60px 0;
-    padding-bottom: 10px;
-  }
-  
-  .register-button {
-    @include border-radius(5px, 5px, 5px, 5px);
-    width: 60%;
-    padding: 20px 15px;
-    background-color: $blue-100;
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 400;
-    margin: 5px 0;
-    
-    &:hover, &:focus {
-      box-shadow: 0px 3px 20px 3px rgba($blue-100,0.3);
-      background-color: $blue-100;
-    }
-  }
-}
-
-//-------------------------------------------
 
 .fluid-input {
   @include size(80%, 50px);

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Message from './message';
 import _ from 'lodash';
+
 class MessageList extends Component {
   constructor(props){
     super(props);
@@ -10,6 +11,7 @@ class MessageList extends Component {
     let app = this.props.db.database().ref('messages');
     app.on('value', snapshot => {
       this.getData(snapshot.val());
+      
     });
   }
   getData(values){
@@ -25,9 +27,11 @@ class MessageList extends Component {
       messages: messages
     });
   }
+  
   render() {
     let messageNodes = this.state.messages.map((message) => {
       return (
+        
         <div className="card">
           <div className="card-content">
           <Message 
