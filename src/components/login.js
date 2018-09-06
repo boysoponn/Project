@@ -7,18 +7,20 @@ import _ from 'lodash';
 class LoginContainer extends Component {
   constructor(props){
     super(props);
+    this.getData = this.getData.bind(this);
+    this.signin = this.signin.bind(this);
       this.state={
-        message:[]
-      }
+        user:[]
+      };
     
     let app = this.props.db.database().ref('user');
-    app.on('value', snapshot => {console.log(snapshot.numChildren());
+    app.on('value', snapshot => {
+      console.log(snapshot.numChildren());
       this.getData(snapshot.val());
     }); 
   }
   getData(values){
     let messagesVal = values;
-    
     let messages = _(messagesVal)
                     .keys()
                     .map(messageKey => {
@@ -26,30 +28,35 @@ class LoginContainer extends Component {
                       cloned.key = messageKey;
                       return cloned;
                     }).value();
-                    console.log(_.map(messages, 'Email'));
+   
     this.setState({
-      messages: messages
-      
-    });
-    // if(messages=="sopon@gmail.com"){
-    //     alert("dsfs");
-    //   }
-  }
+      user: _.map(messages, 'Email')
+    }); 
 
-  signin(){
+ }    
+  signin(){ 
   var email =document.getElementById('email').value;
   var password =document.getElementById('password').value;
   firebase.auth().signInWithEmailAndPassword(email, password)
   .then(function(firebaseUser) {
     alert("เข้ามาละง้าบ");
+
+    let row=0; 
+    while(row<5){       
+      if(this.user[row]=="sopon@gmail.com"){
+     alert(this.user[row]);
+     break;
+   }  
+      row++;
+    }   
+
   })
   .catch(function(error){
     var errorCode = error.code;
-    var errorMessage = error.message;
     if (errorCode === 'auth/wrong-password') {
       alert('Wrong password.');
     } else {
-      alert(errorMessage);
+      alert("Check your email please");
     }
   });
   }
