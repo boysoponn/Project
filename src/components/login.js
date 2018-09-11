@@ -3,24 +3,45 @@ import '../css/login.css';
 import firebase from 'firebase';
 import FluidInput from './fluidinput';
 import _ from 'lodash';
+import { SlideToggle } from "react-slide-toggle";
+import eases from 'eases';
 
-class LoginContainer extends Component {
-  constructor(props){
+class LoginContainer extends Component {    
+
+  constructor(props){  
     super(props);
     this.getData = this.getData.bind(this);
     this.signin = this.signin.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
+    this.onChangeEmail = this.onChangeEmail.bind(this);
       this.state={
-        user:[]
+        messages:[],
+        howmanyuser:0,
+        user:'',
+        username:'',
+        password:'',
+        inputPassword:"",
+        inputEmail:""
+        
       };
-    
-    let app = this.props.db.database().ref('user');
-    app.on('value', snapshot => {
-      console.log(snapshot.numChildren());
-      this.getData(snapshot.val());
-    }); 
+    this.getData();
   }
-  getData(values){
-    let messagesVal = values;
+
+  onChangeEmail(e) {
+    this.setState({
+      inputEmail: e.target.value
+    });
+  }
+
+  onChangePassword(e) {
+    this.setState({
+      inputPassword: e.target.value
+    });
+  }
+  getData(){
+    let app = this.props.db.database().ref('user');
+    app.on('value', snapshot => { 
+    let messagesVal = snapshot.val();
     let messages = _(messagesVal)
                     .keys()
                     .map(messageKey => {
@@ -28,51 +49,74 @@ class LoginContainer extends Component {
                       cloned.key = messageKey;
                       return cloned;
                     }).value();
-   
-    this.setState({
-      user: _.map(messages, 'Email')
-    }); 
-
+                    this.setState({
+                      user: _.map(messages,'Email'),
+                      username: _.map(messages,'Username'),
+                      password: _.map(messages,'Password'),
+                      howmanyuser:snapshot.numChildren(),
+                    }); 
+    });          
  }    
-  signin(){ 
-  var email =document.getElementById('email').value;
-  var password =document.getElementById('password').value;
-  firebase.auth().signInWithEmailAndPassword(email, password)
-  .then(function(firebaseUser) {
-    alert("เข้ามาละง้าบ");
-
-    let row=0; 
-    while(row<5){       
-      if(this.user[row]=="sopon@gmail.com"){
-     alert(this.user[row]);
-     break;
-   }  
+  signin(e){ 
+  e.preventDefault(); 
+  let row=0; 
+    while(row<this.state.howmanyuser){     
+      if(this.state.user[row]=== this.state.inputEmail){
+        if(this.state.password[row]=== this.state.inputPassword){
+            localStorage.setItem('user', this.state.username[row]);
+            alert("เข้ามาละง้าบ");  
+              break;  
+        }else{
+          alert("รหัสผ่านผิดครับ")
+          break;
+        }      
+      }
       row++;
-    }   
-
-  })
-  .catch(function(error){
-    var errorCode = error.code;
-    if (errorCode === 'auth/wrong-password') {
-      alert('Wrong password.');
-    } else {
-      alert("Check your email please");
-    }
-  });
+      if(row>=this.state.howmanyuser){
+      alert("อีเมลผิดค่าบบ")
+      break;
+      }
   }
+}
+  // firebase.auth().signInWithEmailAndPassword(email, password)  
+  // .then(function(firebaseUser) { 
+  // })
+  // .catch(function(error){
+  //   var errorCode = error.code;
+  //   if (errorCode === 'auth/wrong-password') {
+  //     alert('Wrong password.');
+  //   } else {
+  //     alert("Check your email please");
+  //   }
+  // });
+
 
   render() {
     const style = {
       margin: "15px 0"
     };
-    return (
-      <div  className="login-container" >
-        <div className="title">Login</div>
-        <FluidInput type="text" label="Email"  id="email" style={style} />
-        <FluidInput type="password" label="Password" id="password" style={style} />
-        <button className="login-button" onClick={this.signin}>Submit</button>
-        <a href="/register"><button className="login-button">Register</button></a>
-      </div>
+    return (<SlideToggle
+      duration={1000}
+      easeCollapse={eases["circInOut"]}
+      easeExpand={eases["circInOut"]}
+      render={({
+        onToggle,
+        setCollapsibleElement
+      }) => (
+        <div>
+        <button onClick={onToggle}>login</button>
+        <form onSubmit={this.signin}>
+        <div  className="login-container"  ref={setCollapsibleElement}>
+          <div className="title">Login</div>
+          <FluidInput type="email"    label="Email"      value={this.state.inputEmail}     onChange={this.onChangeEmail}     style={style} />
+          <FluidInput type="password" label="Password"   value={this.state.inputPassword}  onChange={this.onChangePassword}  style={style} />
+          <button className="login-button" type="submit">Submit</button>
+          <a href="/register"><button className="login-button">Register</button></a>
+        </div>
+        </form>
+        </div>
+      )}
+    />
     );
   }
 }

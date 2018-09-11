@@ -4,14 +4,9 @@ import '../css/login.css';
 class FluidInput extends Component {
     constructor(props) {
       super(props);
-      this.handleChange = this.handleChange.bind(this);
       this.state = {
         focused: false,
-        value: ""
       };
-    }
-    handleChange(event) {
-      this.setState({value: event.target.value});
     }
     focusField() {
       const { focused } = this.state;
@@ -21,8 +16,8 @@ class FluidInput extends Component {
     }
     
     render() {
-      const { type, label, style } = this.props;
-      const { focused, value } = this.state;
+      const { type, label, style ,value} = this.props;
+      const { focused } = this.state;
       
       let inputClass = "fluid-input";
       if (focused) {
@@ -39,9 +34,9 @@ class FluidInput extends Component {
               type={type}    
               onFocus={this.focusField.bind(this)}
               onBlur={this.focusField.bind(this)}
-              onChange={this.handleChange.bind(this)}
+              onChange={this.props.onChange}
               id={this.props.id}
-              value={this.state.value}
+              value={this.props.value}
               required
               autoComplete="off"
             />
