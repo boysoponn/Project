@@ -1,0 +1,22 @@
+const LoginContainerWithRouter = withRouter(LoginContainer);
+
+class login extends Component{
+  render() {
+    return (
+      <LoginContainerWithRouter db={firebase} />
+    );
+  }
+}
+
+
+  // firebase.auth().signInWithEmailAndPassword(email, password)  
+  // .then(function(firebaseUser) { 
+  // })
+  // .catch(function(error){
+  //   var errorCode = error.code;
+  //   if (errorCode === 'auth/wrong-password') {
+  //     alert('Wrong password.');
+  //   } else {
+  //     alert("Check your email please");
+  //   }
+  // });

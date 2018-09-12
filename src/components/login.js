@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {  withRouter } from 'react-router-dom';
 import '../css/login.css';
 import firebase from 'firebase';
 import FluidInput from './fluidinput';
@@ -64,8 +65,8 @@ class LoginContainer extends Component {
       if(this.state.user[row]=== this.state.inputEmail){
         if(this.state.password[row]=== this.state.inputPassword){
             localStorage.setItem('user', this.state.username[row]);
-            alert("เข้ามาละง้าบ");  
-              break;  
+            alert("เข้ามาละง้าบ");
+            return this.props.history.push('/sidebar');
         }else{
           alert("รหัสผ่านผิดครับ")
           break;
@@ -78,24 +79,12 @@ class LoginContainer extends Component {
       }
   }
 }
-  // firebase.auth().signInWithEmailAndPassword(email, password)  
-  // .then(function(firebaseUser) { 
-  // })
-  // .catch(function(error){
-  //   var errorCode = error.code;
-  //   if (errorCode === 'auth/wrong-password') {
-  //     alert('Wrong password.');
-  //   } else {
-  //     alert("Check your email please");
-  //   }
-  // });
-
-
   render() {
     const style = {
       margin: "15px 0"
-    };
-    return (<SlideToggle
+    }; 
+    return (
+    <SlideToggle
       duration={1000}
       easeCollapse={eases["circInOut"]}
       easeExpand={eases["circInOut"]}
@@ -121,28 +110,16 @@ class LoginContainer extends Component {
   }
 }
 
-// class Container extends Component {
-// constructor( props ){
-//   super( props )
-//   this.state = { shows : false };
-//   this.state = { show : true };
-//   this.toggleDiv = this.toggleDiv.bind(this)
-// }
 
-// toggleDiv() {
-//   const { shows } = this.state;
-//   this.setState( { shows : !shows } )
-//   const { show } = this.state;
-//   this.setState( { show : !show } )
-// }
+const LoginContainerWithRouter = withRouter(LoginContainer);
+
 class login extends Component{
   render() {
     return (
-      <LoginContainer db={firebase}/>
+      <LoginContainerWithRouter db={firebase} />
     );
   }
 }
-
 
 export default login;
   

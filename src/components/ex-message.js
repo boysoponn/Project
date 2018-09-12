@@ -4,7 +4,9 @@ import MessageBox from './message/messagebox';
 import firebase from 'firebase';
 class allmessage extends Component {
   render() {
-    return (
+ 
+    return (   
+
       <div className="container"> 
         <div className="columns">
           <div className="column is-3"></div>
