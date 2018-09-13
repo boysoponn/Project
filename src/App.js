@@ -3,21 +3,23 @@ import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import exmessage from '../src/components/ex-message';
 import login from './components/login';
 import register from './components/register';
-import withStyles from './components/sidebar';
+import MiniDrawer from './components/sidebar';
+import FullWidthTabs from './components/tab';
 import config from './config';
 import firebase from 'firebase';
 import './App.css'
 
-const token = true;
+const user = localStorage.getItem('user');
+
 
 function withRestriction(WrappedComponent) {
   return class RestrictedComponent extends React.Component {
     render() {
-      if (token) {
-        return <WrappedComponent {...this.props} />
-      }
-
-      return <Redirect to='/login' />
+      if (!user) {
+         return <Redirect to='/login' />
+      }else{
+       return <WrappedComponent {...this.props} />
+      }  
     }
   }
 }
@@ -29,13 +31,12 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
+        <div> 
           <Route path="/login" component={login} />   
           <Route path="/register" component={register} /> 
-
           <Route path="/message" component={ExMessageWithRestriction} />  
-
-          <Route path="/sidebar" component={withStyles} />                
+          <Route path="/tab" component={FullWidthTabs} />  
+          <Route path="/sidebar" component={MiniDrawer} />                
         </div>
       </Router>
     );

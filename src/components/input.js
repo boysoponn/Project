@@ -11,7 +11,7 @@ import green from '@material-ui/core/colors/green';
 
 const styles = theme => ({
   margin: {
-    margin: theme.spacing.unit,
+    // margin: theme.spacing.unit,
   },
   cssLabel: {
     '&$cssFocused': {
@@ -86,6 +86,8 @@ class CustomizedInputs extends React.Component {
               underline: classes.cssUnderline,
             }}
             id="custom-css-input"
+            onChange={this.props.onChange}
+            value={this.props.value}
           />
         </FormControl>
       </div>
