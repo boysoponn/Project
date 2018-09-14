@@ -4,7 +4,7 @@ import exmessage from '../src/components/ex-message';
 import login from './components/login';
 import register from './components/register';
 import MiniDrawer from './components/sidebar';
-import FullWidthTabs from './components/tab';
+import ImageUpload from './components/tab';
 import config from './config';
 import firebase from 'firebase';
 import './App.css'
@@ -35,7 +35,7 @@ class App extends Component {
           <Route path="/login" component={login} />   
           <Route path="/register" component={register} /> 
           <Route path="/message" component={ExMessageWithRestriction} />  
-          <Route path="/tab" component={FullWidthTabs} />  
+          <Route path="/tab" component={ImageUpload} />  
           <Route path="/sidebar" component={MiniDrawer} />                
         </div>
       </Router>

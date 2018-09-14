@@ -7,6 +7,7 @@ import _ from 'lodash';
 import { SlideToggle } from "react-slide-toggle";
 import eases from 'eases';
 
+
 class LoginContainer extends Component {    
 
   constructor(props){  
@@ -28,6 +29,7 @@ class LoginContainer extends Component {
     this.getData();
   }
 
+  
   onChangeEmail(e) {
     this.setState({
       inputEmail: e.target.value
