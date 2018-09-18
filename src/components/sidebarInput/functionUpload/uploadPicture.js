@@ -17,21 +17,23 @@ const styles = theme => ({
 });
 
 class UploadPicture extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
   const { classes } = this.props;
+  
   return (
     <div>
-      <div className={classes.imgUpload}><img src={this.props.url } /></div>
+      <div>
+      {this.props.label.map((imageName) => {
+          return <div><h1>{imageName}</h1></div> 
+        })}
+      </div>
       <input
-        type="file" onChange={this.props.onChange}
+        type="file" 
+        onChange={this.props.onChange}
         accept="image/*"
         className={classes.input}
         id="fileUpload"
         multiple
-        type="file"
       />
       <div>
       <label htmlFor="contained-button-file">

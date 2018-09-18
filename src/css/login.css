@@ -12,11 +12,6 @@ input {
   list-style: none;
   position: relative; }
 
-body {
-  background-color: #FAFAFA;
-  margin: 0;
-  padding: 0; }
-
 .login-container {
   width: 400px;
   height: auto;
@@ -26,7 +21,6 @@ body {
   flex-direction: column;
   margin: auto;
   background-color: white;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.12);
   overflow: hidden;
   padding-top: 10px;
   padding-bottom: 20px;
@@ -37,25 +31,6 @@ body {
     font-weight: 300;
     padding: 20px 0;
     padding-bottom: 10px; }
-  .login-container a {
-    width: 100%; }
-    .login-container a .login-button {
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
-      border-bottom-left-radius: 5px;
-      border-bottom-right-radius: 5px;
-      width: 60%;
-      padding: 20px 15px;
-      background-color: #007AFF;
-      color: #fff;
-      letter-spacing: 1px;
-      font-weight: 400;
-      margin-left: 20%;
-      line-height: 0; }
-      .login-container a .login-button:hover, .login-container a .login-button:focus {
-        box-shadow: 0px 3px 20px 3px rgba(0, 122, 255, 0.3);
-        background-color: #007AFF;
-        cursor: pointer; }
   .login-container .login-button {
     line-height: 0;
     border-top-left-radius: 5px;
@@ -64,14 +39,14 @@ body {
     border-bottom-right-radius: 5px;
     width: 60%;
     padding: 20px 15px;
-    background-color: #007AFF;
+    background-color: #ff9292;
     color: #fff;
     letter-spacing: 1px;
-    font-weight: 400;
-    margin: 5px 0; }
+    font-weight: 600;
+    margin-top: 40px; }
     .login-container .login-button:hover, .login-container .login-button:focus {
-      box-shadow: 0px 3px 20px 3px rgba(0, 122, 255, 0.3);
-      background-color: #007AFF;
+      box-shadow: 0px 3px 20px 3px rgba(255, 146, 146, 0.3);
+      background-color: #fd7272;
       cursor: pointer; }
 
 .fluid-input {

@@ -26,23 +26,24 @@ class MessageList extends Component {
     this.setState({
       messages: messages
     });
+    
   }
   
   render() {
-    let messageNodes = this.state.messages.map((message) => {
+    let messageNodes = this.state.messages.map((dd) => {
       return (
         
         <div className="card">
           <div className="card-content">
           <Message 
-            msgKey={message.key} 
-            message = {message.message} 
+            msgKey={dd.key} 
+            message = {dd.message} 
             db={this.props.db}
           />
           </div>
         </div>
       )
-    });
+    });console.log({messageNodes})
     return (
       <div>
         {messageNodes}

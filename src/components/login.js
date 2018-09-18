@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import {  withRouter } from 'react-router-dom';
 import '../css/login.css';
-import firebase from 'firebase';
 import FluidInput from './fluidinput';
 import _ from 'lodash';
-import { SlideToggle } from "react-slide-toggle";
-import eases from 'eases';
-
+import config from '../config';
 
 class LoginContainer extends Component {    
 
@@ -28,8 +25,7 @@ class LoginContainer extends Component {
       };
     this.getData();
   }
-
-  
+ 
   onChangeEmail(e) {
     this.setState({
       inputEmail: e.target.value
@@ -42,7 +38,7 @@ class LoginContainer extends Component {
     });
   }
   getData(){
-    let app = this.props.db.database().ref('user');
+    let app = config.database().ref('user');
     app.on('value', snapshot => { 
     let messagesVal = snapshot.val();
     let messages = _(messagesVal)
@@ -68,7 +64,7 @@ class LoginContainer extends Component {
         if(this.state.password[row]=== this.state.inputPassword){
             localStorage.setItem('user', this.state.username[row]);
             alert("เข้ามาละง้าบ");
-            return this.props.history.push('/sidebar');
+            return this.props.history.push('/cms');
         }else{
           alert("รหัสผ่านผิดครับ")
           break;
@@ -86,30 +82,17 @@ class LoginContainer extends Component {
       margin: "15px 0"
     }; 
     return (
-    <SlideToggle
-      duration={1000}
-      easeCollapse={eases["circInOut"]}
-      easeExpand={eases["circInOut"]}
-      render={({
-        onToggle,
-        setCollapsibleElement
-      }) => (
         <div>
-        <button onClick={onToggle}>login</button>
         <form onSubmit={this.signin}>
-        <div  className="login-container"  ref={setCollapsibleElement}>
+        <div className="login-container" >
           <div className="title">Login</div>
           <FluidInput type="email"    label="Email"      value={this.state.inputEmail}     onChange={this.onChangeEmail}     style={style} />
           <FluidInput type="password" label="Password"   value={this.state.inputPassword}  onChange={this.onChangePassword}  style={style} />
-          <button className="login-button" type="submit">Submit</button>
-          <a href="/register"><button className="login-button">Register</button></a>
+          <button className="login-button" type="submit">SIGN IN</button>
         </div>
         </form>
         </div>
       )}
-    />
-    );
-  }
 }
 
 
@@ -118,7 +101,7 @@ const LoginContainerWithRouter = withRouter(LoginContainer);
 class login extends Component{
   render() {
     return (
-      <LoginContainerWithRouter db={firebase} />
+      <LoginContainerWithRouter/>
     );
   }
 }

@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import exmessage from '../src/components/ex-message';
-import login from './components/login';
-import register from './components/register';
-import MiniDrawer from './components/sidebar';
+import Member from './components/Member';
+import Cms from './components/CMS';
 import ImageUpload from './components/tab';
-import config from './config';
-import firebase from 'firebase';
-import './App.css'
 
 const user = localStorage.getItem('user');
-
 
 function withRestriction(WrappedComponent) {
   return class RestrictedComponent extends React.Component {
@@ -23,8 +18,7 @@ function withRestriction(WrappedComponent) {
     }
   }
 }
-
-const ExMessageWithRestriction = withRestriction(exmessage);
+const CMSWithRestriction = withRestriction(Cms);
 
 
 class App extends Component {
@@ -32,11 +26,11 @@ class App extends Component {
     return (
       <Router>
         <div> 
-          <Route path="/login" component={login} />   
-          <Route path="/register" component={register} /> 
-          <Route path="/message" component={ExMessageWithRestriction} />  
+          <Route exact path="/" component={Member} />
+          <Route path="/login" component={Member} />   
+          <Route path="/message" component={exmessage} />  
           <Route path="/tab" component={ImageUpload} />  
-          <Route path="/sidebar" component={MiniDrawer} />                
+          <Route path="/cms" component={CMSWithRestriction} />                
         </div>
       </Router>
     );

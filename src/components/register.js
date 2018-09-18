@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../css/login.css';
-import firebase from 'firebase';
 import FluidInput from './fluidinput';
+import config from '../config';
 
 class Register extends Component {
     constructor(props){
@@ -53,7 +53,7 @@ class Register extends Component {
 
     register(e){
       e.preventDefault();      
-      let dbCon = this.props.db.database().ref('/user');
+      let dbCon = config.database().ref('/user');
         dbCon.push({
           Firstname:this.state.Firstname,
           Lastname:this.state.Lastname,
@@ -62,10 +62,10 @@ class Register extends Component {
           Password:this.state.Password
         }); 
         this.signUp();
-        alert("สมัครเรียบร้อย");   
+        alert("สมัครเรียบร้อย");
     }
     signUp(){
-      this.props.db.auth().createUserWithEmailAndPassword(this.state.Email,this.state.Password)
+      config.auth().createUserWithEmailAndPassword(this.state.Email,this.state.Password)
     }
 
     render() {  
@@ -81,8 +81,7 @@ class Register extends Component {
               <FluidInput type="text"     label="Username"   value={this.state.Username}  onChange={this.onChangeUsername}  style={style} />            
               <FluidInput type="email"    label="Email"      value={this.state.Email}     onChange={this.onChangeEmail}     style={style} />
               <FluidInput type="password" label="Password"   value={this.state.Password}  onChange={this.onChangePassword}  style={style} />
-              <button type="submit" className="login-button">Submit</button>
-              <button className="login-button"onClick={this.gotologin}>Login</button>
+              <button type="submit" className="login-button">SIGN UP</button>
         </div>
         </form>
       );
@@ -92,7 +91,7 @@ class Register extends Component {
   class RegisterContainer extends Component {
     render() {
         return (
-            <Register db={firebase}/>
+            <Register />
         );
       }
     }
