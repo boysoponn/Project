@@ -14,20 +14,34 @@ function withRestriction(WrappedComponent) {
          return <Redirect to='/login' />
       }else{
        return <WrappedComponent {...this.props} />
+      
       }  
     }
   }
 }
 const CMSWithRestriction = withRestriction(Cms);
 
+function withRestriction2(WrappedComponent2) {
+  return class RestrictedComponent extends React.Component {
+    render() {
+      if (user) {
+         return <Redirect to='/cms' />
+      }else{
+       return <WrappedComponent2 {...this.props} />
+      
+      }  
+    }
+  }
+}
+const LoginWithRestriction = withRestriction2(Member);
 
 class App extends Component {
   render() {
     return (
       <Router>
         <div> 
-          <Route exact path="/" component={Member} />
-          <Route path="/login" component={Member} />   
+          <Route exact path="/" component={LoginWithRestriction} />
+          <Route path="/login" component={LoginWithRestriction} />   
           <Route path="/message" component={exmessage} />  
           <Route path="/tab" component={ImageUpload} />  
           <Route path="/cms" component={CMSWithRestriction} />                

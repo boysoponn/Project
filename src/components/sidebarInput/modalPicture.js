@@ -31,39 +31,38 @@ class ModalChooseImage extends React.Component {
   this.handleClose = this.handleClose.bind(this);
     this.state = {
     open: false,
-    url:[],
-    messages:[],
-    howMany:0,
+    images:[],
     imageName:'',
     };
-    // this.getData();
+}
+
+componentDidMount() {
+  this.getData();
 }
 
   getData(){
-    let app = config.database().ref('/project/sopon/images');
-    app.on('value', snapshot => { 
-    let pictrueVal = snapshot.val();
-    let pictrue = _(pictrueVal)
-                    .keys()
-                    .map(pictrueKey => {
-                      let cloned = _.clone(pictrueVal[pictrueKey]);
-                      cloned.key = pictrueKey;
-                      return cloned;
-                    }).value();
-                    this.setState({
-                      imageName: _.map(pictrue,'imageName'),
-                      howMany:snapshot.numChildren(),
-                    });     
-                 let row=0;
-    while(row<this.state.howMany){
-      config.storage().ref(`images/${this.state.imageName[row]}`).getDownloadURL().then(url => {
-        this.state.url.push(url);
-    })
-      row++;
-    }        
+    const app = config.database().ref('/project/sopon/images');
+    app.on('value', async (snapshot) => { 
+      const snapshotValue = snapshot.val();
+      const snapshotArr = _.keys(snapshotValue).reduce((prev, cur) => {
+        prev.push({
+          _key: cur,
+          ...snapshotValue[cur]
+        });
+        return prev;     
+      }, []);
+
+      const pictures = await Promise.all(snapshotArr.map(async (obj) => {
+        obj.imageName = await config.storage().ref(`images/${obj.imageName}`).getDownloadURL();
+        return Promise.resolve(obj);
+      }));
+
+      this.setState({
+        images: pictures,
+      });     
     });    
-  
- } 
+ }
+
   handleOpen = () => {
     this.setState({ open: true });  
   };
@@ -85,8 +84,8 @@ class ModalChooseImage extends React.Component {
           onClose={this.handleClose}
         >
           <div className={classes.paper}>
-          {this.state.url.map((imageUrl) => {
-          return <div><img src={imageUrl} alt=""/></div> 
+          {this.state.images.map((image) => {
+          return <div key={image._key}><img src={image.imageName} alt=""/></div> 
         })}
           </div>
         </Modal>

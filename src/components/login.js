@@ -64,7 +64,8 @@ class LoginContainer extends Component {
         if(this.state.password[row]=== this.state.inputPassword){
             localStorage.setItem('user', this.state.username[row]);
             alert("เข้ามาละง้าบ");
-            return this.props.history.push('/cms');
+            // return this.props.history.push('/cms');
+            window.location.reload(true);
         }else{
           alert("รหัสผ่านผิดครับ")
           break;

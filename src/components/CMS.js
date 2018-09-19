@@ -127,7 +127,6 @@ getData(){
                     description: _.map(messages,'description'),
                     key:_.map(messages,'key')[0],
                   }); 
-                  console.log(this.state.key)
   });          
 }
 
@@ -214,11 +213,18 @@ getData(){
               title={this.state.title}
               description={this.state.description}
             /></List>
+            
            <Divider />
+           <HeroInput 
+              onChangeDescription={this.handleChangeDescription}
+              onChangeTitle={this.handleChangeTitle}
+              title={this.state.title}
+              description={this.state.description}
+            />
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Typography noWrap>
+          <Typography component="div" noWrap>
             <h1>Title : {this.state.title}</h1>
             <h1>description : {this.state.description}</h1>
           </Typography>

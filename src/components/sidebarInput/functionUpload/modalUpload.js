@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import config from '../../../config';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -53,20 +53,24 @@ class ModalUpload extends React.Component {
       Howmany:0,
       image: [],
       imageName:[],
+      url:[],
     });
   };
   
-  handleChangeUploadPicture = e => {
-    if (e.target.files[0]) {
-      this.setState({
-        Howmany:e.target.files.length
-      });
+  handleChangeUploadPicture(e) {
+    if (e.target.files.length > 0) {
     let row=0;
+    let images = [];
     while(row<e.target.files.length){
-      this.state.image.push(e.target.files[row])
-      this.state.imageName.push(e.target.files[row].name)
+      images.push(e.target.files.item(row));
       row++;
     }  
+    this.setState({
+      image: images,
+      imageName: images.map(image => image.name),
+      url: images.map(image => image.url),
+      Howmany: e.target.files.length
+    });
     }
   }
 
@@ -90,14 +94,14 @@ class ModalUpload extends React.Component {
       });
       this.handleClose();
       alert("Uploaded");  
-    }
+  }
   
 
   render() {
     const { classes } = this.props;
     return (
-      <div>
-        <Button variant="contained" onClick={this.handleOpen}component="span" color="secondary" className={classes.button}>
+      <Fragment>
+        <Button variant="contained" onClick={this.handleOpen} component="span" color="secondary" className={classes.button}>
         Upload
         </Button>
         <Modal
@@ -110,10 +114,11 @@ class ModalUpload extends React.Component {
               onChange={this.handleChangeUploadPicture} 
               onClick={this.handleUploadPicture}
               label={this.state.imageName}
+              url={this.state.url}
           />
           </div>
         </Modal>
-      </div>
+      </Fragment>
     );
   }
 }
