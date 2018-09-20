@@ -17,7 +17,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import HeroInput from './sidebarInput/heroInput';
 import ModalUploadWrapped from './sidebarInput/functionUpload/modalUpload';
 import Button from '@material-ui/core/Button';
-
+import New from './New';
 const drawerWidth = 300;
 
 const styles = theme => ({
@@ -225,6 +225,7 @@ getData(){
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Typography component="div" noWrap>
+          <New/>
             <h1>Title : {this.state.title}</h1>
             <h1>description : {this.state.description}</h1>
           </Typography>

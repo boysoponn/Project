@@ -74,7 +74,7 @@ class ModalUpload extends React.Component {
     }
   }
 
-  handleUploadPicture = e => {
+  handleUploadPicture (e){
     if(this.state.image !== [] ){ 
       let row=0; 
       while(row<this.state.Howmany){  

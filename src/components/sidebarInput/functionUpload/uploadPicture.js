@@ -9,10 +9,14 @@ const styles = theme => ({
     border:"3px Solid red ",
   },
   button: {
-   marginTop:10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop:15,
   },
   input: {
     marginTop:10,
+    display:'none',
   },
 });
 
@@ -32,16 +36,17 @@ class UploadPicture extends React.Component {
         onChange={this.props.onChange}
         accept="image/*"
         className={classes.input}
-        id="fileUpload"
+        id="contained-button-file"
         multiple
-      />
-      <div>
+      />   
       <label htmlFor="contained-button-file">
-        <Button variant="contained" component="span" className={classes.button} onClick={this.props.onClick}>
+      <Button variant="contained" component="span" className={classes.button}>
           Upload
         </Button>
       </label>
-      </div>
+      <Button variant="contained" component="span" className={classes.button} onClick={this.props.onClick}>
+          OK
+      </Button>
     </div>
   );
 }
