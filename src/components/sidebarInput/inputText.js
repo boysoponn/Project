@@ -5,7 +5,7 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import purple from '@material-ui/core/colors/purple';
-
+import SettingAnimate from './SettingAnimate'
 
 const styles = theme => ({
   margin: {
@@ -27,9 +27,26 @@ const styles = theme => ({
 class InputText extends React.Component {
   render() {
     const { classes, inputLabel } = this.props;
-    return (
+    return (  
+
       <div className={classes.container}>
-        <FormControl className={classes.margin}>
+      <SettingAnimate 
+        animate={this.props.animate} 
+        onChangeAnimate={this.props.onChangeAnimate} 
+        duration={this.props.duration} 
+        onChangeDuration={this.props.onChangeDuration} 
+        FontFamily={this.props.FontFamily}
+        onChangeFontFamily={this.props.onChangeFontFamily}
+        onChangeFontSize={this.props.onChangeFontSize}
+        FontSize={this.props.FontSize}
+        FontWeight={this.props.FontWeight}
+        onChangeFontWeight={this.props.onChangeFontWeight}
+        onChangeFontStyle={this.props.onChangeFontStyle}
+        FontStyle={this.props.FontStyle}
+        Status={this.props.Status}
+        onChangeStatus={this.props.onChangeStatus}
+        />
+        <FormControl className={classes.margin}>  
           <InputLabel
             FormLabelClasses={{
               root: classes.cssLabel,
@@ -47,6 +64,7 @@ class InputText extends React.Component {
             onChange={this.props.onChange}
             value={this.props.value}
           />
+          
         </FormControl>
       </div>
     )

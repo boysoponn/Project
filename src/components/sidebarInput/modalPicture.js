@@ -7,7 +7,6 @@ import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 
 
@@ -65,7 +64,7 @@ componentDidMount() {
         });
         return prev;     
       }, []);
-
+      
       const pictures = await Promise.all(snapshotArr.map(async (obj) => {
         obj.imageName = await config.storage().ref(`images/${obj.imageName}`).getDownloadURL();
         return Promise.resolve(obj);
@@ -73,7 +72,7 @@ componentDidMount() {
 
       this.setState({
         images: pictures,
-      });     
+      });    
     });    
  }
 
@@ -107,8 +106,8 @@ componentDidMount() {
           <ListSubheader component="div">Images</ListSubheader>
         </GridListTile>
         {this.state.images.map((image => (
-          <GridListTile key={image._key}>
-            <img src={image.imageName} onClick={this.imageOnClick} alt={image.imageName} />
+          <GridListTile >
+            <img src={image.imageName} key={image._key} onClick={this.imageOnClick} alt={image.imageName} />
             {/* <GridListTileBar/> */}
           </GridListTile>
         )))}

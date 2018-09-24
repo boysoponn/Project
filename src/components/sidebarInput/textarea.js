@@ -4,14 +4,10 @@ import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import purple from '@material-ui/core/colors/purple';
 import TextField from '@material-ui/core/TextField';
+import SettingAnimate from './SettingAnimate'
+
 
 const styles = theme => ({
-  margin: {
-    // margin: theme.spacing.unit,
-  },
-  textField: {
-
-  },
   cssLabel: {
     '&$cssFocused': {
       color: purple[500],
@@ -30,6 +26,12 @@ class Textarea extends React.Component {
     const { classes} = this.props;
     return (
       <div className={classes.container}>
+        <SettingAnimate 
+        animate={this.props.animate} 
+        onChangeAnimate={this.props.onChangeAnimate} 
+        duration={this.props.duration} 
+        onChangeDuration={this.props.onChangeDuration} 
+        />
         <FormControl className={classes.margin}>
         <TextField
           id="multiline-static"

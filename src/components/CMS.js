@@ -17,7 +17,9 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import HeroInput from './sidebarInput/heroInput';
 import ModalUploadWrapped from './sidebarInput/functionUpload/modalUpload';
 import Button from '@material-ui/core/Button';
-import New from './New';
+import New from './template/New';
+import SaveIcon from '@material-ui/icons/Save';
+
 const drawerWidth = 300;
 
 const styles = theme => ({
@@ -30,7 +32,6 @@ const styles = theme => ({
     width:100,
   },
   root: {
-    flexGrow: 1,
     zIndex: 1,
     overflow: 'hidden',
     position: 'relative',
@@ -60,6 +61,7 @@ const styles = theme => ({
     display: 'none',
   },
   drawerPaper: {
+    overflowX: 'hidden',
     position: 'relative',
     whiteSpace: 'nowrap',
     width: drawerWidth,
@@ -69,7 +71,6 @@ const styles = theme => ({
     }),
   },
   drawerPaperClose: {
-    overflowX: 'hidden',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -89,10 +90,16 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
+    padding: '2%',
   },
   grow: {
     flexGrow: 1,
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
+  },
+  iconSmall: {
+    fontSize: 20,
   },
 });
 
@@ -102,40 +109,59 @@ class CMS extends React.Component {
   this.save = this.save.bind(this);
   this.logout = this.logout.bind(this);
   this.handleChangeTitle = this.handleChangeTitle.bind(this);  
-  this.handleChangeDescription = this.handleChangeDescription.bind(this);  
+  this.handleChangeDescription = this.handleChangeDescription.bind(this); 
+  this.onChangeAnimate = this.onChangeAnimate.bind(this); 
+  this.onChangeDuration = this.onChangeDuration.bind(this); 
+  this.onChangeFontFamily = this.onChangeFontFamily.bind(this); 
+  this.onChangeFontSize = this.onChangeFontSize.bind(this); 
+  this.onChangeFontWeight = this.onChangeFontWeight.bind(this); 
+  this.onChangeFontStyle = this.onChangeFontStyle.bind(this);
+  this.onChangeStatus = this.onChangeStatus.bind(this); 
   this.state = {
     open: true,
     title:'',
     description:'',
     key:'',
+    widthcontect:'76%',
+    animate:'bounce',
+    duration:'1s',
+    FontFamily:'Montserrat',
+    FontSize:'15',
+    FontWeight:'400',
+    FontStyle:'normal',
+    Status:'block'
   };
+}
+componentDidMount() {
   this.getData();
 }
-getData(){
-  let app = config.database().ref('project/sopon/hero');
-  app.on('value', snapshot => { 
-  let messagesVal = snapshot.val();
-  let messages = _(messagesVal)
-                  .keys()
-                  .map(messageKey => {
-                    let cloned = _.clone(messagesVal[messageKey]);
-                    cloned.key = messageKey;
-                    return cloned;
-                  }).value();
-                  this.setState({
-                    title: _.map(messages,'title'),
-                    description: _.map(messages,'description'),
-                    key:_.map(messages,'key')[0],
-                  }); 
-  });          
-}
 
+
+  getData(){
+    const app = config.database().ref('project/sopon/hero');
+    app.on('value', async (snapshot) => { 
+      const snapshotValue = snapshot.val(); 
+      const snapshotArr = _.keys(snapshotValue).reduce((prev, cur) => {
+        prev.push({
+          _key: cur,
+          ...snapshotValue[cur]
+        });
+        return prev;     
+      }, []);  
+      this.setState({
+        title:snapshotArr[0].title,
+        description:snapshotArr[0].description,
+        key:snapshotArr[0]._key
+      });
+  });
+};
+  
   save(){
     let dbCon = config.database().ref('/project/sopon/hero');
     dbCon.child(this.state.key).update({
       title:this.state.title,
-      description:this.state.description,
     }); 
+
   };
   handleChangeTitle(e) {
     this.setState({
@@ -148,23 +174,68 @@ getData(){
       description: e.target.value
     });
   };
+
+  onChangeAnimate (e) {
+    this.setState({ 
+        animate: e.target.value 
+    });
+  };
+  
+  onChangeDuration (e) {
+    this.setState({ 
+      duration: e.target.value 
+    });
+  };
+  onChangeFontFamily (e) {
+    this.setState({ 
+      FontFamily: e.target.value 
+    });
+  };
+  onChangeFontSize (e) {
+    this.setState({ 
+      FontSize: e.target.value 
+    });
+  };
+  onChangeFontStyle (e) {
+    this.setState({ 
+      FontStyle: e.target.value 
+    });
+  };
+  onChangeFontWeight (e) {
+    this.setState({ 
+      FontWeight: e.target.value 
+    });
+  };
+  onChangeStatus (e) {
+    this.setState({ 
+      Status: e.target.value 
+    });
+  };
+
   logout(){
     localStorage.removeItem('user');
     window.location.reload(true);
   };
   handleDrawerOpen = () => {
-    this.setState({ open: true });
+    this.setState({ 
+      open: true ,
+      widthcontect:'76%',
+    });
   };
 
   handleDrawerClose = () => {
-    this.setState({ open: false });
+    this.setState({ 
+      open: false ,
+      widthcontect:'90%',
+    });
   };
 
   render() {
     const { classes, theme } = this.props;
     const user = localStorage.getItem('user');
+    
     return (
-      <div className={classes.root}>
+      <div className={classes.root} >
         <AppBar
           position="absolute"
           className={classNames(classes.appBar, this.state.open && classes.appBarShift)}
@@ -182,8 +253,13 @@ getData(){
               CMS Project
             </Typography>
             <Typography color="inherit">
-            <Button variant="contained" color="secondary" onClick={this.save} className={classes.button}>SAVE</Button>
+            <Button variant="contained" color="secondary" onClick={this.save} className={classes.button}>
+            SAVE
+            <SaveIcon className={classNames(classes.rightIcon)} />
+            </Button>
+
             </Typography>
+
             <Typography color="inherit" className={classes.grow} >
             <ModalUploadWrapped />
             </Typography>
@@ -193,6 +269,7 @@ getData(){
             <Button variant="contained" color="primary" className={classes.button} onClick={this.logout}>Logout</Button>
           </Toolbar>
         </AppBar>
+
         <Drawer
           variant="permanent"
           classes={{
@@ -212,6 +289,20 @@ getData(){
               onChangeTitle={this.handleChangeTitle}
               title={this.state.title}
               description={this.state.description}
+              animate={this.state.animate} 
+              onChangeAnimate={this.onChangeAnimate}
+              duration={this.state.duration} 
+              onChangeDuration={this.onChangeDuration}
+              FontFamily={this.state.FontFamily}
+              onChangeFontFamily={this.onChangeFontFamily}
+              FontSize={this.state.FontSize}
+              onChangeFontSize={this.onChangeFontSize}
+              FontWeight={this.state.FontWeight}
+              onChangeFontWeight={this.onChangeFontWeight}
+              FontStyle={this.state.FontStyle}
+              onChangeFontStyle={this.onChangeFontStyle}
+              Status={this.state.Status}
+              onChangeStatus={this.onChangeStatus}
             /></List>
             
            <Divider />
@@ -220,14 +311,36 @@ getData(){
               onChangeTitle={this.handleChangeTitle}
               title={this.state.title}
               description={this.state.description}
+              animate={this.state.animate} 
+              onChangeAnimate={this.onChangeAnimate}
+              duration={this.state.duration} 
+              onChangeDuration={this.onChangeDuration}
+              FontFamily={this.state.FontFamily}
+              onChangeFontFamily={this.onChangeFontFamily}
+              FontSize={this.state.FontSize}
+              onChangeFontSize={this.onChangeFontSize}
+              FontWeight={this.state.FontWeight}
+              onChangeFontWeight={this.onChangeFontWeight}
+              FontStyle={this.state.FontStyle}
+              onChangeFontStyle={this.onChangeFontStyle}
+              Status={this.state.Status}
+              onChangeStatus={this.onChangeStatus}
             />
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Typography component="div" noWrap>
-          <New/>
-            <h1>Title : {this.state.title}</h1>
-            <h1>description : {this.state.description}</h1>
+          <New 
+          widthcontect={this.state.widthcontect} 
+          title={this.state.title} 
+          animateIn={this.state.animate}
+          duration={this.state.duration}
+          FontFamily={this.state.FontFamily} 
+          FontSize={this.state.FontSize}
+          FontWeight={this.state.FontWeight}
+          FontStyle={this.state.FontStyle}
+          Status={this.state.Status}
+          />
           </Typography>
         </main>
       </div>

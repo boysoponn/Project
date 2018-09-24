@@ -9,6 +9,9 @@ const styles = theme => ({
     marginBottom:10,
     border:"3px Solid red ",
   },
+  gg:{
+    width:200,
+  },
   button: {
    marginTop:10,
   },
@@ -22,7 +25,7 @@ class ChoosePicture extends React.Component {
   const { classes } = this.props;
   return (
     <div>
-      <div className={classes.imgUpload}><img src={this.props.url} alt="uploadPicture"/></div>
+      <div className={classes.imgUpload}><img className={classes.gg}src={this.props.url} alt="uploadPicture"/></div>
       <div>
       <ModalChooseImageWrapped/>
       </div>

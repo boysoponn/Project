@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import UploadPicture from './uploadPicture';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 const styles = theme => ({
   modal:{
@@ -21,6 +22,9 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,  
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
   },
 });
 
@@ -103,6 +107,7 @@ class ModalUpload extends React.Component {
       <Fragment>
         <Button variant="contained" onClick={this.handleOpen} component="span" color="secondary" className={classes.button}>
         Upload
+        <CloudUploadIcon className={classes.rightIcon} />
         </Button>
         <Modal
           className={classes.modal}

@@ -54,8 +54,26 @@ class NestedList extends React.Component {
           </ListItem>
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding={false}>
-              <ListItem button className={classes.nested}>
-              <InputText inputLabel="Title" value={this.props.title}  onChange={this.props.onChangeTitle} />
+              <ListItem  className={classes.nested}>
+              <InputText 
+              inputLabel="Title" 
+              value={this.props.title}  
+              onChange={this.props.onChangeTitle} 
+              animate={this.props.animate}  
+              onChangeAnimate={this.props.onChangeAnimate} 
+              duration={this.props.duration} 
+              onChangeDuration={this.props.onChangeDuration}
+              FontFamily={this.props.FontFamily}
+              onChangeFontFamily={this.props.onChangeFontFamily}
+              onChangeFontSize={this.props.onChangeFontSize}
+              FontSize={this.props.FontSize}
+              FontWeight={this.props.FontWeight}
+              onChangeFontWeight={this.props.onChangeFontWeight}
+              onChangeFontStyle={this.props.onChangeFontStyle}
+              FontStyle={this.props.FontStyle}
+              Status={this.props.Status}
+              onChangeStatus={this.props.onChangeStatus}
+              />
               </ListItem>
             </List>
           </Collapse>
@@ -68,7 +86,7 @@ class NestedList extends React.Component {
           </Collapse>
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding={false}>
-              <ListItem button className={classes.nested}>
+              <ListItem className={classes.nested}>
               <ChoosePicture 
               url={this.state.url}
               />

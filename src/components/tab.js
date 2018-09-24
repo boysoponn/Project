@@ -1,37 +1,225 @@
-import React, { Component } from 'react';
-import firebase from 'firebase';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
-class InputUpload extends Component {
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing.unit * 2,
+  },
+});
 
-    constructor(props) {
-        super(props);
-        this.state = { file: null };
-        this.handleChange = this.handleChange.bind(this);
-        this.uploadToFirebase = this.uploadToFirebase.bind(this);
-    }
+class SimpleSelect extends React.Component {
+  state = {
+    age: '',
+    name: 'hai',
+  };
 
-    handleChange(event) {
-        const file = event.target.files[0];
-        this.setState({ file });
-    }
+  handleChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
 
-    uploadToFirebase() {
-        const storageRef = firebase.storage().ref();
-        storageRef.child(`images/${this.state.file.name}`)
-            .put(this.state.file).then((snapshot) => {
-            alert('File has been uploaded!');
-        });
-    }
+  render() {
+    const { classes } = this.props;
 
-    render() {
-        return (
-            <div>
-                <h1>Firebase Upload Example</h1>
-                <input type="file" onChange={this.handleChange} /><br />
-                <button onClick={this.uploadToFirebase}>Upload</button>
-            </div>
-        );
-    }
+    return (
+      <form className={classes.root} autoComplete="off">
+        <FormControl className={classes.formControl}>
+          <InputLabel htmlFor="age-simple">Age</InputLabel>
+          <Select
+            value={this.state.age}
+            onChange={this.handleChange}
+            inputProps={{
+              name: 'age',
+              id: 'age-simple',
+            }}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl className={classes.formControl}>
+          <InputLabel htmlFor="age-helper">Age</InputLabel>
+          <Select
+            value={this.state.age}
+            onChange={this.handleChange}
+            input={<Input name="age" id="age-helper" />}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+          <FormHelperText>Some important helper text</FormHelperText>
+        </FormControl>
+        <FormControl className={classes.formControl}>
+          <Select
+            value={this.state.age}
+            onChange={this.handleChange}
+            displayEmpty
+            name="age"
+            className={classes.selectEmpty}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+          <FormHelperText>Without label</FormHelperText>
+        </FormControl>
+        <FormControl className={classes.formControl}>
+          <InputLabel shrink htmlFor="age-label-placeholder">
+            Age
+          </InputLabel>
+          <Select
+            value={this.state.age}
+            onChange={this.handleChange}
+            input={<Input name="age" id="age-label-placeholder" />}
+            displayEmpty
+            name="age"
+            className={classes.selectEmpty}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+          <FormHelperText>Label + placeholder</FormHelperText>
+        </FormControl>
+        <FormControl className={classes.formControl} disabled>
+          <InputLabel htmlFor="name-disabled">Name</InputLabel>
+          <Select
+            value={this.state.name}
+            onChange={this.handleChange}
+            input={<Input name="name" id="name-disabled" />}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value="hai">Hai</MenuItem>
+            <MenuItem value="olivier">Olivier</MenuItem>
+            <MenuItem value="kevin">Kevin</MenuItem>
+          </Select>
+          <FormHelperText>Disabled</FormHelperText>
+        </FormControl>
+        <FormControl className={classes.formControl} error>
+          <InputLabel htmlFor="name-error">Name</InputLabel>
+          <Select
+            value={this.state.name}
+            onChange={this.handleChange}
+            name="name"
+            renderValue={value => `⚠️  - ${value}`}
+            input={<Input id="name-error" />}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value="hai">Hai</MenuItem>
+            <MenuItem value="olivier">Olivier</MenuItem>
+            <MenuItem value="kevin">Kevin</MenuItem>
+          </Select>
+          <FormHelperText>Error</FormHelperText>
+        </FormControl>
+        <FormControl className={classes.formControl}>
+          <InputLabel htmlFor="name-readonly">Name</InputLabel>
+          <Select
+            value={this.state.name}
+            onChange={this.handleChange}
+            input={<Input name="name" id="name-readonly" readOnly />}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value="hai">Hai</MenuItem>
+            <MenuItem value="olivier">Olivier</MenuItem>
+            <MenuItem value="kevin">Kevin</MenuItem>
+          </Select>
+          <FormHelperText>Read only</FormHelperText>
+        </FormControl>
+        <FormControl className={classes.formControl}>
+          <InputLabel htmlFor="age-auto-width">Age</InputLabel>
+          <Select
+            value={this.state.age}
+            onChange={this.handleChange}
+            input={<Input name="age" id="age-auto-width" />}
+            autoWidth
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+          <FormHelperText>Auto width</FormHelperText>
+        </FormControl>
+        <FormControl className={classes.formControl}>
+          <Select
+            value={this.state.age}
+            onChange={this.handleChange}
+            name="age"
+            displayEmpty
+            className={classes.selectEmpty}
+          >
+            <MenuItem value="" disabled>
+              Placeholder
+            </MenuItem>
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+          <FormHelperText>Placeholder</FormHelperText>
+        </FormControl>
+        <FormControl required className={classes.formControl}>
+          <InputLabel htmlFor="age-required">Age</InputLabel>
+          <Select
+            value={this.state.age}
+            onChange={this.handleChange}
+            name="age"
+            inputProps={{
+              id: 'age-required',
+            }}
+            className={classes.selectEmpty}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+          <FormHelperText>Required</FormHelperText>
+        </FormControl>
+      </form>
+    );
+  }
 }
 
-export default InputUpload;
+SimpleSelect.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(SimpleSelect);
