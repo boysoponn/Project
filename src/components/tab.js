@@ -1,225 +1,108 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    flexGrow: 1,
+    height:'100%',
+    backgroundColor: theme.palette.background.paper,
   },
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 120,
+  tabsRoot: {
+    borderBottom: '1px solid #e8e8e8',
   },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2,
+  tabsIndicator: {
+    backgroundColor: '#1890ff',
+  },
+  tabRoot: {
+    textTransform: 'initial',
+    minWidth: 72,
+    fontWeight: theme.typography.fontWeightRegular,
+    marginRight: theme.spacing.unit * 4,
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    '&:hover': {
+      color: '#40a9ff',
+      opacity: 1,
+    },
+    '&$tabSelected': {
+      color: '#1890ff',
+      fontWeight: theme.typography.fontWeightMedium,
+    },
+    '&:focus': {
+      color: '#40a9ff',
+    },
+  },
+  tabSelected: {},
+  typography: {
+    padding: theme.spacing.unit * 3,
   },
 });
 
-class SimpleSelect extends React.Component {
-  state = {
-    age: '',
-    name: 'hai',
-  };
+class CustomizedTabs extends React.Component {
+  constructor(props){  
+    super(props);
+    this.add = this.add.bind(this);
+      this.state = {
+        value:2,
+        image:[1,2]
+      };
+  }
 
-  handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+  handleChange = (value) => {
+    this.setState({ value });
+  };
+  add(){
+    const dd= this.state.image;
+    dd.push('new value')
+    this.setState({
+      image:dd
+    })
   };
 
   render() {
     const { classes } = this.props;
+    const { value } = this.state;
 
     return (
-      <form className={classes.root} autoComplete="off">
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="age-simple">Age</InputLabel>
-          <Select
-            value={this.state.age}
-            onChange={this.handleChange}
-            inputProps={{
-              name: 'age',
-              id: 'age-simple',
-            }}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="age-helper">Age</InputLabel>
-          <Select
-            value={this.state.age}
-            onChange={this.handleChange}
-            input={<Input name="age" id="age-helper" />}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-          <FormHelperText>Some important helper text</FormHelperText>
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <Select
-            value={this.state.age}
-            onChange={this.handleChange}
-            displayEmpty
-            name="age"
-            className={classes.selectEmpty}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-          <FormHelperText>Without label</FormHelperText>
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <InputLabel shrink htmlFor="age-label-placeholder">
-            Age
-          </InputLabel>
-          <Select
-            value={this.state.age}
-            onChange={this.handleChange}
-            input={<Input name="age" id="age-label-placeholder" />}
-            displayEmpty
-            name="age"
-            className={classes.selectEmpty}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-          <FormHelperText>Label + placeholder</FormHelperText>
-        </FormControl>
-        <FormControl className={classes.formControl} disabled>
-          <InputLabel htmlFor="name-disabled">Name</InputLabel>
-          <Select
-            value={this.state.name}
-            onChange={this.handleChange}
-            input={<Input name="name" id="name-disabled" />}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value="hai">Hai</MenuItem>
-            <MenuItem value="olivier">Olivier</MenuItem>
-            <MenuItem value="kevin">Kevin</MenuItem>
-          </Select>
-          <FormHelperText>Disabled</FormHelperText>
-        </FormControl>
-        <FormControl className={classes.formControl} error>
-          <InputLabel htmlFor="name-error">Name</InputLabel>
-          <Select
-            value={this.state.name}
-            onChange={this.handleChange}
-            name="name"
-            renderValue={value => `⚠️  - ${value}`}
-            input={<Input id="name-error" />}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value="hai">Hai</MenuItem>
-            <MenuItem value="olivier">Olivier</MenuItem>
-            <MenuItem value="kevin">Kevin</MenuItem>
-          </Select>
-          <FormHelperText>Error</FormHelperText>
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="name-readonly">Name</InputLabel>
-          <Select
-            value={this.state.name}
-            onChange={this.handleChange}
-            input={<Input name="name" id="name-readonly" readOnly />}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value="hai">Hai</MenuItem>
-            <MenuItem value="olivier">Olivier</MenuItem>
-            <MenuItem value="kevin">Kevin</MenuItem>
-          </Select>
-          <FormHelperText>Read only</FormHelperText>
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="age-auto-width">Age</InputLabel>
-          <Select
-            value={this.state.age}
-            onChange={this.handleChange}
-            input={<Input name="age" id="age-auto-width" />}
-            autoWidth
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-          <FormHelperText>Auto width</FormHelperText>
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <Select
-            value={this.state.age}
-            onChange={this.handleChange}
-            name="age"
-            displayEmpty
-            className={classes.selectEmpty}
-          >
-            <MenuItem value="" disabled>
-              Placeholder
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-          <FormHelperText>Placeholder</FormHelperText>
-        </FormControl>
-        <FormControl required className={classes.formControl}>
-          <InputLabel htmlFor="age-required">Age</InputLabel>
-          <Select
-            value={this.state.age}
-            onChange={this.handleChange}
-            name="age"
-            inputProps={{
-              id: 'age-required',
-            }}
-            className={classes.selectEmpty}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-          <FormHelperText>Required</FormHelperText>
-        </FormControl>
-      </form>
+      <div className={classes.root}>
+      <button onClick={this.add} >ADD</button>
+        <Tabs
+          value={value}
+          onChange={this.handleChange}
+          classes={{ root: classes.tabsRoot, indicator: classes.tabsIndicator }}
+        >
+        
+        {this.state.image.map((image => (
+          <Tab
+            disableRipple
+            classes={{ root: classes.tabRoot, selected: classes.tabSelected }}
+            label= {image}
+          />
+          )))};
+        </Tabs>
+         
+        <Typography className={classes.typography}>Ant Design UI powered by Material-UI</Typography>
+      </div>
     );
   }
 }
 
-SimpleSelect.propTypes = {
+CustomizedTabs.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleSelect);
+export default withStyles(styles)(CustomizedTabs);

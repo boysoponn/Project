@@ -124,7 +124,7 @@ class CMS extends React.Component {
     key:'',
     widthcontect:'76%',
     animate:'bounce',
-    duration:'1s',
+    duration:'10s',
     FontFamily:'Montserrat',
     FontSize:'15',
     FontWeight:'400',
@@ -161,7 +161,6 @@ componentDidMount() {
     dbCon.child(this.state.key).update({
       title:this.state.title,
     }); 
-
   };
   handleChangeTitle(e) {
     this.setState({

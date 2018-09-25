@@ -3,7 +3,7 @@ import Parallax from 'react-springy-parallax'
 import '../../css/animate.min.css';
 import ScrollAnimation from 'react-animate-on-scroll';
 import LayerOne from './layerOne';
-
+import Tab from '../tab'
 class New extends React.Component {
     constructor(props){  
         super(props);
@@ -31,6 +31,8 @@ class New extends React.Component {
             overflow:'hidden'
         }
         return (
+            <div>
+            <Tab/>
             <Parallax  scrolling={true}  style={div} ref="parallax" pages={3} >
 
                 <Parallax.Layer offset={0} speed={1} style={{ backgroundColor: '#243B4A' }} />
@@ -69,6 +71,7 @@ class New extends React.Component {
                     > 
                 </Parallax.Layer>
             </Parallax>
+            </div>
         )
     }
 }
