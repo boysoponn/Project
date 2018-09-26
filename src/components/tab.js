@@ -1,108 +1,91 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import SwipeableViews from 'react-swipeable-views';
+import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
+function TabContainer({ children, dir }) {
+  return (
+    <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
+      {children}
+    </Typography>
+  );
+}
+
+TabContainer.propTypes = {
+  children: PropTypes.node.isRequired,
+  dir: PropTypes.string.isRequired,
+};
+
 const styles = theme => ({
   root: {
-    flexGrow: 1,
-    height:'100%',
     backgroundColor: theme.palette.background.paper,
-  },
-  tabsRoot: {
-    borderBottom: '1px solid #e8e8e8',
-  },
-  tabsIndicator: {
-    backgroundColor: '#1890ff',
-  },
-  tabRoot: {
-    textTransform: 'initial',
-    minWidth: 72,
-    fontWeight: theme.typography.fontWeightRegular,
-    marginRight: theme.spacing.unit * 4,
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-    '&:hover': {
-      color: '#40a9ff',
-      opacity: 1,
-    },
-    '&$tabSelected': {
-      color: '#1890ff',
-      fontWeight: theme.typography.fontWeightMedium,
-    },
-    '&:focus': {
-      color: '#40a9ff',
-    },
-  },
-  tabSelected: {},
-  typography: {
-    padding: theme.spacing.unit * 3,
+    width: 500,
   },
 });
 
-class CustomizedTabs extends React.Component {
-  constructor(props){  
-    super(props);
-    this.add = this.add.bind(this);
-      this.state = {
-        value:2,
-        image:[1,2]
-      };
-  }
+class FullWidthTabs extends React.Component {
+    constructor(props){  
+        super(props);
+          this.state = {
+            value: 0,
+            news:[1,2]
+          };   
+      }
+ 
 
-  handleChange = (value) => {
+  handleChange = (event, value) => {
     this.setState({ value });
   };
-  add(){
-    const dd= this.state.image;
-    dd.push('new value')
-    this.setState({
-      image:dd
-    })
+
+  handleChangeIndex = index => {
+    this.setState({ value: index });
   };
+  addNewTab(){
+    
+  }
 
   render() {
-    const { classes } = this.props;
-    const { value } = this.state;
+    const { classes, theme } = this.props;
 
     return (
       <div className={classes.root}>
-      <button onClick={this.add} >ADD</button>
-        <Tabs
-          value={value}
-          onChange={this.handleChange}
-          classes={{ root: classes.tabsRoot, indicator: classes.tabsIndicator }}
-        >
+        <AppBar position="static" color="default">
         
-        {this.state.image.map((image => (
-          <Tab
-            disableRipple
-            classes={{ root: classes.tabRoot, selected: classes.tabSelected }}
-            label= {image}
-          />
+          <Tabs
+            value={this.state.value}
+            onChange={this.handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            fullWidth
+          >
+          {this.state.news.map((New => (
+            <Tab label={New} />
+            )))};
+          </Tabs>
+        
+        </AppBar>
+        <SwipeableViews
+          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+          index={this.state.value}
+          onChangeIndex={this.handleChangeIndex}
+        >
+        {this.state.news.map((New => (
+          <TabContainer dir={theme.direction}>{New}</TabContainer>
           )))};
-        </Tabs>
-         
-        <Typography className={classes.typography}>Ant Design UI powered by Material-UI</Typography>
+        </SwipeableViews>
+        <button onClick={this.addNewTab}>ADD</button>
       </div>
     );
   }
 }
 
-CustomizedTabs.propTypes = {
+FullWidthTabs.propTypes = {
   classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CustomizedTabs);
+export default withStyles(styles, { withTheme: true })(FullWidthTabs);

@@ -7,14 +7,8 @@ import Tab from '../tab'
 class New extends React.Component {
     constructor(props){  
         super(props);
-        this.getScrollAnimationHeader = this.getScrollAnimationHeader.bind(this);
           this.state = {
           };   
-      }
-      getScrollAnimationHeader() {
-        return (<ScrollAnimation animateIn="bounceInRight" animateOut="zoomOut">
-            <h1>Install</h1>
-          </ScrollAnimation>)
       }
 
       

@@ -124,7 +124,7 @@ class CMS extends React.Component {
     key:'',
     widthcontect:'76%',
     animate:'bounce',
-    duration:'10s',
+    duration:'4s',
     FontFamily:'Montserrat',
     FontSize:'15',
     FontWeight:'400',
