@@ -5,38 +5,26 @@ import SwipeableViews from 'react-swipeable-views';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
+import IN from './template/IN'
 
-function TabContainer({ children, dir }) {
-  return (
-    <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
-      {children}
-    </Typography>
-  );
-}
 
-TabContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-  dir: PropTypes.string.isRequired,
-};
 
 const styles = theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: 500,
+    width: '100%',
   },
 });
 
-class FullWidthTabs extends React.Component {
+class TabWebsite extends React.Component {
     constructor(props){  
-        super(props);
+      super(props);
+      this.addNewTab = this.addNewTab.bind(this);
           this.state = {
             value: 0,
-            news:[1,2]
+            news:[1],
           };   
       }
- 
-
   handleChange = (event, value) => {
     this.setState({ value });
   };
@@ -44,9 +32,15 @@ class FullWidthTabs extends React.Component {
   handleChangeIndex = index => {
     this.setState({ value: index });
   };
+
   addNewTab(){
-    
-  }
+    const addnew =this.state.news;
+    addnew.push("NEW")
+    this.setState({
+      value:this.state.value+1,
+      news:addnew
+    });
+  };
 
   render() {
     const { classes, theme } = this.props;
@@ -64,9 +58,9 @@ class FullWidthTabs extends React.Component {
           >
           {this.state.news.map((New => (
             <Tab label={New} />
-            )))};
+            )))}
+          <button onClick={this.addNewTab}>ADD</button>
           </Tabs>
-        
         </AppBar>
         <SwipeableViews
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
@@ -74,18 +68,21 @@ class FullWidthTabs extends React.Component {
           onChangeIndex={this.handleChangeIndex}
         >
         {this.state.news.map((New => (
-          <TabContainer dir={theme.direction}>{New}</TabContainer>
-          )))};
+          <div dir={theme.direction}>
+          {New}
+          <IN/>
+          </div>
+          )))}
+
         </SwipeableViews>
-        <button onClick={this.addNewTab}>ADD</button>
       </div>
     );
   }
 }
 
-FullWidthTabs.propTypes = {
+TabWebsite.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(FullWidthTabs);
+export default withStyles(styles, { withTheme: true })(TabWebsite);

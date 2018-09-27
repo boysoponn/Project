@@ -20,15 +20,15 @@ class LayerOne extends React.Component {
             fontStyle:this.props.FontStyle,
             display:this.props.Status
         });
-        const description =({
-            animationDuration: this.props.duration,
-            opacity: 1,
-            fontFamily:this.props.FontFamily,
-            fontSize:this.props.FontSize,
-            fontWeight:this.props.FontWeight,
-            fontStyle:this.props.FontStyle,
-            display:this.props.Status
-        });
+        // const description =({
+        //     animationDuration: this.props.duration,
+        //     opacity: 1,
+        //     fontFamily:this.props.FontFamily,
+        //     fontSize:this.props.FontSize,
+        //     fontWeight:this.props.FontWeight,
+        //     fontStyle:this.props.FontStyle,
+        //     display:this.props.Status
+        // });
         return (
             <div>
             <ScrollAnimation style={title}className={this.props.animateIn} >

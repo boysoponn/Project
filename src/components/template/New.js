@@ -1,9 +1,8 @@
 import React from 'react'
 import Parallax from 'react-springy-parallax'
 import '../../css/animate.min.css';
-import ScrollAnimation from 'react-animate-on-scroll';
 import LayerOne from './layerOne';
-import Tab from '../tab'
+import TabWebsite from '../tab'
 class New extends React.Component {
     constructor(props){  
         super(props);
@@ -26,7 +25,7 @@ class New extends React.Component {
         }
         return (
             <div>
-            <Tab/>
+            <TabWebsite/>
             <Parallax  scrolling={true}  style={div} ref="parallax" pages={3} >
 
                 <Parallax.Layer offset={0} speed={1} style={{ backgroundColor: '#243B4A' }} />
