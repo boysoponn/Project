@@ -31,6 +31,20 @@ const styles = theme => ({
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
   },
+  imgUpload:{
+    marginRight:10,
+    marginBottom:10,
+    border:"3px Solid red ",
+  },
+  gg:{
+    width:200,
+  },
+  button: {
+   marginTop:10,
+  },
+  input: {
+    marginTop:10,
+  },
 });
 
 class ModalChooseImage extends React.Component {
@@ -39,13 +53,14 @@ class ModalChooseImage extends React.Component {
   this.getData = this.getData.bind(this);
   this.handleOpen = this.handleOpen.bind(this);
   this.handleClose = this.handleClose.bind(this);
-  this.imageOnClick = this.imageOnClick.bind(this);
     this.state = {
     open: false,
     images:[],
     imageName:'',
     imagePick:''
     };
+
+  console.log(process.cwd());
 }
 
 componentDidMount() {
@@ -76,10 +91,12 @@ componentDidMount() {
     });    
  }
 
- imageOnClick(){
-  this.setState({  
-  })
- }
+  imageOnClick = image => () => {
+    this.setState({  
+      imagePick: image.imageName
+    });
+  };
+
   handleOpen () {
     this.setState({ open: true });
   };
@@ -92,6 +109,7 @@ componentDidMount() {
     const { classes } = this.props;
     return (
       <div>
+        <div className={classes.imgUpload}><img className={classes.gg} src={this.state.imagePick} alt="uploadPicture"/></div>
         <Button variant="contained" onClick={this.handleOpen} component="span" color="secondary" className={classes.button}>
         Choose image
         </Button>
@@ -107,7 +125,7 @@ componentDidMount() {
         </GridListTile>
         {this.state.images.map((image => (
           <GridListTile >
-            <img src={image.imageName} key={image._key} onClick={this.imageOnClick} alt={image.imageName} />
+            <img src={image.imageName} key={image._key} onClick={this.imageOnClick(image)} alt="gg" />
             {/* <GridListTileBar/> */}
           </GridListTile>
         )))}

@@ -11,7 +11,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import InputText from './inputText';
 import Textarea from './textarea';
-import ChoosePicture from './choosePicture';
+import ModalChooseImage from './modalPicture';
 
 
 const styles = theme => ({
@@ -31,7 +31,6 @@ class NestedList extends React.Component {
     this.state = {
     open: false,
     image: null,
-    url: 'http://via.placeholder.com/400x300',
     };  
   }
 
@@ -87,9 +86,7 @@ class NestedList extends React.Component {
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding={false}>
               <ListItem className={classes.nested}>
-              <ChoosePicture 
-              url={this.state.url}
-              />
+              <ModalChooseImage/>
               </ListItem>
             </List>
           </Collapse>

@@ -2,7 +2,7 @@ import React from 'react'
 import Parallax from 'react-springy-parallax'
 import '../../css/animate.min.css';
 import LayerOne from './layerOne';
-import TabWebsite from '../tab'
+import TabWebsite from './tab'
 class New extends React.Component {
     constructor(props){  
         super(props);

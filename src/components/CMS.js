@@ -124,12 +124,13 @@ class CMS extends React.Component {
     key:'',
     widthcontect:'76%',
     animate:'bounce',
-    duration:'4s',
+    duration:'1s',
     FontFamily:'Montserrat',
     FontSize:'15',
     FontWeight:'400',
     FontStyle:'normal',
-    Status:'block'
+    Status:'block',
+    isLoaded: false
   };
 }
 componentDidMount() {
@@ -151,7 +152,8 @@ componentDidMount() {
       this.setState({
         title:snapshotArr[0].title,
         description:snapshotArr[0].description,
-        key:snapshotArr[0]._key
+        key:snapshotArr[0]._key,
+        isLoaded: true
       });
   });
 };
@@ -232,6 +234,8 @@ componentDidMount() {
   render() {
     const { classes, theme } = this.props;
     const user = localStorage.getItem('user');
+
+    if (!this.state.isLoaded) return null;
     
     return (
       <div className={classes.root} >

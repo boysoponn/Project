@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import exmessage from '../src/components/ex-message';
 import Member from './components/Member';
 import Cms from './components/CMS';
-import ImageUpload from './components/tab';
 
 const user = localStorage.getItem('user');
 
@@ -35,15 +34,14 @@ function withRestriction2(WrappedComponent2) {
 }
 const LoginWithRestriction = withRestriction2(Member);
 
-class App extends Component {
+class App extends Component {z
   render() {
     return (
       <Router>
         <div> 
           <Route exact path="/" component={LoginWithRestriction} />
           <Route path="/login" component={LoginWithRestriction} />   
-          <Route path="/message" component={exmessage} />  
-          <Route path="/tab" component={ImageUpload} />  
+          <Route path="/message" component={exmessage} /> 
           <Route path="/cms" component={CMSWithRestriction} />                
         </div>
       </Router>
