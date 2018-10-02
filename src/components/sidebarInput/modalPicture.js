@@ -59,8 +59,6 @@ class ModalChooseImage extends React.Component {
     imageName:'',
     imagePick:''
     };
-
-  console.log(process.cwd());
 }
 
 componentDidMount() {
@@ -84,6 +82,7 @@ componentDidMount() {
         obj.imageName = await config.storage().ref(`images/${obj.imageName}`).getDownloadURL();
         return Promise.resolve(obj);
       }));
+      console.log({pictures})
 
       this.setState({
         images: pictures,

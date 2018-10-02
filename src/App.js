@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
-import exmessage from '../src/components/ex-message';
+import exmessage from './components/ex-message';
 import Member from './components/Member';
 import Cms from './components/CMS';
+import AppWithConnect from './components/header';
 
 const user = localStorage.getItem('user');
 
@@ -34,7 +35,7 @@ function withRestriction2(WrappedComponent2) {
 }
 const LoginWithRestriction = withRestriction2(Member);
 
-class App extends Component {z
+class App extends Component {
   render() {
     return (
       <Router>
@@ -42,7 +43,8 @@ class App extends Component {z
           <Route exact path="/" component={LoginWithRestriction} />
           <Route path="/login" component={LoginWithRestriction} />   
           <Route path="/message" component={exmessage} /> 
-          <Route path="/cms" component={CMSWithRestriction} />                
+          <Route path="/cms" component={CMSWithRestriction} />   
+          <Route path="/header" component={AppWithConnect} />                
         </div>
       </Router>
     );

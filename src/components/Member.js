@@ -23,7 +23,6 @@ TabContainer.propTypes = {
 
 const styles = theme => ({
 background:{
- backgroundColor:'#ff9292',
  margin: 0,
  padding: 0,
 },

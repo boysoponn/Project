@@ -17,8 +17,9 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import HeroInput from './sidebarInput/heroInput';
 import ModalUploadWrapped from './sidebarInput/functionUpload/modalUpload';
 import Button from '@material-ui/core/Button';
-import New from './template/New';
 import SaveIcon from '@material-ui/icons/Save';
+import TabWebsite from './template/tab'
+import { connect } from 'react-redux'
 
 const drawerWidth = 300;
 
@@ -91,6 +92,7 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: '2%',
+    width:'70%',
   },
   grow: {
     flexGrow: 1,
@@ -118,6 +120,7 @@ class CMS extends React.Component {
   this.onChangeFontStyle = this.onChangeFontStyle.bind(this);
   this.onChangeStatus = this.onChangeStatus.bind(this); 
   this.state = {
+    tabs:'',
     open: true,
     title:'',
     description:'',
@@ -126,7 +129,7 @@ class CMS extends React.Component {
     animate:'bounce',
     duration:'1s',
     FontFamily:'Montserrat',
-    FontSize:'15',
+    FontSize:'50',
     FontWeight:'400',
     FontStyle:'normal',
     Status:'block',
@@ -136,32 +139,31 @@ class CMS extends React.Component {
 componentDidMount() {
   this.getData();
 }
+componentWillReceiveProps(nextPorps){
+  if(nextPorps.tabs !== this.props.tabs){
+    this.setState({
+      tabs:nextPorps.tabs
+    })
+  }
+  this.getData();
+}
 
-
-  getData(){
-    const app = config.database().ref('project/sopon/hero');
+getData(){
+    const app = config.database().ref('project/test/'+this.state.tabs);
     app.on('value', async (snapshot) => { 
       const snapshotValue = snapshot.val(); 
-      const snapshotArr = _.keys(snapshotValue).reduce((prev, cur) => {
-        prev.push({
-          _key: cur,
-          ...snapshotValue[cur]
-        });
-        return prev;     
-      }, []);  
-      this.setState({
-        title:snapshotArr[0].title,
-        description:snapshotArr[0].description,
-        key:snapshotArr[0]._key,
-        isLoaded: true
-      });
+      let messages = _(snapshotValue).value();
+        this.setState({
+          title: (messages.pageName),
+          isLoaded: true,
+        }); 
   });
 };
   
   save(){
-    let dbCon = config.database().ref('/project/sopon/hero');
-    dbCon.child(this.state.key).update({
-      title:this.state.title,
+    let dbCon = config.database().ref('project/test/'+this.state.tabs);
+    dbCon.update({
+      hero:this.state.title,
     }); 
   };
   handleChangeTitle(e) {
@@ -235,8 +237,35 @@ componentDidMount() {
     const { classes, theme } = this.props;
     const user = localStorage.getItem('user');
 
-    if (!this.state.isLoaded) return null;
+    let dd;
+    //if(this.props.tabs === '1'){
+     dd=
+      <HeroInput 
+              onChangeDescription={this.handleChangeDescription}
+              onChangeTitle={this.handleChangeTitle}
+              title={this.state.title}
+              description={this.state.description}
+              animate={this.state.animate} 
+              onChangeAnimate={this.onChangeAnimate}
+              duration={this.state.duration} 
+              onChangeDuration={this.onChangeDuration}
+              FontFamily={this.state.FontFamily}
+              onChangeFontFamily={this.onChangeFontFamily}
+              FontSize={this.state.FontSize}
+              onChangeFontSize={this.onChangeFontSize}
+              FontWeight={this.state.FontWeight}
+              onChangeFontWeight={this.onChangeFontWeight}
+              FontStyle={this.state.FontStyle}
+              onChangeFontStyle={this.onChangeFontStyle}
+              Status={this.state.Status}
+              onChangeStatus={this.onChangeStatus}
+            />
+    //}
+
     
+    
+    ;
+    if (!this.state.isLoaded) return null;
     return (
       <div className={classes.root} >
         <AppBar
@@ -287,63 +316,27 @@ componentDidMount() {
           </div>
           <Divider />
             <List disablePadding={true}>
-            <HeroInput 
-              onChangeDescription={this.handleChangeDescription}
-              onChangeTitle={this.handleChangeTitle}
-              title={this.state.title}
-              description={this.state.description}
-              animate={this.state.animate} 
-              onChangeAnimate={this.onChangeAnimate}
-              duration={this.state.duration} 
-              onChangeDuration={this.onChangeDuration}
-              FontFamily={this.state.FontFamily}
-              onChangeFontFamily={this.onChangeFontFamily}
-              FontSize={this.state.FontSize}
-              onChangeFontSize={this.onChangeFontSize}
-              FontWeight={this.state.FontWeight}
-              onChangeFontWeight={this.onChangeFontWeight}
-              FontStyle={this.state.FontStyle}
-              onChangeFontStyle={this.onChangeFontStyle}
-              Status={this.state.Status}
-              onChangeStatus={this.onChangeStatus}
-            /></List>
+            {dd}
+            </List>
             
            <Divider />
-           <HeroInput 
-              onChangeDescription={this.handleChangeDescription}
-              onChangeTitle={this.handleChangeTitle}
-              title={this.state.title}
-              description={this.state.description}
-              animate={this.state.animate} 
-              onChangeAnimate={this.onChangeAnimate}
-              duration={this.state.duration} 
-              onChangeDuration={this.onChangeDuration}
-              FontFamily={this.state.FontFamily}
-              onChangeFontFamily={this.onChangeFontFamily}
-              FontSize={this.state.FontSize}
-              onChangeFontSize={this.onChangeFontSize}
-              FontWeight={this.state.FontWeight}
-              onChangeFontWeight={this.onChangeFontWeight}
-              FontStyle={this.state.FontStyle}
-              onChangeFontStyle={this.onChangeFontStyle}
-              Status={this.state.Status}
-              onChangeStatus={this.onChangeStatus}
-            />
+  
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Typography component="div" noWrap>
-          <New 
-          widthcontect={this.state.widthcontect} 
-          title={this.state.title} 
-          animateIn={this.state.animate}
-          duration={this.state.duration}
-          FontFamily={this.state.FontFamily} 
-          FontSize={this.state.FontSize}
-          FontWeight={this.state.FontWeight}
-          FontStyle={this.state.FontStyle}
-          Status={this.state.Status}
-          />
+            <TabWebsite          
+            widthcontect={this.state.widthcontect} 
+            title={this.state.title} 
+            animate={this.state.animate}
+            duration={this.state.duration}
+            FontFamily={this.state.FontFamily} 
+            FontSize={this.state.FontSize}
+            FontWeight={this.state.FontWeight}
+            FontStyle={this.state.FontStyle}
+            Status={this.state.Status}
+
+            />
           </Typography>
         </main>
       </div>
@@ -356,4 +349,8 @@ CMS.propTypes = {
   theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(CMS);
+const mapStateToPropsTabs = state => ({
+  tabs: state.tabs 
+})
+
+export default connect(mapStateToPropsTabs)(withStyles(styles, { withTheme: true })(CMS));
