@@ -6,4 +6,9 @@ export const login = (user) => ({
   type: 'login',
   user
 })
+
+export const getUrlImage = (url) => ({
+  type: 'getUrlImage',
+  url
+})
   

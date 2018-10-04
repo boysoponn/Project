@@ -8,7 +8,8 @@ import Button from '@material-ui/core/Button';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import ListSubheader from '@material-ui/core/ListSubheader';
-
+import { connect } from 'react-redux'
+import {getUrlImage} from '../actions'
 
 const styles = theme => ({
   root: {
@@ -91,9 +92,7 @@ componentDidMount() {
  }
 
   imageOnClick = image => () => {
-    this.setState({  
-      imagePick: image.imageName
-    });
+    this.props.dispatch(getUrlImage(image.imageName));
   };
 
   handleOpen () {
@@ -108,7 +107,7 @@ componentDidMount() {
     const { classes } = this.props;
     return (
       <div>
-        <div className={classes.imgUpload}><img className={classes.gg} src={this.state.imagePick} alt="uploadPicture"/></div>
+        <div className={classes.imgUpload}><img className={classes.gg} src={this.props.imagePick} alt="uploadPicture"/></div>
         <Button variant="contained" onClick={this.handleOpen} component="span" color="secondary" className={classes.button}>
         Choose image
         </Button>
@@ -143,4 +142,5 @@ ModalChooseImage.propTypes = {
 // We need an intermediary variable for handling the recursive nesting.
 const ModalChooseImageWrapped = withStyles(styles)(ModalChooseImage);
 
-export default ModalChooseImageWrapped;
+
+export default connect()(ModalChooseImageWrapped);

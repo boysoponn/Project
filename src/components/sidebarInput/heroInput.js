@@ -56,22 +56,22 @@ class NestedList extends React.Component {
               <ListItem  className={classes.nested}>
               <InputText 
               inputLabel="Title" 
-              value={this.props.title}  
-              onChange={this.props.onChangeTitle} 
-              animate={this.props.animate}  
-              onChangeAnimate={this.props.onChangeAnimate} 
-              duration={this.props.duration} 
-              onChangeDuration={this.props.onChangeDuration}
-              FontFamily={this.props.FontFamily}
-              onChangeFontFamily={this.props.onChangeFontFamily}
-              onChangeFontSize={this.props.onChangeFontSize}
-              FontSize={this.props.FontSize}
-              FontWeight={this.props.FontWeight}
-              onChangeFontWeight={this.props.onChangeFontWeight}
-              onChangeFontStyle={this.props.onChangeFontStyle}
-              FontStyle={this.props.FontStyle}
-              Status={this.props.Status}
-              onChangeStatus={this.props.onChangeStatus}
+              value={this.props.heroTitle}  
+              animate={this.props.heroTitleAnimate} 
+              onChange={this.props.heroTitleOnChange} 
+              duration={this.props.heroTitleDuration}   
+              FontFamily={this.props.heroTitleFontFamily}
+              FontSize={this.props.heroTitleFontSize}
+              FontWeight={this.props.heroTitleFontWeight}
+              FontStyle={this.props.heroTitleFontStyle}
+              Status={this.props.heroTitleStatus}
+              onChangeAnimate={this.props.heroTitleOnChangeAnimate}              
+              onChangeDuration={this.props.heroTitleOnChangeDuration}            
+              onChangeFontFamily={this.props.heroTitleOnChangeFontFamily}
+              onChangeFontSize={this.props.heroTitleOnChangeFontSize}                           
+              onChangeFontWeight={this.props.heroTitleOnChangeFontWeight}
+              onChangeFontStyle={this.props.heroTitleOnChangeFontStyle}              
+              onChangeStatus={this.props.heroTitleOnChangeStatus}
               />
               </ListItem>
             </List>
@@ -79,14 +79,35 @@ class NestedList extends React.Component {
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding={false}>
               <ListItem button className={classes.nested}>
-              <Textarea label="descrition" value={this.props.description} onChange={this.props.onChangeDescription}/>
+              <Textarea 
+              label="descrition" 
+              value={this.props.heroDescription}  
+              animate={this.props.heroDescriptionAnimate} 
+              onChange={this.props.heroDescriptionOnChange} 
+              duration={this.props.heroDescriptionDuration}   
+              FontFamily={this.props.heroDescriptionFontFamily}
+              FontSize={this.props.heroDescriptionFontSize}
+              FontWeight={this.props.heroDescriptionFontWeight}
+              FontStyle={this.props.heroDescriptionFontStyle}
+              Status={this.props.heroDescriptionStatus}
+              onChangeAnimate={this.props.heroDescriptionOnChangeAnimate}              
+              onChangeDuration={this.props.heroDescriptionOnChangeDuration}            
+              onChangeFontFamily={this.props.heroDescriptionOnChangeFontFamily}
+              onChangeFontSize={this.props.heroDescriptionOnChangeFontSize}                           
+              onChangeFontWeight={this.props.heroDescriptionOnChangeFontWeight}
+              onChangeFontStyle={this.props.heroDescriptionOnChangeFontStyle}              
+              onChangeStatus={this.props.heroDescriptionOnChangeStatus}
+
+              />
               </ListItem>
             </List>
           </Collapse>
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding={false}>
               <ListItem className={classes.nested}>
-              <ModalChooseImage/>
+              <ModalChooseImage
+              imagePick={this.props.heroImagePick}
+              />
               </ListItem>
             </List>
           </Collapse>

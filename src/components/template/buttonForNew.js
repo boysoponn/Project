@@ -14,6 +14,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import RadioButtons from './choosetemplant'
+import AddIcon from '@material-ui/icons/AddCircle';
+import CreateIcon from '@material-ui/icons/Create';
 
 const styles = {
   appBar: {
@@ -37,6 +39,14 @@ const styles = {
       borderBottomColor: 'blue',
     },
   },
+  button:{
+    width: 100,
+    marginRight: 5,
+    float:'left',
+  },
+  rightIcon: {
+    marginLeft:5,
+  },
 };
 
 
@@ -50,10 +60,19 @@ class ButtonForNewTab extends React.Component {
 
 
   render() {
-    const { classes } = this.props;
+    const { classes} = this.props;
+    let icon;
+    if( this.props.icon === "add"){
+      icon = <AddIcon  className={classes.rightIcon} />
+    }
+    if( this.props.icon === "edit"){
+      icon = <CreateIcon  className={classes.rightIcon} />
+    }
     return (
       <div>
-        <Button variant="contained" color="secondary"  onClick={this.props.handleOpen}>ADD</Button>
+        <Button variant="contained" color="secondary"  className={classes.button} onClick={this.props.handleOpen}>{this.props.labelButton}
+        {icon}
+        </Button>
         <Dialog
           fullScreen
           open={this.props.open}
@@ -66,7 +85,7 @@ class ButtonForNewTab extends React.Component {
                 <CloseIcon />
               </IconButton>
               <Typography variant="title" color="inherit" className={classes.flex}>
-                Create your page
+                {this.props.labelbox}
               </Typography>
               <Button color="inherit"  onClick={this.props.onClickSave}>
                 save

@@ -1,6 +1,10 @@
 import React from 'react';
+import _ from 'lodash';
 import config from './../../config';
 import PropTypes from 'prop-types';
+import Slide from '@material-ui/core/Slide';
+import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { withStyles } from '@material-ui/core/styles';
 import SwipeableViews from 'react-swipeable-views';
 import AppBar from '@material-ui/core/AppBar';
@@ -10,45 +14,56 @@ import IN from './IN'
 import ButtonForNewTab from './buttonForNew'
 import { connect } from 'react-redux'
 import { checkTab} from '../actions'
-import Slide from '@material-ui/core/Slide';
-import _ from 'lodash';
+
+
 
 const styles = theme => ({
+  button:{
+    width: 100,
+    marginRight: 5,
+    float:'left',
+  },
   root: {
-    backgroundColor: theme.palette.background.paper,
+    // backgroundColor: theme.palette.background.paper,
   },
   content:{
     backgroundColor:'#fff',
     height:'100%',
-  }
+  },
+  rightIcon: {
+    marginLeft:5,
+  },
 });
 function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
 class TabWebsite extends React.Component {
-    constructor(props){  
-      super(props);
-      this.onChangeName = this.onChangeName.bind(this); 
-      this.addNewTab = this.addNewTab.bind(this);
-          this.state = {
-            value: 0,
-            num:1,
-            news:[],
-            open:false,
-            namePage:'',
-            selectedHero:'none',
-            selectedAbout:'none',
-            selectedGallery:'none',
-            selectedWelcome:'none',
-            selectedContact:'none',
-          };   
-      }
+  constructor(props){  
+    super(props);
+    this.onChangeName = this.onChangeName.bind(this); 
+    this.addNewTab = this.addNewTab.bind(this);
+    this.saveEdit = this.saveEdit.bind(this);
+    this.deletePage = this.deletePage.bind(this);
+    this.setNullValue = this.setNullValue.bind(this);
+      this.state = {
+        value: 0,
+        num:1,
+        news:[],
+        open:false,
+        openEdit:false,
+        namePage:'',
+        selectedHero:'none',
+        selectedAbout:'none',
+        selectedGallery:'none',
+        selectedWelcome:'none',
+        selectedContact:'none',
+      };   
+    }
+
   componentDidMount() {
     this.getData();
   }
-
-
     getData(){
       const app = config.database().ref('project/test');
       app.on('value', async (snapshot) => { 
@@ -66,6 +81,35 @@ class TabWebsite extends React.Component {
     });
   };
         
+  handleOpenEdit = () => {
+    let app = config.database().ref('project/test/'+this.props.tabs);
+    app.on('value', async (snapshot) => { 
+      const snapshotValue = snapshot.val(); 
+      let data = _(snapshotValue).value();
+        this.setState({
+          namePage:data.pageName,
+          selectedHero:data.hero,
+          selectedAbout:data.about,
+          selectedGallery:data.gallery,
+          selectedWelcome:data.welcome,
+          selectedContact:data.contact,
+          openEdit: true
+        }); 
+    });
+  };
+
+  setNullValue(){
+    this.setState({
+      selectedHero:'none',
+      selectedAbout:'none',
+      selectedGallery:'none',
+      selectedWelcome:'none',
+      selectedContact:'none',
+    })
+  }
+
+  handleCloseEdit = () => {this.setState({ openEdit: false,namePage:''});};
+
   handleOpen = () => {this.setState({ open: true });};
 
   handleClose = () => {this.setState({ open: false,namePage:''});};  
@@ -86,6 +130,28 @@ class TabWebsite extends React.Component {
 
   handleChangeIndex = index => {this.setState({ value: index });};
 
+  saveEdit(){
+    if(this.state.namePage){
+      let dbCon = config.database().ref('project/test/'+this.props.tabs);
+      dbCon.update({
+      pageName: this.state.namePage,
+      hero: this.state.selectedHero,
+      welcome: this.state.selectedWelcome,
+      about : this.state.selectedAbout,
+      gallery :this.state.selectedGallery,
+      contact : this.state.selectedContact
+    })    
+    this.setState({
+      value:this.state.value,
+      num:this.state.num +1,
+    });
+    this.handleCloseEdit();
+    }else{
+      this.setNullValue();
+      this.handleCloseEdit();
+    }
+  };
+
   addNewTab(){
     if(this.state.namePage){
       let dbCon = config.database().ref('project/test');
@@ -101,32 +167,34 @@ class TabWebsite extends React.Component {
     this.setState({
       value:this.state.value,
       num:this.state.num +1,
-      open: false,
-      namePage:'',
-      selectedHero:'none',
-      selectedAbout:'none',
-      selectedGallery:'none',
-      selectedWelcome:'none',
-      selectedContact:'none',
     });
+    this.setNullValue();
+    this.handleClose();
     }else{
       this.setState({
-      open: false,
-      namePage:'',
-      selectedHero:'none',
-      selectedAbout:'none',
-      selectedGallery:'none',
-      selectedWelcome:'none',
-      selectedContact:'none',
       })
+      this.setNullValue();
+      this.handleClose();
     }
   };
 
+  deletePage(){
+    let dbCon = config.database().ref('project/test');
+    dbCon.child(this.props.tabs).remove();
+  }
+
   render() {
     const { classes, theme } = this.props;
+    const center= ({
+      textAlign: 'center'
+    }); 
     return (
     <div>
+      <div>
       <ButtonForNewTab
+      icon="add"
+      labelbox="Create page"
+      labelButton="ADD"
       onClickSave={this.addNewTab}
       handleClose={this.handleClose}
       handleOpen={this.handleOpen}
@@ -166,6 +234,53 @@ class TabWebsite extends React.Component {
       valueContact3="ContactNo2"
       valueContact4="ContactNo3"
       />
+      <ButtonForNewTab
+      icon="edit"
+      labelbox="Edit page"
+      labelButton="Edit"
+      onClickSave={this.saveEdit}
+      handleClose={this.handleCloseEdit}
+      handleOpen={this.handleOpenEdit}
+      open={this.state.openEdit}
+      onClose={this.handleCloseEdit}
+      TransitionComponent={Transition}
+      onChangeName={this.onChangeName}
+      valueName={this.state.namePage}
+      selectedHero={this.state.selectedHero}
+      handleChangeHero={this.handleChangeSelectHero}
+      valueHero1="none"
+      valueHero2="HeroNo1"
+      valueHero3="HeroNo2"
+      valueHero4="HeroNo3"
+      selectedWelcome={this.state.selectedWelcome}
+      handleChangeWelcome={this.handleChangeSelectWelcome}
+      valueWelcome1="none"
+      valueWelcome2="WelcomeNo1"
+      valueWelcome3="WelcomeNo2"
+      valueWelcome4="WelcomeNo3"
+      selectedAbout={this.state.selectedAbout}
+      handleChangeAbout={this.handleChangeSelectAbout}
+      valueAbout1="none"
+      valueAbout2="AboutNo1"
+      valueAbout3="AboutNo2"
+      valueAbout4="AboutNo3"
+      selectedGallery={this.state.selectedGallery}
+      handleChangeGallery={this.handleChangeSelectGallery}
+      valueGallery1="none"
+      valueGallery2="GalleryNo1"
+      valueGallery3="GalleryNo2"
+      valueGallery4="GalleryNo3"
+      selectedContact={this.state.selectedContact}
+      handleChangeContact={this.handleChangeSelectContact}
+      valueContact1="none"
+      valueContact2="ContactNo1"
+      valueContact3="ContactNo2"
+      valueContact4="ContactNo3"
+      />
+      <Button variant="contained" color="secondary" className={classes.button} onClick={this.deletePage}>Delete
+      <DeleteIcon className={classes.rightIcon}/>
+      </Button>
+      </div>
       <div className={classes.root}>
         <AppBar position="static" color="default">
           <Tabs
@@ -191,20 +306,30 @@ class TabWebsite extends React.Component {
         > 
           {this.state.news.map((New => (
             <div key={New._key} className={classes.content}>
-            <h1>{New.pageName}</h1>
-            <IN             
-             widthcontect={this.props.widthcontect} 
-              title={this.props.title} 
-              animate={this.props.animate}
-              duration={this.props.duration}
-              FontFamily={this.props.FontFamily} 
-              FontSize={this.props.FontSize}
-              FontWeight={this.props.FontWeight}
-              FontStyle={this.props.FontStyle}
-              Status={this.props.Status}
-            Hero={New.hero}
-            Welcome={New.welcome}
-            About={New.about}
+            <h1 style={center}>{New.pageName}</h1>
+            <IN           
+              Hero={New.hero}
+              Welcome={New.welcome}
+              About={New.about}  
+
+              heroImagePick={this.props.heroImagePick}
+              title={this.props.heroTitle} 
+              animate={this.props.heroTitleAnimate}
+              duration={this.props.heroTitleDuration}
+              FontFamily={this.props.heroTitleFontFamily} 
+              FontSize={this.props.heroTitleFontSize}
+              FontWeight={this.props.heroTitleFontWeight}
+              FontStyle={this.props.heroTitleFontStyle}
+              Status={this.props.heroTitleStatus}
+
+              description={this.props.heroDescription}
+              durationDescription= {this.props.heroDescriptionDuration}
+              FontFamilyDescription={this.props.heroDescriptionFontFamily}
+              FontSizeDescription={this.props.heroDescriptionFontSize}
+              FontWeightDescription={this.props.heroDescriptionFontWeight}
+              FontStyleDescription={this.props.heroDescriptionFontStyle}
+              StatusDescription={this.props.heroDescriptionStatus}
+              animateDescription={this.props.heroDescriptionAnimate} 
             />
             </div>
           )))}   
@@ -220,6 +345,8 @@ TabWebsite.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
+const mapStateToPropsTabs = state => ({
+  tabs: state.tabs 
+})
 
-
-export default connect()(withStyles(styles, { withTheme: true })(TabWebsite));
+export default connect(mapStateToPropsTabs)(withStyles(styles, { withTheme: true })(TabWebsite));

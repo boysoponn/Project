@@ -18,6 +18,7 @@ import HeroInput from './sidebarInput/heroInput';
 import ModalUploadWrapped from './sidebarInput/functionUpload/modalUpload';
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
+import ExitIcon from '@material-ui/icons/ExitToApp';
 import TabWebsite from './template/tab'
 import { connect } from 'react-redux'
 
@@ -40,6 +41,7 @@ const styles = theme => ({
     height: '100%',
   },
   appBar: {
+    backgroundColor:'#fff',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -110,128 +112,88 @@ class CMS extends React.Component {
   super(props);
   this.save = this.save.bind(this);
   this.logout = this.logout.bind(this);
-  this.handleChangeTitle = this.handleChangeTitle.bind(this);  
-  this.handleChangeDescription = this.handleChangeDescription.bind(this); 
-  this.onChangeAnimate = this.onChangeAnimate.bind(this); 
-  this.onChangeDuration = this.onChangeDuration.bind(this); 
-  this.onChangeFontFamily = this.onChangeFontFamily.bind(this); 
-  this.onChangeFontSize = this.onChangeFontSize.bind(this); 
-  this.onChangeFontWeight = this.onChangeFontWeight.bind(this); 
-  this.onChangeFontStyle = this.onChangeFontStyle.bind(this);
-  this.onChangeStatus = this.onChangeStatus.bind(this); 
+  this.heroTitleOnChange = this.heroTitleOnChange.bind(this);  
+  this.heroTitleOnChangeAnimate = this.heroTitleOnChangeAnimate.bind(this); 
+  this.heroTitleOnChangeDuration = this.heroTitleOnChangeDuration.bind(this); 
+  this.heroTitleOnChangeFontFamily = this.heroTitleOnChangeFontFamily.bind(this); 
+  this.heroTitleOnChangeFontSize = this.heroTitleOnChangeFontSize.bind(this); 
+  this.heroTitleOnChangeFontWeight = this.heroTitleOnChangeFontWeight.bind(this); 
+  this.heroTitleOnChangeFontStyle = this.heroTitleOnChangeFontStyle.bind(this);
+  this.heroTitleOnChangeStatus = this.heroTitleOnChangeStatus.bind(this); 
+
+  this.heroDescriptionOnChange = this.heroDescriptionOnChange.bind(this); 
+  this.heroDescriptionOnChangeAnimate = this.heroDescriptionOnChangeAnimate.bind(this); 
+  this.heroDescriptionOnChangeDuration = this.heroDescriptionOnChangeDuration.bind(this); 
+  this.heroDescriptionOnChangeFontFamily = this.heroDescriptionOnChangeFontFamily.bind(this); 
+  this.heroDescriptionOnChangeFontSize = this.heroDescriptionOnChangeFontSize.bind(this); 
+  this.heroDescriptionOnChangeFontWeight = this.heroDescriptionOnChangeFontWeight.bind(this); 
+  this.heroDescriptionOnChangeFontStyle = this.heroDescriptionOnChangeFontStyle.bind(this);
+  this.heroDescriptionOnChangeStatus = this.heroDescriptionOnChangeStatus.bind(this); 
   this.state = {
-    tabs:'',
+    // isLoaded: false
     open: true,
-    title:'',
-    description:'',
     key:'',
-    widthcontect:'76%',
-    animate:'bounce',
-    duration:'1s',
-    FontFamily:'Montserrat',
-    FontSize:'50',
-    FontWeight:'400',
-    FontStyle:'normal',
-    Status:'block',
-    isLoaded: false
+    heroTitle:'',
+    heroTitleAnimate:'bounce',
+    heroTitleDuration:'1s',
+    heroTitleFontFamily:'Montserrat',
+    heroTitleFontSize:'50',
+    heroTitleFontWeight:'400',
+    heroTitleFontStyle:'normal',
+    heroTitleStatus:'block',
+
+    heroDescription:'',
+    heroDescriptionAnimate:'bounce',
+    heroDescriptionDuration:'1s',
+    heroDescriptionFontFamily:'Montserrat',
+    heroDescriptionFontSize:'20',
+    heroDescriptionFontWeight:'400',
+    heroDescriptionFontStyle:'normal',
+    heroDescriptionStatus:'block',
   };
 }
-componentDidMount() {
-  this.getData();
-}
-componentWillReceiveProps(nextPorps){
-  if(nextPorps.tabs !== this.props.tabs){
-    this.setState({
-      tabs:nextPorps.tabs
-    })
-  }
-  this.getData();
-}
 
-getData(){
-    const app = config.database().ref('project/test/'+this.state.tabs);
-    app.on('value', async (snapshot) => { 
-      const snapshotValue = snapshot.val(); 
-      let messages = _(snapshotValue).value();
+
+componentWillReceiveProps(nextProps){
+  let app = config.database().ref('project/test/'+nextProps.tabs);
+  app.on('value', async (snapshot) => { 
+  const snapshotValue = snapshot.val(); 
+  let data = _(snapshotValue).value();
         this.setState({
-          title: (messages.pageName),
-          isLoaded: true,
+          heroTitle:data.pageName,
+          heroDescription:data.pageName
         }); 
   });
-};
-  
+}
+ 
   save(){
-    let dbCon = config.database().ref('project/test/'+this.state.tabs);
+    let dbCon = config.database().ref('project/test/'+this.props.tabs);
     dbCon.update({
-      hero:this.state.title,
+      hero:this.state.heroTitle,
     }); 
   };
-  handleChangeTitle(e) {
-    this.setState({
-      title: e.target.value
-    });
-  };
 
-  handleChangeDescription(e) {
-    this.setState({
-      description: e.target.value
-    });
-  };
+  logout(){localStorage.removeItem('user'); window.location.reload(true);};
+  handleDrawerOpen = () => {this.setState({ open: true ,});}
+  handleDrawerClose = () => {this.setState({  open: false ,});};
 
-  onChangeAnimate (e) {
-    this.setState({ 
-        animate: e.target.value 
-    });
-  };
-  
-  onChangeDuration (e) {
-    this.setState({ 
-      duration: e.target.value 
-    });
-  };
-  onChangeFontFamily (e) {
-    this.setState({ 
-      FontFamily: e.target.value 
-    });
-  };
-  onChangeFontSize (e) {
-    this.setState({ 
-      FontSize: e.target.value 
-    });
-  };
-  onChangeFontStyle (e) {
-    this.setState({ 
-      FontStyle: e.target.value 
-    });
-  };
-  onChangeFontWeight (e) {
-    this.setState({ 
-      FontWeight: e.target.value 
-    });
-  };
-  onChangeStatus (e) {
-    this.setState({ 
-      Status: e.target.value 
-    });
-  };
+  heroTitleOnChange(e) {this.setState({heroTitle: e.target.value});};
+  heroTitleOnChangeAnimate (e) {this.setState({ heroTitleAnimate: e.target.value });};
+  heroTitleOnChangeDuration (e) {this.setState({ heroTitleDuration: e.target.value });};
+  heroTitleOnChangeFontFamily (e) {this.setState({ heroTitleFontFamily: e.target.value });};
+  heroTitleOnChangeFontSize (e) {this.setState({ heroTitleFontSize: e.target.value });};
+  heroTitleOnChangeFontStyle (e) {this.setState({ heroTitleFontStyle: e.target.value });};
+  heroTitleOnChangeFontWeight (e) {this.setState({ heroTitleFontWeight: e.target.value });};
+  heroTitleOnChangeStatus (e) {this.setState({ heroTitleStatus: e.target.value });};
 
-  logout(){
-    localStorage.removeItem('user');
-    window.location.reload(true);
-  };
-  handleDrawerOpen = () => {
-    this.setState({ 
-      open: true ,
-      widthcontect:'76%',
-    });
-  };
-
-  handleDrawerClose = () => {
-    this.setState({ 
-      open: false ,
-      widthcontect:'90%',
-    });
-  };
+  heroDescriptionOnChange(e) {this.setState({heroDescription: e.target.value});};
+  heroDescriptionOnChangeAnimate (e) {this.setState({ heroDescriptionAnimate: e.target.value });};
+  heroDescriptionOnChangeDuration (e) {this.setState({ heroDescriptionDuration: e.target.value });};
+  heroDescriptionOnChangeFontFamily (e) {this.setState({ heroDescriptionFontFamily: e.target.value });};
+  heroDescriptionOnChangeFontSize (e) {this.setState({ heroDescriptionFontSize: e.target.value });};
+  heroDescriptionOnChangeFontStyle (e) {this.setState({ heroDescriptionFontStyle: e.target.value });};
+  heroDescriptionOnChangeFontWeight (e) {this.setState({ heroDescriptionFontWeight: e.target.value });};
+  heroDescriptionOnChangeStatus (e) {this.setState({ heroDescriptionStatus: e.target.value });};
 
   render() {
     const { classes, theme } = this.props;
@@ -241,31 +203,50 @@ getData(){
     //if(this.props.tabs === '1'){
      dd=
       <HeroInput 
-              onChangeDescription={this.handleChangeDescription}
-              onChangeTitle={this.handleChangeTitle}
-              title={this.state.title}
-              description={this.state.description}
-              animate={this.state.animate} 
-              onChangeAnimate={this.onChangeAnimate}
-              duration={this.state.duration} 
-              onChangeDuration={this.onChangeDuration}
-              FontFamily={this.state.FontFamily}
-              onChangeFontFamily={this.onChangeFontFamily}
-              FontSize={this.state.FontSize}
-              onChangeFontSize={this.onChangeFontSize}
-              FontWeight={this.state.FontWeight}
-              onChangeFontWeight={this.onChangeFontWeight}
-              FontStyle={this.state.FontStyle}
-              onChangeFontStyle={this.onChangeFontStyle}
-              Status={this.state.Status}
-              onChangeStatus={this.onChangeStatus}
+        heroImagePick={this.props.urlImage} 
+
+        heroTitle={this.state.heroTitle}             
+        heroTitleAnimate={this.state.heroTitleAnimate} 
+        heroTitleDuration={this.state.heroTitleDuration} 
+        heroTitleFontFamily={this.state.heroTitleFontFamily}
+        heroTitleFontSize={this.state.heroTitleFontSize}
+        heroTitleFontWeight={this.state.heroTitleFontWeight}
+        heroTitleFontStyle={this.state.heroTitleFontStyle}
+        heroTitleStatus={this.state.heroTitleStatus}
+        
+        heroTitleOnChange={this.heroTitleOnChange}
+        heroTitleOnChangeAnimate={this.heroTitleOnChangeAnimate}
+        heroTitleOnChangeDuration={this.heroTitleOnChangeDuration}           
+        heroTitleOnChangeFontFamily={this.heroTitleOnChangeFontFamily}            
+        heroTitleOnChangeFontSize={this.heroTitleOnChangeFontSize}             
+        heroTitleOnChangeFontWeight={this.heroTitleOnChangeFontWeight}          
+        heroTitleOnChangeFontStyle={this.heroTitleOnChangeFontStyle}
+        heroTitleOnChangeStatus={this.heroTitleOnChangeStatus}
+
+        heroDescription={this.state.heroDescription}
+        heroDescriptionAnimate={this.state.heroDescriptionAnimate}
+        heroDescriptionDuration={this.state.heroDescriptionDuration} 
+        heroDescriptionFontFamily= {this.state.heroDescriptionFontFamily}
+        heroDescriptionFontSize={this.state.heroDescriptionFontSize}
+        heroDescriptionFontWeight={this.state.heroDescriptionFontWeight}
+        heroDescriptionFontStyle={this.state.heroDescriptionFontStyle}
+        heroDescriptionStatus={this.state.heroDescriptionStatus}
+
+        heroDescriptionOnChange={this.heroDescriptionOnChange}
+        heroDescriptionOnChangeAnimate={this.heroDescriptionOnChangeAnimate}
+        heroDescriptionOnChangeDuration={this.heroDescriptionOnChangeDuration}           
+        heroDescriptionOnChangeFontFamily={this.heroDescriptionOnChangeFontFamily}            
+        heroDescriptionOnChangeFontSize={this.heroDescriptionOnChangeFontSize}             
+        heroDescriptionOnChangeFontWeight={this.heroDescriptionOnChangeFontWeight}          
+        heroDescriptionOnChangeFontStyle={this.heroDescriptionOnChangeFontStyle}
+        heroDescriptionOnChangeStatus={this.heroDescriptionOnChangeStatus}
             />
     //}
 
     
     
     ;
-    if (!this.state.isLoaded) return null;
+    // if (!this.state.isLoaded) return null;
     return (
       <div className={classes.root} >
         <AppBar
@@ -274,20 +255,20 @@ getData(){
         >
           <Toolbar disableGutters={!this.state.open}>
             <IconButton
-              color="inherit"
+              color="#000"
               aria-label="Open drawer"
               onClick={this.handleDrawerOpen}
               className={classNames(classes.menuButton, this.state.open && classes.hide)}
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="title" color="inherit" className={classes.grow} >
-              CMS Project
+            <Typography variant="title" color="#000" className={classes.grow} >
+              CMS PROJECT
             </Typography>
             <Typography color="inherit">
             <Button variant="contained" color="secondary" onClick={this.save} className={classes.button}>
             SAVE
-            <SaveIcon className={classNames(classes.rightIcon)} />
+            <SaveIcon className={classes.rightIcon} />
             </Button>
 
             </Typography>
@@ -295,10 +276,12 @@ getData(){
             <Typography color="inherit" className={classes.grow} >
             <ModalUploadWrapped />
             </Typography>
-            <Typography variant="title" color="inherit" >
+            <Typography variant="title" color="#000" >
               Welcome : {user}
             </Typography>
-            <Button variant="contained" color="primary" className={classes.button} onClick={this.logout}>Logout</Button>
+            <Button variant="contained" color="primary" className={classes.button} onClick={this.logout}>Logout
+            <ExitIcon className={classes.rightIcon}/>
+            </Button>
           </Toolbar>
         </AppBar>
 
@@ -320,24 +303,30 @@ getData(){
             </List>
             
            <Divider />
-  
         </Drawer>
         <main className={classes.content}>
-          <div className={classes.toolbar} />
-          <Typography component="div" noWrap>
-            <TabWebsite          
-            widthcontect={this.state.widthcontect} 
-            title={this.state.title} 
-            animate={this.state.animate}
-            duration={this.state.duration}
-            FontFamily={this.state.FontFamily} 
-            FontSize={this.state.FontSize}
-            FontWeight={this.state.FontWeight}
-            FontStyle={this.state.FontStyle}
-            Status={this.state.Status}
+          <div className={classes.toolbar} /> 
+            <TabWebsite       
+            heroImagePick={this.props.urlImage}  
+            heroTitle={this.state.heroTitle} 
+            heroTitleAnimate={this.state.heroTitleAnimate}
+            heroTitleDuration={this.state.heroTitleDuration}
+            heroTitleFontFamily={this.state.heroTitleFontFamily} 
+            heroTitleFontSize={this.state.heroTitleFontSize}
+            heroTitleFontWeight={this.state.heroTitleFontWeight}
+            heroTitleFontStyle={this.state.heroTitleFontStyle}
+            heroTitleStatus={this.state.heroTitleStatus}
 
-            />
-          </Typography>
+            heroDescription={this.state.heroDescription}
+            heroDescriptionAnimate={this.state.heroDescriptionAnimate}
+            heroDescriptionDuration={this.state.heroDescriptionDuration} 
+            heroDescriptionFontFamily= {this.state.heroDescriptionFontFamily}
+            heroDescriptionFontSize={this.state.heroDescriptionFontSize}
+            heroDescriptionFontWeight={this.state.heroDescriptionFontWeight}
+            heroDescriptionFontStyle={this.state.heroDescriptionFontStyle}
+            heroDescriptionStatus={this.state.heroDescriptionStatus}
+
+            />       
         </main>
       </div>
     );
@@ -349,8 +338,9 @@ CMS.propTypes = {
   theme: PropTypes.object.isRequired,
 };
 
-const mapStateToPropsTabs = state => ({
-  tabs: state.tabs 
+const mapStateToProps = state => ({
+  tabs: state.tabs ,
+  urlImage: state.urlImage 
 })
 
-export default connect(mapStateToPropsTabs)(withStyles(styles, { withTheme: true })(CMS));
+export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(CMS));

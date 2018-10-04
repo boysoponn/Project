@@ -26,11 +26,21 @@ class Textarea extends React.Component {
     const { classes} = this.props;
     return (
       <div className={classes.container}>
-        <SettingAnimate 
+      <SettingAnimate 
         animate={this.props.animate} 
-        onChangeAnimate={this.props.onChangeAnimate} 
         duration={this.props.duration} 
+        FontFamily={this.props.FontFamily}
+        FontSize={this.props.FontSize}
+        FontWeight={this.props.FontWeight}
+        FontStyle={this.props.FontStyle}
+        Status={this.props.Status}
+        onChangeFontFamily={this.props.onChangeFontFamily}
+        onChangeFontSize={this.props.onChangeFontSize}
         onChangeDuration={this.props.onChangeDuration} 
+        onChangeAnimate={this.props.onChangeAnimate} 
+        onChangeFontWeight={this.props.onChangeFontWeight}
+        onChangeFontStyle={this.props.onChangeFontStyle}
+        onChangeStatus={this.props.onChangeStatus}
         />
         <FormControl className={classes.margin}>
         <TextField

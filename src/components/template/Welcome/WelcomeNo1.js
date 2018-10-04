@@ -11,11 +11,10 @@ class WelcomeNo1 extends React.Component {
   render() {
     const background =({
         backgroundColor:'blue',
-        height:500
+        height:1500
     });
     return (
         <div style={background}>   
-            
         </div>
     );
   }

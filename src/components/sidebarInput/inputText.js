@@ -32,18 +32,18 @@ class InputText extends React.Component {
       <div className={classes.container}>
       <SettingAnimate 
         animate={this.props.animate} 
-        onChangeAnimate={this.props.onChangeAnimate} 
         duration={this.props.duration} 
-        onChangeDuration={this.props.onChangeDuration} 
         FontFamily={this.props.FontFamily}
-        onChangeFontFamily={this.props.onChangeFontFamily}
-        onChangeFontSize={this.props.onChangeFontSize}
         FontSize={this.props.FontSize}
         FontWeight={this.props.FontWeight}
-        onChangeFontWeight={this.props.onChangeFontWeight}
-        onChangeFontStyle={this.props.onChangeFontStyle}
         FontStyle={this.props.FontStyle}
         Status={this.props.Status}
+        onChangeFontFamily={this.props.onChangeFontFamily}
+        onChangeFontSize={this.props.onChangeFontSize}
+        onChangeDuration={this.props.onChangeDuration} 
+        onChangeAnimate={this.props.onChangeAnimate} 
+        onChangeFontWeight={this.props.onChangeFontWeight}
+        onChangeFontStyle={this.props.onChangeFontStyle}
         onChangeStatus={this.props.onChangeStatus}
         />
         <FormControl className={classes.margin}>  
