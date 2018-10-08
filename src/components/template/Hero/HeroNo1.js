@@ -14,16 +14,14 @@ class HeroNo1 extends React.Component {
     const background ={
         backgroundImage:"url("+this.props.ImagePick+")",
         backgroundSize:'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment:'fixed',
-        minHeight:600,
+        height:'100%',
         margin:0
     };
     const title ={
         textAlign:'center',
         marginTop:0,
         marginBottom:0,
-        paddingTop:200,
+        paddingTop:'20%',
         color:'#fff',
         opacity: 1,
         animationDuration: this.props.duration,

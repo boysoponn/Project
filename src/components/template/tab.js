@@ -100,6 +100,7 @@ class TabWebsite extends React.Component {
 
   setNullValue(){
     this.setState({
+      pageName:'',
       selectedHero:'none',
       selectedAbout:'none',
       selectedGallery:'none',
@@ -108,11 +109,11 @@ class TabWebsite extends React.Component {
     })
   }
 
-  handleCloseEdit = () => {this.setState({ openEdit: false,namePage:''});};
+  handleCloseEdit = () => {this.setState({ openEdit: false});};
 
   handleOpen = () => {this.setState({ open: true });};
 
-  handleClose = () => {this.setState({ open: false,namePage:''});};  
+  handleClose = () => {this.setState({ open: false,}); this.setNullValue();};  
 
   onChangeName(e){this.setState({ namePage: e.target.value});};
 
@@ -132,32 +133,13 @@ class TabWebsite extends React.Component {
 
   saveEdit(){
     if(this.state.namePage){
+      let pathUpper =this.state.namePage;
+      let pathLower =pathUpper.toLowerCase();
       let dbCon = config.database().ref('project/test/'+this.props.tabs);
       dbCon.update({
       pageName: this.state.namePage,
-      hero: this.state.selectedHero,
-      welcome: this.state.selectedWelcome,
-      about : this.state.selectedAbout,
-      gallery :this.state.selectedGallery,
-      contact : this.state.selectedContact
-    })    
-    this.setState({
-      value:this.state.value,
-      num:this.state.num +1,
-    });
-    this.handleCloseEdit();
-    }else{
-      this.setNullValue();
-      this.handleCloseEdit();
-    }
-  };
-
-  addNewTab(){
-    if(this.state.namePage){
-      let dbCon = config.database().ref('project/test');
-      dbCon.push({
-      key:this.state.num,
-      pageName: this.state.namePage,
+      pathName: pathLower,
+      path: "/test/"+pathLower,
       hero: this.state.selectedHero,
       welcome: this.state.selectedWelcome,
       about : this.state.selectedAbout,
@@ -169,12 +151,52 @@ class TabWebsite extends React.Component {
       num:this.state.num +1,
     });
     this.setNullValue();
-    this.handleClose();
+    this.handleCloseEdit();
     }else{
-      this.setState({
-      })
       this.setNullValue();
-      this.handleClose();
+      this.handleCloseEdit();
+    }
+  };
+
+  addNewTab(){
+    if(this.state.namePage){
+      let pathUpper =this.state.namePage;
+      let pathLower =pathUpper.toLowerCase();
+      let dbCon = config.database().ref('project/test');
+      dbCon.push({
+      key:this.state.num,
+      pageName: this.state.namePage,
+      pathName:pathLower,
+      path: "/test/"+pathLower,
+      hero: this.state.selectedHero,
+      welcome: this.state.selectedWelcome,
+      about : this.state.selectedAbout,
+      gallery :this.state.selectedGallery,
+      contact : this.state.selectedContact,
+      heroBackgroundImage:'',
+      heroTitle:'',
+      heroTitleAnimate:'',
+      heroTitleDuration:'',
+      heroTitleFontFamily:'',
+      heroTitleFontSize:'',
+      heroTitleFontWeight:'',
+      heroTitleFontStyle:'',
+      heroTitleStatus:'',
+      heroDescription:'',
+      heroDescriptionAnimate:'',
+      heroDescriptionDuration:'',
+      heroDescriptionFontFamily:'',
+      heroDescriptionFontSize:'',
+      heroDescriptionFontWeight:'',
+      heroDescriptionFontStyle:'',
+      heroDescriptionStatus:'',
+    })    
+    this.setState({
+      value:this.state.value,
+      num:this.state.num +1,
+    });
+    this.setNullValue();
+    this.handleClose();
     }
   };
 
@@ -307,7 +329,7 @@ class TabWebsite extends React.Component {
           {this.state.news.map((New => (
             <div key={New._key} className={classes.content}>
             <h1 style={center}>{New.pageName}</h1>
-            <IN           
+            <IN         
               Hero={New.hero}
               Welcome={New.welcome}
               About={New.about}  

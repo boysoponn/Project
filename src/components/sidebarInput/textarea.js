@@ -25,7 +25,7 @@ class Textarea extends React.Component {
   render() {
     const { classes} = this.props;
     return (
-      <div className={classes.container}>
+      <div >
       <SettingAnimate 
         animate={this.props.animate} 
         duration={this.props.duration} 

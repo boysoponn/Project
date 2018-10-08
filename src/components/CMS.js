@@ -21,6 +21,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import ExitIcon from '@material-ui/icons/ExitToApp';
 import TabWebsite from './template/tab'
 import { connect } from 'react-redux'
+// import {getUrlImage} from './actions'
 
 const drawerWidth = 300;
 
@@ -129,27 +130,30 @@ class CMS extends React.Component {
   this.heroDescriptionOnChangeFontWeight = this.heroDescriptionOnChangeFontWeight.bind(this); 
   this.heroDescriptionOnChangeFontStyle = this.heroDescriptionOnChangeFontStyle.bind(this);
   this.heroDescriptionOnChangeStatus = this.heroDescriptionOnChangeStatus.bind(this); 
+  
   this.state = {
     // isLoaded: false
     open: true,
     key:'',
+    heroBackgroundImage:'',
+    heroButtonSelected:'',
     heroTitle:'',
-    heroTitleAnimate:'bounce',
-    heroTitleDuration:'1s',
-    heroTitleFontFamily:'Montserrat',
-    heroTitleFontSize:'50',
-    heroTitleFontWeight:'400',
-    heroTitleFontStyle:'normal',
-    heroTitleStatus:'block',
+    heroTitleAnimate:'',
+    heroTitleDuration:'',
+    heroTitleFontFamily:'',
+    heroTitleFontSize:'',
+    heroTitleFontWeight:'',
+    heroTitleFontStyle:'',
+    heroTitleStatus:'',
 
     heroDescription:'',
-    heroDescriptionAnimate:'bounce',
-    heroDescriptionDuration:'1s',
-    heroDescriptionFontFamily:'Montserrat',
-    heroDescriptionFontSize:'20',
-    heroDescriptionFontWeight:'400',
-    heroDescriptionFontStyle:'normal',
-    heroDescriptionStatus:'block',
+    heroDescriptionAnimate:'',
+    heroDescriptionDuration:'',
+    heroDescriptionFontFamily:'',
+    heroDescriptionFontSize:'',
+    heroDescriptionFontWeight:'',
+    heroDescriptionFontStyle:'',
+    heroDescriptionStatus:'',
   };
 }
 
@@ -160,8 +164,23 @@ componentWillReceiveProps(nextProps){
   const snapshotValue = snapshot.val(); 
   let data = _(snapshotValue).value();
         this.setState({
-          heroTitle:data.pageName,
-          heroDescription:data.pageName
+          heroBackgroundImage:data.heroBackgroundImage,
+          heroTitle:data.heroTitle,
+          heroTitleAnimate:data.heroTitleAnimate,
+          heroTitleDuration:data.heroTitleDuration,
+          heroTitleFontFamily:data.heroTitleFontFamily,
+          heroTitleFontSize:data.heroTitleFontSize,
+          heroTitleFontWeight:data.heroTitleFontWeight,
+          heroTitleFontStyle:data.heroTitleFontStyle,
+          heroTitleStatus:data.heroTitleStatus,
+          heroDescription:data.heroDescription,
+          heroDescriptionAnimate:data.heroDescriptionAnimate,
+          heroDescriptionDuration:data.heroDescriptionDuration,
+          heroDescriptionFontFamily:data.heroDescriptionFontFamily,
+          heroDescriptionFontSize:data.heroDescriptionFontSize,
+          heroDescriptionFontWeight:data.heroDescriptionFontWeight,
+          heroDescriptionFontStyle:data.heroDescriptionFontStyle,
+          heroDescriptionStatus:data.heroDescriptionStatus,
         }); 
   });
 }
@@ -169,8 +188,24 @@ componentWillReceiveProps(nextProps){
   save(){
     let dbCon = config.database().ref('project/test/'+this.props.tabs);
     dbCon.update({
-      hero:this.state.heroTitle,
-    }); 
+      heroTitle:this.state.heroTitle,
+      heroTitleAnimate:this.state.heroTitleAnimate,
+      heroTitleDuration:this.state.heroTitleDuration,
+      heroTitleFontFamily:this.state.heroTitleFontFamily,
+      heroTitleFontSize:this.state.heroTitleFontSize,
+      heroTitleFontWeight:this.state.heroTitleFontWeight,
+      heroTitleFontStyle:this.state.heroTitleFontStyle,
+      heroTitleStatus:this.state.heroTitleStatus,
+      heroDescription:this.state.heroDescription,
+      heroDescriptionAnimate:this.state.heroDescriptionAnimate,
+      heroDescriptionDuration:this.state.heroDescriptionDuration,
+      heroDescriptionFontFamily:this.state.heroDescriptionFontFamily,
+      heroDescriptionFontSize:this.state.heroDescriptionFontSize,
+      heroDescriptionFontWeight:this.state.heroDescriptionFontWeight,
+      heroDescriptionFontStyle:this.state.heroDescriptionFontStyle,
+      heroDescriptionStatus:this.state.heroDescriptionStatus,
+    });
+    alert("saved") 
   };
 
   logout(){localStorage.removeItem('user'); window.location.reload(true);};
@@ -195,57 +230,12 @@ componentWillReceiveProps(nextProps){
   heroDescriptionOnChangeFontWeight (e) {this.setState({ heroDescriptionFontWeight: e.target.value });};
   heroDescriptionOnChangeStatus (e) {this.setState({ heroDescriptionStatus: e.target.value });};
 
+  heroButtonChange = event => {this.setState({ heroButtonSelected: event.target.value });};
+  
   render() {
     const { classes, theme } = this.props;
     const user = localStorage.getItem('user');
 
-    let dd;
-    //if(this.props.tabs === '1'){
-     dd=
-      <HeroInput 
-        heroImagePick={this.props.urlImage} 
-
-        heroTitle={this.state.heroTitle}             
-        heroTitleAnimate={this.state.heroTitleAnimate} 
-        heroTitleDuration={this.state.heroTitleDuration} 
-        heroTitleFontFamily={this.state.heroTitleFontFamily}
-        heroTitleFontSize={this.state.heroTitleFontSize}
-        heroTitleFontWeight={this.state.heroTitleFontWeight}
-        heroTitleFontStyle={this.state.heroTitleFontStyle}
-        heroTitleStatus={this.state.heroTitleStatus}
-        
-        heroTitleOnChange={this.heroTitleOnChange}
-        heroTitleOnChangeAnimate={this.heroTitleOnChangeAnimate}
-        heroTitleOnChangeDuration={this.heroTitleOnChangeDuration}           
-        heroTitleOnChangeFontFamily={this.heroTitleOnChangeFontFamily}            
-        heroTitleOnChangeFontSize={this.heroTitleOnChangeFontSize}             
-        heroTitleOnChangeFontWeight={this.heroTitleOnChangeFontWeight}          
-        heroTitleOnChangeFontStyle={this.heroTitleOnChangeFontStyle}
-        heroTitleOnChangeStatus={this.heroTitleOnChangeStatus}
-
-        heroDescription={this.state.heroDescription}
-        heroDescriptionAnimate={this.state.heroDescriptionAnimate}
-        heroDescriptionDuration={this.state.heroDescriptionDuration} 
-        heroDescriptionFontFamily= {this.state.heroDescriptionFontFamily}
-        heroDescriptionFontSize={this.state.heroDescriptionFontSize}
-        heroDescriptionFontWeight={this.state.heroDescriptionFontWeight}
-        heroDescriptionFontStyle={this.state.heroDescriptionFontStyle}
-        heroDescriptionStatus={this.state.heroDescriptionStatus}
-
-        heroDescriptionOnChange={this.heroDescriptionOnChange}
-        heroDescriptionOnChangeAnimate={this.heroDescriptionOnChangeAnimate}
-        heroDescriptionOnChangeDuration={this.heroDescriptionOnChangeDuration}           
-        heroDescriptionOnChangeFontFamily={this.heroDescriptionOnChangeFontFamily}            
-        heroDescriptionOnChangeFontSize={this.heroDescriptionOnChangeFontSize}             
-        heroDescriptionOnChangeFontWeight={this.heroDescriptionOnChangeFontWeight}          
-        heroDescriptionOnChangeFontStyle={this.heroDescriptionOnChangeFontStyle}
-        heroDescriptionOnChangeStatus={this.heroDescriptionOnChangeStatus}
-            />
-    //}
-
-    
-    
-    ;
     // if (!this.state.isLoaded) return null;
     return (
       <div className={classes.root} >
@@ -299,7 +289,48 @@ componentWillReceiveProps(nextProps){
           </div>
           <Divider />
             <List disablePadding={true}>
-            {dd}
+            <HeroInput 
+              heroImagePick={this.state.heroBackgroundImage} 
+
+              heroTitle={this.state.heroTitle}             
+              heroTitleAnimate={this.state.heroTitleAnimate} 
+              heroTitleDuration={this.state.heroTitleDuration} 
+              heroTitleFontFamily={this.state.heroTitleFontFamily}
+              heroTitleFontSize={this.state.heroTitleFontSize}
+              heroTitleFontWeight={this.state.heroTitleFontWeight}
+              heroTitleFontStyle={this.state.heroTitleFontStyle}
+              heroTitleStatus={this.state.heroTitleStatus}
+              
+              heroTitleOnChange={this.heroTitleOnChange}
+              heroTitleOnChangeAnimate={this.heroTitleOnChangeAnimate}
+              heroTitleOnChangeDuration={this.heroTitleOnChangeDuration}           
+              heroTitleOnChangeFontFamily={this.heroTitleOnChangeFontFamily}            
+              heroTitleOnChangeFontSize={this.heroTitleOnChangeFontSize}             
+              heroTitleOnChangeFontWeight={this.heroTitleOnChangeFontWeight}          
+              heroTitleOnChangeFontStyle={this.heroTitleOnChangeFontStyle}
+              heroTitleOnChangeStatus={this.heroTitleOnChangeStatus}
+
+              heroDescription={this.state.heroDescription}
+              heroDescriptionAnimate={this.state.heroDescriptionAnimate}
+              heroDescriptionDuration={this.state.heroDescriptionDuration} 
+              heroDescriptionFontFamily= {this.state.heroDescriptionFontFamily}
+              heroDescriptionFontSize={this.state.heroDescriptionFontSize}
+              heroDescriptionFontWeight={this.state.heroDescriptionFontWeight}
+              heroDescriptionFontStyle={this.state.heroDescriptionFontStyle}
+              heroDescriptionStatus={this.state.heroDescriptionStatus}
+
+              heroDescriptionOnChange={this.heroDescriptionOnChange}
+              heroDescriptionOnChangeAnimate={this.heroDescriptionOnChangeAnimate}
+              heroDescriptionOnChangeDuration={this.heroDescriptionOnChangeDuration}           
+              heroDescriptionOnChangeFontFamily={this.heroDescriptionOnChangeFontFamily}            
+              heroDescriptionOnChangeFontSize={this.heroDescriptionOnChangeFontSize}             
+              heroDescriptionOnChangeFontWeight={this.heroDescriptionOnChangeFontWeight}          
+              heroDescriptionOnChangeFontStyle={this.heroDescriptionOnChangeFontStyle}
+              heroDescriptionOnChangeStatus={this.heroDescriptionOnChangeStatus}
+
+              heroButtonChange={this.heroButtonChange}
+              heroButtonSelected={this.state.heroButtonSelected}
+            />
             </List>
             
            <Divider />
@@ -307,7 +338,8 @@ componentWillReceiveProps(nextProps){
         <main className={classes.content}>
           <div className={classes.toolbar} /> 
             <TabWebsite       
-            heroImagePick={this.props.urlImage}  
+            heroImagePick={this.state.heroBackgroundImage} 
+
             heroTitle={this.state.heroTitle} 
             heroTitleAnimate={this.state.heroTitleAnimate}
             heroTitleDuration={this.state.heroTitleDuration}

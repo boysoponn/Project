@@ -12,7 +12,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import InputText from './inputText';
 import Textarea from './textarea';
 import ModalChooseImage from './modalPicture';
-
+import InputButton from './inputButton';
 
 const styles = theme => ({
   root: {
@@ -78,9 +78,9 @@ class NestedList extends React.Component {
           </Collapse>
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding={false}>
-              <ListItem button className={classes.nested}>
+              <ListItem  className={classes.nested}>
               <Textarea 
-              label="descrition" 
+              label="Description" 
               value={this.props.heroDescription}  
               animate={this.props.heroDescriptionAnimate} 
               onChange={this.props.heroDescriptionOnChange} 
@@ -97,7 +97,23 @@ class NestedList extends React.Component {
               onChangeFontWeight={this.props.heroDescriptionOnChangeFontWeight}
               onChangeFontStyle={this.props.heroDescriptionOnChangeFontStyle}              
               onChangeStatus={this.props.heroDescriptionOnChangeStatus}
-
+              />
+              </ListItem>
+            </List>
+          </Collapse>
+          <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding={false}>
+              <ListItem className={classes.nested}>
+              <InputButton
+              label="Label button"
+              handleChange={this.props.heroButtonChange}
+              selectedValue={this.props.heroButtonSelected}
+              value1="none"
+              value2="heroButtonValue1"
+              value3="heroButtonValue2"
+              value4="heroButtonValue3"
+              value5="heroButtonValue4"
+              value6="heroButtonValue5"
               />
               </ListItem>
             </List>

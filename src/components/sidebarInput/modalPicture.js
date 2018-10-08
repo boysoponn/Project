@@ -3,13 +3,17 @@ import _ from 'lodash';
 import config from '../../config';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import { connect } from 'react-redux'
-import {getUrlImage} from '../actions'
+import Slide from '@material-ui/core/Slide';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
+function Transition(props) {
+  return <Slide direction="right" {...props} />;
+}
 
 const styles = theme => ({
   root: {
@@ -18,11 +22,6 @@ const styles = theme => ({
     justifyContent: 'space-around',
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
-  },
-  modal:{
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   gridList: {
     width: 700,
@@ -42,10 +41,16 @@ const styles = theme => ({
   },
   button: {
    marginTop:10,
+   width:130
   },
-  input: {
-    marginTop:10,
-  },
+  image:{
+    '&:hover': {
+      cursor: 'pointer',
+    },
+    '&:active': {
+      opacity:0.5,
+    },
+  }
 });
 
 class ModalChooseImage extends React.Component {
@@ -60,10 +65,6 @@ class ModalChooseImage extends React.Component {
     imageName:'',
     imagePick:''
     };
-}
-
-componentDidMount() {
-  this.getData();
 }
 
   getData(){
@@ -83,8 +84,6 @@ componentDidMount() {
         obj.imageName = await config.storage().ref(`images/${obj.imageName}`).getDownloadURL();
         return Promise.resolve(obj);
       }));
-      console.log({pictures})
-
       this.setState({
         images: pictures,
       });    
@@ -92,11 +91,16 @@ componentDidMount() {
  }
 
   imageOnClick = image => () => {
-    this.props.dispatch(getUrlImage(image.imageName));
+    // this.props.dispatch(getUrlImage(image.imageName));
+    let dbCon = config.database().ref('project/test/'+this.props.tabs);
+    dbCon.update({
+      heroBackgroundImage:image.imageName,
+    }); 
   };
 
   handleOpen () {
     this.setState({ open: true });
+    this.getData();
   };
 
   handleClose (){
@@ -107,29 +111,34 @@ componentDidMount() {
     const { classes } = this.props;
     return (
       <div>
-        <div className={classes.imgUpload}><img className={classes.gg} src={this.props.imagePick} alt="uploadPicture"/></div>
+        <div className={classes.imgUpload}>
+        <img className={classes.gg} src={this.props.imagePick} alt="uploadPicture"/>
+        </div>
         <Button variant="contained" onClick={this.handleOpen} component="span" color="secondary" className={classes.button}>
         Choose image
         </Button>
-        <Modal
-          className={classes.modal}
+        <Dialog
           open={this.state.open}
+          TransitionComponent={Transition}
+          keepMounted
           onClose={this.handleClose}
-        > 
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+         <DialogTitle id="alert-dialog-slide-title">
+            {"Choose Image"}
+        </DialogTitle>
         <div className={classes.root}>
-        <GridList cellHeight={200} className={classes.gridList}>
-        <GridListTile key="Subheader" cols={2} style={{ height: '50' }}>
-          <ListSubheader component="div">Images</ListSubheader>
-        </GridListTile>
+        <GridList cellHeight={200} cellWidth={1000} className={classes.gridList}>
         {this.state.images.map((image => (
           <GridListTile >
-            <img src={image.imageName} key={image._key} onClick={this.imageOnClick(image)} alt="gg" />
+            <img src={image.imageName} key={image._key} className={classes.image} onClick={this.imageOnClick(image)} alt="gg" />
             {/* <GridListTileBar/> */}
           </GridListTile>
         )))}
       </GridList>
       </div>
-        </Modal>
+        </Dialog>
       </div>
     );
   }
@@ -141,6 +150,8 @@ ModalChooseImage.propTypes = {
 
 // We need an intermediary variable for handling the recursive nesting.
 const ModalChooseImageWrapped = withStyles(styles)(ModalChooseImage);
+const mapStateToProps = state => ({
+  tabs: state.tabs ,
+})
 
-
-export default connect()(ModalChooseImageWrapped);
+export default connect(mapStateToProps)(ModalChooseImageWrapped);

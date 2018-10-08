@@ -50,6 +50,11 @@ const styles = theme => ({
   inputSetInput:{
     width:120
   },
+  button:{
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  }
 });
 
 const MenuProps = {
@@ -101,7 +106,7 @@ class SettingAnimate extends React.Component {
     return (
       <div className={classes.full}>
         <div className={classes.left}>
-            <SettingsFonts  onClick={this.handleClick2} />
+            <SettingsFonts className={classes.button} onClick={this.handleClick2} />
             {this.state.open2 ? (
               <Paper className={classes.paperfont}>
               <form className={classes} autoComplete="off">
@@ -197,7 +202,7 @@ class SettingAnimate extends React.Component {
             ) : null}
       </div>
       <div className={classes.right}>
-            <Settings root='outline' onClick={this.handleClick} />
+            <Settings className={classes.button} root='outline' onClick={this.handleClick} />
             {this.state.open ? (
               <Paper className={classes.paper}>
                
