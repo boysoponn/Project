@@ -106,14 +106,16 @@ class NestedList extends React.Component {
               <ListItem className={classes.nested}>
               <InputButton
               label="Label button"
+              buttonValue={this.props.heroButtonValue}
+              onChangeLabel={this.props.heroButtonOnChange}
               handleChange={this.props.heroButtonChange}
               selectedValue={this.props.heroButtonSelected}
-              value1="none"
-              value2="heroButtonValue1"
-              value3="heroButtonValue2"
-              value4="heroButtonValue3"
-              value5="heroButtonValue4"
-              value6="heroButtonValue5"
+              value1="heroButtonValue1"
+              value2="heroButtonValue2"
+              value3="heroButtonValue3"
+              value4="heroButtonValue4"
+              value5="heroButtonValue5"
+              value6="heroButtonValue6"
               />
               </ListItem>
             </List>

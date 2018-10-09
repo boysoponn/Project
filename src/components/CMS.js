@@ -154,6 +154,7 @@ class CMS extends React.Component {
     heroDescriptionFontWeight:'',
     heroDescriptionFontStyle:'',
     heroDescriptionStatus:'',
+    heroButtonValue:'',
   };
 }
 
@@ -164,6 +165,7 @@ componentWillReceiveProps(nextProps){
   const snapshotValue = snapshot.val(); 
   let data = _(snapshotValue).value();
         this.setState({
+          hero:data.hero,
           heroBackgroundImage:data.heroBackgroundImage,
           heroTitle:data.heroTitle,
           heroTitleAnimate:data.heroTitleAnimate,
@@ -181,6 +183,7 @@ componentWillReceiveProps(nextProps){
           heroDescriptionFontWeight:data.heroDescriptionFontWeight,
           heroDescriptionFontStyle:data.heroDescriptionFontStyle,
           heroDescriptionStatus:data.heroDescriptionStatus,
+
         }); 
   });
 }
@@ -231,11 +234,58 @@ componentWillReceiveProps(nextProps){
   heroDescriptionOnChangeStatus (e) {this.setState({ heroDescriptionStatus: e.target.value });};
 
   heroButtonChange = event => {this.setState({ heroButtonSelected: event.target.value });};
+  heroButtonOnChange = event => {this.setState({ heroButtonValue: event.target.value });};
   
   render() {
     const { classes, theme } = this.props;
     const user = localStorage.getItem('user');
+    let heroInput;
+    if( this.state.hero !== "none"){
+    heroInput =
+      <HeroInput 
+      heroImagePick={this.state.heroBackgroundImage}
+      heroTitle={this.state.heroTitle}             
+      heroTitleAnimate={this.state.heroTitleAnimate} 
+      heroTitleDuration={this.state.heroTitleDuration} 
+      heroTitleFontFamily={this.state.heroTitleFontFamily}
+      heroTitleFontSize={this.state.heroTitleFontSize}
+      heroTitleFontWeight={this.state.heroTitleFontWeight}
+      heroTitleFontStyle={this.state.heroTitleFontStyle}
+      heroTitleStatus={this.state.heroTitleStatus}
+      
+      heroTitleOnChange={this.heroTitleOnChange}
+      heroTitleOnChangeAnimate={this.heroTitleOnChangeAnimate}
+      heroTitleOnChangeDuration={this.heroTitleOnChangeDuration}           
+      heroTitleOnChangeFontFamily={this.heroTitleOnChangeFontFamily}            
+      heroTitleOnChangeFontSize={this.heroTitleOnChangeFontSize}             
+      heroTitleOnChangeFontWeight={this.heroTitleOnChangeFontWeight}          
+      heroTitleOnChangeFontStyle={this.heroTitleOnChangeFontStyle}
+      heroTitleOnChangeStatus={this.heroTitleOnChangeStatus}
 
+      heroDescription={this.state.heroDescription}
+      heroDescriptionAnimate={this.state.heroDescriptionAnimate}
+      heroDescriptionDuration={this.state.heroDescriptionDuration} 
+      heroDescriptionFontFamily= {this.state.heroDescriptionFontFamily}
+      heroDescriptionFontSize={this.state.heroDescriptionFontSize}
+      heroDescriptionFontWeight={this.state.heroDescriptionFontWeight}
+      heroDescriptionFontStyle={this.state.heroDescriptionFontStyle}
+      heroDescriptionStatus={this.state.heroDescriptionStatus}
+
+      heroDescriptionOnChange={this.heroDescriptionOnChange}
+      heroDescriptionOnChangeAnimate={this.heroDescriptionOnChangeAnimate}
+      heroDescriptionOnChangeDuration={this.heroDescriptionOnChangeDuration}           
+      heroDescriptionOnChangeFontFamily={this.heroDescriptionOnChangeFontFamily}            
+      heroDescriptionOnChangeFontSize={this.heroDescriptionOnChangeFontSize}             
+      heroDescriptionOnChangeFontWeight={this.heroDescriptionOnChangeFontWeight}          
+      heroDescriptionOnChangeFontStyle={this.heroDescriptionOnChangeFontStyle}
+      heroDescriptionOnChangeStatus={this.heroDescriptionOnChangeStatus}
+
+      heroButtonValue={this.state.heroButtonValue}
+      heroButtonOnChange={this.heroButtonOnChange}
+      heroButtonChange={this.heroButtonChange}
+      heroButtonSelected={this.state.heroButtonSelected}
+    />
+    }
     // if (!this.state.isLoaded) return null;
     return (
       <div className={classes.root} >
@@ -289,48 +339,7 @@ componentWillReceiveProps(nextProps){
           </div>
           <Divider />
             <List disablePadding={true}>
-            <HeroInput 
-              heroImagePick={this.state.heroBackgroundImage} 
-
-              heroTitle={this.state.heroTitle}             
-              heroTitleAnimate={this.state.heroTitleAnimate} 
-              heroTitleDuration={this.state.heroTitleDuration} 
-              heroTitleFontFamily={this.state.heroTitleFontFamily}
-              heroTitleFontSize={this.state.heroTitleFontSize}
-              heroTitleFontWeight={this.state.heroTitleFontWeight}
-              heroTitleFontStyle={this.state.heroTitleFontStyle}
-              heroTitleStatus={this.state.heroTitleStatus}
-              
-              heroTitleOnChange={this.heroTitleOnChange}
-              heroTitleOnChangeAnimate={this.heroTitleOnChangeAnimate}
-              heroTitleOnChangeDuration={this.heroTitleOnChangeDuration}           
-              heroTitleOnChangeFontFamily={this.heroTitleOnChangeFontFamily}            
-              heroTitleOnChangeFontSize={this.heroTitleOnChangeFontSize}             
-              heroTitleOnChangeFontWeight={this.heroTitleOnChangeFontWeight}          
-              heroTitleOnChangeFontStyle={this.heroTitleOnChangeFontStyle}
-              heroTitleOnChangeStatus={this.heroTitleOnChangeStatus}
-
-              heroDescription={this.state.heroDescription}
-              heroDescriptionAnimate={this.state.heroDescriptionAnimate}
-              heroDescriptionDuration={this.state.heroDescriptionDuration} 
-              heroDescriptionFontFamily= {this.state.heroDescriptionFontFamily}
-              heroDescriptionFontSize={this.state.heroDescriptionFontSize}
-              heroDescriptionFontWeight={this.state.heroDescriptionFontWeight}
-              heroDescriptionFontStyle={this.state.heroDescriptionFontStyle}
-              heroDescriptionStatus={this.state.heroDescriptionStatus}
-
-              heroDescriptionOnChange={this.heroDescriptionOnChange}
-              heroDescriptionOnChangeAnimate={this.heroDescriptionOnChangeAnimate}
-              heroDescriptionOnChangeDuration={this.heroDescriptionOnChangeDuration}           
-              heroDescriptionOnChangeFontFamily={this.heroDescriptionOnChangeFontFamily}            
-              heroDescriptionOnChangeFontSize={this.heroDescriptionOnChangeFontSize}             
-              heroDescriptionOnChangeFontWeight={this.heroDescriptionOnChangeFontWeight}          
-              heroDescriptionOnChangeFontStyle={this.heroDescriptionOnChangeFontStyle}
-              heroDescriptionOnChangeStatus={this.heroDescriptionOnChangeStatus}
-
-              heroButtonChange={this.heroButtonChange}
-              heroButtonSelected={this.state.heroButtonSelected}
-            />
+            {heroInput}
             </List>
             
            <Divider />
