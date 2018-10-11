@@ -132,7 +132,7 @@ class CMS extends React.Component {
   this.heroDescriptionOnChangeStatus = this.heroDescriptionOnChangeStatus.bind(this); 
   
   this.state = {
-    // isLoaded: false
+    // isLoaded: false,
     open: true,
     key:'',
     heroBackgroundImage:'',
@@ -183,7 +183,7 @@ componentWillReceiveProps(nextProps){
           heroDescriptionFontWeight:data.heroDescriptionFontWeight,
           heroDescriptionFontStyle:data.heroDescriptionFontStyle,
           heroDescriptionStatus:data.heroDescriptionStatus,
-
+          // isLoaded: false
         }); 
   });
 }

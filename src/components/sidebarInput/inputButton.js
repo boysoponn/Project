@@ -10,6 +10,7 @@ import Radio from '@material-ui/core/Radio';
 import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
 import styled from 'styled-components'
+import { SketchPicker  } from 'react-color';
 
 function Transition(props) {
   return <Slide direction="right" {...props} />;
@@ -38,6 +39,7 @@ const styles = theme => ({
 class InputButton extends React.Component {
   state = {
     open: false,
+    opencolor:false
   };
 
   handleClickOpen = () => {
@@ -47,7 +49,18 @@ class InputButton extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+  handleClickOpenColor = () => {
+    this.setState({ opencolor: true });
+  };
 
+  handleCloseColor = () => {
+    this.setState({ opencolor: false });
+  };
+  handleChangeComplete = (color, event) => {
+    this.setState({ background: color.hex });
+      console.log(this.state.background)
+      
+  };
   render() {
     const { classes } = this.props;
 
@@ -73,6 +86,8 @@ class InputButton extends React.Component {
          {"Setting Button"}
         </DialogTitle>
         <List className={classes.dialog}>
+        <button onClick={this.handleClickOpenColor}>color</button>
+        <SketchPicker onClose={this.handleCloseColor} open={this.state.opencolor} color={this.state.background} onChangeComplete={ this.handleChangeComplete } />
         <ListItem>
         <Radio
           checked={this.props.selectedValue === this.props.value1}
@@ -107,7 +122,7 @@ class InputButton extends React.Component {
           value={this.props.value4}
           name="radio-button-demo"
         />
-        <ChoiceButton  hh="none "className="slide" >&nbsp;</ChoiceButton>
+        <ChoiceButton  content={this.props.buttonValue} className="slide" >&nbsp;</ChoiceButton>
           </ListItem>
           <ListItem>
           <Radio
@@ -116,7 +131,7 @@ class InputButton extends React.Component {
           value={this.props.value5}
           name="radio-button-demo"
         />
-        <ChoiceButton className="slideLeft" >&nbsp;</ChoiceButton>
+        <ChoiceButton content={this.props.buttonValue} className="slideLeft" >&nbsp;</ChoiceButton>
           </ListItem>
           {/* <ListItem>
           <Radio
@@ -221,7 +236,7 @@ position: relative;
   }
   .slide&{
     :after{
-      content: ${props => props.content};
+      content: '${props => props.content}';
       position:absolute;
       width:100%;
       height:100%;
@@ -254,7 +269,7 @@ position: relative;
   }
   .slideLeft&{
     :after{
-      content:${props => props.content };
+      content:'${props => props.content }';
       position:absolute;
       width:100%;
       height:100%;
