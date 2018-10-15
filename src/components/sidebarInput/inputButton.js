@@ -4,13 +4,21 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import Text from './Text';
-import purple from '@material-ui/core/colors/purple';
+import {blue,purple} from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
 import Radio from '@material-ui/core/Radio';
 import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
 import styled from 'styled-components'
-import { SketchPicker  } from 'react-color';
+import SettingAnimate from './SettingAnimate'
+import Grid from '@material-ui/core/Grid';
+import PickColor from './pickColor'
+import Divider from '@material-ui/core/Divider';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Popover from '@material-ui/core/Popover';
 
 function Transition(props) {
   return <Slide direction="right" {...props} />;
@@ -20,6 +28,13 @@ const styles = theme => ({
     button: {
         marginTop:10,
         width:130
+       },
+    buttonSetting:{
+      width:170,
+      marginLeft:20
+       },
+    width:{
+        width:1295
        },
     cssLabel: {
       '&$cssFocused': {
@@ -32,52 +47,85 @@ const styles = theme => ({
         borderBottomColor: purple[500],
       },
     },
-    dialog:{
-    width:'500px',
+    formControl: {
+      minWidth: 120,
     },
+    radio: {
+      color: blue[500],
+      '&$checked': {
+        color: blue[500],
+      },
+    },
+    checked: {},
   });
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        width: 220,
+      },
+    },
+  };
 class InputButton extends React.Component {
   state = {
     open: false,
-    opencolor:false
+    open1: false,
+    open2: false,
+    anchorEl1: null,
+    anchorEl2: null,
+    anchorEl3: null,
   };
 
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
-  };
-  handleClickOpenColor = () => {
-    this.setState({ opencolor: true });
-  };
-
-  handleCloseColor = () => {
-    this.setState({ opencolor: false });
-  };
-  handleChangeComplete = (color, event) => {
-    this.setState({ background: color.hex });
-      console.log(this.state.background)
-      
-  };
+  handleClickOpen = () => {this.setState({ open: true });};
+  handleClose = () => {this.setState({ open: false });};
+  handleChangeComplete = (color, event) => {this.setState({ background: color.hex })};
+  handleClick1 = event => {this.setState({anchorEl1: event.currentTarget,});};
+  handleClose1 = () => {this.setState({anchorEl1: null,});};
+  handleClick2 = event => {this.setState({anchorEl2: event.currentTarget, });};
+  handleClose2 = () => {this.setState({anchorEl2: null,});};
+  handleClick3 = event => {this.setState({anchorEl3: event.currentTarget,});};
+  handleClose3 = () => {this.setState({anchorEl3: null,});};
   render() {
+    const pickColor={
+      color: '#757575',
+      fontSize: '16px',
+    }
     const { classes } = this.props;
-
-
+    const { anchorEl1,anchorEl2,anchorEl3 } = this.state;
+    const open1 = Boolean(anchorEl1);
+    const open2 = Boolean(anchorEl2);
+    const open3 = Boolean(anchorEl3);
     return (
       <div>
-        <div>
-        <Text
-        label={this.props.label}
-        value={this.props.buttonValue}
-        onChange={this.props.onChangeLabel}
+      <SettingAnimate 
+        animate={this.props.animate} 
+        duration={this.props.duration} 
+        FontFamily={this.props.FontFamily}
+        FontSize={this.props.FontSize}
+        FontWeight={this.props.FontWeight}
+        FontStyle={this.props.FontStyle}
+        Status={this.props.Status}
+        onChangeFontFamily={this.props.buttonOnChangeFontFamily}
+        onChangeFontSize={this.props.buttonOnChangeFontSize}
+        onChangeDuration={this.props.buttonOnChangeDuration} 
+        onChangeAnimate={this.props.buttonOnChangeAnimate} 
+        onChangeFontWeight={this.props.buttonOnChangeFontWeight}
+        onChangeFontStyle={this.props.buttonOnChangeFontStyle}
+        onChangeStatus={this.props.buttonOnChangeStatus}
+        color={this.props.buttonColor}
+        onChange={this.props.buttonOnChangeColor}
         />
-        </div>
+        <Text
+        type="text"
+        label={this.props.label}
+        value={this.props.button}
+        onChange={this.props.buttonOnChange}
+        />
+        <div>
         <Button variant="contained" onClick={this.handleClickOpen} component="span" color="secondary" className={classes.button}>
         Setting Button
         </Button>
         <Dialog
+          maxWidth="lg"
           open={this.state.open}
           TransitionComponent={Transition}
           onClose={this.handleClose}
@@ -85,65 +133,435 @@ class InputButton extends React.Component {
         <DialogTitle>
          {"Setting Button"}
         </DialogTitle>
-        <List className={classes.dialog}>
-        <button onClick={this.handleClickOpenColor}>color</button>
-        <SketchPicker onClose={this.handleCloseColor} open={this.state.opencolor} color={this.state.background} onChangeComplete={ this.handleChangeComplete } />
+        <ListItem>
+          <Text
+            type="text"
+            label="Link"
+            value={this.props.buttonLink}
+            onChange={this.props.buttonOnChangeLink}
+          />
+        </ListItem>
+        <List>
+        <Button variant="contained" onClick={this.handleClick1} component="span" color="secondary" className={classes.buttonSetting}>
+        Label
+        </Button>
+            <Popover
+              open={open1}
+              anchorEl={anchorEl1}
+              onClose={this.handleClose1}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+            >
+              <ListItem>
+              <Text
+                type="text"
+                label={this.props.label}
+                value={this.props.button}
+                onChange={this.props.buttonOnChange}
+              />
+              <PickColor
+              padding="0"
+              width="20px"
+              height="20px"
+              color={this.props.buttonColor}
+              onChange={this.props.buttonOnChangeColor}
+              />
+              </ListItem>
+              <ListItem>
+              <Text
+                type="text"
+                label= "Swap Label Button"
+                value={this.props.buttonSwap}
+                onChange={this.props.buttonOnChangeSwap}
+              />
+              <PickColor
+              padding="0"
+              width="20px"
+              height="20px"
+              color={this.props.buttonSwapColor}
+              onChange={this.props.buttonOnChangeSwapColor}
+              />
+              </ListItem>
+              <ListItem>
+                <p style={pickColor}>Hover Color&nbsp;&nbsp;&nbsp;</p>
+                <PickColor
+                padding="0"
+                width="30px"
+                height="20px"
+                color={this.props.buttonHoverColor}
+                onChange={this.props.buttonOnChangeHoverColor}
+                />
+                </ListItem>            
+            </Popover>  
+
+        <Button variant="contained" onClick={this.handleClick2} component="span" color="secondary" className={classes.buttonSetting}>
+        Background
+        </Button>
+            <Popover
+              open={open2}
+              anchorEl={anchorEl2}
+              onClose={this.handleClose2}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+            >
+                <ListItem>
+                <p style={pickColor}> Background Color&nbsp;&nbsp;&nbsp;</p>
+                <PickColor
+                padding="0"
+                width="30px"
+                height="20px"
+                color={this.props.buttonBGColor}
+                onChange={this.props.buttonOnChangeBGColor}
+                />
+                </ListItem>
+                <ListItem>
+                <p style={pickColor}>Hover Background Color&nbsp;&nbsp;&nbsp;</p>
+                <PickColor
+                padding="0"
+                width="30px"
+                height="20px"
+                color={this.props.buttonHBGColor}
+                onChange={this.props.buttonOnChangeHBGColor}
+                />
+                </ListItem>
+            </Popover>  
+
+        <Button variant="contained" onClick={this.handleClick3} component="span" color="secondary" className={classes.buttonSetting}>
+        Border
+        </Button>
+            <Popover
+              open={open3}
+              anchorEl={anchorEl3}
+              onClose={this.handleClose3}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+            >
+                <ListItem>
+                <form className={classes} autoComplete="off">
+                  <FormControl className={classes.formControl}>
+                  <InputLabel htmlFor="age-simple">Border Radius</InputLabel>
+                  <Select 
+                    variant='outlined'
+                      value={this.props.buttonRadius}
+                      onChange={this.props.buttonOnChangeRadius}
+                      MenuProps={MenuProps}
+                  >   
+                      <MenuItem value={'0px'}>none</MenuItem>
+                      <MenuItem value={'5px'}>Radius No.1</MenuItem>
+                      <MenuItem value={'10px'}>Radius No.2</MenuItem>
+                      <MenuItem value={'20px'}>Radius No.3</MenuItem>
+                      <MenuItem value={'30px'}>Radius No.4</MenuItem>
+                  </Select>
+                  </FormControl>
+                </form>
+                </ListItem>
+                <ListItem>
+                <p style={pickColor}>Boder Color&nbsp;&nbsp;&nbsp;</p>
+                <PickColor
+                padding="0"
+                width="30px"
+                height="20px"
+                color={this.props.buttonBDColor}
+                onChange={this.props.buttonOnChangeBDColor}
+                />
+                </ListItem>
+                <ListItem>
+                <p style={pickColor}>Hover Boder Color&nbsp;&nbsp;&nbsp;</p>
+                <PickColor
+                padding="0"
+                width="30px"
+                height="20px"
+                color={this.props.buttonHBDColor}
+                onChange={this.props.buttonOnChangeHBDColor}
+                />
+                </ListItem> 
+            </Popover>  
+            </List>  
+        <Divider />
+
+        <Grid container spacing={24} className={classes.width}>
+        <Grid item xs={12} sm={3}>
+        <List >  
         <ListItem>
         <Radio
-          checked={this.props.selectedValue === this.props.value1}
-          onChange={this.props.handleChange}
+          checked={this.props.buttonSelected === this.props.value1}
+          onChange={this.props.buttonOnChangeSelected}
           value={this.props.value1}
           name="radio-button-demo"
         />
-        <ChoiceButton className="fill">{this.props.buttonValue}</ChoiceButton>
+        <ChoiceButton
+          FontFamily={this.props.FontFamily}
+          FontWeight={this.props.FontWeight}
+          FontSize={this.props.FontSize}
+          buttonColor={this.props.buttonColor}
+          buttonBDColor={this.props.buttonBDColor}
+          buttonRadius={this.props.buttonRadius}
+          buttonBGColor={this.props.buttonBGColor} 
+        >
+        {this.props.button}</ChoiceButton>
           </ListItem>
           <ListItem>
           <Radio
-          checked={this.props.selectedValue === this.props.value2}
-          onChange={this.props.handleChange}
-          value={this.props.value2}
-          name="radio-button-demo"
-        />
-        <ChoiceButton className="fade" >{this.props.buttonValue}</ChoiceButton>
-          </ListItem>
-          <ListItem>
-          <Radio
-          checked={this.props.selectedValue === this.props.value3}
-          onChange={this.props.handleChange}
-          value={this.props.value3}
-          name="radio-button-demo"
-        />
-        <ChoiceButton className="arrow">{this.props.buttonValue}</ChoiceButton>
-          </ListItem>
-          <ListItem>
-          <Radio
-          checked={this.props.selectedValue === this.props.value4}
-          onChange={this.props.handleChange}
-          value={this.props.value4}
-          name="radio-button-demo"
-        />
-        <ChoiceButton  content={this.props.buttonValue} className="slide" >&nbsp;</ChoiceButton>
-          </ListItem>
-          <ListItem>
-          <Radio
-          checked={this.props.selectedValue === this.props.value5}
-          onChange={this.props.handleChange}
+          checked={this.props.buttonSelected === this.props.value5}
+          onChange={this.props.buttonOnChangeSelected}
           value={this.props.value5}
           name="radio-button-demo"
         />
-        <ChoiceButton content={this.props.buttonValue} className="slideLeft" >&nbsp;</ChoiceButton>
+        <ChoiceButton  className="fillRight" 
+          FontFamily={this.props.FontFamily}
+          FontWeight={this.props.FontWeight}
+          FontSize={this.props.FontSize}
+          buttonColor={this.props.buttonColor}
+          buttonBDColor={this.props.buttonBDColor}
+          buttonRadius={this.props.buttonRadius}
+          buttonBGColor={this.props.buttonBGColor} 
+        >
+        {this.props.button}</ChoiceButton>
           </ListItem>
-          {/* <ListItem>
+          <ListItem>
           <Radio
-          checked={this.props.selectedValue === this.props.value6}
-          onChange={this.props.handleChange}
+          checked={this.props.buttonSelected === this.props.value9}
+          onChange={this.props.buttonOnChangeSelected}
+          value={this.props.value9}
+          name="radio-button-demo"
+        />
+        <ChoiceButton className="arrow" 
+          FontFamily={this.props.FontFamily}
+          FontWeight={this.props.FontWeight}
+          FontSize={this.props.FontSize}
+          buttonColor={this.props.buttonColor}
+          buttonBDColor={this.props.buttonBDColor}
+          buttonRadius={this.props.buttonRadius}
+          buttonBGColor={this.props.buttonBGColor} 
+        >
+        {this.props.button}</ChoiceButton>
+          </ListItem>
+        </List>
+        </Grid>
+        
+        <Grid item xs={12} sm={3}>
+        <List >  
+        <ListItem>
+        <Radio
+          checked={this.props.buttonSelected === this.props.value2}
+          onChange={this.props.buttonOnChangeSelected}
+          value={this.props.value2}
+          name="radio-button-demo"
+        />
+        <ChoiceButton className="fillUp"
+          FontFamily={this.props.FontFamily}
+          FontWeight={this.props.FontWeight}
+          FontSize={this.props.FontSize}
+          buttonHoverColor={this.props.buttonHoverColor}
+          buttonHBGColor={this.props.buttonHBGColor}
+          buttonColor={this.props.buttonColor}
+          buttonBDColor={this.props.buttonBDColor}
+          buttonRadius={this.props.buttonRadius}
+          buttonBGColor={this.props.buttonBGColor} 
+        >
+        {this.props.button}</ChoiceButton>
+          </ListItem>
+          <ListItem>
+          <Radio
+          checked={this.props.buttonSelected === this.props.value6}
+          onChange={this.props.buttonOnChangeSelected}
           value={this.props.value6}
           name="radio-button-demo"
         />
-        <ChoiceButton className={classes.button1} >{this.props.buttonValue}</ChoiceButton>
-          </ListItem> */}
+        <ChoiceButton  className="fillMiddle"
+          FontFamily={this.props.FontFamily}
+          FontWeight={this.props.FontWeight}
+          FontSize={this.props.FontSize}
+          buttonHoverColor={this.props.buttonHoverColor}
+          buttonHBGColor={this.props.buttonHBGColor}
+          buttonColor={this.props.buttonColor}
+          buttonBDColor={this.props.buttonBDColor}
+          buttonRadius={this.props.buttonRadius}
+          buttonBGColor={this.props.buttonBGColor} 
+        >
+        {this.props.button}</ChoiceButton>
+          </ListItem>
+          <ListItem>
+          <Radio
+          checked={this.props.buttonSelected === this.props.value10}
+          onChange={this.props.buttonOnChangeSelected}
+          value={this.props.value10}
+          name="radio-button-demo"
+        />
+        <ChoiceButton className="fade" 
+          FontFamily={this.props.FontFamily}
+          FontWeight={this.props.FontWeight}
+          FontSize={this.props.FontSize}
+          buttonHoverColor={this.props.buttonHoverColor}
+          buttonHBDColor={this.props.buttonHBDColor}
+          buttonColor={this.props.buttonColor}
+          buttonBDColor={this.props.buttonBDColor}
+          buttonRadius={this.props.buttonRadius}
+          buttonBGColor={this.props.buttonBGColor}       
+        >
+        {this.props.button}</ChoiceButton>
+          </ListItem>
         </List>
+        </Grid>
+        <Grid item xs={12} sm={3}>
+        <List >  
+        <ListItem>
+        <Radio
+          checked={this.props.buttonSelected === this.props.value3}
+          onChange={this.props.buttonOnChangeSelected}
+          value={this.props.value3}
+          name="radio-button-demo"
+        />
+        <ChoiceButton className="fillDown"
+          FontFamily={this.props.FontFamily}
+          FontWeight={this.props.FontWeight}
+          FontSize={this.props.FontSize}
+          buttonHoverColor={this.props.buttonHoverColor}
+          buttonHBGColor={this.props.buttonHBGColor}
+          buttonColor={this.props.buttonColor}
+          buttonBDColor={this.props.buttonBDColor}
+          buttonRadius={this.props.buttonRadius}
+          buttonBGColor={this.props.buttonBGColor}
+        >
+        {this.props.button}</ChoiceButton>
+          </ListItem>
+          <ListItem>
+          <Radio
+          checked={this.props.buttonSelected === this.props.value7}
+          onChange={this.props.buttonOnChangeSelected}
+          value={this.props.value7}
+          name="radio-button-demo"
+        />
+        <ChoiceButton  className="fillOblique" 
+          FontFamily={this.props.FontFamily}
+          FontWeight={this.props.FontWeight}
+          FontSize={this.props.FontSize}
+          buttonHoverColor={this.props.buttonHoverColor}
+          buttonHBGColor={this.props.buttonHBGColor}
+          buttonColor={this.props.buttonColor}
+          buttonBDColor={this.props.buttonBDColor}
+          buttonRadius={this.props.buttonRadius}
+          buttonBGColor={this.props.buttonBGColor}
+        >
+        {this.props.button}</ChoiceButton>
+          </ListItem>
+          <ListItem>
+          <Radio
+          checked={this.props.buttonSelected === this.props.value11}
+          onChange={this.props.buttonOnChangeSelected}
+          value={this.props.value11}
+          classes={{
+            root: classes.radio,
+            checked: classes.checked,
+          }}
+          name="radio-button-demo"
+        />
+        <ChoiceButton content={this.props.button} swapContent={this.props.buttonSwap} className="slide" 
+          FontFamily={this.props.FontFamily}
+          FontWeight={this.props.FontWeight}
+          FontSize={this.props.FontSize}
+          buttonSwapColor={this.props.buttonSwapColor}
+          buttonHBGColor={this.props.buttonHBGColor}
+          buttonColor={this.props.buttonColor}
+          buttonBDColor={this.props.buttonBDColor}
+          buttonRadius={this.props.buttonRadius}
+          buttonBGColor={this.props.buttonBGColor}
+        >
+        &nbsp;</ChoiceButton>
+         </ListItem>
+        </List>
+        </Grid>
+        <Grid item xs={12} sm={3}>
+        <List >  
+        <ListItem>
+        <Radio
+          checked={this.props.buttonSelected === this.props.value4}
+          onChange={this.props.buttonOnChangeSelected}
+          value={this.props.value4}
+          name="radio-button-demo"
+        />
+        <ChoiceButton className="fillLeft"
+          FontFamily={this.props.FontFamily}
+          FontWeight={this.props.FontWeight}
+          FontSize={this.props.FontSize}
+          buttonHoverColor={this.props.buttonHoverColor}
+          buttonHBGColor={this.props.buttonHBGColor}
+          buttonColor={this.props.buttonColor}
+          buttonBDColor={this.props.buttonBDColor}
+          buttonRadius={this.props.buttonRadius}
+          buttonBGColor={this.props.buttonBGColor}
+        >
+        {this.props.button}</ChoiceButton>
+          </ListItem>
+          <ListItem>
+          <Radio
+          checked={this.props.buttonSelected === this.props.value8}
+          onChange={this.props.buttonOnChangeSelected}
+          value={this.props.value8}
+          name="radio-button-demo"
+        />
+        <ChoiceButton  className="fillOn" 
+          FontFamily={this.props.FontFamily}
+          FontWeight={this.props.FontWeight}
+          FontSize={this.props.FontSize}
+          buttonHoverColor={this.props.buttonHoverColor}
+          buttonHBGColor={this.props.buttonHBGColor}
+          buttonColor={this.props.buttonColor}
+          buttonBDColor={this.props.buttonBDColor}
+          buttonRadius={this.props.buttonRadius}
+          buttonBGColor={this.props.buttonBGColor}
+        >
+        {this.props.button}</ChoiceButton>
+          </ListItem>
+          <ListItem>
+          <Radio
+          classes={{
+            root: classes.radio,
+            checked: classes.checked,
+          }}
+          checked={this.props.buttonSelected === this.props.value12}
+          onChange={this.props.buttonOnChangeSelected}
+          value={this.props.value12}
+          name="radio-button-demo"
+        />
+        <ChoiceButton className="slideLeft" 
+        content={this.props.button} 
+        swapContent={this.props.buttonSwap} 
+        FontFamily={this.props.FontFamily}
+        FontWeight={this.props.FontWeight}
+        FontSize={this.props.FontSize}
+        buttonSwapColor={this.props.buttonSwapColor}
+        buttonHBGColor={this.props.buttonHBGColor}
+        buttonColor={this.props.buttonColor}
+        buttonBDColor={this.props.buttonBDColor}
+        buttonRadius={this.props.buttonRadius}
+        buttonBGColor={this.props.buttonBGColor}
+        >
+        &nbsp;</ChoiceButton>
+          </ListItem>
+        </List>
+        </Grid>
+        </Grid>
         </Dialog>
+      </div>
       </div>
     );
   }
@@ -151,68 +569,177 @@ class InputButton extends React.Component {
 
 export default withStyles(styles)(InputButton);
 
-
 const ChoiceButton = styled.button`
-position: relative;
-  display:${props => props.hh} ;
+  position: relative;
   height: 60px;
   width: 200px;
   margin: 10px 7px;
   padding: 5px 5px;
-  font-weight: 700;
-  font-size: 15px;
+  font-family:${props => props.FontFamily};
+  font-weight: ${props => props.FontWeight};
+  font-size: ${props => props.FontSize};
   letter-spacing: 2px;
-  color: #383736;
-  border: 2px #383736 solid;
-  border-radius: 4px;
+  color: ${props => props.buttonColor};
+  border: 2px ${props => props.buttonBDColor} solid;
+  border-radius: ${props => props.buttonRadius};
   text-transform: uppercase;
   outline: 0;
   overflow:hidden;
-  background: none;
+  background: ${props => props.buttonBGColor};
   z-index: 1;
   cursor: pointer;
-  transition:         0.08s ease-in;
-  -o-transition:      0.08s ease-in;
-  -ms-transition:     0.08s ease-in;
-  -moz-transition:    0.08s ease-in;
-  -webkit-transition: 0.08s ease-in;
-  .fill&{
+  transition:         0.09s ease-in;
+  -o-transition:      0.09s ease-in;
+  -ms-transition:     0.09s ease-in;
+  -moz-transition:    0.09s ease-in;
+  -webkit-transition: 0.09s ease-in;
+  :hover{
+    border: 2px ${props => props.buttonHBDColor} solid; 
+    color:${props => props.buttonHoverColor}
+  }
+  .fillUp&{
     :hover {
-      color: whitesmoke;
+      color:  ${props => props.buttonHoverColor};
     }
     :before {
       content: "";
       position: absolute;
-      background: #383736;
+      background: ${props => props.buttonHBGColor};
       bottom: 0;
-      left: 0;
+      left:0 ;
       right: 0;
       top: 100%;
       z-index: -1;
-      -webkit-transition: top 0.09s ease-in;
+      -webkit-transition: all 0.09s ease-in;
+
     }
     :hover:before {
       top: 0;
     }
   }
-  .fade&{
-    :before{
-      content:"→";
-      position:absolute;
-      color:#383736;
-      left: 88%;
-      opacity: 0;
-      -webkit-transition: all 0.2s ease-in;
-    }
-    :hover:before{
-      left:91%;
-      opacity:1;
-    }
+  .fillDown&{
     :hover {
-      border: 0px #fff solid;
-      -webkit-transform: scale(1.04,1.04);
-      -webkit-transition: border 0.3s ease-out;
-      -webkit-transition: transform 250ms cubic-bezier(0.680, -0.550, 0.265, 1.550); 
+      color: ${props => props.buttonHoverColor};
+    }
+    :before {
+      content: "";
+      position: absolute;
+      background: ${props => props.buttonHBGColor};
+      bottom: 100%;
+      left:0 ;
+      right: 0;
+      top: 0;
+      z-index: -1;
+      -webkit-transition: all 0.09s ease-in;
+
+    }
+    :hover:before {
+      bottom: 0;
+    }
+  }
+  .fillRight&{
+    :hover {
+      color: ${props => props.buttonHoverColor};
+    }
+    :before {
+      content: "";
+      position: absolute;
+      background: ${props => props.buttonHBGColor};
+      bottom: 0;
+      left:0 ;
+      right: 100%;
+      top: 0;
+      z-index: -1;
+      -webkit-transition: all 0.09s ease-in;
+
+    }
+    :hover:before {
+      right: 0;
+    }
+  }
+  .fillLeft&{
+    :hover {
+      color: ${props => props.buttonHoverColor};;
+    }
+    :before {
+      content: "";
+      position: absolute;
+      background: ${props => props.buttonHBGColor};
+      bottom: 0;
+      left:100% ;
+      right: 0;
+      top: 0;
+      z-index: -1;
+      -webkit-transition: all 0.09s ease-in;
+
+    }
+    :hover:before {
+      left: 0;
+    }
+  }
+  .fillMiddle&{
+    :hover {
+      color: ${props => props.buttonHoverColor};;
+    }
+    :before {
+      content: "";
+      position: absolute;
+      background: ${props => props.buttonHBGColor};
+      bottom: 50%;
+      left:0 ;
+      right: 0;
+      top: 50%;
+      z-index: -1;
+      -webkit-transition: all 0.09s ease-in;
+
+    }
+    :hover:before {
+      top: 0;
+      bottom: 0;
+    }
+  }
+  .fillOblique&{
+    :hover {
+      color: ${props => props.buttonHoverColor};;
+    }
+    :before {
+      content: "";
+      position: absolute;
+      background:${props => props.buttonHBGColor};
+      bottom: 0;
+      left:50% ;
+      right: 50%;
+      top: 0;
+      z-index: -1;
+      -webkit-transition: all 0.09s ease-in;
+
+    }
+    :hover:before {
+      left: 0;
+      right: 0;
+    }
+  }
+  .fillOn&{
+    :hover {
+      color: ${props => props.buttonHoverColor};;
+    }
+    :before {
+      content: "";
+      position: absolute;
+      background:${props => props.buttonHBGColor};
+      bottom: 50%;
+      left:50% ;
+      right: 50%;
+      top: 50%;
+      z-index: -1;
+      -webkit-transition: all 0.09s ease-in;
+
+    }
+    :hover:before {
+      top: 0;
+      bottom: 0;
+      left:0 ;
+      right: 0;
     }
   }
   .arrow&{
@@ -221,7 +748,7 @@ position: relative;
     :before{
       content:"→";
       position:absolute;
-      color:#383736;
+      color:${props => props.buttonHoverColor};
       left: 83%;
       opacity: 0;
       -webkit-transition: all 250ms cubic-bezier(0.680, -0.550, 0.265, 1.550); 
@@ -232,6 +759,26 @@ position: relative;
     }
     :hover {
       width:170px;
+    }
+  }
+  .fade&{
+    :before{
+      content:"→";
+      position:absolute;
+      color:${props => props.buttonHoverColor};
+      left: 88%;
+      opacity: 0;
+      -webkit-transition: all 0.2s ease-in;
+    }
+    :hover:before{
+      left:91%;
+      opacity:1;
+    }
+    :hover {
+      border: 0px ${props => props.buttonHBDColor} solid;
+      -webkit-transform: scale(1.04,1.04);
+      -webkit-transition: border 0.3s ease-out;
+      -webkit-transition: transform 250ms cubic-bezier(0.680, -0.550, 0.265, 1.550); 
     }
   }
   .slide&{
@@ -245,22 +792,22 @@ position: relative;
       -webkit-transition: all 400ms cubic-bezier(0.680, -0.550, 0.265, 1.550); 
     }
     :before {
-      content:"Read it →";
+      content:'${props => props.swapContent}';
       height:100%;
       width:100%;
       position:absolute;
-      color:#383736;
+      color:${props => props.buttonColor};
       left:-100%;
       opacity: 0;
       -webkit-transition: all 500ms cubic-bezier(0.680, -0.550, 0.265, 1.550); 
     }
     :hover{
-      background:#383736;
+      background:${props => props.buttonHBGColor};
     }
     :hover:before{
       left:0;
       opacity:1;
-      color:#fff;
+      color:${props => props.buttonSwapColor};
     }
     :hover:after{
       left:100%;
@@ -278,20 +825,21 @@ position: relative;
       -webkit-transition: all 400ms cubic-bezier(0.680, -0.550, 0.265, 1.550); 
     }
     :before {
-      content:"Read it →";
+      content:'${props => props.swapContent}';
       height:100%;
       width:100%;
       position:absolute;
       opacity: 1;
       left:100%;
-      color:#383736;
+      color:${props => props.buttonColor};
       -webkit-transition: all 425ms cubic-bezier(0.680, -0.550, 0.265, 1.550); 
     }
     :hover{
-      background:none;
+      background:${props => props.buttonHBGColor};
     }
     :hover:before{
       left:0;
+      color:${props => props.buttonSwapColor};
     }
     :hover:after{
       left:100%;

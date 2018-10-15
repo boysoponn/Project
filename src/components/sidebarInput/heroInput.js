@@ -40,6 +40,7 @@ class NestedList extends React.Component {
   
 
   render() {
+    console.log(this.props.heroButtonSelected)
     const { classes } = this.props;
     return (
       <div className={classes.root} >
@@ -72,6 +73,8 @@ class NestedList extends React.Component {
               onChangeFontWeight={this.props.heroTitleOnChangeFontWeight}
               onChangeFontStyle={this.props.heroTitleOnChangeFontStyle}              
               onChangeStatus={this.props.heroTitleOnChangeStatus}
+              color={this.props.heroTitleColor}
+              onChangeColor={this.props.heroTitleOnChangeColor}
               />
               </ListItem>
             </List>
@@ -97,6 +100,8 @@ class NestedList extends React.Component {
               onChangeFontWeight={this.props.heroDescriptionOnChangeFontWeight}
               onChangeFontStyle={this.props.heroDescriptionOnChangeFontStyle}              
               onChangeStatus={this.props.heroDescriptionOnChangeStatus}
+              color={this.props.heroDescriptionColor}
+              onChangeColor={this.props.heroDescriptionOnChangeColor}
               />
               </ListItem>
             </List>
@@ -105,17 +110,58 @@ class NestedList extends React.Component {
             <List component="div" disablePadding={false}>
               <ListItem className={classes.nested}>
               <InputButton
-              label="Label button"
-              buttonValue={this.props.heroButtonValue}
-              onChangeLabel={this.props.heroButtonOnChange}
-              handleChange={this.props.heroButtonChange}
-              selectedValue={this.props.heroButtonSelected}
-              value1="heroButtonValue1"
-              value2="heroButtonValue2"
-              value3="heroButtonValue3"
-              value4="heroButtonValue4"
-              value5="heroButtonValue5"
-              value6="heroButtonValue6"
+              label="Label Button"
+              button={this.props.heroButton}
+              buttonColor={this.props.heroButtonColor}
+              buttonSwapColor={this.props.heroButtonSwapColor}
+              buttonSelected={this.props.heroButtonSelected}
+              buttonSwap={this.props.heroButtonSwap}
+              buttonLink={this.props.heroButtonLink}
+              buttonRadius={this.props.heroButtonRadius}
+              buttonBGColor={this.props.heroButtonBGColor}
+              buttonHBGColor={this.props.heroButtonHBGColor}
+              buttonBDColor={this.props.heroButtonBDColor}
+              buttonHBDColor={this.props.heroButtonHBDColor}
+              buttonOnChange={this.props.heroButtonOnChange}
+              buttonHoverColor={this.props.heroButtonHoverColor}
+
+              buttonOnChangeHoverColor={this.props.heroButtonOnChangeHoverColor}
+              buttonOnChangeFontFamily={this.props.heroButtonOnChangeFontFamily}
+              buttonOnChangeFontSize={this.props.heroButtonOnChangeFontSize}
+              buttonOnChangeDuration={this.props.heroButtonOnChangeDuration} 
+              buttonOnChangeAnimate={this.props.heroButtonOnChangeAnimate} 
+              buttonOnChangeFontWeight={this.props.heroButtonOnChangeFontWeight}
+              buttonOnChangeFontStyle={this.props.heroButtonOnChangeFontStyle}
+              buttonOnChangeStatus={this.props.heroButtonOnChangeStatus}
+              buttonOnChangeColor={this.props.heroButtonOnChangeColor}
+              buttonOnChangeSwapColor={this.props.heroButtonOnChangeSwapColor}
+              buttonOnChangeHBDColor={this.props.heroButtonOnChangeHBDColor}
+              buttonOnChangeBDColor={this.props.heroButtonOnChangeBDColor}
+              buttonOnChangeHBGColor={this.props.heroButtonOnChangeHBGColor}
+              buttonOnChangeBGColor={this.props.heroButtonOnChangeBGColor}
+              buttonOnChangeRadius={this.props.heroButtonOnChangeRadius}
+              buttonOnChangeLink={this.props.heroButtonOnChangeLink}
+              buttonOnChangeSwap={this.props.heroButtonOnChangeSwap}
+              buttonOnChangeSelected={this.props.heroButtonOnChangeSelected}
+              value1="none"
+              value2="fillUp"
+              value3="fillDown"
+              value4="fillLeft"
+              value5="fillRight"
+              value6="fillMiddle"
+              value7="fillOblique"
+              value8="fillOn"
+              value9="arrow"
+              value10="fade"
+              value11="slide"
+              value12="slideLeft"
+              animate={this.props.heroButtonAnimate} 
+              duration={this.props.heroButtonDuration} 
+              FontFamily={this.props.heroButtonFontFamily}
+              FontSize={this.props.heroButtonFontSize}
+              FontWeight={this.props.heroButtonFontWeight}
+              FontStyle={this.props.heroButtonFontStyle}
+              Status={this.props.heroButtonStatus}
               />
               </ListItem>
             </List>

@@ -2,23 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
-import purple from '@material-ui/core/colors/purple';
 import TextField from '@material-ui/core/TextField';
 import SettingAnimate from './SettingAnimate'
 
 
 const styles = theme => ({
-  cssLabel: {
-    '&$cssFocused': {
-      color: purple[500],
-    },
-  },
-  cssFocused: {},
-  cssUnderline: {
-    '&:after': {
-      borderBottomColor: purple[500],
-    },
-  },
 });
 
 class Textarea extends React.Component {
@@ -41,6 +29,8 @@ class Textarea extends React.Component {
         onChangeFontWeight={this.props.onChangeFontWeight}
         onChangeFontStyle={this.props.onChangeFontStyle}
         onChangeStatus={this.props.onChangeStatus}
+        color={this.props.color}
+        onChange={this.props.onChangeColor}
         />
         <FormControl className={classes.margin}>
         <TextField

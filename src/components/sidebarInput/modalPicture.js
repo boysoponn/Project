@@ -92,7 +92,7 @@ class ModalChooseImage extends React.Component {
 
   imageOnClick = image => () => {
     // this.props.dispatch(getUrlImage(image.imageName));
-    let dbCon = config.database().ref('project/test/'+this.props.tabs);
+    let dbCon = config.database().ref('project/test/'+this.props.tabs+'/heroContent');
     dbCon.update({
       heroBackgroundImage:image.imageName,
     }); 

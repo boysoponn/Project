@@ -1,0 +1,20 @@
+  this.OnChange = this.OnChange.bind(this); 
+  this.OnChangeAnimate = this.OnChangeAnimate.bind(this); 
+  this.OnChangeDuration = this.OnChangeDuration.bind(this); 
+  this.OnChangeFontFamily = this.OnChangeFontFamily.bind(this); 
+  this.OnChangeFontSize = this.OnChangeFontSize.bind(this); 
+  this.OnChangeFontWeight = this.OnChangeFontWeight.bind(this); 
+  this.OnChangeFontStyle = this.OnChangeFontStyle.bind(this);
+  this.OnChangeStatus = this.OnChangeStatus.bind(this); 
+  this.OnChangeColor = this.OnChangeColor.bind(this);
+
+  OnChange = event => {this.setState({ Value: event.target.value });};
+  SelectedOnChange = event => {this.setState({ Selected: event.target.value });};
+  OnChangeAnimate (e) {this.setState({ Animate: e.target.value });};
+  OnChangeDuration (e) {this.setState({ Duration: e.target.value });};
+  ChangeFontFamily (e) {this.setState({ FontFamily: e.target.value });};
+  OnChangeFontSize (e) {this.setState({ FontSize: e.target.value });};
+  OnChangeFontStyle (e) {this.setState({ FontStyle: e.target.value });};
+  OnChangeFontWeight (e) {this.setState({ FontWeight: e.target.value });};
+  OnChangeStatus (e) {this.setState({ Status: e.target.value });};
+  OnChangeColor (color) {this.setState({ Color: color.rgb });};

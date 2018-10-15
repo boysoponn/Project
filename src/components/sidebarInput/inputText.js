@@ -1,35 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import purple from '@material-ui/core/colors/purple';
 import SettingAnimate from './SettingAnimate'
+import Text from './Text';
 
-const styles = theme => ({
-  margin: {
-    // margin: theme.spacing.unit,
-  },
-  cssLabel: {
-    '&$cssFocused': {
-      color: purple[500],
-    },
-  },
-  cssFocused: {},
-  cssUnderline: {
-    '&:after': {
-      borderBottomColor: purple[500],
-    },
-  },
-});
 
 class InputText extends React.Component {
   render() {
-    const { classes, inputLabel } = this.props;
     return (  
-
-      <div className={classes.container}>
+      <div >
       <SettingAnimate 
         animate={this.props.animate} 
         duration={this.props.duration} 
@@ -45,33 +22,18 @@ class InputText extends React.Component {
         onChangeFontWeight={this.props.onChangeFontWeight}
         onChangeFontStyle={this.props.onChangeFontStyle}
         onChangeStatus={this.props.onChangeStatus}
+        color={this.props.color}
+        onChange={this.props.onChangeColor}
         />
-        <FormControl className={classes.margin}>  
-          <InputLabel
-            FormLabelClasses={{
-              root: classes.cssLabel,
-              focused: classes.cssFocused,
-            }}
-            htmlFor="custom-css-input"
-            children={inputLabel}
-          >
-          </InputLabel>
-          <Input
-            classes={{
-              underline: classes.cssUnderline,
-            }}
-            id="custom-css-input"
-            onChange={this.props.onChange}
-            value={this.props.value}
-          />
-          
-        </FormControl>
+        <Text
+        type="text"
+        label={this.props.inputLabel}
+        value={this.props.value}
+        onChange={this.props.onChange}
+        />
       </div>
     )
   }
 }
 
-InputText.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-export default withStyles(styles)(InputText);
+export default InputText;

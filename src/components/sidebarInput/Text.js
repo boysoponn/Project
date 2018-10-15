@@ -7,8 +7,8 @@ import FormControl from '@material-ui/core/FormControl';
 import purple from '@material-ui/core/colors/purple';
 
 const styles = theme => ({
-  margin: {
-    // margin: theme.spacing.unit,
+  con:{
+    width:'100%'
   },
   cssLabel: {
     '&$cssFocused': {
@@ -27,8 +27,7 @@ class Text extends React.Component {
   render() {
     const { classes} = this.props;
     return (  
-      <div className={classes.container}>
-        <FormControl className={classes.margin}>  
+        <FormControl>  
           <InputLabel
             FormLabelClasses={{
               root: classes.cssLabel,
@@ -42,13 +41,14 @@ class Text extends React.Component {
             classes={{
               underline: classes.cssUnderline,
             }}
+            type={this.props.type}
             id="custom-css-input"
             onChange={this.props.onChange}
             value={this.props.value}
           />
           
         </FormControl>
-      </div>
+
     )
   }
 }

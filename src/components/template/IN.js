@@ -20,34 +20,46 @@ class IN extends React.Component {
     Hero = <HeroNo1
     ImagePick={this.props.heroImagePick}
     title={this.props.title}
-    duration= {this.props.duration}
-    FontFamily={this.props.FontFamily}
-    FontSize={this.props.FontSize}
-    FontWeight={this.props.FontWeight}
-    FontStyle={this.props.FontStyle}
-    Status={this.props.Status}
-    animate={this.props.animate} 
+    titleDuration= {this.props.titleDuration}
+    titleFontFamily={this.props.titleFontFamily}
+    titleFontSize={this.props.titleFontSize}
+    titleFontWeight={this.props.titleFontWeight}
+    titleFontStyle={this.props.titleFontStyle}
+    titleStatus={this.props.titleStatus}
+    titleAnimate={this.props.titleAnimate} 
+    titleColor={this.props.titleColor}
 
     description={this.props.description}
-    durationDescription= {this.props.durationDescription}
-    FontFamilyDescription={this.props.FontFamilyDescription}
-    FontSizeDescription={this.props.FontSizeDescription}
-    FontWeightDescription={this.props.FontWeightDescription}
-    FontStyleDescription={this.props.FontStyleDescription}
-    StatusDescription={this.props.StatusDescription}
-    animateDescription={this.props.animateDescription} 
+    descriptionDuration= {this.props.descriptionDuration}
+    descriptionFontFamily={this.props.descriptionFontFamily}
+    descriptionFontSize={this.props.descriptionFontSize}
+    descriptionFontWeight={this.props.descriptionFontWeight}
+    descriptionFontStyle={this.props.descriptionFontStyle}
+    descriptionStatus={this.props.descriptionStatus}
+    descriptionAnimate={this.props.descriptionAnimate} 
+    descriptionColor={this.props.descriptionColor}
     />
   }
   if( this.props.Hero === "HeroNo2"){
     Hero = <HeroNo2
+    ImagePick={this.props.heroImagePick}
     title={this.props.title}
-    duration= {this.props.duration}
-    FontFamily={this.props.FontFamily}
-    FontSize={this.props.FontSize}
-    FontWeight={this.props.FontWeight}
-    FontStyle={this.props.FontStyle}
-    Status={this.props.Status}
-    animate={this.props.animate} 
+    titleDuration= {this.props.titleDuration}
+    titleFontFamily={this.props.titleFontFamily}
+    titleFontSize={this.props.titleFontSize}
+    titleFontWeight={this.props.titleFontWeight}
+    titleFontStyle={this.props.titleFontStyle}
+    titleStatus={this.props.titleStatus}
+    titleAnimate={this.props.titleAnimate} 
+
+    description={this.props.description}
+    DescriptionDuration= {this.props.DescriptionDuration}
+    DescriptionFontFamily={this.props.DescriptionFontFamily}
+    DescriptionFontSize={this.props.DescriptionFontSize}
+    DescriptionFontWeight={this.props.DescriptionFontWeight}
+    DescriptionFontStyle={this.props.DescriptionFontStyle}
+    DescriptionStatus={this.props.DescriptionStatus}
+    DescriptionAnimate={this.props.DescriptionAnimate} 
     />
   }
   if( this.props.Welcome === "WelcomeNo1"){

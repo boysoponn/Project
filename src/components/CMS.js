@@ -121,6 +121,8 @@ class CMS extends React.Component {
   this.heroTitleOnChangeFontWeight = this.heroTitleOnChangeFontWeight.bind(this); 
   this.heroTitleOnChangeFontStyle = this.heroTitleOnChangeFontStyle.bind(this);
   this.heroTitleOnChangeStatus = this.heroTitleOnChangeStatus.bind(this); 
+  this.heroTitleOnChangeStatus = this.heroTitleOnChangeStatus.bind(this); 
+  this.heroTitleOnChangeColor = this.heroTitleOnChangeColor.bind(this); 
 
   this.heroDescriptionOnChange = this.heroDescriptionOnChange.bind(this); 
   this.heroDescriptionOnChangeAnimate = this.heroDescriptionOnChangeAnimate.bind(this); 
@@ -130,13 +132,34 @@ class CMS extends React.Component {
   this.heroDescriptionOnChangeFontWeight = this.heroDescriptionOnChangeFontWeight.bind(this); 
   this.heroDescriptionOnChangeFontStyle = this.heroDescriptionOnChangeFontStyle.bind(this);
   this.heroDescriptionOnChangeStatus = this.heroDescriptionOnChangeStatus.bind(this); 
-  
+  this.heroDescriptionOnChangeColor = this.heroDescriptionOnChangeColor.bind(this);
+
+
+  this.heroButtonOnChange = this.heroButtonOnChange.bind(this); 
+  this.heroButtonOnChangeSelected = this.heroButtonOnChangeSelected.bind(this);
+  this.heroButtonOnChangeAnimate = this.heroButtonOnChangeAnimate.bind(this); 
+  this.heroButtonOnChangeDuration = this.heroButtonOnChangeDuration.bind(this); 
+  this.heroButtonOnChangeFontFamily = this.heroButtonOnChangeFontFamily.bind(this); 
+  this.heroButtonOnChangeFontSize = this.heroButtonOnChangeFontSize.bind(this); 
+  this.heroButtonOnChangeFontWeight = this.heroButtonOnChangeFontWeight.bind(this); 
+  this.heroButtonOnChangeFontStyle = this.heroButtonOnChangeFontStyle.bind(this);
+  this.heroButtonOnChangeStatus = this.heroButtonOnChangeStatus.bind(this); 
+  this.heroButtonOnChangeColor = this.heroButtonOnChangeColor.bind(this);
+  this.heroButtonOnChangeHBDColor = this.heroButtonOnChangeHBDColor.bind(this); 
+  this.heroButtonOnChangeBDColor = this.heroButtonOnChangeBDColor.bind(this); 
+  this.heroButtonOnChangeHBGColor = this.heroButtonOnChangeHBGColor.bind(this); 
+  this.heroButtonOnChangeBGColor = this.heroButtonOnChangeBGColor.bind(this); 
+  this.heroButtonOnChangeRadius = this.heroButtonOnChangeRadius.bind(this);
+  this.heroButtonOnChangeLink = this.heroButtonOnChangeLink.bind(this); 
+  this.heroButtonOnChangeSwap = this.heroButtonOnChangeSwap.bind(this);
+  this.heroButtonOnChangeSwapColor = this.heroButtonOnChangeSwapColor.bind(this);
+  this.heroButtonOnChangeHoverColor = this.heroButtonOnChangeHoverColor.bind(this);
   this.state = {
     // isLoaded: false,
     open: true,
     key:'',
     heroBackgroundImage:'',
-    heroButtonSelected:'',
+
     heroTitle:'',
     heroTitleAnimate:'',
     heroTitleDuration:'',
@@ -145,6 +168,7 @@ class CMS extends React.Component {
     heroTitleFontWeight:'',
     heroTitleFontStyle:'',
     heroTitleStatus:'',
+    heroTitleColor:'',
 
     heroDescription:'',
     heroDescriptionAnimate:'',
@@ -154,7 +178,20 @@ class CMS extends React.Component {
     heroDescriptionFontWeight:'',
     heroDescriptionFontStyle:'',
     heroDescriptionStatus:'',
-    heroButtonValue:'',
+    heroDescriptionColor:'',
+
+    heroButton:'',
+    heroButtonSelected:'',
+    heroButtonAnimate:'',
+    heroButtonDuration:'',
+    heroButtonFontFamily:'',
+    heroButtonFontSize:'',
+    heroButtonFontWeight:'',
+    heroButtonFontStyle:'',
+    heroButtonStatus:'',
+    heroButtonColor:'',
+    heroButtonHoverColor:'',
+    heroButtonSwapColor:'',
   };
 }
 
@@ -166,23 +203,37 @@ componentWillReceiveProps(nextProps){
   let data = _(snapshotValue).value();
         this.setState({
           hero:data.hero,
-          heroBackgroundImage:data.heroBackgroundImage,
-          heroTitle:data.heroTitle,
-          heroTitleAnimate:data.heroTitleAnimate,
-          heroTitleDuration:data.heroTitleDuration,
-          heroTitleFontFamily:data.heroTitleFontFamily,
-          heroTitleFontSize:data.heroTitleFontSize,
-          heroTitleFontWeight:data.heroTitleFontWeight,
-          heroTitleFontStyle:data.heroTitleFontStyle,
-          heroTitleStatus:data.heroTitleStatus,
-          heroDescription:data.heroDescription,
-          heroDescriptionAnimate:data.heroDescriptionAnimate,
-          heroDescriptionDuration:data.heroDescriptionDuration,
-          heroDescriptionFontFamily:data.heroDescriptionFontFamily,
-          heroDescriptionFontSize:data.heroDescriptionFontSize,
-          heroDescriptionFontWeight:data.heroDescriptionFontWeight,
-          heroDescriptionFontStyle:data.heroDescriptionFontStyle,
-          heroDescriptionStatus:data.heroDescriptionStatus,
+          heroBackgroundImage:data.heroContent.heroBackgroundImage,
+          heroTitle:data.heroContent.heroTitle,
+          heroTitleAnimate:data.heroContent.heroTitleAnimate,
+          heroTitleDuration:data.heroContent.heroTitleDuration,
+          heroTitleFontFamily:data.heroContent.heroTitleFontFamily,
+          heroTitleFontSize:data.heroContent.heroTitleFontSize,
+          heroTitleFontWeight:data.heroContent.heroTitleFontWeight,
+          heroTitleFontStyle:data.heroContent.heroTitleFontStyle,
+          heroTitleStatus:data.heroContent.heroTitleStatus,
+          heroTitleColor:data.heroContent.heroTitleColor,
+
+          heroDescription:data.heroContent.heroDescription,
+          heroDescriptionAnimate:data.heroContent.heroDescriptionAnimate,
+          heroDescriptionDuration:data.heroContent.heroDescriptionDuration,
+          heroDescriptionFontFamily:data.heroContent.heroDescriptionFontFamily,
+          heroDescriptionFontSize:data.heroContent.heroDescriptionFontSize,
+          heroDescriptionFontWeight:data.heroContent.heroDescriptionFontWeight,
+          heroDescriptionFontStyle:data.heroContent.heroDescriptionFontStyle,
+          heroDescriptionStatus:data.heroContent.heroDescriptionStatus,
+          heroDescriptionColor:data.heroContent.heroDescriptionColor,
+
+          heroButton:data.heroContent.heroButton,
+          heroButtonSelected:data.heroContent.heroButtonSelected,
+          heroButtonAnimate:data.heroContent.heroButtonAnimate,
+          heroButtonDuration:data.heroContent.heroButtonDuration,
+          heroButtonFontFamily:data.heroContent.heroButtonFontFamily,
+          heroButtonFontSize:data.heroContent.heroButtonFontSize,
+          heroButtonFontWeight:data.heroContent.heroButtonFontWeight,
+          heroButtonFontStyle:data.heroContent.heroButtonFontStyle,
+          heroButtonStatus:data.heroContent.heroButtonStatus,
+          heroButtonColor:data.heroContent.heroButtonColor,
           // isLoaded: false
         }); 
   });
@@ -191,6 +242,8 @@ componentWillReceiveProps(nextProps){
   save(){
     let dbCon = config.database().ref('project/test/'+this.props.tabs);
     dbCon.update({
+    heroContent:{
+      heroBackgroundImage:this.state.heroBackgroundImage,
       heroTitle:this.state.heroTitle,
       heroTitleAnimate:this.state.heroTitleAnimate,
       heroTitleDuration:this.state.heroTitleDuration,
@@ -199,6 +252,8 @@ componentWillReceiveProps(nextProps){
       heroTitleFontWeight:this.state.heroTitleFontWeight,
       heroTitleFontStyle:this.state.heroTitleFontStyle,
       heroTitleStatus:this.state.heroTitleStatus,
+      heroTitleColor:this.state.heroTitleColor,
+      
       heroDescription:this.state.heroDescription,
       heroDescriptionAnimate:this.state.heroDescriptionAnimate,
       heroDescriptionDuration:this.state.heroDescriptionDuration,
@@ -207,6 +262,19 @@ componentWillReceiveProps(nextProps){
       heroDescriptionFontWeight:this.state.heroDescriptionFontWeight,
       heroDescriptionFontStyle:this.state.heroDescriptionFontStyle,
       heroDescriptionStatus:this.state.heroDescriptionStatus,
+      heroDescriptionColor:this.state.heroDescriptionColor,
+
+      heroButton:this.state.heroButton,
+      heroButtonSelected:this.state.heroButtonSelected,
+      heroButtonAnimate:this.state.heroButtonAnimate,
+      heroButtonDuration:this.state.heroButtonDuration,
+      heroButtonFontFamily:this.state.heroButtonFontFamily,
+      heroButtonFontSize:this.state.heroButtonFontSize,
+      heroButtonFontWeight:this.state.heroButtonFontWeight,
+      heroButtonFontStyle:this.state.heroButtonFontStyle,
+      heroButtonStatus:this.state.heroButtonStatus,
+      heroButtonColor:this.state.heroButtonColor,
+    }
     });
     alert("saved") 
   };
@@ -223,6 +291,7 @@ componentWillReceiveProps(nextProps){
   heroTitleOnChangeFontStyle (e) {this.setState({ heroTitleFontStyle: e.target.value });};
   heroTitleOnChangeFontWeight (e) {this.setState({ heroTitleFontWeight: e.target.value });};
   heroTitleOnChangeStatus (e) {this.setState({ heroTitleStatus: e.target.value });};
+  heroTitleOnChangeColor (color) {this.setState({ heroTitleColor: color.hex});};
 
   heroDescriptionOnChange(e) {this.setState({heroDescription: e.target.value});};
   heroDescriptionOnChangeAnimate (e) {this.setState({ heroDescriptionAnimate: e.target.value });};
@@ -232,9 +301,27 @@ componentWillReceiveProps(nextProps){
   heroDescriptionOnChangeFontStyle (e) {this.setState({ heroDescriptionFontStyle: e.target.value });};
   heroDescriptionOnChangeFontWeight (e) {this.setState({ heroDescriptionFontWeight: e.target.value });};
   heroDescriptionOnChangeStatus (e) {this.setState({ heroDescriptionStatus: e.target.value });};
+  heroDescriptionOnChangeColor (color) {this.setState({ heroDescriptionColor: color.hex });};
 
-  heroButtonChange = event => {this.setState({ heroButtonSelected: event.target.value });};
-  heroButtonOnChange = event => {this.setState({ heroButtonValue: event.target.value });};
+  heroButtonOnChange = (e) => {this.setState({ heroButton: e.target.value });};
+  heroButtonOnChangeSelected = event => {this.setState({ heroButtonSelected: event.target.value });};
+  heroButtonOnChangeAnimate (e) {this.setState({ heroButtonAnimate: e.target.value });};
+  heroButtonOnChangeDuration (e) {this.setState({ heroButtonDuration: e.target.value });};
+  heroButtonOnChangeFontFamily (e) {this.setState({ heroButtonFontFamily: e.target.value });};
+  heroButtonOnChangeFontSize (e) {this.setState({ heroButtonFontSize: e.target.value });};
+  heroButtonOnChangeFontStyle (e) {this.setState({ heroButtonFontStyle: e.target.value });};
+  heroButtonOnChangeFontWeight (e) {this.setState({ heroButtonFontWeight: e.target.value });};
+  heroButtonOnChangeStatus (e) {this.setState({ heroButtonStatus: e.target.value });};
+  heroButtonOnChangeSwap = (e) => {this.setState({ heroButtonSwap: e.target.value });};
+  heroButtonOnChangeLink (e) {this.setState({ heroButtonLink: e.target.value });};
+  heroButtonOnChangeRadius (e) {this.setState({ heroButtonRadius: e.target.value });};
+  heroButtonOnChangeBGColor (color) {this.setState({ heroButtonBGColor: color.hex });};
+  heroButtonOnChangeHBGColor (color) {this.setState({ heroButtonHBGColor: color.hex });};
+  heroButtonOnChangeBDColor (color) {this.setState({ heroButtonBDColor: color.hex });};
+  heroButtonOnChangeHBDColor (color) {this.setState({ heroButtonHBDColor: color.hex });};
+  heroButtonOnChangeColor (color) {this.setState({ heroButtonColor: color.hex });};
+  heroButtonOnChangeSwapColor(color) {this.setState({ heroButtonSwapColor: color.hex });};
+  heroButtonOnChangeHoverColor(color) {this.setState({ heroButtonHoverColor: color.hex });};
   
   render() {
     const { classes, theme } = this.props;
@@ -251,8 +338,9 @@ componentWillReceiveProps(nextProps){
       heroTitleFontSize={this.state.heroTitleFontSize}
       heroTitleFontWeight={this.state.heroTitleFontWeight}
       heroTitleFontStyle={this.state.heroTitleFontStyle}
-      heroTitleStatus={this.state.heroTitleStatus}
-      
+      heroTitleStatus={this.state.heroTitleStatus} 
+      heroTitleColor={this.state.heroTitleColor}
+
       heroTitleOnChange={this.heroTitleOnChange}
       heroTitleOnChangeAnimate={this.heroTitleOnChangeAnimate}
       heroTitleOnChangeDuration={this.heroTitleOnChangeDuration}           
@@ -261,6 +349,7 @@ componentWillReceiveProps(nextProps){
       heroTitleOnChangeFontWeight={this.heroTitleOnChangeFontWeight}          
       heroTitleOnChangeFontStyle={this.heroTitleOnChangeFontStyle}
       heroTitleOnChangeStatus={this.heroTitleOnChangeStatus}
+      heroTitleOnChangeColor={this.heroTitleOnChangeColor}
 
       heroDescription={this.state.heroDescription}
       heroDescriptionAnimate={this.state.heroDescriptionAnimate}
@@ -270,6 +359,7 @@ componentWillReceiveProps(nextProps){
       heroDescriptionFontWeight={this.state.heroDescriptionFontWeight}
       heroDescriptionFontStyle={this.state.heroDescriptionFontStyle}
       heroDescriptionStatus={this.state.heroDescriptionStatus}
+      heroDescriptionColor={this.state.heroDescriptionColor}
 
       heroDescriptionOnChange={this.heroDescriptionOnChange}
       heroDescriptionOnChangeAnimate={this.heroDescriptionOnChangeAnimate}
@@ -279,11 +369,47 @@ componentWillReceiveProps(nextProps){
       heroDescriptionOnChangeFontWeight={this.heroDescriptionOnChangeFontWeight}          
       heroDescriptionOnChangeFontStyle={this.heroDescriptionOnChangeFontStyle}
       heroDescriptionOnChangeStatus={this.heroDescriptionOnChangeStatus}
+      heroDescriptionOnChangeColor={this.heroDescriptionOnChangeColor}
 
-      heroButtonValue={this.state.heroButtonValue}
-      heroButtonOnChange={this.heroButtonOnChange}
-      heroButtonChange={this.heroButtonChange}
+      heroButton={this.state.heroButton} 
       heroButtonSelected={this.state.heroButtonSelected}
+      heroButtonAnimate={this.state.heroButtonAnimate} 
+      heroButtonDuration={this.state.heroButtonDuration} 
+      heroButtonFontFamily={this.state.heroButtonFontFamily}
+      heroButtonFontSize={this.state.heroButtonFontSize}
+      heroButtonFontWeight={this.state.heroButtonFontWeight}
+      heroButtonFontStyle={this.state.heroButtonFontStyle}
+      heroButtonStatus={this.state.heroButtonStatus}
+      heroButtonColor={this.state.heroButtonColor}
+      heroButtonSwapColor={this.state.heroButtonSwapColor}
+      heroButtonSwap={this.state.heroButtonSwap}
+      heroButtonLink={this.state.heroButtonLink}
+      heroButtonRadius={this.state.heroButtonRadius}
+      heroButtonBGColor={this.state.heroButtonBGColor}
+      heroButtonHBGColor={this.state.heroButtonHBGColor}
+      heroButtonBDColor={this.state.heroButtonBDColor}
+      heroButtonHBDColor={this.state.heroButtonHBDColor}
+      heroButtonHoverColor={this.state.heroButtonHoverColor}
+              
+      heroButtonOnChangeHoverColor={this.heroButtonOnChangeHoverColor}
+      heroButtonOnChangeHBDColor={this.heroButtonOnChangeHBDColor}
+      heroButtonOnChangeBDColor={this.heroButtonOnChangeBDColor}
+      heroButtonOnChangeHBGColor={this.heroButtonOnChangeHBGColor}
+      heroButtonOnChangeBGColor={this.heroButtonOnChangeBGColor}
+      heroButtonOnChangeRadius={this.heroButtonOnChangeRadius}
+      heroButtonOnChangeLink={this.heroButtonOnChangeLink}
+      heroButtonOnChangeSwap={this.heroButtonOnChangeSwap}
+      heroButtonOnChangeSelected={this.heroButtonOnChangeSelected}
+      heroButtonOnChange={this.heroButtonOnChange}
+      heroButtonOnChangeFontFamily={this.heroButtonOnChangeFontFamily}
+      heroButtonOnChangeFontSize={this.heroButtonOnChangeFontSize}
+      heroButtonOnChangeDuration={this.heroButtonOnChangeDuration} 
+      heroButtonOnChangeAnimate={this.heroButtonOnChangeAnimate} 
+      heroButtonOnChangeFontWeight={this.heroButtonOnChangeFontWeight}
+      heroButtonOnChangeFontStyle={this.heroButtonOnChangeFontStyle}
+      heroButtonOnChangeStatus={this.heroButtonOnChangeStatus}
+      heroButtonOnChangeColor={this.heroButtonOnChangeColor}
+      heroButtonOnChangeSwapColor={this.heroButtonOnChangeSwapColor}
     />
     }
     // if (!this.state.isLoaded) return null;
@@ -295,14 +421,13 @@ componentWillReceiveProps(nextProps){
         >
           <Toolbar disableGutters={!this.state.open}>
             <IconButton
-              color="#000"
               aria-label="Open drawer"
               onClick={this.handleDrawerOpen}
               className={classNames(classes.menuButton, this.state.open && classes.hide)}
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="title" color="#000" className={classes.grow} >
+            <Typography variant="title"  className={classes.grow} >
               CMS PROJECT
             </Typography>
             <Typography color="inherit">
@@ -347,26 +472,86 @@ componentWillReceiveProps(nextProps){
         <main className={classes.content}>
           <div className={classes.toolbar} /> 
             <TabWebsite       
-            heroImagePick={this.state.heroBackgroundImage} 
+              heroImagePick={this.state.heroBackgroundImage}
+              heroTitle={this.state.heroTitle}             
+              heroTitleAnimate={this.state.heroTitleAnimate} 
+              heroTitleDuration={this.state.heroTitleDuration} 
+              heroTitleFontFamily={this.state.heroTitleFontFamily}
+              heroTitleFontSize={this.state.heroTitleFontSize}
+              heroTitleFontWeight={this.state.heroTitleFontWeight}
+              heroTitleFontStyle={this.state.heroTitleFontStyle}
+              heroTitleStatus={this.state.heroTitleStatus} 
+              heroTitleColor={this.state.heroTitleColor}
 
-            heroTitle={this.state.heroTitle} 
-            heroTitleAnimate={this.state.heroTitleAnimate}
-            heroTitleDuration={this.state.heroTitleDuration}
-            heroTitleFontFamily={this.state.heroTitleFontFamily} 
-            heroTitleFontSize={this.state.heroTitleFontSize}
-            heroTitleFontWeight={this.state.heroTitleFontWeight}
-            heroTitleFontStyle={this.state.heroTitleFontStyle}
-            heroTitleStatus={this.state.heroTitleStatus}
+              heroTitleOnChange={this.heroTitleOnChange}
+              heroTitleOnChangeAnimate={this.heroTitleOnChangeAnimate}
+              heroTitleOnChangeDuration={this.heroTitleOnChangeDuration}           
+              heroTitleOnChangeFontFamily={this.heroTitleOnChangeFontFamily}            
+              heroTitleOnChangeFontSize={this.heroTitleOnChangeFontSize}             
+              heroTitleOnChangeFontWeight={this.heroTitleOnChangeFontWeight}          
+              heroTitleOnChangeFontStyle={this.heroTitleOnChangeFontStyle}
+              heroTitleOnChangeStatus={this.heroTitleOnChangeStatus}
+              heroTitleOnChangeColor={this.heroTitleOnChangeColor}
 
-            heroDescription={this.state.heroDescription}
-            heroDescriptionAnimate={this.state.heroDescriptionAnimate}
-            heroDescriptionDuration={this.state.heroDescriptionDuration} 
-            heroDescriptionFontFamily= {this.state.heroDescriptionFontFamily}
-            heroDescriptionFontSize={this.state.heroDescriptionFontSize}
-            heroDescriptionFontWeight={this.state.heroDescriptionFontWeight}
-            heroDescriptionFontStyle={this.state.heroDescriptionFontStyle}
-            heroDescriptionStatus={this.state.heroDescriptionStatus}
+              heroDescription={this.state.heroDescription}
+              heroDescriptionAnimate={this.state.heroDescriptionAnimate}
+              heroDescriptionDuration={this.state.heroDescriptionDuration} 
+              heroDescriptionFontFamily= {this.state.heroDescriptionFontFamily}
+              heroDescriptionFontSize={this.state.heroDescriptionFontSize}
+              heroDescriptionFontWeight={this.state.heroDescriptionFontWeight}
+              heroDescriptionFontStyle={this.state.heroDescriptionFontStyle}
+              heroDescriptionStatus={this.state.heroDescriptionStatus}
+              heroDescriptionColor={this.state.heroDescriptionColor}
 
+              heroDescriptionOnChange={this.heroDescriptionOnChange}
+              heroDescriptionOnChangeAnimate={this.heroDescriptionOnChangeAnimate}
+              heroDescriptionOnChangeDuration={this.heroDescriptionOnChangeDuration}           
+              heroDescriptionOnChangeFontFamily={this.heroDescriptionOnChangeFontFamily}            
+              heroDescriptionOnChangeFontSize={this.heroDescriptionOnChangeFontSize}             
+              heroDescriptionOnChangeFontWeight={this.heroDescriptionOnChangeFontWeight}          
+              heroDescriptionOnChangeFontStyle={this.heroDescriptionOnChangeFontStyle}
+              heroDescriptionOnChangeStatus={this.heroDescriptionOnChangeStatus}
+              heroDescriptionOnChangeColor={this.heroDescriptionOnChangeColor}
+
+              heroButton={this.state.heroButton} 
+              heroButtonSelected={this.state.heroButtonSelected}
+              heroButtonAnimate={this.state.heroButtonAnimate} 
+              heroButtonDuration={this.state.heroButtonDuration} 
+              heroButtonFontFamily={this.state.heroButtonFontFamily}
+              heroButtonFontSize={this.state.heroButtonFontSize}
+              heroButtonFontWeight={this.state.heroButtonFontWeight}
+              heroButtonFontStyle={this.state.heroButtonFontStyle}
+              heroButtonStatus={this.state.heroButtonStatus}
+              heroButtonColor={this.state.heroButtonColor}
+              heroButtonSwapColor={this.state.heroButtonSwapColor}
+              heroButtonSwap={this.state.heroButtonSwap}
+              heroButtonLink={this.state.heroButtonLink}
+              heroButtonRadius={this.state.heroButtonRadius}
+              heroButtonBGColor={this.state.heroButtonBGColor}
+              heroButtonHBGColor={this.state.heroButtonHBGColor}
+              heroButtonBDColor={this.state.heroButtonBDColor}
+              heroButtonHBDColor={this.state.heroButtonHBDColor}
+              herobuttonHoverColor={this.state.herobuttonHoverColor}
+                      
+              herobuttonOnChangeHoverColor={this.herobuttonOnChangeHoverColor}
+              heroButtonOnChangeHBDColor={this.heroButtonOnChangeHBDColor}
+              heroButtonOnChangeBDColor={this.heroButtonOnChangeBDColor}
+              heroButtonOnChangeHBGColor={this.heroButtonOnChangeHBGColor}
+              heroButtonOnChangeBGColor={this.heroButtonOnChangeBGColor}
+              heroButtonOnChangeRadius={this.heroButtonOnChangeRadius}
+              heroButtonOnChangeLink={this.heroButtonOnChangeLink}
+              heroButtonOnChangeSwap={this.heroButtonOnChangeSwap}
+              heroButtonOnChangeSelected={this.heroButtonOnChangeSelected}
+              heroButtonOnChange={this.heroButtonOnChange}
+              heroButtonOnChangeFontFamily={this.heroButtonOnChangeFontFamily}
+              heroButtonOnChangeFontSize={this.heroButtonOnChangeFontSize}
+              heroButtonOnChangeDuration={this.heroButtonOnChangeDuration} 
+              heroButtonOnChangeAnimate={this.heroButtonOnChangeAnimate} 
+              heroButtonOnChangeFontWeight={this.heroButtonOnChangeFontWeight}
+              heroButtonOnChangeFontStyle={this.heroButtonOnChangeFontStyle}
+              heroButtonOnChangeStatus={this.heroButtonOnChangeStatus}
+              heroButtonOnChangeColor={this.heroButtonOnChangeColor}
+              heroButtonOnChangeSwapColor={this.heroButtonOnChangeSwapColor}
             />       
         </main>
       </div>

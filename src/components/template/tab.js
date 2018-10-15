@@ -173,23 +173,37 @@ class TabWebsite extends React.Component {
       about : this.state.selectedAbout,
       gallery :this.state.selectedGallery,
       contact : this.state.selectedContact,
-      heroBackgroundImage:'',
-      heroTitle:'',
-      heroTitleAnimate:'',
-      heroTitleDuration:'',
-      heroTitleFontFamily:'',
-      heroTitleFontSize:'',
-      heroTitleFontWeight:'',
-      heroTitleFontStyle:'',
-      heroTitleStatus:'',
-      heroDescription:'',
-      heroDescriptionAnimate:'',
-      heroDescriptionDuration:'',
-      heroDescriptionFontFamily:'',
-      heroDescriptionFontSize:'',
-      heroDescriptionFontWeight:'',
-      heroDescriptionFontStyle:'',
-      heroDescriptionStatus:'',
+      heroContent: {      
+        heroBackgroundImage:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/images%2Fglenn-carstens-peters-282287-unsplash.jpg?alt=media&token=0d7da81b-339e-412a-9efb-36682e1207e9',
+        heroTitle:'Title',
+        heroTitleAnimate:'none',
+        heroTitleDuration:'1',
+        heroTitleFontFamily:'Roboto Mono',
+        heroTitleFontSize:'130',
+        heroTitleFontWeight:'400',
+        heroTitleFontStyle:'normal',
+        heroTitleStatus:'on',
+        heroTitleColor:'#fff',
+        heroDescription:'description',
+        heroDescriptionAnimate:'none',
+        heroDescriptionDuration:'1',
+        heroDescriptionFontFamily:'Roboto Mono',
+        heroDescriptionFontSize:'30',
+        heroDescriptionFontWeight:'400',
+        heroDescriptionFontStyle:'normal',
+        heroDescriptionStatus:'on',
+        heroDescriptionColor:'#fff',
+        heroButton:'Button',
+        heroButtonSelected:'heroButtonValue1',
+        heroButtonAnimate:'none',
+        heroButtonDuration:'1',
+        heroButtonFontFamily:'Roboto Mono',
+        heroButtonFontSize:'20',
+        heroButtonFontWeight:'400',
+        heroButtonFontStyle:'normal',
+        heroButtonStatus:'on',
+        heroButtonColor:'#fff',
+      }
     })    
     this.setState({
       value:this.state.value,
@@ -336,22 +350,24 @@ class TabWebsite extends React.Component {
 
               heroImagePick={this.props.heroImagePick}
               title={this.props.heroTitle} 
-              animate={this.props.heroTitleAnimate}
-              duration={this.props.heroTitleDuration}
-              FontFamily={this.props.heroTitleFontFamily} 
-              FontSize={this.props.heroTitleFontSize}
-              FontWeight={this.props.heroTitleFontWeight}
-              FontStyle={this.props.heroTitleFontStyle}
-              Status={this.props.heroTitleStatus}
+              titleAnimate={this.props.heroTitleAnimate}
+              titleDuration={this.props.heroTitleDuration}
+              titleFontFamily={this.props.heroTitleFontFamily} 
+              titleFontSize={this.props.heroTitleFontSize}
+              titleFontWeight={this.props.heroTitleFontWeight}
+              titleFontStyle={this.props.heroTitleFontStyle}
+              titleStatus={this.props.heroTitleStatus}
+              titleColor={this.props.heroTitleColor}
 
               description={this.props.heroDescription}
-              durationDescription= {this.props.heroDescriptionDuration}
-              FontFamilyDescription={this.props.heroDescriptionFontFamily}
-              FontSizeDescription={this.props.heroDescriptionFontSize}
-              FontWeightDescription={this.props.heroDescriptionFontWeight}
-              FontStyleDescription={this.props.heroDescriptionFontStyle}
-              StatusDescription={this.props.heroDescriptionStatus}
-              animateDescription={this.props.heroDescriptionAnimate} 
+              descriptionDuration= {this.props.heroDescriptionDuration}
+              descriptionFontFamily={this.props.heroDescriptionFontFamily}
+              descriptionFontSize={this.props.heroDescriptionFontSize}
+              descriptionFontWeight={this.props.heroDescriptionFontWeight}
+              descriptionFontStyle={this.props.heroDescriptionFontStyle}
+              descriptionStatus={this.props.heroDescriptionStatus}
+              descriptionAnimate={this.props.heroDescriptionAnimate} 
+              descriptionColor={this.props.heroDescriptionColor}
             />
             </div>
           )))}   

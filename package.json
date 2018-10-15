@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^3.0.3",
     "@material-ui/icons": "^3.0.1",
+    "antd": "^3.10.1",
     "eases": "^1.0.8",
     "firebase": "^5.5.0",
     "gulp": "^3.9.1",

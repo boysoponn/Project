@@ -2,7 +2,6 @@ import React from 'react';
 import '../../css/animate.min.css';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Settings from '@material-ui/icons/PlayCircleOutline';
 import SettingsFonts from '@material-ui/icons/SettingsOutlined';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -10,39 +9,21 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
+import Popover from '@material-ui/core/Popover';
+import PickColor from './pickColor'
 
 
 const styles = theme => ({
-  paper: {
-    position:'fixed',
-    marginLeft:90,
-    marginTop:-50,
-    zIndex:5, 
+  label:{
+    color:'#757575',
+    fontSize:12,
   },
-  paperfont: {
-    position:'fixed',
-    marginLeft:90,
-    marginTop:-50,
-    zIndex:5, 
-  },
-  content:{
-    backgroundColor:'#fff',
-  },
-
   formControl: {
     margin: theme.spacing.unit,
     minWidth: 120,
   },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2,
-  },
-  label: {
-    fontSize:17,
-    marginLeft:30,
-  },
   full:{
     float:'right',
-    marginLeft:15,
   },
   left:{
     float:'left',
@@ -67,48 +48,64 @@ const MenuProps = {
 class SettingAnimate extends React.Component {
     constructor(props){
         super(props);
-        this.handleClick = this.handleClick.bind(this);
         this.handleClick2 = this.handleClick2.bind(this);
         this.state = {
             open: false,
             open2: false,
-            animate:''
+            anchorEl: null,
+            anchorEl2: null,
         };
       }
 
 
-  handleClick () {
-    if(this.state.open2 === true ){
-    this.setState ({
-      open2: false,
-    });
-    }
-      this.setState ({
-        open: !this.state.open,
-      });
-    
-  };
-
-  handleClick2 () {
-    if(this.state.open === true ){
-      this.setState ({
-        open: false,
-      });
-      }   
-        this.setState ({
-          open2: !this.state.open2,
+      handleClick = event => {
+        this.setState({
+          anchorEl: event.currentTarget,
         });
-  };
+      };
+    
+      handleClose = () => {
+        this.setState({
+          anchorEl: null,
+        });
+      };
+      handleClick2 = event => {
+        this.setState({
+          anchorEl2: event.currentTarget,
+        });
+      };
+    
+      handleClose2 = () => {
+        this.setState({
+          anchorEl2: null,
+        });
+      };
 
 
   render() {
     const { classes } = this.props;
+    const { anchorEl,anchorEl2 } = this.state;
+    const open = Boolean(anchorEl);
+    const open2 = Boolean(anchorEl2);
+
     return (
+      
       <div className={classes.full}>
         <div className={classes.left}>
-            <SettingsFonts className={classes.button} onClick={this.handleClick2} />
-            {this.state.open2 ? (
-              <Paper className={classes.paperfont}>
+            <SettingsFonts className={classes.button} onClick={this.handleClick} />
+            <Popover
+              open={open}
+              anchorEl={anchorEl}
+              onClose={this.handleClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+            >
               <form className={classes} autoComplete="off">
                     <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="age-simple">Status</InputLabel>
@@ -197,15 +194,34 @@ class SettingAnimate extends React.Component {
                     </Select>
                     </FormControl>
                     </form>
-
-              </Paper>
-            ) : null}
+                    <div className={classes.formControl}>
+                    <label className={classes.label}>Font Color</label>
+                    <PickColor
+                    width="100px"
+                    height="14px"
+                    padding="5px"
+                    color={this.props.color}
+                    onChange={this.props.onChange}
+                    />
+                    </div>
+                    </Popover>
       </div>
+
       <div className={classes.right}>
-            <Settings className={classes.button} root='outline' onClick={this.handleClick} />
-            {this.state.open ? (
-              <Paper className={classes.paper}>
-               
+            <Settings className={classes.button} root='outline' onClick={this.handleClick2} />
+            <Popover
+              open={open2}
+              anchorEl={anchorEl2}
+              onClose={this.handleClose2}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+            >
                 <form className={classes} autoComplete="off">
                     <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="age-simple">Animation</InputLabel>
@@ -330,10 +346,8 @@ class SettingAnimate extends React.Component {
                         <MenuItem value={'10s'}>10</MenuItem>
                     </Select>
                     </FormControl>
-                    </form>
-               
-              </Paper>
-            ) : null}
+                    </form>     
+              </Popover>
             </div>
       </div>
     );
