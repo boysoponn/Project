@@ -177,31 +177,31 @@ class TabWebsite extends React.Component {
         heroBackgroundImage:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/images%2Fglenn-carstens-peters-282287-unsplash.jpg?alt=media&token=0d7da81b-339e-412a-9efb-36682e1207e9',
         heroTitle:'Title',
         heroTitleAnimate:'none',
-        heroTitleDuration:'1',
+        heroTitleDuration:'1s',
         heroTitleFontFamily:'Roboto Mono',
         heroTitleFontSize:'130',
         heroTitleFontWeight:'400',
         heroTitleFontStyle:'normal',
-        heroTitleStatus:'on',
+        heroTitleStatus:'block',
         heroTitleColor:'#fff',
         heroDescription:'description',
         heroDescriptionAnimate:'none',
-        heroDescriptionDuration:'1',
+        heroDescriptionDuration:'1s',
         heroDescriptionFontFamily:'Roboto Mono',
         heroDescriptionFontSize:'30',
         heroDescriptionFontWeight:'400',
         heroDescriptionFontStyle:'normal',
-        heroDescriptionStatus:'on',
+        heroDescriptionStatus:'block',
         heroDescriptionColor:'#fff',
         heroButton:'Button',
         heroButtonSelected:'heroButtonValue1',
         heroButtonAnimate:'none',
-        heroButtonDuration:'1',
+        heroButtonDuration:'1s',
         heroButtonFontFamily:'Roboto Mono',
         heroButtonFontSize:'20',
         heroButtonFontWeight:'400',
         heroButtonFontStyle:'normal',
-        heroButtonStatus:'on',
+        heroButtonStatus:'block',
         heroButtonColor:'#fff',
       }
     })    
@@ -349,25 +349,25 @@ class TabWebsite extends React.Component {
               About={New.about}  
 
               heroImagePick={this.props.heroImagePick}
-              title={this.props.heroTitle} 
-              titleAnimate={this.props.heroTitleAnimate}
-              titleDuration={this.props.heroTitleDuration}
-              titleFontFamily={this.props.heroTitleFontFamily} 
-              titleFontSize={this.props.heroTitleFontSize}
-              titleFontWeight={this.props.heroTitleFontWeight}
-              titleFontStyle={this.props.heroTitleFontStyle}
-              titleStatus={this.props.heroTitleStatus}
-              titleColor={this.props.heroTitleColor}
+              heroTitle={this.props.heroTitle} 
+              heroTitleAnimate={this.props.heroTitleAnimate}
+              heroTitleDuration={this.props.heroTitleDuration}
+              heroTitleFontFamily={this.props.heroTitleFontFamily} 
+              heroTitleFontSize={this.props.heroTitleFontSize}
+              heroTitleFontWeight={this.props.heroTitleFontWeight}
+              heroTitleFontStyle={this.props.heroTitleFontStyle}
+              heroTitleStatus={this.props.heroTitleStatus}
+              heroTitleColor={this.props.heroTitleColor}
 
-              description={this.props.heroDescription}
-              descriptionDuration= {this.props.heroDescriptionDuration}
-              descriptionFontFamily={this.props.heroDescriptionFontFamily}
-              descriptionFontSize={this.props.heroDescriptionFontSize}
-              descriptionFontWeight={this.props.heroDescriptionFontWeight}
-              descriptionFontStyle={this.props.heroDescriptionFontStyle}
-              descriptionStatus={this.props.heroDescriptionStatus}
-              descriptionAnimate={this.props.heroDescriptionAnimate} 
-              descriptionColor={this.props.heroDescriptionColor}
+              heroDescription={this.props.heroDescription}
+              heroDescriptionDuration= {this.props.heroDescriptionDuration}
+              heroDescriptionFontFamily={this.props.heroDescriptionFontFamily}
+              heroDescriptionFontSize={this.props.heroDescriptionFontSize}
+              heroDescriptionFontWeight={this.props.heroDescriptionFontWeight}
+              heroDescriptionFontStyle={this.props.heroDescriptionFontStyle}
+              heroDescriptionStatus={this.props.heroDescriptionStatus}
+              heroDescriptionAnimate={this.props.heroDescriptionAnimate} 
+              heroDescriptionColor={this.props.heroDescriptionColor}
             />
             </div>
           )))}   

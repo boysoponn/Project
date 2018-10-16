@@ -3,6 +3,7 @@ import '../../css/animate.min.css';
 import HeroNo1 from './Hero/HeroNo1'
 import HeroNo2 from './Hero/HeroNo2'
 import WelcomeNo1 from './Welcome/WelcomeNo1'
+import WelcomeNo2 from './Welcome/WelcomeNo2'
 
 class IN extends React.Component {
     constructor(props){  
@@ -18,52 +19,57 @@ class IN extends React.Component {
   let Welcome;
   if( this.props.Hero === "HeroNo1"){
     Hero = <HeroNo1
-    ImagePick={this.props.heroImagePick}
-    title={this.props.title}
-    titleDuration= {this.props.titleDuration}
-    titleFontFamily={this.props.titleFontFamily}
-    titleFontSize={this.props.titleFontSize}
-    titleFontWeight={this.props.titleFontWeight}
-    titleFontStyle={this.props.titleFontStyle}
-    titleStatus={this.props.titleStatus}
-    titleAnimate={this.props.titleAnimate} 
-    titleColor={this.props.titleColor}
+    heroImagePick={this.props.heroImagePick}
+    heroTitle={this.props.heroTitle} 
+    heroTitleAnimate={this.props.heroTitleAnimate}
+    heroTitleDuration={this.props.heroTitleDuration}
+    heroTitleFontFamily={this.props.heroTitleFontFamily} 
+    heroTitleFontSize={this.props.heroTitleFontSize}
+    heroTitleFontWeight={this.props.heroTitleFontWeight}
+    heroTitleFontStyle={this.props.heroTitleFontStyle}
+    heroTitleStatus={this.props.heroTitleStatus}
+    heroTitleColor={this.props.heroTitleColor}
 
-    description={this.props.description}
-    descriptionDuration= {this.props.descriptionDuration}
-    descriptionFontFamily={this.props.descriptionFontFamily}
-    descriptionFontSize={this.props.descriptionFontSize}
-    descriptionFontWeight={this.props.descriptionFontWeight}
-    descriptionFontStyle={this.props.descriptionFontStyle}
-    descriptionStatus={this.props.descriptionStatus}
-    descriptionAnimate={this.props.descriptionAnimate} 
-    descriptionColor={this.props.descriptionColor}
+    heroDescription={this.props.heroDescription}
+    heroDescriptionDuration= {this.props.heroDescriptionDuration}
+    heroDescriptionFontFamily={this.props.heroDescriptionFontFamily}
+    heroDescriptionFontSize={this.props.heroDescriptionFontSize}
+    heroDescriptionFontWeight={this.props.heroDescriptionFontWeight}
+    heroDescriptionFontStyle={this.props.heroDescriptionFontStyle}
+    heroDescriptionStatus={this.props.heroDescriptionStatus}
+    heroDescriptionAnimate={this.props.heroDescriptionAnimate} 
+    heroDescriptionColor={this.props.heroDescriptionColor}
     />
   }
   if( this.props.Hero === "HeroNo2"){
     Hero = <HeroNo2
-    ImagePick={this.props.heroImagePick}
-    title={this.props.title}
-    titleDuration= {this.props.titleDuration}
-    titleFontFamily={this.props.titleFontFamily}
-    titleFontSize={this.props.titleFontSize}
-    titleFontWeight={this.props.titleFontWeight}
-    titleFontStyle={this.props.titleFontStyle}
-    titleStatus={this.props.titleStatus}
-    titleAnimate={this.props.titleAnimate} 
+    heroImagePick={this.props.heroImagePick}
+    heroTitle={this.props.heroTitle} 
+    heroTitleAnimate={this.props.heroTitleAnimate}
+    heroTitleDuration={this.props.heroTitleDuration}
+    heroTitleFontFamily={this.props.heroTitleFontFamily} 
+    heroTitleFontSize={this.props.heroTitleFontSize}
+    heroTitleFontWeight={this.props.heroTitleFontWeight}
+    heroTitleFontStyle={this.props.heroTitleFontStyle}
+    heroTitleStatus={this.props.heroTitleStatus}
+    heroTitleColor={this.props.heroTitleColor}
 
-    description={this.props.description}
-    DescriptionDuration= {this.props.DescriptionDuration}
-    DescriptionFontFamily={this.props.DescriptionFontFamily}
-    DescriptionFontSize={this.props.DescriptionFontSize}
-    DescriptionFontWeight={this.props.DescriptionFontWeight}
-    DescriptionFontStyle={this.props.DescriptionFontStyle}
-    DescriptionStatus={this.props.DescriptionStatus}
-    DescriptionAnimate={this.props.DescriptionAnimate} 
+    heroDescription={this.props.heroDescription}
+    heroDescriptionDuration= {this.props.heroDescriptionDuration}
+    heroDescriptionFontFamily={this.props.heroDescriptionFontFamily}
+    heroDescriptionFontSize={this.props.heroDescriptionFontSize}
+    heroDescriptionFontWeight={this.props.heroDescriptionFontWeight}
+    heroDescriptionFontStyle={this.props.heroDescriptionFontStyle}
+    heroDescriptionStatus={this.props.heroDescriptionStatus}
+    heroDescriptionAnimate={this.props.heroDescriptionAnimate} 
+    heroDescriptionColor={this.props.heroDescriptionColor}
     />
   }
   if( this.props.Welcome === "WelcomeNo1"){
     Welcome = <WelcomeNo1/>
+  }
+  if( this.props.Welcome === "WelcomeNo2"){
+    Welcome = <WelcomeNo2/>
   }
 return (
       <div>   

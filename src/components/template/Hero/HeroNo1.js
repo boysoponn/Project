@@ -11,54 +11,53 @@ class HeroNo1 extends React.Component {
 
   render() {
     const background ={
-        backgroundImage:"url("+this.props.ImagePick+")",
+        backgroundImage:"url("+this.props.heroImagePick+")",
         backgroundSize:'cover',
         height:'100%',
         margin:0
     };
     const content={
         textAlign: 'center',
-        
         paddingTop: '20%',
     };
     const title ={
-        color:this.props.titleColor,
+        color:this.props.heroTitleColor,
         opacity: 1,
-        animationDuration: this.props.titleDuration,
-        fontFamily:this.props.titleFontFamily,
-        fontSize:this.props.titleFontSize,
-        fontWeight:this.props.titleFontWeight,
-        fontStyle:this.props.titleFontStyle,
-        display:this.props.titleStatus
+        animationDuration: this.props.heroTitleDuration,
+        fontFamily:this.props.heroTitleFontFamily,
+        fontSize:this.props.heroTitleFontSize,
+        fontWeight:this.props.heroTitleFontWeight,
+        fontStyle:this.props.heroTitleFontStyle,
+        display:this.props.heroTitleStatus
     };
     const description={
         opacity: 1,
-        color:this.props.descriptionColor,
-        animationDuration: this.props.descriptionDuration,
-        fontFamily:this.props.descriptionFontFamily,
-        fontSize:this.props.descriptionFontSize,
-        fontWeight:this.props.descriptionFontWeight,
-        fontStyle:this.props.descriptionFontStyle,
-        display:this.props.descriptionStatus
+        color:this.props.heroDescriptionColor,
+        animationDuration: this.props.heroDescriptionDuration,
+        fontFamily:this.props.heroDescriptionFontFamily,
+        fontSize:this.props.heroDescriptionFontSize,
+        fontWeight:this.props.heroDescriptionFontWeight,
+        fontStyle:this.props.heroDescriptionFontStyle,
+        display:this.props.heroDescriptionStatus
     };
     const button={
         opacity: 1,
-        color:this.props.descriptionColor,
-        animationDuration: this.props.descriptionDuration,
-        fontFamily:this.props.descriptionFontFamily,
-        fontSize:this.props.descriptionFontSize,
-        fontWeight:this.props.descriptionFontWeight,
-        fontStyle:this.props.descriptionFontStyle,
-        display:this.props.descriptionStatus
+        color:this.props.HeroDescriptionColor,
+        animationDuration: this.props.heroDescriptionDuration,
+        fontFamily:this.props.heroDescriptionFontFamily,
+        fontSize:this.props.heroDescriptionFontSize,
+        fontWeight:this.props.heroDescriptionFontWeight,
+        fontStyle:this.props.heroDescriptionFontStyle,
+        display:this.props.heroDescriptionStatus
     };
     return (
         <div style={background}>  
             <div style={content}>
-            <ScrollAnimation style={title} className={this.props.titleAnimate} >
-            {this.props.title}
+            <ScrollAnimation style={title} className={this.props.heroTitleAnimate} >
+            {this.props.heroTitle}
             </ScrollAnimation> 
-            <ScrollAnimation style={description} className={this.props.descriptionAnimate} >
-            {this.props.description}
+            <ScrollAnimation style={description} className={this.props.heroDescriptionAnimate} >
+            {this.props.heroDescription}
             </ScrollAnimation> 
             {/* <ScrollAnimation style={button} className={this.props.buttonAnimate} >
             <ChoiceButton content={this.props.button} swapContent={this.props.buttonSwap} className={this.props.buttonSelected}>{this.props.button}</ChoiceButton>
