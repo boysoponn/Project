@@ -279,7 +279,7 @@ componentWillReceiveProps(nextProps){
     alert("saved") 
   };
 
-  logout(){localStorage.removeItem('user'); window.location.reload(true);};
+  logout(){config.auth().signOut();window.location.reload(); };
   handleDrawerOpen = () => {this.setState({ open: true ,});}
   handleDrawerClose = () => {this.setState({  open: false ,});};
 

@@ -4,39 +4,58 @@ import exmessage from './components/ex-message';
 import Member from './components/Member';
 import Cms from './components/CMS';
 import AppWithConnect from './components/header';
+import config from './config'
 
-const user = localStorage.getItem('user');
 
-function withRestriction(WrappedComponent) {
-  return class RestrictedComponent extends React.Component {
-    render() {
-      if (!user) {
-         return <Redirect to='/login' />
-      }else{
-       return <WrappedComponent {...this.props} />
-      
-      }  
-    }
+
+
+
+
+
+class App extends Component {
+  state = {
+    authenticated: false,
+    username:""
+  };
+  componentDidMount() {
+    config.auth().onAuthStateChanged((authenticated) => {
+      authenticated
+        ? this.setState(() => ({
+            authenticated: true,
+            username:"sdfsd"
+          }))
+        : this.setState(() => ({
+            authenticated: false,
+          }));
+    alert(this.state.username);});
   }
-}
-const CMSWithRestriction = withRestriction(Cms);
+  render() {
+    const user = this.state.username;
+    function withRestriction(WrappedComponent) {
+      return class RestrictedComponent extends React.Component {
+        render() {
+          if (user =="") {
+             return <Redirect to='/login' />
+          }else{
+           return <WrappedComponent {...this.props} />
+          }  
+        }
+      }
+    }
+    const CMSWithRestriction = withRestriction(Cms);
 
 function withRestriction2(WrappedComponent2) {
   return class RestrictedComponent extends React.Component {
     render() {
-      if (user) {
+      if (user !== "") {
          return <Redirect to='/cms' />
       }else{
        return <WrappedComponent2 {...this.props} />
-      
       }  
     }
   }
 }
 const LoginWithRestriction = withRestriction2(Member);
-
-class App extends Component {
-  render() {
     return (
       <Router>
         <div> 

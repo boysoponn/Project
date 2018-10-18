@@ -19,8 +19,8 @@ class LoginContainer extends Component {
         user:'',
         username:'',
         password:'',
-        inputPassword:"",
-        inputEmail:""
+        inputPassword:"boysopon",
+        inputEmail:"boysopon@mail.com"
         
       };
     this.getData();
@@ -58,25 +58,28 @@ class LoginContainer extends Component {
  }    
   signin(e){ 
   e.preventDefault(); 
-  let row=0; 
-    while(row<this.state.howmanyuser){     
-      if(this.state.user[row]=== this.state.inputEmail){
-        if(this.state.password[row]=== this.state.inputPassword){
-            localStorage.setItem('user', this.state.username[row]);
-            alert("เข้ามาละง้าบ");
-            // return this.props.history.push('/cms');
-            window.location.reload(true);
-        }else{
-          alert("รหัสผ่านผิดครับ")
-          break;
-        }      
-      }
-      row++;
-      if(row>=this.state.howmanyuser){
-      alert("อีเมลผิดค่าบบ")
-      break;
-      }
-  }
+  config.auth().signInWithEmailAndPassword(this.state.inputEmail, this.state.inputPassword).then((user) => {
+    this.props.history.push('/');
+  })
+  // let row=0; 
+  //   while(row<this.state.howmanyuser){     
+  //     if(this.state.user[row]=== this.state.inputEmail){
+  //       if(this.state.password[row]=== this.state.inputPassword){
+  //           localStorage.setItem('user', this.state.username[row]);
+  //           alert("เข้ามาละง้าบ");
+  //           // return this.props.history.push('/cms');
+  //           window.location.reload(true);
+  //       }else{
+  //         alert("รหัสผ่านผิดครับ")
+  //         break;
+  //       }      
+  //     }
+  //     row++;
+  //     if(row>=this.state.howmanyuser){
+  //     alert("อีเมลผิดค่าบบ")
+  //     break;
+  //     }
+  // }
 }
   render() {
     const style = {

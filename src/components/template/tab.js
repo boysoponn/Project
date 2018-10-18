@@ -100,7 +100,7 @@ class TabWebsite extends React.Component {
 
   setNullValue(){
     this.setState({
-      pageName:'',
+      namePage:'',
       selectedHero:'none',
       selectedAbout:'none',
       selectedGallery:'none',
@@ -205,12 +205,6 @@ class TabWebsite extends React.Component {
         heroButtonColor:'#fff',
       }
     })    
-    this.setState({
-      value:this.state.value,
-      num:this.state.num +1,
-    });
-    this.setNullValue();
-    this.handleClose();
     }
   };
 
