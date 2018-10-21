@@ -25,13 +25,17 @@ function Transition(props) {
 }
 
 const styles = theme => ({
+    popoverHeight:{
+      height:500
+    },
     button: {
         marginTop:10,
         width:130
        },
     buttonSetting:{
       width:170,
-      marginLeft:20
+      marginLeft:20,
+      marginRight:20
        },
     width:{
         width:1295
@@ -70,9 +74,12 @@ class InputButton extends React.Component {
     open: false,
     open1: false,
     open2: false,
+    open3: false,
+    open4: false,
     anchorEl1: null,
     anchorEl2: null,
     anchorEl3: null,
+    anchorEl4: null,
   };
 
   handleClickOpen = () => {this.setState({ open: true });};
@@ -84,16 +91,24 @@ class InputButton extends React.Component {
   handleClose2 = () => {this.setState({anchorEl2: null,});};
   handleClick3 = event => {this.setState({anchorEl3: event.currentTarget,});};
   handleClose3 = () => {this.setState({anchorEl3: null,});};
+  handleClick4 = event => {this.setState({anchorEl4: event.currentTarget,});};
+  handleClose4 = () => {this.setState({anchorEl4: null,});};
   render() {
     const pickColor={
       color: '#757575',
       fontSize: '16px',
     }
+    const button={
+      margin:'auto',
+      marginTop:20,
+      marginBottom:20
+    }
     const { classes } = this.props;
-    const { anchorEl1,anchorEl2,anchorEl3 } = this.state;
+    const { anchorEl1,anchorEl2,anchorEl3 ,anchorEl4} = this.state;
     const open1 = Boolean(anchorEl1);
     const open2 = Boolean(anchorEl2);
     const open3 = Boolean(anchorEl3);
+    const open4 = Boolean(anchorEl4);
     return (
       <div>
       <SettingAnimate 
@@ -151,10 +166,10 @@ class InputButton extends React.Component {
               onClose={this.handleClose1}
               anchorOrigin={{
                 vertical: 'bottom',
-                horizontal: 'center',
+                horizontal: 'right',
               }}
               transformOrigin={{
-                vertical: 'top',
+                vertical: 'bottom',
                 horizontal: 'left',
               }}
             >
@@ -209,10 +224,10 @@ class InputButton extends React.Component {
               onClose={this.handleClose2}
               anchorOrigin={{
                 vertical: 'bottom',
-                horizontal: 'center',
+                horizontal: 'right',
               }}
               transformOrigin={{
-                vertical: 'top',
+                vertical: 'bottom',
                 horizontal: 'left',
               }}
             >
@@ -247,10 +262,10 @@ class InputButton extends React.Component {
               onClose={this.handleClose3}
               anchorOrigin={{
                 vertical: 'bottom',
-                horizontal: 'center',
+                horizontal: 'right',
               }}
               transformOrigin={{
-                vertical: 'top',
+                vertical: 'bottom',
                 horizontal: 'left',
               }}
             >
@@ -294,12 +309,25 @@ class InputButton extends React.Component {
                 />
                 </ListItem> 
             </Popover>  
-            </List>  
-        <Divider />
-
-        <Grid container spacing={24} className={classes.width}>
-        <Grid item xs={12} sm={3}>
-        <List >  
+            
+            <Button variant="contained" onClick={this.handleClick4} component="span" color="secondary" className={classes.buttonSetting}>
+        Animation
+        </Button>
+            <Popover
+              className={classes.popoverHeight}
+              open={open4}
+              anchorEl={anchorEl4}
+              onClose={this.handleClose4}
+              anchorOrigin={{
+                vertical: 'center',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'center',
+                horizontal: 'left',
+              }}
+            >
+               <List >  
         <ListItem>
         <Radio
           checked={this.props.buttonSelected === this.props.value1}
@@ -311,10 +339,12 @@ class InputButton extends React.Component {
           FontFamily={this.props.FontFamily}
           FontWeight={this.props.FontWeight}
           FontSize={this.props.FontSize}
+          FontStyle={this.props.FontStyle}
           buttonColor={this.props.buttonColor}
           buttonBDColor={this.props.buttonBDColor}
           buttonRadius={this.props.buttonRadius}
           buttonBGColor={this.props.buttonBGColor} 
+          buttonHBDColor={this.props.buttonHBDColor}
         >
         {this.props.button}</ChoiceButton>
           </ListItem>
@@ -329,10 +359,13 @@ class InputButton extends React.Component {
           FontFamily={this.props.FontFamily}
           FontWeight={this.props.FontWeight}
           FontSize={this.props.FontSize}
+          buttonHoverColor={this.props.buttonHoverColor}
+          buttonHBGColor={this.props.buttonHBGColor}
           buttonColor={this.props.buttonColor}
           buttonBDColor={this.props.buttonBDColor}
           buttonRadius={this.props.buttonRadius}
           buttonBGColor={this.props.buttonBGColor} 
+          buttonHBDColor={this.props.buttonHBDColor}
         >
         {this.props.button}</ChoiceButton>
           </ListItem>
@@ -351,14 +384,11 @@ class InputButton extends React.Component {
           buttonBDColor={this.props.buttonBDColor}
           buttonRadius={this.props.buttonRadius}
           buttonBGColor={this.props.buttonBGColor} 
+          buttonHBDColor={this.props.buttonHBDColor}
+          buttonHBGColor={this.props.buttonHBGColor}
         >
         {this.props.button}</ChoiceButton>
-          </ListItem>
-        </List>
-        </Grid>
-        
-        <Grid item xs={12} sm={3}>
-        <List >  
+          </ListItem> 
         <ListItem>
         <Radio
           checked={this.props.buttonSelected === this.props.value2}
@@ -375,7 +405,8 @@ class InputButton extends React.Component {
           buttonColor={this.props.buttonColor}
           buttonBDColor={this.props.buttonBDColor}
           buttonRadius={this.props.buttonRadius}
-          buttonBGColor={this.props.buttonBGColor} 
+          buttonBGColor={this.props.buttonBGColor}
+          buttonHBDColor={this.props.buttonHBDColor} 
         >
         {this.props.button}</ChoiceButton>
           </ListItem>
@@ -396,33 +427,10 @@ class InputButton extends React.Component {
           buttonBDColor={this.props.buttonBDColor}
           buttonRadius={this.props.buttonRadius}
           buttonBGColor={this.props.buttonBGColor} 
-        >
-        {this.props.button}</ChoiceButton>
-          </ListItem>
-          <ListItem>
-          <Radio
-          checked={this.props.buttonSelected === this.props.value10}
-          onChange={this.props.buttonOnChangeSelected}
-          value={this.props.value10}
-          name="radio-button-demo"
-        />
-        <ChoiceButton className="fade" 
-          FontFamily={this.props.FontFamily}
-          FontWeight={this.props.FontWeight}
-          FontSize={this.props.FontSize}
-          buttonHoverColor={this.props.buttonHoverColor}
           buttonHBDColor={this.props.buttonHBDColor}
-          buttonColor={this.props.buttonColor}
-          buttonBDColor={this.props.buttonBDColor}
-          buttonRadius={this.props.buttonRadius}
-          buttonBGColor={this.props.buttonBGColor}       
         >
         {this.props.button}</ChoiceButton>
           </ListItem>
-        </List>
-        </Grid>
-        <Grid item xs={12} sm={3}>
-        <List >  
         <ListItem>
         <Radio
           checked={this.props.buttonSelected === this.props.value3}
@@ -440,6 +448,7 @@ class InputButton extends React.Component {
           buttonBDColor={this.props.buttonBDColor}
           buttonRadius={this.props.buttonRadius}
           buttonBGColor={this.props.buttonBGColor}
+          buttonHBDColor={this.props.buttonHBDColor}
         >
         {this.props.button}</ChoiceButton>
           </ListItem>
@@ -460,6 +469,7 @@ class InputButton extends React.Component {
           buttonBDColor={this.props.buttonBDColor}
           buttonRadius={this.props.buttonRadius}
           buttonBGColor={this.props.buttonBGColor}
+          buttonHBDColor={this.props.buttonHBDColor}
         >
         {this.props.button}</ChoiceButton>
           </ListItem>
@@ -484,13 +494,11 @@ class InputButton extends React.Component {
           buttonBDColor={this.props.buttonBDColor}
           buttonRadius={this.props.buttonRadius}
           buttonBGColor={this.props.buttonBGColor}
+          buttonHBDColor={this.props.buttonHBDColor}
         >
         &nbsp;</ChoiceButton>
          </ListItem>
-        </List>
-        </Grid>
-        <Grid item xs={12} sm={3}>
-        <List >  
+
         <ListItem>
         <Radio
           checked={this.props.buttonSelected === this.props.value4}
@@ -508,6 +516,7 @@ class InputButton extends React.Component {
           buttonBDColor={this.props.buttonBDColor}
           buttonRadius={this.props.buttonRadius}
           buttonBGColor={this.props.buttonBGColor}
+          buttonHBDColor={this.props.buttonHBDColor}
         >
         {this.props.button}</ChoiceButton>
           </ListItem>
@@ -528,6 +537,7 @@ class InputButton extends React.Component {
           buttonBDColor={this.props.buttonBDColor}
           buttonRadius={this.props.buttonRadius}
           buttonBGColor={this.props.buttonBGColor}
+          buttonHBDColor={this.props.buttonHBDColor}
         >
         {this.props.button}</ChoiceButton>
           </ListItem>
@@ -554,13 +564,31 @@ class InputButton extends React.Component {
         buttonBDColor={this.props.buttonBDColor}
         buttonRadius={this.props.buttonRadius}
         buttonBGColor={this.props.buttonBGColor}
+        buttonHBDColor={this.props.buttonHBDColor}
         >
         &nbsp;</ChoiceButton>
           </ListItem>
-        </List>
-        </Grid>
-        </Grid>
-        </Dialog>
+          </List>
+
+            </Popover>  
+            </List>  
+        <Divider />
+        <div style={button}>
+        <ChoiceButton  className={this.props.buttonSelected} 
+          FontFamily={this.props.FontFamily}
+          FontWeight={this.props.FontWeight}
+          FontSize={this.props.FontSize}
+          FontStyle={this.props.FontStyle}
+          buttonHoverColor={this.props.buttonHoverColor}
+          buttonHBGColor={this.props.buttonHBGColor}
+          buttonColor={this.props.buttonColor}
+          buttonBDColor={this.props.buttonBDColor}
+          buttonRadius={this.props.buttonRadius}
+          buttonBGColor={this.props.buttonBGColor}
+          buttonHBDColor={this.props.buttonHBDColor}
+        >{this.props.button}</ChoiceButton>
+        </div>
+      </Dialog>
       </div>
       </div>
     );
@@ -750,6 +778,7 @@ const ChoiceButton = styled.button`
       position:absolute;
       color:${props => props.buttonHoverColor};
       left: 83%;
+
       opacity: 0;
       -webkit-transition: all 250ms cubic-bezier(0.680, -0.550, 0.265, 1.550); 
     }
@@ -759,26 +788,7 @@ const ChoiceButton = styled.button`
     }
     :hover {
       width:170px;
-    }
-  }
-  .fade&{
-    :before{
-      content:"→";
-      position:absolute;
-      color:${props => props.buttonHoverColor};
-      left: 88%;
-      opacity: 0;
-      -webkit-transition: all 0.2s ease-in;
-    }
-    :hover:before{
-      left:91%;
-      opacity:1;
-    }
-    :hover {
-      border: 0px ${props => props.buttonHBDColor} solid;
-      -webkit-transform: scale(1.04,1.04);
-      -webkit-transition: border 0.3s ease-out;
-      -webkit-transition: transform 250ms cubic-bezier(0.680, -0.550, 0.265, 1.550); 
+      background:${props => props.buttonHBGColor};
     }
   }
   .slide&{

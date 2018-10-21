@@ -1,40 +1,57 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import exmessage from './components/ex-message';
 import Member from './components/Member';
 import Cms from './components/CMS';
 import AppWithConnect from './components/header';
 import config from './config'
-
-
-
-
-
-
+import { connect } from 'react-redux'
+import {login} from './components/actions'
 
 class App extends Component {
   state = {
     authenticated: false,
     username:""
   };
+
   componentDidMount() {
     config.auth().onAuthStateChanged((authenticated) => {
       authenticated
-        ? this.setState(() => ({
+        ? this.setState ({
             authenticated: true,
-            username:"sdfsd"
-          }))
+            email:authenticated.email
+          })
         : this.setState(() => ({
             authenticated: false,
-          }));
-    alert(this.state.username);});
+          }));      
+        if(this.state.authenticated){
+          const pathemail=this.state.email.replace(".","");
+          let app = config.database().ref('user/'+pathemail);
+          app.on('value', snapshot => { 
+          let dataVal = snapshot.val();
+          let data = _(dataVal)
+                          .keys()
+                          .map(dataKey => {
+                            let cloned = _.clone(dataVal[dataKey]);
+                            cloned.key = dataKey;
+                            return cloned;
+                          }).value();
+                          this.setState({
+                            username: _.map(data,'Username'),
+                          }); 
+          }); 
+        }
+    }); 
   }
+
   render() {
+ this.props.dispatch(login(this.state.username));
     const user = this.state.username;
     function withRestriction(WrappedComponent) {
       return class RestrictedComponent extends React.Component {
         render() {
-          if (user =="") {
+          if (user ==="") {
              return <Redirect to='/login' />
           }else{
            return <WrappedComponent {...this.props} />
@@ -69,4 +86,7 @@ const LoginWithRestriction = withRestriction2(Member);
     );
    }
   }
-  export default App;
+  const mapStateToProps = state => ({
+    user: state.user ,
+  })
+  export default connect(mapStateToProps)(App);

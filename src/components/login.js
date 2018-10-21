@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import {  withRouter } from 'react-router-dom';
 import '../css/login.css';
 import FluidInput from './fluidinput';
-import _ from 'lodash';
 import config from '../config';
 
 class LoginContainer extends Component {    
 
   constructor(props){  
     super(props);
-    this.getData = this.getData.bind(this);
     this.signin = this.signin.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
@@ -19,11 +17,9 @@ class LoginContainer extends Component {
         user:'',
         username:'',
         password:'',
-        inputPassword:"boysopon",
-        inputEmail:"boysopon@mail.com"
-        
+        inputPassword:"developers",
+        inputEmail:"developers@mail.com"       
       };
-    this.getData();
   }
  
   onChangeEmail(e) {
@@ -37,25 +33,7 @@ class LoginContainer extends Component {
       inputPassword: e.target.value
     });
   }
-  getData(){
-    let app = config.database().ref('user');
-    app.on('value', snapshot => { 
-    let messagesVal = snapshot.val();
-    let messages = _(messagesVal)
-                    .keys()
-                    .map(messageKey => {
-                      let cloned = _.clone(messagesVal[messageKey]);
-                      cloned.key = messageKey;
-                      return cloned;
-                    }).value();
-                    this.setState({
-                      user: _.map(messages,'Email'),
-                      username: _.map(messages,'Username'),
-                      password: _.map(messages,'Password'),
-                      howmanyuser:snapshot.numChildren(),
-                    }); 
-    });          
- }    
+   
   signin(e){ 
   e.preventDefault(); 
   config.auth().signInWithEmailAndPassword(this.state.inputEmail, this.state.inputPassword).then((user) => {

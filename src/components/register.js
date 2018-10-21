@@ -52,8 +52,10 @@ class Register extends Component {
     }
 
     register(e){
-      e.preventDefault();      
-      let dbCon = config.database().ref('/user');
+      e.preventDefault();  
+      const email = this.state.Email ;
+      const pathemail=email.replace(".","");  
+      let dbCon = config.database().ref('/user/'+pathemail);
         dbCon.push({
           Firstname:this.state.Firstname,
           Lastname:this.state.Lastname,

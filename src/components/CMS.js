@@ -325,7 +325,6 @@ componentWillReceiveProps(nextProps){
   
   render() {
     const { classes, theme } = this.props;
-    const user = localStorage.getItem('user');
     let heroInput;
     if( this.state.hero !== "none"){
     heroInput =
@@ -442,7 +441,7 @@ componentWillReceiveProps(nextProps){
             <ModalUploadWrapped />
             </Typography>
             <Typography variant="title" color="#000" >
-              Welcome : {user}
+              Welcome : {this.props.user}
             </Typography>
             <Button variant="contained" color="primary" className={classes.button} onClick={this.logout}>Logout
             <ExitIcon className={classes.rightIcon}/>
@@ -566,7 +565,8 @@ CMS.propTypes = {
 
 const mapStateToProps = state => ({
   tabs: state.tabs ,
-  urlImage: state.urlImage 
+  urlImage: state.urlImage ,
+  user:state.user
 })
 
 export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(CMS));
