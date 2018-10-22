@@ -94,15 +94,33 @@ class InputButton extends React.Component {
   handleClick4 = event => {this.setState({anchorEl4: event.currentTarget,});};
   handleClose4 = () => {this.setState({anchorEl4: null,});};
   render() {
+    const button;
+    if(this.props.buttonSelected !== this.props.value12  ){
+      button =         
+      <ChoiceButton  
+      className={this.props.buttonSelected} 
+      FontFamily={this.props.FontFamily}
+      FontWeight={this.props.FontWeight}
+      FontSize={this.props.FontSize}
+      FontStyle={this.props.FontStyle}
+      buttonHoverColor={this.props.buttonHoverColor}
+      buttonHBGColor={this.props.buttonHBGColor}
+      buttonColor={this.props.buttonColor}
+      buttonBDColor={this.props.buttonBDColor}
+      buttonRadius={this.props.buttonRadius}
+      buttonBGColor={this.props.buttonBGColor}
+      buttonHBDColor={this.props.buttonHBDColor}
+    >{this.props.button}</ChoiceButton>
+    };
     const pickColor={
       color: '#757575',
       fontSize: '16px',
-    }
-    const button={
+    };
+    const divButton={
       margin:'auto',
       marginTop:20,
       marginBottom:20
-    }
+    };
     const { classes } = this.props;
     const { anchorEl1,anchorEl2,anchorEl3 ,anchorEl4} = this.state;
     const open1 = Boolean(anchorEl1);
@@ -327,266 +345,233 @@ class InputButton extends React.Component {
                 horizontal: 'left',
               }}
             >
-               <List >  
-        <ListItem>
-        <Radio
-          checked={this.props.buttonSelected === this.props.value1}
-          onChange={this.props.buttonOnChangeSelected}
-          value={this.props.value1}
-          name="radio-button-demo"
-        />
-        <ChoiceButton
-          FontFamily={this.props.FontFamily}
-          FontWeight={this.props.FontWeight}
-          FontSize={this.props.FontSize}
-          FontStyle={this.props.FontStyle}
-          buttonColor={this.props.buttonColor}
-          buttonBDColor={this.props.buttonBDColor}
-          buttonRadius={this.props.buttonRadius}
-          buttonBGColor={this.props.buttonBGColor} 
-          buttonHBDColor={this.props.buttonHBDColor}
-        >
-        {this.props.button}</ChoiceButton>
-          </ListItem>
-          <ListItem>
-          <Radio
-          checked={this.props.buttonSelected === this.props.value5}
-          onChange={this.props.buttonOnChangeSelected}
-          value={this.props.value5}
-          name="radio-button-demo"
-        />
-        <ChoiceButton  className="fillRight" 
-          FontFamily={this.props.FontFamily}
-          FontWeight={this.props.FontWeight}
-          FontSize={this.props.FontSize}
-          buttonHoverColor={this.props.buttonHoverColor}
-          buttonHBGColor={this.props.buttonHBGColor}
-          buttonColor={this.props.buttonColor}
-          buttonBDColor={this.props.buttonBDColor}
-          buttonRadius={this.props.buttonRadius}
-          buttonBGColor={this.props.buttonBGColor} 
-          buttonHBDColor={this.props.buttonHBDColor}
-        >
-        {this.props.button}</ChoiceButton>
-          </ListItem>
-          <ListItem>
-          <Radio
-          checked={this.props.buttonSelected === this.props.value9}
-          onChange={this.props.buttonOnChangeSelected}
-          value={this.props.value9}
-          name="radio-button-demo"
-        />
-        <ChoiceButton className="arrow" 
-          FontFamily={this.props.FontFamily}
-          FontWeight={this.props.FontWeight}
-          FontSize={this.props.FontSize}
-          buttonColor={this.props.buttonColor}
-          buttonBDColor={this.props.buttonBDColor}
-          buttonRadius={this.props.buttonRadius}
-          buttonBGColor={this.props.buttonBGColor} 
-          buttonHBDColor={this.props.buttonHBDColor}
-          buttonHBGColor={this.props.buttonHBGColor}
-        >
-        {this.props.button}</ChoiceButton>
-          </ListItem> 
-        <ListItem>
-        <Radio
-          checked={this.props.buttonSelected === this.props.value2}
-          onChange={this.props.buttonOnChangeSelected}
-          value={this.props.value2}
-          name="radio-button-demo"
-        />
-        <ChoiceButton className="fillUp"
-          FontFamily={this.props.FontFamily}
-          FontWeight={this.props.FontWeight}
-          FontSize={this.props.FontSize}
-          buttonHoverColor={this.props.buttonHoverColor}
-          buttonHBGColor={this.props.buttonHBGColor}
-          buttonColor={this.props.buttonColor}
-          buttonBDColor={this.props.buttonBDColor}
-          buttonRadius={this.props.buttonRadius}
-          buttonBGColor={this.props.buttonBGColor}
-          buttonHBDColor={this.props.buttonHBDColor} 
-        >
-        {this.props.button}</ChoiceButton>
-          </ListItem>
-          <ListItem>
-          <Radio
-          checked={this.props.buttonSelected === this.props.value6}
-          onChange={this.props.buttonOnChangeSelected}
-          value={this.props.value6}
-          name="radio-button-demo"
-        />
-        <ChoiceButton  className="fillMiddle"
-          FontFamily={this.props.FontFamily}
-          FontWeight={this.props.FontWeight}
-          FontSize={this.props.FontSize}
-          buttonHoverColor={this.props.buttonHoverColor}
-          buttonHBGColor={this.props.buttonHBGColor}
-          buttonColor={this.props.buttonColor}
-          buttonBDColor={this.props.buttonBDColor}
-          buttonRadius={this.props.buttonRadius}
-          buttonBGColor={this.props.buttonBGColor} 
-          buttonHBDColor={this.props.buttonHBDColor}
-        >
-        {this.props.button}</ChoiceButton>
-          </ListItem>
-        <ListItem>
-        <Radio
-          checked={this.props.buttonSelected === this.props.value3}
-          onChange={this.props.buttonOnChangeSelected}
-          value={this.props.value3}
-          name="radio-button-demo"
-        />
-        <ChoiceButton className="fillDown"
-          FontFamily={this.props.FontFamily}
-          FontWeight={this.props.FontWeight}
-          FontSize={this.props.FontSize}
-          buttonHoverColor={this.props.buttonHoverColor}
-          buttonHBGColor={this.props.buttonHBGColor}
-          buttonColor={this.props.buttonColor}
-          buttonBDColor={this.props.buttonBDColor}
-          buttonRadius={this.props.buttonRadius}
-          buttonBGColor={this.props.buttonBGColor}
-          buttonHBDColor={this.props.buttonHBDColor}
-        >
-        {this.props.button}</ChoiceButton>
-          </ListItem>
-          <ListItem>
-          <Radio
-          checked={this.props.buttonSelected === this.props.value7}
-          onChange={this.props.buttonOnChangeSelected}
-          value={this.props.value7}
-          name="radio-button-demo"
-        />
-        <ChoiceButton  className="fillOblique" 
-          FontFamily={this.props.FontFamily}
-          FontWeight={this.props.FontWeight}
-          FontSize={this.props.FontSize}
-          buttonHoverColor={this.props.buttonHoverColor}
-          buttonHBGColor={this.props.buttonHBGColor}
-          buttonColor={this.props.buttonColor}
-          buttonBDColor={this.props.buttonBDColor}
-          buttonRadius={this.props.buttonRadius}
-          buttonBGColor={this.props.buttonBGColor}
-          buttonHBDColor={this.props.buttonHBDColor}
-        >
-        {this.props.button}</ChoiceButton>
-          </ListItem>
-          <ListItem>
-          <Radio
-          checked={this.props.buttonSelected === this.props.value11}
-          onChange={this.props.buttonOnChangeSelected}
-          value={this.props.value11}
-          classes={{
-            root: classes.radio,
-            checked: classes.checked,
-          }}
-          name="radio-button-demo"
-        />
-        <ChoiceButton content={this.props.button} swapContent={this.props.buttonSwap} className="slide" 
-          FontFamily={this.props.FontFamily}
-          FontWeight={this.props.FontWeight}
-          FontSize={this.props.FontSize}
-          buttonSwapColor={this.props.buttonSwapColor}
-          buttonHBGColor={this.props.buttonHBGColor}
-          buttonColor={this.props.buttonColor}
-          buttonBDColor={this.props.buttonBDColor}
-          buttonRadius={this.props.buttonRadius}
-          buttonBGColor={this.props.buttonBGColor}
-          buttonHBDColor={this.props.buttonHBDColor}
-        >
-        &nbsp;</ChoiceButton>
-         </ListItem>
-
-        <ListItem>
-        <Radio
-          checked={this.props.buttonSelected === this.props.value4}
-          onChange={this.props.buttonOnChangeSelected}
-          value={this.props.value4}
-          name="radio-button-demo"
-        />
-        <ChoiceButton className="fillLeft"
-          FontFamily={this.props.FontFamily}
-          FontWeight={this.props.FontWeight}
-          FontSize={this.props.FontSize}
-          buttonHoverColor={this.props.buttonHoverColor}
-          buttonHBGColor={this.props.buttonHBGColor}
-          buttonColor={this.props.buttonColor}
-          buttonBDColor={this.props.buttonBDColor}
-          buttonRadius={this.props.buttonRadius}
-          buttonBGColor={this.props.buttonBGColor}
-          buttonHBDColor={this.props.buttonHBDColor}
-        >
-        {this.props.button}</ChoiceButton>
-          </ListItem>
-          <ListItem>
-          <Radio
-          checked={this.props.buttonSelected === this.props.value8}
-          onChange={this.props.buttonOnChangeSelected}
-          value={this.props.value8}
-          name="radio-button-demo"
-        />
-        <ChoiceButton  className="fillOn" 
-          FontFamily={this.props.FontFamily}
-          FontWeight={this.props.FontWeight}
-          FontSize={this.props.FontSize}
-          buttonHoverColor={this.props.buttonHoverColor}
-          buttonHBGColor={this.props.buttonHBGColor}
-          buttonColor={this.props.buttonColor}
-          buttonBDColor={this.props.buttonBDColor}
-          buttonRadius={this.props.buttonRadius}
-          buttonBGColor={this.props.buttonBGColor}
-          buttonHBDColor={this.props.buttonHBDColor}
-        >
-        {this.props.button}</ChoiceButton>
-          </ListItem>
-          <ListItem>
-          <Radio
-          classes={{
-            root: classes.radio,
-            checked: classes.checked,
-          }}
-          checked={this.props.buttonSelected === this.props.value12}
-          onChange={this.props.buttonOnChangeSelected}
-          value={this.props.value12}
-          name="radio-button-demo"
-        />
-        <ChoiceButton className="slideLeft" 
-        content={this.props.button} 
-        swapContent={this.props.buttonSwap} 
-        FontFamily={this.props.FontFamily}
-        FontWeight={this.props.FontWeight}
-        FontSize={this.props.FontSize}
-        buttonSwapColor={this.props.buttonSwapColor}
-        buttonHBGColor={this.props.buttonHBGColor}
-        buttonColor={this.props.buttonColor}
-        buttonBDColor={this.props.buttonBDColor}
-        buttonRadius={this.props.buttonRadius}
-        buttonBGColor={this.props.buttonBGColor}
-        buttonHBDColor={this.props.buttonHBDColor}
-        >
-        &nbsp;</ChoiceButton>
-          </ListItem>
-          </List>
+              <List >  
+              <ListItem>
+                <Radio
+                  checked={this.props.buttonSelected === this.props.value2}
+                  onChange={this.props.buttonOnChangeSelected}
+                  value={this.props.value2}
+                  name="radio-button-demo"
+                />
+                <ChoiceButton className="fillUp"
+                  FontFamily={this.props.FontFamily}
+                  FontWeight={this.props.FontWeight}
+                  FontSize={this.props.FontSize}
+                  buttonHoverColor={this.props.buttonHoverColor}
+                  buttonHBGColor={this.props.buttonHBGColor}
+                  buttonColor={this.props.buttonColor}
+                  buttonBDColor={this.props.buttonBDColor}
+                  buttonRadius={this.props.buttonRadius}
+                  buttonBGColor={this.props.buttonBGColor}
+                  buttonHBDColor={this.props.buttonHBDColor} 
+                >
+                {this.props.button}</ChoiceButton>
+              </ListItem>
+              <ListItem>
+                <Radio
+                  checked={this.props.buttonSelected === this.props.value3}
+                  onChange={this.props.buttonOnChangeSelected}
+                  value={this.props.value3}
+                  name="radio-button-demo"
+                />
+                <ChoiceButton className="fillDown"
+                  FontFamily={this.props.FontFamily}
+                  FontWeight={this.props.FontWeight}
+                  FontSize={this.props.FontSize}
+                  buttonHoverColor={this.props.buttonHoverColor}
+                  buttonHBGColor={this.props.buttonHBGColor}
+                  buttonColor={this.props.buttonColor}
+                  buttonBDColor={this.props.buttonBDColor}
+                  buttonRadius={this.props.buttonRadius}
+                  buttonBGColor={this.props.buttonBGColor}
+                  buttonHBDColor={this.props.buttonHBDColor}
+                >
+                {this.props.button}</ChoiceButton>
+              </ListItem>
+              <ListItem>
+                <Radio
+                  checked={this.props.buttonSelected === this.props.value4}
+                  onChange={this.props.buttonOnChangeSelected}
+                  value={this.props.value4}
+                  name="radio-button-demo"
+                />
+                <ChoiceButton className="fillLeft"
+                  FontFamily={this.props.FontFamily}
+                  FontWeight={this.props.FontWeight}
+                  FontSize={this.props.FontSize}
+                  buttonHoverColor={this.props.buttonHoverColor}
+                  buttonHBGColor={this.props.buttonHBGColor}
+                  buttonColor={this.props.buttonColor}
+                  buttonBDColor={this.props.buttonBDColor}
+                  buttonRadius={this.props.buttonRadius}
+                  buttonBGColor={this.props.buttonBGColor}
+                  buttonHBDColor={this.props.buttonHBDColor}
+                >
+                {this.props.button}</ChoiceButton>
+              </ListItem>
+              <ListItem>
+                <Radio
+                  checked={this.props.buttonSelected === this.props.value5}
+                  onChange={this.props.buttonOnChangeSelected}
+                  value={this.props.value5}
+                  name="radio-button-demo"
+                />
+                <ChoiceButton  className="fillRight" 
+                  FontFamily={this.props.FontFamily}
+                  FontWeight={this.props.FontWeight}
+                  FontSize={this.props.FontSize}
+                  buttonHoverColor={this.props.buttonHoverColor}
+                  buttonHBGColor={this.props.buttonHBGColor}
+                  buttonColor={this.props.buttonColor}
+                  buttonBDColor={this.props.buttonBDColor}
+                  buttonRadius={this.props.buttonRadius}
+                  buttonBGColor={this.props.buttonBGColor} 
+                  buttonHBDColor={this.props.buttonHBDColor}
+                >
+                {this.props.button}</ChoiceButton>
+              </ListItem>
+              <ListItem>
+              <Radio
+                checked={this.props.buttonSelected === this.props.value6}
+                onChange={this.props.buttonOnChangeSelected}
+                value={this.props.value6}
+                name="radio-button-demo"
+              />
+              <ChoiceButton  className="fillMiddle"
+                FontFamily={this.props.FontFamily}
+                FontWeight={this.props.FontWeight}
+                FontSize={this.props.FontSize}
+                buttonHoverColor={this.props.buttonHoverColor}
+                buttonHBGColor={this.props.buttonHBGColor}
+                buttonColor={this.props.buttonColor}
+                buttonBDColor={this.props.buttonBDColor}
+                buttonRadius={this.props.buttonRadius}
+                buttonBGColor={this.props.buttonBGColor} 
+                buttonHBDColor={this.props.buttonHBDColor}
+              >
+              {this.props.button}</ChoiceButton>
+                </ListItem>
+                <ListItem>
+                <Radio
+                checked={this.props.buttonSelected === this.props.value7}
+                onChange={this.props.buttonOnChangeSelected}
+                value={this.props.value7}
+                name="radio-button-demo"
+              />
+              <ChoiceButton  className="fillOblique" 
+                FontFamily={this.props.FontFamily}
+                FontWeight={this.props.FontWeight}
+                FontSize={this.props.FontSize}
+                buttonHoverColor={this.props.buttonHoverColor}
+                buttonHBGColor={this.props.buttonHBGColor}
+                buttonColor={this.props.buttonColor}
+                buttonBDColor={this.props.buttonBDColor}
+                buttonRadius={this.props.buttonRadius}
+                buttonBGColor={this.props.buttonBGColor}
+                buttonHBDColor={this.props.buttonHBDColor}
+              >
+              {this.props.button}</ChoiceButton>
+                </ListItem>
+                <ListItem>
+                <Radio
+                checked={this.props.buttonSelected === this.props.value8}
+                onChange={this.props.buttonOnChangeSelected}
+                value={this.props.value8}
+                name="radio-button-demo"
+              />
+              <ChoiceButton  className="fillOn" 
+                FontFamily={this.props.FontFamily}
+                FontWeight={this.props.FontWeight}
+                FontSize={this.props.FontSize}
+                buttonHoverColor={this.props.buttonHoverColor}
+                buttonHBGColor={this.props.buttonHBGColor}
+                buttonColor={this.props.buttonColor}
+                buttonBDColor={this.props.buttonBDColor}
+                buttonRadius={this.props.buttonRadius}
+                buttonBGColor={this.props.buttonBGColor}
+                buttonHBDColor={this.props.buttonHBDColor}
+              >
+              {this.props.button}</ChoiceButton>
+                </ListItem>
+                <ListItem>
+                <Radio
+                checked={this.props.buttonSelected === this.props.value9}
+                onChange={this.props.buttonOnChangeSelected}
+                value={this.props.value9}
+                name="radio-button-demo"
+              />
+              <ChoiceButton className="arrow" 
+                FontFamily={this.props.FontFamily}
+                FontWeight={this.props.FontWeight}
+                FontSize={this.props.FontSize}
+                buttonColor={this.props.buttonColor}
+                buttonBDColor={this.props.buttonBDColor}
+                buttonRadius={this.props.buttonRadius}
+                buttonBGColor={this.props.buttonBGColor} 
+                buttonHBDColor={this.props.buttonHBDColor}
+                buttonHBGColor={this.props.buttonHBGColor}
+              >
+              {this.props.button}</ChoiceButton>
+                </ListItem> 
+                <ListItem>
+                <Radio
+                checked={this.props.buttonSelected === this.props.value11}
+                onChange={this.props.buttonOnChangeSelected}
+                value={this.props.value11}
+                classes={{
+                  root: classes.radio,
+                  checked: classes.checked,
+                }}
+                name="radio-button-demo"
+              />
+              <ChoiceButton content={this.props.button} swapContent={this.props.buttonSwap} className="slide" 
+                FontFamily={this.props.FontFamily}
+                FontWeight={this.props.FontWeight}
+                FontSize={this.props.FontSize}
+                buttonSwapColor={this.props.buttonSwapColor}
+                buttonHBGColor={this.props.buttonHBGColor}
+                buttonColor={this.props.buttonColor}
+                buttonBDColor={this.props.buttonBDColor}
+                buttonRadius={this.props.buttonRadius}
+                buttonBGColor={this.props.buttonBGColor}
+                buttonHBDColor={this.props.buttonHBDColor}
+              >
+              &nbsp;</ChoiceButton>
+              </ListItem>
+                <ListItem>
+                <Radio
+                classes={{
+                  root: classes.radio,
+                  checked: classes.checked,
+                }}
+                checked={this.props.buttonSelected === this.props.value12}
+                onChange={this.props.buttonOnChangeSelected}
+                value={this.props.value12}
+                name="radio-button-demo"
+              />
+              <ChoiceButton className="slideLeft" 
+              content={this.props.button} 
+              swapContent={this.props.buttonSwap} 
+              FontFamily={this.props.FontFamily}
+              FontWeight={this.props.FontWeight}
+              FontSize={this.props.FontSize}
+              buttonSwapColor={this.props.buttonSwapColor}
+              buttonHBGColor={this.props.buttonHBGColor}
+              buttonColor={this.props.buttonColor}
+              buttonBDColor={this.props.buttonBDColor}
+              buttonRadius={this.props.buttonRadius}
+              buttonBGColor={this.props.buttonBGColor}
+              buttonHBDColor={this.props.buttonHBDColor}
+              >
+              &nbsp;</ChoiceButton>
+                </ListItem>
+                </List>
 
             </Popover>  
             </List>  
         <Divider />
-        <div style={button}>
-        <ChoiceButton  className={this.props.buttonSelected} 
-          FontFamily={this.props.FontFamily}
-          FontWeight={this.props.FontWeight}
-          FontSize={this.props.FontSize}
-          FontStyle={this.props.FontStyle}
-          buttonHoverColor={this.props.buttonHoverColor}
-          buttonHBGColor={this.props.buttonHBGColor}
-          buttonColor={this.props.buttonColor}
-          buttonBDColor={this.props.buttonBDColor}
-          buttonRadius={this.props.buttonRadius}
-          buttonBGColor={this.props.buttonBGColor}
-          buttonHBDColor={this.props.buttonHBDColor}
-        >{this.props.button}</ChoiceButton>
+        <div style={divButton}>
+            {button}
         </div>
       </Dialog>
       </div>

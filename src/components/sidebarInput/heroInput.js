@@ -143,7 +143,6 @@ class NestedList extends React.Component {
               buttonOnChangeLink={this.props.heroButtonOnChangeLink}
               buttonOnChangeSwap={this.props.heroButtonOnChangeSwap}
               buttonOnChangeSelected={this.props.heroButtonOnChangeSelected}
-              value1="none"
               value2="fillUp"
               value3="fillDown"
               value4="fillLeft"
@@ -152,7 +151,6 @@ class NestedList extends React.Component {
               value7="fillOblique"
               value8="fillOn"
               value9="arrow"
-              value10="fade"
               value11="slide"
               value12="slideLeft"
               animate={this.props.heroButtonAnimate} 
