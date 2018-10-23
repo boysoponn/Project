@@ -94,8 +94,9 @@ class InputButton extends React.Component {
   handleClick4 = event => {this.setState({anchorEl4: event.currentTarget,});};
   handleClose4 = () => {this.setState({anchorEl4: null,});};
   render() {
-    const button;
-    if(this.props.buttonSelected !== this.props.value12  ){
+    let button;
+    let swaplabel;
+    if(this.props.buttonSelected !== this.props.value12 && this.props.buttonSelected !== this.props.value11 ){
       button =         
       <ChoiceButton  
       className={this.props.buttonSelected} 
@@ -111,6 +112,41 @@ class InputButton extends React.Component {
       buttonBGColor={this.props.buttonBGColor}
       buttonHBDColor={this.props.buttonHBDColor}
     >{this.props.button}</ChoiceButton>
+    swaplabel = null;
+    }
+    else{
+      button = 
+      <ChoiceButton content={this.props.button} swapContent={this.props.buttonSwap} className="slide" 
+      FontFamily={this.props.FontFamily}
+      FontWeight={this.props.FontWeight}
+      FontSize={this.props.FontSize}
+      FontStyle={this.props.FontStyle}
+      buttonSwapColor={this.props.buttonSwapColor}
+      buttonHBGColor={this.props.buttonHBGColor}
+      buttonColor={this.props.buttonColor}
+      buttonBDColor={this.props.buttonBDColor}
+      buttonRadius={this.props.buttonRadius}
+      buttonBGColor={this.props.buttonBGColor}
+      buttonHBDColor={this.props.buttonHBDColor}
+    >
+    &nbsp;</ChoiceButton>
+
+      swaplabel =  
+      <ListItem>
+      <Text
+        type="text"
+        label= "Swap Label Button"
+        value={this.props.buttonSwap}
+        onChange={this.props.buttonOnChangeSwap}
+      />
+      <PickColor
+      padding="0"
+      width="20px"
+      height="20px"
+      color={this.props.buttonSwapColor}
+      onChange={this.props.buttonOnChangeSwapColor}
+      />
+      </ListItem>
     };
     const pickColor={
       color: '#757575',
@@ -174,161 +210,24 @@ class InputButton extends React.Component {
             onChange={this.props.buttonOnChangeLink}
           />
         </ListItem>
-        <List>
-        <Button variant="contained" onClick={this.handleClick1} component="span" color="secondary" className={classes.buttonSetting}>
-        Label
-        </Button>
-            <Popover
-              open={open1}
-              anchorEl={anchorEl1}
-              onClose={this.handleClose1}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-            >
-              <ListItem>
-              <Text
-                type="text"
-                label={this.props.label}
-                value={this.props.button}
-                onChange={this.props.buttonOnChange}
-              />
-              <PickColor
-              padding="0"
-              width="20px"
-              height="20px"
-              color={this.props.buttonColor}
-              onChange={this.props.buttonOnChangeColor}
-              />
-              </ListItem>
-              <ListItem>
-              <Text
-                type="text"
-                label= "Swap Label Button"
-                value={this.props.buttonSwap}
-                onChange={this.props.buttonOnChangeSwap}
-              />
-              <PickColor
-              padding="0"
-              width="20px"
-              height="20px"
-              color={this.props.buttonSwapColor}
-              onChange={this.props.buttonOnChangeSwapColor}
-              />
-              </ListItem>
-              <ListItem>
-                <p style={pickColor}>Hover Color&nbsp;&nbsp;&nbsp;</p>
-                <PickColor
-                padding="0"
-                width="30px"
-                height="20px"
-                color={this.props.buttonHoverColor}
-                onChange={this.props.buttonOnChangeHoverColor}
-                />
-                </ListItem>            
-            </Popover>  
-
-        <Button variant="contained" onClick={this.handleClick2} component="span" color="secondary" className={classes.buttonSetting}>
-        Background
-        </Button>
-            <Popover
-              open={open2}
-              anchorEl={anchorEl2}
-              onClose={this.handleClose2}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-            >
-                <ListItem>
-                <p style={pickColor}> Background Color&nbsp;&nbsp;&nbsp;</p>
-                <PickColor
-                padding="0"
-                width="30px"
-                height="20px"
-                color={this.props.buttonBGColor}
-                onChange={this.props.buttonOnChangeBGColor}
-                />
-                </ListItem>
-                <ListItem>
-                <p style={pickColor}>Hover Background Color&nbsp;&nbsp;&nbsp;</p>
-                <PickColor
-                padding="0"
-                width="30px"
-                height="20px"
-                color={this.props.buttonHBGColor}
-                onChange={this.props.buttonOnChangeHBGColor}
-                />
-                </ListItem>
-            </Popover>  
-
-        <Button variant="contained" onClick={this.handleClick3} component="span" color="secondary" className={classes.buttonSetting}>
-        Border
-        </Button>
-            <Popover
-              open={open3}
-              anchorEl={anchorEl3}
-              onClose={this.handleClose3}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-            >
-                <ListItem>
+        <ListItem>
                 <form className={classes} autoComplete="off">
                   <FormControl className={classes.formControl}>
-                  <InputLabel htmlFor="age-simple">Border Radius</InputLabel>
+                  <InputLabel htmlFor="age-simple">Link Target</InputLabel>
                   <Select 
                     variant='outlined'
-                      value={this.props.buttonRadius}
-                      onChange={this.props.buttonOnChangeRadius}
+                      value={this.props.buttonLinkTarget}
+                      onChange={this.props.buttonOnChangeLinkTarget}
                       MenuProps={MenuProps}
                   >   
-                      <MenuItem value={'0px'}>none</MenuItem>
-                      <MenuItem value={'5px'}>Radius No.1</MenuItem>
-                      <MenuItem value={'10px'}>Radius No.2</MenuItem>
-                      <MenuItem value={'20px'}>Radius No.3</MenuItem>
-                      <MenuItem value={'30px'}>Radius No.4</MenuItem>
+                      <MenuItem value={'_blank'}>New Window</MenuItem>
+                      <MenuItem value={'_self'}>Self</MenuItem>
                   </Select>
                   </FormControl>
                 </form>
-                </ListItem>
-                <ListItem>
-                <p style={pickColor}>Boder Color&nbsp;&nbsp;&nbsp;</p>
-                <PickColor
-                padding="0"
-                width="30px"
-                height="20px"
-                color={this.props.buttonBDColor}
-                onChange={this.props.buttonOnChangeBDColor}
-                />
-                </ListItem>
-                <ListItem>
-                <p style={pickColor}>Hover Boder Color&nbsp;&nbsp;&nbsp;</p>
-                <PickColor
-                padding="0"
-                width="30px"
-                height="20px"
-                color={this.props.buttonHBDColor}
-                onChange={this.props.buttonOnChangeHBDColor}
-                />
-                </ListItem> 
-            </Popover>  
-            
-            <Button variant="contained" onClick={this.handleClick4} component="span" color="secondary" className={classes.buttonSetting}>
+        </ListItem>
+        <List>
+        <Button variant="contained" onClick={this.handleClick4} component="span" color="secondary" className={classes.buttonSetting}>
         Animation
         </Button>
             <Popover
@@ -567,7 +466,146 @@ class InputButton extends React.Component {
                 </ListItem>
                 </List>
 
+            </Popover> 
+        <Button variant="contained" onClick={this.handleClick1} component="span" color="secondary" className={classes.buttonSetting}>
+        Label
+        </Button>
+            <Popover
+              open={open1}
+              anchorEl={anchorEl1}
+              onClose={this.handleClose1}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+            >
+              <ListItem>
+              <Text
+                type="text"
+                label={this.props.label}
+                value={this.props.button}
+                onChange={this.props.buttonOnChange}
+              />
+              <PickColor
+              padding="0"
+              width="20px"
+              height="20px"
+              color={this.props.buttonColor}
+              onChange={this.props.buttonOnChangeColor}
+              />
+              </ListItem>
+                {swaplabel}
+              <ListItem>
+                <p style={pickColor}>Hover Color&nbsp;&nbsp;&nbsp;</p>
+                <PickColor
+                padding="0"
+                width="30px"
+                height="20px"
+                color={this.props.buttonHoverColor}
+                onChange={this.props.buttonOnChangeHoverColor}
+                />
+                </ListItem>            
             </Popover>  
+
+        <Button variant="contained" onClick={this.handleClick2} component="span" color="secondary" className={classes.buttonSetting}>
+        Background
+        </Button>
+            <Popover
+              open={open2}
+              anchorEl={anchorEl2}
+              onClose={this.handleClose2}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+            >
+                <ListItem>
+                <p style={pickColor}> Background Color&nbsp;&nbsp;&nbsp;</p>
+                <PickColor
+                padding="0"
+                width="30px"
+                height="20px"
+                color={this.props.buttonBGColor}
+                onChange={this.props.buttonOnChangeBGColor}
+                />
+                </ListItem>
+                <ListItem>
+                <p style={pickColor}>Hover Background Color&nbsp;&nbsp;&nbsp;</p>
+                <PickColor
+                padding="0"
+                width="30px"
+                height="20px"
+                color={this.props.buttonHBGColor}
+                onChange={this.props.buttonOnChangeHBGColor}
+                />
+                </ListItem>
+            </Popover>  
+
+        <Button variant="contained" onClick={this.handleClick3} component="span" color="secondary" className={classes.buttonSetting}>
+        Border
+        </Button>
+            <Popover
+              open={open3}
+              anchorEl={anchorEl3}
+              onClose={this.handleClose3}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+            >
+                <ListItem>
+                <form className={classes} autoComplete="off">
+                  <FormControl className={classes.formControl}>
+                  <InputLabel htmlFor="age-simple">Border Radius</InputLabel>
+                  <Select 
+                    variant='outlined'
+                      value={this.props.buttonRadius}
+                      onChange={this.props.buttonOnChangeRadius}
+                      MenuProps={MenuProps}
+                  >   
+                      <MenuItem value={'0px'}>none</MenuItem>
+                      <MenuItem value={'5px'}>Radius No.1</MenuItem>
+                      <MenuItem value={'10px'}>Radius No.2</MenuItem>
+                      <MenuItem value={'20px'}>Radius No.3</MenuItem>
+                      <MenuItem value={'30px'}>Radius No.4</MenuItem>
+                  </Select>
+                  </FormControl>
+                </form>
+                </ListItem>
+                <ListItem>
+                <p style={pickColor}>Boder Color&nbsp;&nbsp;&nbsp;</p>
+                <PickColor
+                padding="0"
+                width="30px"
+                height="20px"
+                color={this.props.buttonBDColor}
+                onChange={this.props.buttonOnChangeBDColor}
+                />
+                </ListItem>
+                <ListItem>
+                <p style={pickColor}>Hover Boder Color&nbsp;&nbsp;&nbsp;</p>
+                <PickColor
+                padding="0"
+                width="30px"
+                height="20px"
+                color={this.props.buttonHBDColor}
+                onChange={this.props.buttonOnChangeHBDColor}
+                />
+                </ListItem> 
+            </Popover>  
+           
             </List>  
         <Divider />
         <div style={divButton}>

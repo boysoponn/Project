@@ -117,6 +117,7 @@ class NestedList extends React.Component {
               buttonSelected={this.props.heroButtonSelected}
               buttonSwap={this.props.heroButtonSwap}
               buttonLink={this.props.heroButtonLink}
+              buttonLinkTarget={this.props.heroButtonLinkTarget}
               buttonRadius={this.props.heroButtonRadius}
               buttonBGColor={this.props.heroButtonBGColor}
               buttonHBGColor={this.props.heroButtonHBGColor}
@@ -141,6 +142,7 @@ class NestedList extends React.Component {
               buttonOnChangeBGColor={this.props.heroButtonOnChangeBGColor}
               buttonOnChangeRadius={this.props.heroButtonOnChangeRadius}
               buttonOnChangeLink={this.props.heroButtonOnChangeLink}
+              buttonOnChangeLinkTarget={this.props.heroButtonOnChangeLinkTarget}
               buttonOnChangeSwap={this.props.heroButtonOnChangeSwap}
               buttonOnChangeSelected={this.props.heroButtonOnChangeSelected}
               value2="fillUp"

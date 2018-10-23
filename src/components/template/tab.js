@@ -362,6 +362,27 @@ class TabWebsite extends React.Component {
               heroDescriptionStatus={this.props.heroDescriptionStatus}
               heroDescriptionAnimate={this.props.heroDescriptionAnimate} 
               heroDescriptionColor={this.props.heroDescriptionColor}
+
+              heroButton={this.props.heroButton} 
+              heroButtonSelected={this.props.heroButtonSelected}
+              heroButtonAnimate={this.props.heroButtonAnimate} 
+              heroButtonDuration={this.props.heroButtonDuration} 
+              heroButtonFontFamily={this.props.heroButtonFontFamily}
+              heroButtonFontSize={this.props.heroButtonFontSize}
+              heroButtonFontWeight={this.props.heroButtonFontWeight}
+              heroButtonFontStyle={this.props.heroButtonFontStyle}
+              heroButtonStatus={this.props.heroButtonStatus}
+              heroButtonColor={this.props.heroButtonColor}
+              heroButtonSwapColor={this.props.heroButtonSwapColor}
+              heroButtonSwap={this.props.heroButtonSwap}
+              heroButtonLink={this.props.heroButtonLink}
+              heroButtonLinkTarget={this.props.heroButtonLinkTarget}
+              heroButtonRadius={this.props.heroButtonRadius}
+              heroButtonBGColor={this.props.heroButtonBGColor}
+              heroButtonHBGColor={this.props.heroButtonHBGColor}
+              heroButtonBDColor={this.props.heroButtonBDColor}
+              heroButtonHBDColor={this.props.heroButtonHBDColor}
+              heroButtonHoverColor={this.props.heroButtonHoverColor}
             />
             </div>
           )))}   

@@ -40,15 +40,45 @@ class HeroNo1 extends React.Component {
         fontStyle:this.props.heroDescriptionFontStyle,
         display:this.props.heroDescriptionStatus
     };
-    const button={
-        opacity: 1,
-        color:this.props.HeroDescriptionColor,
-        animationDuration: this.props.heroDescriptionDuration,
-        fontFamily:this.props.heroDescriptionFontFamily,
-        fontSize:this.props.heroDescriptionFontSize,
-        fontWeight:this.props.heroDescriptionFontWeight,
-        fontStyle:this.props.heroDescriptionFontStyle,
-        display:this.props.heroDescriptionStatus
+    const buttonAnimate={
+      opacity: 1,
+      animationDuration: this.props.heroDescriptionDuration,
+      display:this.props.heroDescriptionStatus
+    };
+    let button;
+    if(this.props.heroButtonSelected !== "slideLeft" && this.props.heroButtonSelected !== "slide" ){
+      button =         
+      <ChoiceButton  
+      className={this.props.heroButtonSelected} 
+      FontFamily={this.props.heroButtonFontFamily}
+      FontWeight={this.props.heroButtonFontWeight}
+      FontSize={this.props.heroButtonFontSize}
+      FontStyle={this.props.heroButtonFontStyle}
+      buttonHoverColor={this.props.heroButtonHoverColor}
+      buttonHBGColor={this.props.heroButtonHBGColor}
+      buttonColor={this.props.heroButtonColor}
+      buttonBDColor={this.props.heroButtonBDColor}
+      buttonRadius={this.props.heroButtonRadius}
+      buttonBGColor={this.props.heroButtonBGColor}
+      buttonHBDColor={this.props.heroButtonHBDColor}
+    >{this.props.heroButton}</ChoiceButton>
+    }
+    else{
+      button = 
+      <ChoiceButton content={this.props.heroButton} swapContent={this.props.heroButtonSwap} className="slide" 
+      FontFamily={this.props.heroButtonFontFamily}
+      FontWeight={this.props.heroButtonFontWeight}
+      FontSize={this.props.heroButtonFontSize}
+      FontStyle={this.props.heroButtonFontStyle}
+      buttonSwapColor={this.props.heroButtonSwapColor}
+      buttonHBGColor={this.props.heroButtonHBGColor}
+      buttonColor={this.props.heroButtonColor}
+      buttonBDColor={this.props.heroButtonBDColor}
+      buttonRadius={this.props.heroButtonRadius}
+      buttonBGColor={this.props.heroButtonBGColor}
+      buttonHBDColor={this.props.heroButtonHBDColor}
+    >
+    &nbsp;</ChoiceButton>
     };
     return (
         <div style={background}>  
@@ -59,9 +89,10 @@ class HeroNo1 extends React.Component {
             <ScrollAnimation style={description} className={this.props.heroDescriptionAnimate} >
             {this.props.heroDescription}
             </ScrollAnimation> 
-            {/* <ScrollAnimation style={button} className={this.props.buttonAnimate} >
-            <ChoiceButton content={this.props.button} swapContent={this.props.buttonSwap} className={this.props.buttonSelected}>{this.props.button}</ChoiceButton>
-            </ScrollAnimation>  */}
+
+            <ScrollAnimation style={buttonAnimate} className={this.props.herobuttonAnimate}>
+              <a href={this.props.heroButtonLink} target={this.props.heroButtonLinkTarget}>{button}</a>
+            </ScrollAnimation > 
             </div>
         </div> 
     );
@@ -71,24 +102,23 @@ class HeroNo1 extends React.Component {
 export default connect()(HeroNo1);
 
 
-
 const ChoiceButton = styled.button`
-position: relative;
-  display:${props => props.display} ;
+  position: relative;
   height: 60px;
   width: 200px;
   margin: 10px 7px;
   padding: 5px 5px;
-  font-weight: 700;
-  font-size: 15px;
+  font-family:${props => props.FontFamily};
+  font-weight: ${props => props.FontWeight};
+  font-size: ${props => props.FontSize};
   letter-spacing: 2px;
-  color: #383736;
-  border: 2px #383736 solid;
-  border-radius: 4px;
+  color: ${props => props.buttonColor};
+  border: 2px ${props => props.buttonBDColor} solid;
+  border-radius: ${props => props.buttonRadius};
   text-transform: uppercase;
   outline: 0;
   overflow:hidden;
-  background: none;
+  background: ${props => props.buttonBGColor};
   z-index: 1;
   cursor: pointer;
   transition:         0.09s ease-in;
@@ -96,14 +126,18 @@ position: relative;
   -ms-transition:     0.09s ease-in;
   -moz-transition:    0.09s ease-in;
   -webkit-transition: 0.09s ease-in;
+  :hover{
+    border: 2px ${props => props.buttonHBDColor} solid; 
+    color:${props => props.buttonHoverColor}
+  }
   .fillUp&{
     :hover {
-      color: whitesmoke;
+      color:  ${props => props.buttonHoverColor};
     }
     :before {
       content: "";
       position: absolute;
-      background: #383736;
+      background: ${props => props.buttonHBGColor};
       bottom: 0;
       left:0 ;
       right: 0;
@@ -118,12 +152,12 @@ position: relative;
   }
   .fillDown&{
     :hover {
-      color: whitesmoke;
+      color: ${props => props.buttonHoverColor};
     }
     :before {
       content: "";
       position: absolute;
-      background: #383736;
+      background: ${props => props.buttonHBGColor};
       bottom: 100%;
       left:0 ;
       right: 0;
@@ -138,12 +172,12 @@ position: relative;
   }
   .fillRight&{
     :hover {
-      color: whitesmoke;
+      color: ${props => props.buttonHoverColor};
     }
     :before {
       content: "";
       position: absolute;
-      background: #383736;
+      background: ${props => props.buttonHBGColor};
       bottom: 0;
       left:0 ;
       right: 100%;
@@ -158,12 +192,12 @@ position: relative;
   }
   .fillLeft&{
     :hover {
-      color: whitesmoke;
+      color: ${props => props.buttonHoverColor};;
     }
     :before {
       content: "";
       position: absolute;
-      background: #383736;
+      background: ${props => props.buttonHBGColor};
       bottom: 0;
       left:100% ;
       right: 0;
@@ -178,12 +212,12 @@ position: relative;
   }
   .fillMiddle&{
     :hover {
-      color: whitesmoke;
+      color: ${props => props.buttonHoverColor};;
     }
     :before {
       content: "";
       position: absolute;
-      background: #383736;
+      background: ${props => props.buttonHBGColor};
       bottom: 50%;
       left:0 ;
       right: 0;
@@ -199,12 +233,12 @@ position: relative;
   }
   .fillOblique&{
     :hover {
-      color: whitesmoke;
+      color: ${props => props.buttonHoverColor};;
     }
     :before {
       content: "";
       position: absolute;
-      background: #383736;
+      background:${props => props.buttonHBGColor};
       bottom: 0;
       left:50% ;
       right: 50%;
@@ -220,12 +254,12 @@ position: relative;
   }
   .fillOn&{
     :hover {
-      color: whitesmoke;
+      color: ${props => props.buttonHoverColor};;
     }
     :before {
       content: "";
       position: absolute;
-      background: #383736;
+      background:${props => props.buttonHBGColor};
       bottom: 50%;
       left:50% ;
       right: 50%;
@@ -247,8 +281,9 @@ position: relative;
     :before{
       content:"→";
       position:absolute;
-      color:#383736;
+      color:${props => props.buttonHoverColor};
       left: 83%;
+
       opacity: 0;
       -webkit-transition: all 250ms cubic-bezier(0.680, -0.550, 0.265, 1.550); 
     }
@@ -258,26 +293,7 @@ position: relative;
     }
     :hover {
       width:170px;
-    }
-  }
-  .fade&{
-    :before{
-      content:"→";
-      position:absolute;
-      color:#383736;
-      left: 88%;
-      opacity: 0;
-      -webkit-transition: all 0.2s ease-in;
-    }
-    :hover:before{
-      left:91%;
-      opacity:1;
-    }
-    :hover {
-      border: 0px #fff solid;
-      -webkit-transform: scale(1.04,1.04);
-      -webkit-transition: border 0.3s ease-out;
-      -webkit-transition: transform 250ms cubic-bezier(0.680, -0.550, 0.265, 1.550); 
+      background:${props => props.buttonHBGColor};
     }
   }
   .slide&{
@@ -295,18 +311,18 @@ position: relative;
       height:100%;
       width:100%;
       position:absolute;
-      color:#383736;
+      color:${props => props.buttonColor};
       left:-100%;
       opacity: 0;
       -webkit-transition: all 500ms cubic-bezier(0.680, -0.550, 0.265, 1.550); 
     }
     :hover{
-      background:#383736;
+      background:${props => props.buttonHBGColor};
     }
     :hover:before{
       left:0;
       opacity:1;
-      color:#fff;
+      color:${props => props.buttonSwapColor};
     }
     :hover:after{
       left:100%;
@@ -330,14 +346,15 @@ position: relative;
       position:absolute;
       opacity: 1;
       left:100%;
-      color:#383736;
+      color:${props => props.buttonColor};
       -webkit-transition: all 425ms cubic-bezier(0.680, -0.550, 0.265, 1.550); 
     }
     :hover{
-      background:none;
+      background:${props => props.buttonHBGColor};
     }
     :hover:before{
       left:0;
+      color:${props => props.buttonSwapColor};
     }
     :hover:after{
       left:100%;

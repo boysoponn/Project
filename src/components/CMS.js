@@ -151,6 +151,7 @@ class CMS extends React.Component {
   this.heroButtonOnChangeBGColor = this.heroButtonOnChangeBGColor.bind(this); 
   this.heroButtonOnChangeRadius = this.heroButtonOnChangeRadius.bind(this);
   this.heroButtonOnChangeLink = this.heroButtonOnChangeLink.bind(this); 
+  this.heroButtonOnChangeLinkTarget = this.heroButtonOnChangeLinkTarget.bind(this); 
   this.heroButtonOnChangeSwap = this.heroButtonOnChangeSwap.bind(this);
   this.heroButtonOnChangeSwapColor = this.heroButtonOnChangeSwapColor.bind(this);
   this.heroButtonOnChangeHoverColor = this.heroButtonOnChangeHoverColor.bind(this);
@@ -314,6 +315,7 @@ componentWillReceiveProps(nextProps){
   heroButtonOnChangeStatus (e) {this.setState({ heroButtonStatus: e.target.value });};
   heroButtonOnChangeSwap = (e) => {this.setState({ heroButtonSwap: e.target.value });};
   heroButtonOnChangeLink (e) {this.setState({ heroButtonLink: e.target.value });};
+  heroButtonOnChangeLinkTarget (e) {this.setState({ heroButtonLinkTarget: e.target.value });};
   heroButtonOnChangeRadius (e) {this.setState({ heroButtonRadius: e.target.value });};
   heroButtonOnChangeBGColor (color) {this.setState({ heroButtonBGColor: color.hex });};
   heroButtonOnChangeHBGColor (color) {this.setState({ heroButtonHBGColor: color.hex });};
@@ -383,6 +385,7 @@ componentWillReceiveProps(nextProps){
       heroButtonSwapColor={this.state.heroButtonSwapColor}
       heroButtonSwap={this.state.heroButtonSwap}
       heroButtonLink={this.state.heroButtonLink}
+      heroButtonLinkTarget={this.state.heroButtonLinkTarget}
       heroButtonRadius={this.state.heroButtonRadius}
       heroButtonBGColor={this.state.heroButtonBGColor}
       heroButtonHBGColor={this.state.heroButtonHBGColor}
@@ -397,6 +400,7 @@ componentWillReceiveProps(nextProps){
       heroButtonOnChangeBGColor={this.heroButtonOnChangeBGColor}
       heroButtonOnChangeRadius={this.heroButtonOnChangeRadius}
       heroButtonOnChangeLink={this.heroButtonOnChangeLink}
+      heroButtonOnChangeLinkTarget={this.heroButtonOnChangeLinkTarget}
       heroButtonOnChangeSwap={this.heroButtonOnChangeSwap}
       heroButtonOnChangeSelected={this.heroButtonOnChangeSelected}
       heroButtonOnChange={this.heroButtonOnChange}
@@ -525,6 +529,7 @@ componentWillReceiveProps(nextProps){
               heroButtonSwapColor={this.state.heroButtonSwapColor}
               heroButtonSwap={this.state.heroButtonSwap}
               heroButtonLink={this.state.heroButtonLink}
+              heroButtonLinkTarget={this.state.heroButtonLinkTarget}
               heroButtonRadius={this.state.heroButtonRadius}
               heroButtonBGColor={this.state.heroButtonBGColor}
               heroButtonHBGColor={this.state.heroButtonHBGColor}
@@ -539,6 +544,7 @@ componentWillReceiveProps(nextProps){
               heroButtonOnChangeBGColor={this.heroButtonOnChangeBGColor}
               heroButtonOnChangeRadius={this.heroButtonOnChangeRadius}
               heroButtonOnChangeLink={this.heroButtonOnChangeLink}
+              heroButtonOnChangeLinkTarget={this.heroButtonOnChangeLinkTarget}
               heroButtonOnChangeSwap={this.heroButtonOnChangeSwap}
               heroButtonOnChangeSelected={this.heroButtonOnChangeSelected}
               heroButtonOnChange={this.heroButtonOnChange}

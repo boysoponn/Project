@@ -80,7 +80,8 @@ const LoginWithRestriction = withRestriction2(Member);
           <Route path="/login" component={LoginWithRestriction} />   
           <Route path="/message" component={exmessage} /> 
           <Route path="/cms" component={CMSWithRestriction} />   
-          <Route path="/header" component={AppWithConnect} />                
+          <Route path="/header" component={AppWithConnect} />   
+          <Route path="/test" component={Cms} />                
         </div>
       </Router>
     );
