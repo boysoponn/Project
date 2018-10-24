@@ -14,7 +14,7 @@ import IN from './IN'
 import ButtonForNewTab from './buttonForNew'
 import { connect } from 'react-redux'
 import { checkTab} from '../actions'
-
+import SaveIcon from '@material-ui/icons/Save';
 
 
 const styles = theme => ({
@@ -33,6 +33,7 @@ const styles = theme => ({
   rightIcon: {
     marginLeft:5,
   },
+
 });
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -46,6 +47,7 @@ class TabWebsite extends React.Component {
     this.saveEdit = this.saveEdit.bind(this);
     this.deletePage = this.deletePage.bind(this);
     this.setNullValue = this.setNullValue.bind(this);
+    this.save = this.save.bind(this);
       this.state = {
         value: 0,
         num:1,
@@ -194,7 +196,7 @@ class TabWebsite extends React.Component {
         heroDescriptionStatus:'block',
         heroDescriptionColor:'#fff',
         heroButton:'Button',
-        heroButtonSelected:'heroButtonValue1',
+        heroButtonSelected:'fillRight',
         heroButtonAnimate:'none',
         heroButtonDuration:'1s',
         heroButtonFontFamily:'Roboto Mono',
@@ -202,16 +204,78 @@ class TabWebsite extends React.Component {
         heroButtonFontWeight:'400',
         heroButtonFontStyle:'normal',
         heroButtonStatus:'block',
-        heroButtonColor:'#fff',
+        heroButtonColor:'#228B22',
+        heroButtonSwapColor:"#FFFFFF",
+        heroButtonSwap:"Let go",
+        heroButtonLink:"",
+        heroButtonLinkTarget:"_blank",
+        heroButtonRadius:"10px",
+        heroButtonBGColor:"#FFFFFF",
+        heroButtonHBGColor:"#228B22",
+        heroButtonBDColor:"#228B22",
+        heroButtonHBDColor:"#FFFFFF",
+        heroButtonHoverColor:"#FFFFFF",
       }
     })    
     }
+    this.setNullValue();
+    this.handleClose();
   };
 
   deletePage(){
     let dbCon = config.database().ref('project/test');
     dbCon.child(this.props.tabs).remove();
   }
+
+  save(){
+    let dbCon = config.database().ref('project/test/'+this.props.tabs);
+    dbCon.update({
+    heroContent:{
+      heroBackgroundImage:this.props.heroBackgroundImage,
+      heroTitle:this.props.heroTitle,
+      heroTitleAnimate:this.props.heroTitleAnimate,
+      heroTitleDuration:this.props.heroTitleDuration,
+      heroTitleFontFamily:this.props.heroTitleFontFamily,
+      heroTitleFontSize:this.props.heroTitleFontSize,
+      heroTitleFontWeight:this.props.heroTitleFontWeight,
+      heroTitleFontStyle:this.props.heroTitleFontStyle,
+      heroTitleStatus:this.props.heroTitleStatus,
+      heroTitleColor:this.props.heroTitleColor,
+      
+      heroDescription:this.props.heroDescription,
+      heroDescriptionAnimate:this.props.heroDescriptionAnimate,
+      heroDescriptionDuration:this.props.heroDescriptionDuration,
+      heroDescriptionFontFamily:this.props.heroDescriptionFontFamily,
+      heroDescriptionFontSize:this.props.heroDescriptionFontSize,
+      heroDescriptionFontWeight:this.props.heroDescriptionFontWeight,
+      heroDescriptionFontStyle:this.props.heroDescriptionFontStyle,
+      heroDescriptionStatus:this.props.heroDescriptionStatus,
+      heroDescriptionColor:this.props.heroDescriptionColor,
+
+      heroButton:this.props.heroButton,
+      heroButtonSelected:this.props.heroButtonSelected,
+      heroButtonAnimate:this.props.heroButtonAnimate,
+      heroButtonDuration:this.props.heroButtonDuration,
+      heroButtonFontFamily:this.props.heroButtonFontFamily,
+      heroButtonFontSize:this.props.heroButtonFontSize,
+      heroButtonFontWeight:this.props.heroButtonFontWeight,
+      heroButtonFontStyle:this.props.heroButtonFontStyle,
+      heroButtonStatus:this.props.heroButtonStatus,
+      heroButtonColor:this.props.heroButtonColor,
+      heroButtonSwapColor:this.props.heroButtonSwapColor,
+      heroButtonSwap:this.props.heroButtonSwap,
+      heroButtonLink:this.props.heroButtonLink,
+      heroButtonLinkTarget:this.props.heroButtonLinkTarget,
+      heroButtonRadius:this.props.heroButtonRadius,
+      heroButtonBGColor:this.props.heroButtonBGColor,
+      heroButtonHBGColor:this.props.heroButtonHBGColor,
+      heroButtonBDColor:this.props.heroButtonBDColor,
+      heroButtonHBDColor:this.props.heroButtonHBDColor,
+      heroButtonHoverColor:this.props.heroButtonHoverColor,
+    }
+    });
+    alert("saved") 
+  };
 
   render() {
     const { classes, theme } = this.props;
@@ -220,6 +284,10 @@ class TabWebsite extends React.Component {
     }); 
     return (
     <div>
+      <Button variant="contained" color="secondary" onClick={this.save} className={classes.button}>
+        SAVE
+        <SaveIcon className={classes.rightIcon} />
+      </Button>
       <div>
       <ButtonForNewTab
       icon="add"
@@ -342,7 +410,7 @@ class TabWebsite extends React.Component {
               Welcome={New.welcome}
               About={New.about}  
 
-              heroImagePick={this.props.heroImagePick}
+              heroImagePick={this.props.heroBackgroundImage}
               heroTitle={this.props.heroTitle} 
               heroTitleAnimate={this.props.heroTitleAnimate}
               heroTitleDuration={this.props.heroTitleDuration}

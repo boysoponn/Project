@@ -15,9 +15,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import HeroInput from './sidebarInput/heroInput';
-import ModalUploadWrapped from './sidebarInput/functionUpload/modalUpload';
 import Button from '@material-ui/core/Button';
-import SaveIcon from '@material-ui/icons/Save';
 import ExitIcon from '@material-ui/icons/ExitToApp';
 import TabWebsite from './template/tab'
 import { connect } from 'react-redux'
@@ -111,7 +109,6 @@ const styles = theme => ({
 class CMS extends React.Component {
   constructor(props){
   super(props);
-  this.save = this.save.bind(this);
   this.logout = this.logout.bind(this);
   this.heroTitleOnChange = this.heroTitleOnChange.bind(this);  
   this.heroTitleOnChangeAnimate = this.heroTitleOnChangeAnimate.bind(this); 
@@ -235,50 +232,21 @@ componentWillReceiveProps(nextProps){
           heroButtonFontStyle:data.heroContent.heroButtonFontStyle,
           heroButtonStatus:data.heroContent.heroButtonStatus,
           heroButtonColor:data.heroContent.heroButtonColor,
+          heroButtonSwapColor:data.heroContent.heroButtonSwapColor,
+          heroButtonSwap:data.heroContent.heroButtonSwap,
+          heroButtonLink:data.heroContent.heroButtonLink,
+          heroButtonLinkTarget:data.heroContent.heroButtonLinkTarget,
+          heroButtonRadius:data.heroContent.heroButtonRadius,
+          heroButtonBGColor:data.heroContent.heroButtonBGColor,
+          heroButtonHBGColor:data.heroContent.heroButtonHBGColor,
+          heroButtonBDColor:data.heroContent.heroButtonBDColor,
+          heroButtonHBDColor:data.heroContent.heroButtonHBDColor,
+          heroButtonHoverColor:data.heroContent.heroButtonHoverColor,
           // isLoaded: false
         }); 
   });
 }
  
-  save(){
-    let dbCon = config.database().ref('project/test/'+this.props.tabs);
-    dbCon.update({
-    heroContent:{
-      heroBackgroundImage:this.state.heroBackgroundImage,
-      heroTitle:this.state.heroTitle,
-      heroTitleAnimate:this.state.heroTitleAnimate,
-      heroTitleDuration:this.state.heroTitleDuration,
-      heroTitleFontFamily:this.state.heroTitleFontFamily,
-      heroTitleFontSize:this.state.heroTitleFontSize,
-      heroTitleFontWeight:this.state.heroTitleFontWeight,
-      heroTitleFontStyle:this.state.heroTitleFontStyle,
-      heroTitleStatus:this.state.heroTitleStatus,
-      heroTitleColor:this.state.heroTitleColor,
-      
-      heroDescription:this.state.heroDescription,
-      heroDescriptionAnimate:this.state.heroDescriptionAnimate,
-      heroDescriptionDuration:this.state.heroDescriptionDuration,
-      heroDescriptionFontFamily:this.state.heroDescriptionFontFamily,
-      heroDescriptionFontSize:this.state.heroDescriptionFontSize,
-      heroDescriptionFontWeight:this.state.heroDescriptionFontWeight,
-      heroDescriptionFontStyle:this.state.heroDescriptionFontStyle,
-      heroDescriptionStatus:this.state.heroDescriptionStatus,
-      heroDescriptionColor:this.state.heroDescriptionColor,
-
-      heroButton:this.state.heroButton,
-      heroButtonSelected:this.state.heroButtonSelected,
-      heroButtonAnimate:this.state.heroButtonAnimate,
-      heroButtonDuration:this.state.heroButtonDuration,
-      heroButtonFontFamily:this.state.heroButtonFontFamily,
-      heroButtonFontSize:this.state.heroButtonFontSize,
-      heroButtonFontWeight:this.state.heroButtonFontWeight,
-      heroButtonFontStyle:this.state.heroButtonFontStyle,
-      heroButtonStatus:this.state.heroButtonStatus,
-      heroButtonColor:this.state.heroButtonColor,
-    }
-    });
-    alert("saved") 
-  };
 
   logout(){config.auth().signOut();window.location.reload(); };
   handleDrawerOpen = () => {this.setState({ open: true ,});}
@@ -433,16 +401,9 @@ componentWillReceiveProps(nextProps){
             <Typography variant="title"  className={classes.grow} >
               CMS PROJECT
             </Typography>
-            <Typography color="inherit">
-            <Button variant="contained" color="secondary" onClick={this.save} className={classes.button}>
-            SAVE
-            <SaveIcon className={classes.rightIcon} />
-            </Button>
-
-            </Typography>
 
             <Typography color="inherit" className={classes.grow} >
-            <ModalUploadWrapped />
+
             </Typography>
             <Typography variant="title" color="#000" >
               Welcome : {this.props.user}
@@ -475,7 +436,7 @@ componentWillReceiveProps(nextProps){
         <main className={classes.content}>
           <div className={classes.toolbar} /> 
             <TabWebsite       
-              heroImagePick={this.state.heroBackgroundImage}
+              heroBackgroundImage={this.state.heroBackgroundImage}
               heroTitle={this.state.heroTitle}             
               heroTitleAnimate={this.state.heroTitleAnimate} 
               heroTitleDuration={this.state.heroTitleDuration} 
@@ -535,9 +496,9 @@ componentWillReceiveProps(nextProps){
               heroButtonHBGColor={this.state.heroButtonHBGColor}
               heroButtonBDColor={this.state.heroButtonBDColor}
               heroButtonHBDColor={this.state.heroButtonHBDColor}
-              herobuttonHoverColor={this.state.herobuttonHoverColor}
+              heroButtonHoverColor={this.state.heroButtonHoverColor}
                       
-              herobuttonOnChangeHoverColor={this.herobuttonOnChangeHoverColor}
+              heroButtonOnChangeHoverColor={this.herobuttonOnChangeHoverColor}
               heroButtonOnChangeHBDColor={this.heroButtonOnChangeHBDColor}
               heroButtonOnChangeBDColor={this.heroButtonOnChangeBDColor}
               heroButtonOnChangeHBGColor={this.heroButtonOnChangeHBGColor}

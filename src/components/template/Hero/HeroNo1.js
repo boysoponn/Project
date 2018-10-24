@@ -42,8 +42,8 @@ class HeroNo1 extends React.Component {
     };
     const buttonAnimate={
       opacity: 1,
-      animationDuration: this.props.heroDescriptionDuration,
-      display:this.props.heroDescriptionStatus
+      animationDuration: this.props.heroButtonDuration,
+      display:this.props.heroButtonStatus
     };
     let button;
     if(this.props.heroButtonSelected !== "slideLeft" && this.props.heroButtonSelected !== "slide" ){
@@ -65,7 +65,10 @@ class HeroNo1 extends React.Component {
     }
     else{
       button = 
-      <ChoiceButton content={this.props.heroButton} swapContent={this.props.heroButtonSwap} className="slide" 
+      <ChoiceButton 
+      content={this.props.heroButton} 
+      swapContent={this.props.heroButtonSwap} 
+      className={this.props.heroButtonSelected}  
       FontFamily={this.props.heroButtonFontFamily}
       FontWeight={this.props.heroButtonFontWeight}
       FontSize={this.props.heroButtonFontSize}
@@ -80,6 +83,13 @@ class HeroNo1 extends React.Component {
     >
     &nbsp;</ChoiceButton>
     };
+        
+    // let checkButton;
+    // if(this.props.heroButtonLink !== ""){
+    //   checkButton = <a href={this.props.heroButtonLink} target={this.props.heroButtonLinkTarget}>{button}</a>
+    // }else{
+    //   checkButton = {button}
+    // };
     return (
         <div style={background}>  
             <div style={content}>
@@ -90,8 +100,8 @@ class HeroNo1 extends React.Component {
             {this.props.heroDescription}
             </ScrollAnimation> 
 
-            <ScrollAnimation style={buttonAnimate} className={this.props.herobuttonAnimate}>
-              <a href={this.props.heroButtonLink} target={this.props.heroButtonLinkTarget}>{button}</a>
+            <ScrollAnimation style={buttonAnimate} className={this.props.heroButtonAnimate}>
+            <a href={this.props.heroButtonLink} target={this.props.heroButtonLinkTarget}>{button}</a>
             </ScrollAnimation > 
             </div>
         </div> 
@@ -108,6 +118,7 @@ const ChoiceButton = styled.button`
   width: 200px;
   margin: 10px 7px;
   padding: 5px 5px;
+  font-style:${props=> props.FontStyle}
   font-family:${props => props.FontFamily};
   font-weight: ${props => props.FontWeight};
   font-size: ${props => props.FontSize};
@@ -245,7 +256,6 @@ const ChoiceButton = styled.button`
       top: 0;
       z-index: -1;
       -webkit-transition: all 0.09s ease-in;
-
     }
     :hover:before {
       left: 0;
@@ -283,7 +293,6 @@ const ChoiceButton = styled.button`
       position:absolute;
       color:${props => props.buttonHoverColor};
       left: 83%;
-
       opacity: 0;
       -webkit-transition: all 250ms cubic-bezier(0.680, -0.550, 0.265, 1.550); 
     }

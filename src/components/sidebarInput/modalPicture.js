@@ -10,12 +10,17 @@ import { connect } from 'react-redux'
 import Slide from '@material-ui/core/Slide';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import ModalUploadWrapped from './functionUpload/modalUpload';
 
 function Transition(props) {
   return <Slide direction="right" {...props} />;
 }
 
 const styles = theme => ({
+  margin:{
+    marginRight:20,
+    float:'Right'
+  },
   root: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -126,8 +131,10 @@ class ModalChooseImage extends React.Component {
           aria-describedby="alert-dialog-slide-description"
         >
          <DialogTitle id="alert-dialog-slide-title">
-            {"Choose Image"}
+         {"Choose Image"}
+        <ModalUploadWrapped className={classes.margin}/>            
         </DialogTitle>
+
         <div className={classes.root}>
         <GridList cellHeight={200} cellWidth={1000} className={classes.gridList}>
         {this.state.images.map((image => (

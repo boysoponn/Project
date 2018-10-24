@@ -11,7 +11,6 @@ import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
 import styled from 'styled-components'
 import SettingAnimate from './SettingAnimate'
-import Grid from '@material-ui/core/Grid';
 import PickColor from './pickColor'
 import Divider from '@material-ui/core/Divider';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -116,7 +115,9 @@ class InputButton extends React.Component {
     }
     else{
       button = 
-      <ChoiceButton content={this.props.button} swapContent={this.props.buttonSwap} className="slide" 
+      <ChoiceButton content={this.props.button} 
+      swapContent={this.props.buttonSwap}  
+      className={this.props.buttonSelected} 
       FontFamily={this.props.FontFamily}
       FontWeight={this.props.FontWeight}
       FontSize={this.props.FontSize}
@@ -404,6 +405,7 @@ class InputButton extends React.Component {
                 FontWeight={this.props.FontWeight}
                 FontSize={this.props.FontSize}
                 buttonColor={this.props.buttonColor}
+                buttonHoverColor={this.props.buttonHoverColor}
                 buttonBDColor={this.props.buttonBDColor}
                 buttonRadius={this.props.buttonRadius}
                 buttonBGColor={this.props.buttonBGColor} 
@@ -626,6 +628,7 @@ const ChoiceButton = styled.button`
   width: 200px;
   margin: 10px 7px;
   padding: 5px 5px;
+  font-style:${props=> props.FontStyle}
   font-family:${props => props.FontFamily};
   font-weight: ${props => props.FontWeight};
   font-size: ${props => props.FontSize};

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import config from '../../../config';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -39,7 +39,6 @@ class ModalUpload extends React.Component {
     image: [],
     imageName:[],
     Howmany:0,
-    url: 'http://via.placeholder.com/400x300',
     };  
   }
   handleOpen = () => {
@@ -104,7 +103,7 @@ class ModalUpload extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Fragment>
+      <div className={this.props.className}>
         <Button variant="contained" onClick={this.handleOpen} component="span" color="secondary" className={classes.button}>
         Upload
         <CloudUploadIcon className={classes.rightIcon} />
@@ -123,7 +122,7 @@ class ModalUpload extends React.Component {
           />
           </div>
         </Modal>
-      </Fragment>
+      </div>
     );
   }
 }

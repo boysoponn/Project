@@ -47,8 +47,8 @@ class HeroNo2 extends React.Component {
   };
   const buttonAnimate={
     opacity: 1,
-    animationDuration: this.props.heroDescriptionDuration,
-    display:this.props.heroDescriptionStatus
+    animationDuration: this.props.heroButtonDuration,
+    display:this.props.heroButtonStatus
   };
 
   let button;
@@ -71,7 +71,9 @@ class HeroNo2 extends React.Component {
   }
   else{
     button = 
-    <ChoiceButton content={this.props.heroButton} swapContent={this.props.heroButtonSwap} className="slide" 
+    <ChoiceButton content={this.props.heroButton} 
+    swapContent={this.props.heroButtonSwap} 
+    className={this.props.heroButtonSelected} 
     FontFamily={this.props.heroButtonFontFamily}
     FontWeight={this.props.heroButtonFontWeight}
     FontSize={this.props.heroButtonFontSize}
@@ -97,7 +99,7 @@ class HeroNo2 extends React.Component {
             <ScrollAnimation style={description} className={this.props.heroDescriptionAnimate} >
             {this.props.heroDescription}
             </ScrollAnimation> 
-            <ScrollAnimation style={buttonAnimate} className={this.props.herobuttonAnimate}>
+            <ScrollAnimation style={buttonAnimate} className={this.props.heroButtonAnimate}>
             <a href={this.props.heroButtonLink}target={this.props.heroButtonLinkTarget}>{button}</a>
             </ScrollAnimation > 
             </div>
@@ -114,13 +116,13 @@ class HeroNo2 extends React.Component {
 
 export default connect()(HeroNo2);
 
-
 const ChoiceButton = styled.button`
   position: relative;
   height: 60px;
   width: 200px;
   margin: 10px 7px;
   padding: 5px 5px;
+  font-style:${props=> props.FontStyle}
   font-family:${props => props.FontFamily};
   font-weight: ${props => props.FontWeight};
   font-size: ${props => props.FontSize};

@@ -2,15 +2,20 @@ import React from 'react';
 import '../../css/animate.min.css';
 import HeroNo1 from './Hero/HeroNo1'
 import HeroNo2 from './Hero/HeroNo2'
-import WelcomeNo1 from './Welcome/WelcomeNo1'
-import WelcomeNo2 from './Welcome/WelcomeNo2'
+// import WelcomeNo1 from './Welcome/WelcomeNo1'
+// import WelcomeNo2 from './Welcome/WelcomeNo2'
+import CarouselNo1 from './Carousel/CarouselNo1'
+
 
 class IN extends React.Component {
 
   render() {
-
+  const End={
+    height:200,
+    backgroundColor:'none',
+  };
   let Hero;
-  let Welcome;
+  let Carousel;
   if( this.props.Hero === "HeroNo1"){
     Hero = <HeroNo1
     heroImagePick={this.props.heroImagePick}
@@ -102,15 +107,17 @@ class IN extends React.Component {
     />
   }
   if( this.props.Welcome === "WelcomeNo1"){
-    Welcome = <WelcomeNo1/>
+    Carousel = <CarouselNo1
+    />
   }
   if( this.props.Welcome === "WelcomeNo2"){
-    Welcome = <WelcomeNo2/>
+    Carousel = <CarouselNo1/>
   }
 return (
       <div>   
       {Hero}
-      {Welcome}
+      {Carousel}
+      <div style={End}></div>
       </div>
 );
   }
