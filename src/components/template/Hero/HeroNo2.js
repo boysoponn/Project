@@ -88,6 +88,18 @@ class HeroNo2 extends React.Component {
   >
   &nbsp;</ChoiceButton>
   };
+  let checkButton;
+  if(this.props.heroButtonLink !== ""){
+    checkButton = 
+    <ScrollAnimation style={buttonAnimate} className={this.props.heroButtonAnimate}>
+    <a href={this.props.heroButtonLink} target={this.props.heroButtonLinkTarget}>{button}</a>
+    </ScrollAnimation > 
+  }else{
+    checkButton = 
+    <ScrollAnimation style={buttonAnimate} className={this.props.heroButtonAnimate}>
+    {button}
+    </ScrollAnimation > 
+  };
     return (
     <div>
         <Grid container spacing={0}>
@@ -99,9 +111,7 @@ class HeroNo2 extends React.Component {
             <ScrollAnimation style={description} className={this.props.heroDescriptionAnimate} >
             {this.props.heroDescription}
             </ScrollAnimation> 
-            <ScrollAnimation style={buttonAnimate} className={this.props.heroButtonAnimate}>
-            <a href={this.props.heroButtonLink}target={this.props.heroButtonLinkTarget}>{button}</a>
-            </ScrollAnimation > 
+            {checkButton}
             </div>
         </Grid>
         <Grid item xs={12} sm={6}>

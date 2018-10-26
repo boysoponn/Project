@@ -84,12 +84,18 @@ class HeroNo1 extends React.Component {
     &nbsp;</ChoiceButton>
     };
         
-    // let checkButton;
-    // if(this.props.heroButtonLink !== ""){
-    //   checkButton = <a href={this.props.heroButtonLink} target={this.props.heroButtonLinkTarget}>{button}</a>
-    // }else{
-    //   checkButton = {button}
-    // };
+    let checkButton;
+    if(this.props.heroButtonLink !== ""){
+      checkButton = 
+      <ScrollAnimation style={buttonAnimate} className={this.props.heroButtonAnimate}>
+      <a href={this.props.heroButtonLink} target={this.props.heroButtonLinkTarget}>{button}</a>
+      </ScrollAnimation > 
+    }else{
+      checkButton = 
+      <ScrollAnimation style={buttonAnimate} className={this.props.heroButtonAnimate}>
+      {button}
+      </ScrollAnimation > 
+    };
     return (
         <div style={background}>  
             <div style={content}>
@@ -99,10 +105,7 @@ class HeroNo1 extends React.Component {
             <ScrollAnimation style={description} className={this.props.heroDescriptionAnimate} >
             {this.props.heroDescription}
             </ScrollAnimation> 
-
-            <ScrollAnimation style={buttonAnimate} className={this.props.heroButtonAnimate}>
-            <a href={this.props.heroButtonLink} target={this.props.heroButtonLinkTarget}>{button}</a>
-            </ScrollAnimation > 
+            {checkButton}
             </div>
         </div> 
     );
