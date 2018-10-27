@@ -2,6 +2,7 @@ import React from 'react';
 import ScrollAnimation from 'react-animate-on-scroll';
 import { connect } from 'react-redux'
 import styled from 'styled-components'
+
 class HeroNo1 extends React.Component {
     constructor(props){  
       super(props);
