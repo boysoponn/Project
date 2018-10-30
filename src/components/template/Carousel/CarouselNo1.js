@@ -1,17 +1,13 @@
 import React from 'react';
-import styled from 'styled-components'
 import { Carousel } from 'antd';
-import './h.css';
-import 'antd/dist/antd.css';  
+import './../tamplateCSS/h.css';
+
 
 class CarouselNo1 extends React.Component {
     constructor(props){  
       super(props);
           this.state = {
-            posts : [
-                {id: 1, title: 'Hello World', content: 'Welcome to learning React!', image:"https://i.2th.me/a/i/hazbc7vc/2th.me_816817.png"},
-                {id: 2, title: 'Installation', content: 'You can install React from npm.', image:"https://wallpaper.campus-star.com/app/uploads/2017/09/wallpaper-n-40.jpg"}
-              ]
+        
           };   
       }
 
@@ -23,19 +19,23 @@ class CarouselNo1 extends React.Component {
         width:'100%',
         height:'500px',
     };
-    const h1={
-        color:'#fff',
+    let h1;
+    this.props.carousel.map((post => (
+    h1={
+        color:post.carouselTitleColor,
         position: 'absolute',
         textAlign: 'center',
         top:' 50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-    };
+    }
+    )))
+
     return (
         <div style={background}> 
-            <Carousel autoplay>
-            {this.state.posts.map((post => (
-                <div>
+            <Carousel autoplay speed='1000' dots={true} pauseOnHover= {false}>
+            {this.props.carousel.map((post => (
+                <div key={post._key}>
                     <img style={img}src={post.image}/>
                      <h1 style={h1}>{post.title}</h1>
                 </div>

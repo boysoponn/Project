@@ -3,36 +3,15 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-import SettingAnimate from './SettingAnimate'
-
 
 const styles = theme => ({
 });
 
 class Textarea extends React.Component {
   render() {
-    const { classes} = this.props;
     return (
       <div >
-      <SettingAnimate 
-        animate={this.props.animate} 
-        duration={this.props.duration} 
-        FontFamily={this.props.FontFamily}
-        FontSize={this.props.FontSize}
-        FontWeight={this.props.FontWeight}
-        FontStyle={this.props.FontStyle}
-        Status={this.props.Status}
-        onChangeFontFamily={this.props.onChangeFontFamily}
-        onChangeFontSize={this.props.onChangeFontSize}
-        onChangeDuration={this.props.onChangeDuration} 
-        onChangeAnimate={this.props.onChangeAnimate} 
-        onChangeFontWeight={this.props.onChangeFontWeight}
-        onChangeFontStyle={this.props.onChangeFontStyle}
-        onChangeStatus={this.props.onChangeStatus}
-        color={this.props.color}
-        onChange={this.props.onChangeColor}
-        />
-        <FormControl className={classes.margin}>
+        <FormControl>
         <TextField
           id="multiline-static"
           label={this.props.label}
@@ -40,7 +19,6 @@ class Textarea extends React.Component {
           rows="4"
           onChange={this.props.onChange}
           value={this.props.value}
-          className={classes.textField}
           margin="normal"
         />
         </FormControl>

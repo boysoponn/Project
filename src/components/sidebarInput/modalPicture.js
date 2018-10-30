@@ -97,9 +97,9 @@ class ModalChooseImage extends React.Component {
 
   imageOnClick = image => () => {
     // this.props.dispatch(getUrlImage(image.imageName));
-    let dbCon = config.database().ref('project/test/'+this.props.tabs+'/heroContent');
+    let dbCon = config.database().ref('project/test/'+this.props.tabs+this.props.path);
     dbCon.update({
-      heroBackgroundImage:image.imageName,
+      image:image.imageName,
     }); 
   };
 
@@ -140,7 +140,6 @@ class ModalChooseImage extends React.Component {
         {this.state.images.map((image => (
           <GridListTile >
             <img src={image.imageName} key={image._key} className={classes.image} onClick={this.imageOnClick(image)} alt="gg" />
-            {/* <GridListTileBar/> */}
           </GridListTile>
         )))}
       </GridList>

@@ -106,12 +106,15 @@ class IN extends React.Component {
     heroButtonHoverColor={this.props.heroButtonHoverColor}
     />
   }
-  if( this.props.Welcome === "WelcomeNo1"){
+  if( this.props.Carousel === "CarouselNo1"){
     Carousel = <CarouselNo1
+    carousel={this.props.carousel}
     />
   }
-  if( this.props.Welcome === "WelcomeNo2"){
-    Carousel = <CarouselNo1/>
+  if( this.props.Carousel === "CarouselNo2"){
+    Carousel = <CarouselNo1
+    carousel={this.props.carousel}
+    />
   }
 return (
       <div>   

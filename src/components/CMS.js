@@ -15,11 +15,12 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import HeroInput from './sidebarInput/heroInput';
+import CarouselInput from './sidebarInput/carouselInput';
 import Button from '@material-ui/core/Button';
 import ExitIcon from '@material-ui/icons/ExitToApp';
 import TabWebsite from './template/tab'
 import { connect } from 'react-redux'
-// import {getUrlImage} from './actions'
+import {getUrlImage} from './actions'
 
 const drawerWidth = 300;
 
@@ -190,6 +191,7 @@ class CMS extends React.Component {
     heroButtonColor:'',
     heroButtonHoverColor:'',
     heroButtonSwapColor:'',
+    carousel:[],
   };
 }
 
@@ -201,7 +203,7 @@ componentWillReceiveProps(nextProps){
   let data = _(snapshotValue).value();
         this.setState({
           hero:data.hero,
-          heroBackgroundImage:data.heroContent.heroBackgroundImage,
+          heroBackgroundImage:data.heroContent.image,
           heroTitle:data.heroContent.heroTitle,
           heroTitleAnimate:data.heroContent.heroTitleAnimate,
           heroTitleDuration:data.heroContent.heroTitleDuration,
@@ -245,6 +247,29 @@ componentWillReceiveProps(nextProps){
           // isLoaded: false
         }); 
   });
+
+  let carouselItems = config.database().ref('project/test/'+nextProps.tabs+'/carouselContent');
+  carouselItems.on('value', async (snapshot) => { 
+  const snapshotValue2 = snapshot.val(); 
+  const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {
+    prev.push({
+      _key: cur,
+      ...snapshotValue2[cur]
+    });
+    return prev;     
+  }, []); 
+  this.setState({
+    carousel:snapshotArr
+  });
+});
+
+
+  // let app2 = config.database().ref('project/test/'+nextProps.tabs+'/carouselContent/'+nextProps.url);
+  //   app2.on('value', async (snapshot) => { 
+  //   const snapshotValue3 = snapshot.val(); 
+  //   let data2 = _(snapshotValue3).value();
+  //   console.log(data2.title);  
+  //   });
 }
  
 
@@ -293,6 +318,7 @@ componentWillReceiveProps(nextProps){
   heroButtonOnChangeSwapColor(color) {this.setState({ heroButtonSwapColor: color.hex });};
   heroButtonOnChangeHoverColor(color) {this.setState({ heroButtonHoverColor: color.hex });};
   
+
   render() {
     const { classes, theme } = this.props;
     let heroInput;
@@ -429,6 +455,9 @@ componentWillReceiveProps(nextProps){
           <Divider />
             <List disablePadding={true}>
             {heroInput}
+            <CarouselInput
+            carousel={this.state.carousel}
+            />
             </List>
             
            <Divider />
@@ -518,6 +547,8 @@ componentWillReceiveProps(nextProps){
               heroButtonOnChangeStatus={this.heroButtonOnChangeStatus}
               heroButtonOnChangeColor={this.heroButtonOnChangeColor}
               heroButtonOnChangeSwapColor={this.heroButtonOnChangeSwapColor}
+
+              carousel={this.state.carousel}
             />       
         </main>
       </div>
@@ -532,7 +563,7 @@ CMS.propTypes = {
 
 const mapStateToProps = state => ({
   tabs: state.tabs ,
-  urlImage: state.urlImage ,
+  url: state.urlImage ,
   user:state.user
 })
 

@@ -10,7 +10,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import InputText from './inputText';
-import Textarea from './textarea';
+import InputTextarea from './inputTextarea';
 import ModalChooseImage from './modalPicture';
 import InputButton from './inputButton';
 
@@ -40,7 +40,6 @@ class NestedList extends React.Component {
   
 
   render() {
-    console.log(this.props.heroButtonSelected)
     const { classes } = this.props;
     return (
       <div className={classes.root} >
@@ -56,7 +55,7 @@ class NestedList extends React.Component {
             <List component="div" disablePadding={false}>
               <ListItem  className={classes.nested}>
               <InputText 
-              inputLabel="Title" 
+              label="Title" 
               value={this.props.heroTitle}  
               animate={this.props.heroTitleAnimate} 
               onChange={this.props.heroTitleOnChange} 
@@ -82,7 +81,7 @@ class NestedList extends React.Component {
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding={false}>
               <ListItem  className={classes.nested}>
-              <Textarea 
+              <InputTextarea 
               label="Description" 
               value={this.props.heroDescription}  
               animate={this.props.heroDescriptionAnimate} 
@@ -171,6 +170,7 @@ class NestedList extends React.Component {
               <ListItem className={classes.nested}>
               <ModalChooseImage
               imagePick={this.props.heroImagePick}
+              path="/heroContent"
               />
               </ListItem>
             </List>

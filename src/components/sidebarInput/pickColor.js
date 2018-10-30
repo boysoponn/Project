@@ -57,7 +57,7 @@ class PickColor extends React.Component {
                 horizontal: 'left',
               }}
             >         
-          <SketchPicker color={this.props.color} onChange={ this.props.onChange } />
+          <SketchPicker color={this.props.color} onChangeComplete={ this.props.onChange } />
         </Popover>
       </div>
     )

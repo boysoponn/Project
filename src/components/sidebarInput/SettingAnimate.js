@@ -87,11 +87,24 @@ class SettingAnimate extends React.Component {
     const { anchorEl,anchorEl2 } = this.state;
     const open = Boolean(anchorEl);
     const open2 = Boolean(anchorEl2);
+    let displayAnimate;
+    let displayFont;
+    if(this.props.displayFont === 'block'){
+      displayFont = {display:'block'}
+    }else if(this.props.displayFont === 'none'){
+      displayFont = {display:'none'}
+    }
+    if(this.props.displayAnimate === 'block'){
+      displayAnimate = {display:'block'}
+    }else if(this.props.displayAnimate === 'none'){
+      displayAnimate = {display:'none'}
+    }
+    
 
     return (
       
       <div className={classes.full}>
-        <div className={classes.left}>
+        <div className={classes.left} style={displayFont}>
             <SettingsFonts className={classes.button} onClick={this.handleClick} />
             <Popover
               open={open}
@@ -207,7 +220,7 @@ class SettingAnimate extends React.Component {
                     </Popover>
       </div>
 
-      <div className={classes.right}>
+      <div className={classes.right} style={displayAnimate}>
             <Settings className={classes.button} root='outline' onClick={this.handleClick2} />
             <Popover
               open={open2}

@@ -231,6 +231,7 @@ class TabWebsite extends React.Component {
     let dbCon = config.database().ref('project/test/'+this.props.tabs);
     dbCon.update({
     heroContent:{
+      image:this.props.heroBackgroundImage,
       heroBackgroundImage:this.props.heroBackgroundImage,
       heroTitle:this.props.heroTitle,
       heroTitleAnimate:this.props.heroTitleAnimate,
@@ -391,7 +392,6 @@ class TabWebsite extends React.Component {
           >
           {this.state.news.map((New => (
             <Tab label={New.pageName} key={New._key}  onClick={() => this.props.dispatch(checkTab(New._key))}/>
-
             )))}
           
           </Tabs>
@@ -407,6 +407,7 @@ class TabWebsite extends React.Component {
             <h1 style={center}>{New.pageName}</h1>
             <IN         
               Hero={New.hero}
+              Carousel={New.carousel}
               Welcome={New.welcome}
               About={New.about}  
 
@@ -451,6 +452,8 @@ class TabWebsite extends React.Component {
               heroButtonBDColor={this.props.heroButtonBDColor}
               heroButtonHBDColor={this.props.heroButtonHBDColor}
               heroButtonHoverColor={this.props.heroButtonHoverColor}
+
+              carousel={this.props.carousel}
             />
             </div>
           )))}   

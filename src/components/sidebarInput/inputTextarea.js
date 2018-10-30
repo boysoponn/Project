@@ -1,11 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import FormControl from '@material-ui/core/FormControl';
+import TextField from '@material-ui/core/TextField';
 import SettingAnimate from './SettingAnimate'
-import Text from './Text';
 
 
-class InputText extends React.Component {
+const styles = theme => ({
+});
+
+class InputTextarea extends React.Component {
   render() {
-    return (  
+    const { classes} = this.props;
+    return (
       <div >
       <SettingAnimate 
         displayFont={this.props.displayFont}
@@ -27,15 +34,23 @@ class InputText extends React.Component {
         color={this.props.color}
         onChange={this.props.onChangeColor}
         />
-        <Text
-        type="text"
-        label={this.props.Label}
-        value={this.props.value}
-        onChange={this.props.onChange}
+        <FormControl className={classes.margin}>
+        <TextField
+          id="multiline-static"
+          label={this.props.label}
+          multiline
+          rows="4"
+          onChange={this.props.onChange}
+          value={this.props.value}
+          margin="normal"
         />
+        </FormControl>
       </div>
     )
   }
 }
 
-export default InputText;
+InputTextarea.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+export default withStyles(styles)(InputTextarea);
