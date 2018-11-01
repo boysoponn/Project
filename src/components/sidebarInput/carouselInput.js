@@ -20,6 +20,9 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import SaveIcon from '@material-ui/icons/Save';
+import Popover from '@material-ui/core/Popover';
+import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/AddCircle';
 
 function Transition(props) {
   return <Slide direction="right" {...props} />;
@@ -39,10 +42,13 @@ const styles = theme => ({
     width:130
    },
    paper: {
-    width:1000
+    width:200
   },
   rightIcon: {
     marginLeft:5,
+    '&:hover': {
+      cursor: 'pointer',
+    },
   },
   save:{
     width: 100,
@@ -59,12 +65,13 @@ class NestedList extends React.Component {
     openItem:false,
     openItem1:false,
     image: null,
+    anchorEl: null,
     carouselTitle:''
     };  
   }
-  save = () => {
-    let dbCon = config.database().ref('project/test/'+this.props.tabs+"/carouselContent/"+this.state.carouselPath);
-    dbCon.update({
+  save =  () => {
+    let dbCon = config.database().ref('project/test/'+this.props.tabs+"/carouselContent/");
+    dbCon.child(this.state.carouselPath).update({
       title:this.state.carouselTitle,
       description:this.state.carouselDescription,
       carouselTitleFontFamily:this.state.carouselTitleFontFamily,
@@ -82,11 +89,35 @@ class NestedList extends React.Component {
     });
     alert("saved") 
   };
+  delete = carousel => () =>{
+    let dbCon = config.database().ref('project/test/'+this.props.tabs+"/carouselContent/");
+    dbCon.child(carousel._key).remove();
+  }
+  addItem=()=>{
+    let dbCon = config.database().ref('project/test/'+this.props.tabs+"/carouselContent/");
+    dbCon.push({
+      title:'Title',
+      description:'Description',
+      carouselTitleFontFamily:'Montserrat',
+      carouselTitleFontWeight:'700',
+      carouselTitleFontSize:'70',
+      carouselTitleFontStyle:'normal',
+      carouselTitleStatus:'block',
+      carouselTitleColor:'#ffffff',
+      carouselDescriptionFontFamily:'Montserrat',
+      carouselDescriptionFontWeight:'400',
+      carouselDescriptionFontSize:'30',
+      carouselDescriptionFontStyle:'normal',
+      carouselDescriptionStatus:'block',
+      carouselDescriptionColor:'#ffffff',  
+      image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/images%2Fhero-set3-b.jpg?alt=media&token=278896f0-391e-475b-b6d3-4cb1b834651b'
+    })  
+  }
   handleClick = () => {
     this.setState(state => ({ open: !state.open }));
   };
-  handleClickOpen = () => {this.setState({ openItem: true });};
-  handleClose = () => {this.setState({ openItem: false });};
+  handleClickOpen = (event) => {this.setState({ anchorEl: event.currentTarget, });};
+  handleClose = () => {this.setState({ anchorEl: null, });};
   OpenItem = carousel => () => { this.setState({ 
     openItem1: true ,
     carouselTitle:carousel.title,
@@ -128,6 +159,8 @@ class NestedList extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const { anchorEl } = this.state;
+    const open = Boolean(anchorEl);
     return (
       <div className={classes.root} >
         <List disablePadding={true}>
@@ -144,22 +177,33 @@ class NestedList extends React.Component {
             <Button variant="contained" onClick={this.handleClickOpen} component="span" color="secondary" className={classes.button}>
              Carousel Items
             </Button>
-            <Dialog
-              maxWidth="lg"
-              open={this.state.openItem}
-              TransitionComponent={Transition}
+            <Popover
+              open={open}
+              anchorEl={anchorEl}
               onClose={this.handleClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
             >
-            <DialogTitle>
-            {"Carousel Items"}
-            </DialogTitle>
             {this.props.carousel.map((carousel => (
             <ListItem key={carousel._key}>
             <Button variant="contained"  onClick={this.OpenItem(carousel)} component="span" color="secondary" className={classes.paper}>
               {carousel.title}
             </Button>
+            <DeleteIcon  onClick={this.delete(carousel)} className={classes.rightIcon}/>
             </ListItem>
              )))} 
+             <ListItem>
+            <Button variant="contained"  onClick={this.addItem} component="span" color="secondary" className={classes.paper}>
+              ADD
+              <AddIcon className={classes.rightIcon} />
+            </Button>
+            </ListItem>
             <Dialog
               maxWidth="lg"
               open={this.state.openItem1}
@@ -221,7 +265,7 @@ class NestedList extends React.Component {
                 />
               </ListItem>
             </Dialog>
-            </Dialog>
+            </Popover>
             </ListItem>           
             </List>
           </Collapse>
@@ -241,15 +285,4 @@ const mapStateToProps = state => ({
 })
 export default connect(mapStateToProps)(withStyles(styles)(NestedList));
 
-      // carouselTitleFontFamily:'Montserrat',
-      // carouselTitleFontWeight:'700',
-      // carouselTitleFontSize:'70px',
-      // carouselTitleFontStyle:'normal',
-      // carouselTitleStatus:'block',
-      // carouselTitleColor:'#ffffff',
-      // carouselDescriptionFontFamily:'Montserrat',
-      // carouselDescriptionFontWeight:'400',
-      // carouselDescriptionFontSize:'30px'
-      // carouselDescriptionFontStyle:'normal',
-      // carouselDescriptionStatus:'block',
-      // carouselDescriptionColor:'#ffffff',     
+   

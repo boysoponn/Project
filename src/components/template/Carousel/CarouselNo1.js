@@ -1,6 +1,6 @@
 import React from 'react';
 import { Carousel } from 'antd';
-import './../tamplateCSS/h.css';
+import './../tamplateCSS/carousel.css';
 
 
 class CarouselNo1 extends React.Component {
@@ -13,30 +13,25 @@ class CarouselNo1 extends React.Component {
 
   render() {
     const background ={
-        height:700,
+        height:500,
     };
-    const img={
-        width:'100%',
-        height:'500px',
-    };
-    const ss={
-        position: 'absolute',
-        top:' 50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)'
-    };
+
     return (
         <div style={background}> 
             <Carousel autoplay speed='1000' dots={true} pauseOnHover= {false}>
             {this.props.carousel.map((post => (
-                <div key={post._key}>
-                    <img style={img}src={post.image}/>
-                    <div  >
-                     <h1 style={{
-                                position: 'absolute',
-                                top:' 50%',
-                                left: '50%',
-                                transform: 'translate(-50%, -50%)',
+                <div>
+                    <div style={{
+                          backgroundImage:"url("+post.image+")",
+                          height:'500',
+                          backgroundSize:'cover', 
+                          backgroundPosition: 'center center',
+                          backgroundRepeat:  'no-repeat',}} key={post._key}>
+                      <h1 style={{
+                        position: 'absolute',
+                        top:' 50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
                         color:post.carouselTitleColor,
                         fontFamily:post.carouselTitleFontFamily,
                         fontSize:post.carouselTitleFontSize,
