@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import config from '../../config';
-import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
