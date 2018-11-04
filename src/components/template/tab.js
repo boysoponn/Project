@@ -42,12 +42,6 @@ function Transition(props) {
 class TabWebsite extends React.Component {
   constructor(props){  
     super(props);
-    this.onChangeName = this.onChangeName.bind(this); 
-    this.addNewTab = this.addNewTab.bind(this);
-    this.saveEdit = this.saveEdit.bind(this);
-    this.deletePage = this.deletePage.bind(this);
-    this.setNullValue = this.setNullValue.bind(this);
-    this.save = this.save.bind(this);
       this.state = {
         value: 0,
         num:1,
@@ -60,14 +54,15 @@ class TabWebsite extends React.Component {
         selectedGallery:'none',
         selectedWelcome:'none',
         selectedContact:'none',
+        selectedCarousel:'none'
       };   
     }
 
-  componentDidMount() {
+  componentDidMount=()=> {
     this.getData();
   }
-    getData(){
-      const app = config.database().ref('project/test');
+    getData=()=>{
+      const app = config.database().ref('project/'+this.props.user+'/');
       app.on('value', async (snapshot) => { 
         const snapshotValue = snapshot.val(); 
         const snapshotArr = _.keys(snapshotValue).reduce((prev, cur) => {
@@ -82,72 +77,68 @@ class TabWebsite extends React.Component {
         });
     });
   };
-        
-  handleOpenEdit = () => {
-    let app = config.database().ref('project/test/'+this.props.tabs);
-    app.on('value', async (snapshot) => { 
-      const snapshotValue = snapshot.val(); 
-      let data = _(snapshotValue).value();
-        this.setState({
-          namePage:data.pageName,
-          selectedHero:data.hero,
-          selectedAbout:data.about,
-          selectedGallery:data.gallery,
-          selectedWelcome:data.welcome,
-          selectedContact:data.contact,
-          openEdit: true
-        }); 
-    });
-  };
 
-  setNullValue(){
+  setNullValue=()=>{
     this.setState({
       namePage:'',
+      selectedCarousel:'none',
       selectedHero:'none',
       selectedAbout:'none',
       selectedGallery:'none',
       selectedWelcome:'none',
       selectedContact:'none',
     })
-  }
+  };
 
-  handleCloseEdit = () => {this.setState({ openEdit: false});};
+  handleOpenEdit = () => {
+    let OpenEdit = config.database().ref('project/'+this.props.user+'/'+this.props.tabs);
+    OpenEdit.on('value', async (snapshot) => { 
+      const snapshotValue = snapshot.val(); 
+      let data = _(snapshotValue).value();
+        this.setState({
+          namePage:data.pageName,
+          selectedHero:data.hero,
+          selectedCarousel:data.carousel,
+          selectedAbout:data.about,
+          selectedGallery:data.gallery,
+          selectedWelcome:data.welcome,
+          selectedContact:data.contact,
+        }); 
+    });
+    this.setState({
+      openEdit:true
+    });
+  };
 
+  handleCloseEdit = () => {this.setState({ openEdit: false});this.setNullValue();};
   handleOpen = () => {this.setState({ open: true });};
-
   handleClose = () => {this.setState({ open: false,}); this.setNullValue();};  
-
-  onChangeName(e){this.setState({ namePage: e.target.value});};
-
+  onChangeName=(e)=>{this.setState({ namePage: e.target.value});};
   handleChangeSelectHero = event => {this.setState({ selectedHero: event.target.value });};
-
   handleChangeSelectWelcome = event => {this.setState({ selectedWelcome: event.target.value });};
-
   handleChangeSelectAbout = event => {this.setState({ selectedAbout: event.target.value });};
-
   handleChangeSelectGallery = event => {this.setState({ selectedGallery: event.target.value });};
-
   handleChangeSelectContact = event => {this.setState({ selectedContact: event.target.value });};
-
+  handleChangeSelectedCarousel = event => {this.setState({ selectedCarousel: event.target.value });};
   handleChange = (event, value) => {this.setState({ value });};
-
   handleChangeIndex = index => {this.setState({ value: index });};
 
-  saveEdit(){
+  saveEdit=()=>{
     if(this.state.namePage){
       let pathUpper =this.state.namePage;
       let pathLower =pathUpper.toLowerCase();
-      let dbCon = config.database().ref('project/test/'+this.props.tabs);
+      let dbCon = config.database().ref('project/'+this.props.user+'/'+this.props.tabs);
       dbCon.update({
       pageName: this.state.namePage,
       pathName: pathLower,
       path: "/test/"+pathLower,
       hero: this.state.selectedHero,
+      carousel: this.state.selectedCarousel,
       welcome: this.state.selectedWelcome,
       about : this.state.selectedAbout,
       gallery :this.state.selectedGallery,
       contact : this.state.selectedContact
-    })    
+    });    
     this.setState({
       value:this.state.value,
       num:this.state.num +1,
@@ -160,23 +151,24 @@ class TabWebsite extends React.Component {
     }
   };
 
-  addNewTab(){
+  addNewTab=()=>{
     if(this.state.namePage){
       let pathUpper =this.state.namePage;
       let pathLower =pathUpper.toLowerCase();
-      let dbCon = config.database().ref('project/test');
+      let dbCon = config.database().ref('project/'+this.props.user+'/');
       dbCon.push({
       key:this.state.num,
       pageName: this.state.namePage,
       pathName:pathLower,
-      path: "/test/"+pathLower,
+      path: "/"+this.props.user+"/"+pathLower,
       hero: this.state.selectedHero,
+      carousel: this.state.selectedCarousel,
       welcome: this.state.selectedWelcome,
       about : this.state.selectedAbout,
       gallery :this.state.selectedGallery,
       contact : this.state.selectedContact,
       heroContent: {      
-        heroBackgroundImage:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/images%2Fglenn-carstens-peters-282287-unsplash.jpg?alt=media&token=0d7da81b-339e-412a-9efb-36682e1207e9',
+        image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Fphoto-1529460608-bc455fccd5a4.jpg?alt=media&token=4fd85984-d17a-4bbe-9936-eb855881e12f',
         heroTitle:'Title',
         heroTitleAnimate:'none',
         heroTitleDuration:'1s',
@@ -215,20 +207,63 @@ class TabWebsite extends React.Component {
         heroButtonBDColor:"#228B22",
         heroButtonHBDColor:"#FFFFFF",
         heroButtonHoverColor:"#FFFFFF",
+      },
+      carouselSetting:{ 
+        speed:'1000',
+        pauseOnHover:true,
+        dots:true,
+        autoplay:true,
+        vertical:true  
+      },
+      carouselContent:{
+        Content1:{
+        title:'Title',
+        description:'Description',
+        carouselTitleFontFamily:'Montserrat',
+        carouselTitleFontWeight:'700',
+        carouselTitleFontSize:'70',
+        carouselTitleFontStyle:'normal',
+        carouselTitleStatus:'block',
+        carouselTitleColor:'#ffffff',
+        carouselDescriptionFontFamily:'Montserrat',
+        carouselDescriptionFontWeight:'400',
+        carouselDescriptionFontSize:'30',
+        carouselDescriptionFontStyle:'normal',
+        carouselDescriptionStatus:'block',
+        carouselDescriptionColor:'#ffffff',  
+        image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2F3038591-poster-p-1-secrets-of-the-most-productive-peoplehow-to-work-different-productivity-styles.jpg?alt=media&token=aca301c1-8ed2-4353-942e-39df3bff3ed0'  
+        },
+        Content2:{
+          title:'Title',
+          description:'Description',
+          carouselTitleFontFamily:'Montserrat',
+          carouselTitleFontWeight:'700',
+          carouselTitleFontSize:'70',
+          carouselTitleFontStyle:'normal',
+          carouselTitleStatus:'block',
+          carouselTitleColor:'#ffffff',
+          carouselDescriptionFontFamily:'Montserrat',
+          carouselDescriptionFontWeight:'400',
+          carouselDescriptionFontSize:'30',
+          carouselDescriptionFontStyle:'normal',
+          carouselDescriptionStatus:'block',
+          carouselDescriptionColor:'#ffffff',  
+          image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2F1.jpg?alt=media&token=ce74df4f-e4ea-437f-90b0-c39ec8970086'  
+          }
       }
-    })    
+    });     
     }
     this.setNullValue();
     this.handleClose();
   };
 
-  deletePage(){
-    let dbCon = config.database().ref('project/test');
+  deletePage=()=>{
+    let dbCon = config.database().ref('project/'+this.props.user+'/');
     dbCon.child(this.props.tabs).remove();
-  }
+  };
 
-  save(){
-    let dbCon = config.database().ref('project/test/'+this.props.tabs);
+  save=()=>{
+    let dbCon = config.database().ref('project/'+this.props.user+'/'+this.props.tabs);
     dbCon.update({
     heroContent:{
       image:this.props.heroBackgroundImage,
@@ -273,16 +308,22 @@ class TabWebsite extends React.Component {
       heroButtonBDColor:this.props.heroButtonBDColor,
       heroButtonHBDColor:this.props.heroButtonHBDColor,
       heroButtonHoverColor:this.props.heroButtonHoverColor,
+    },
+    carouselSetting:{
+      speed:this.props.carouselSpeed,
+      pauseOnHover:this.props.carouselPauseOnHover,
+      dots:this.props.carouselDots,
+      autoplay:this.props.carouselAutoplay,
+      vertical:this.props.carouselVertical
     }
     });
-    alert("saved") 
+    alert("saved");
+    this.setNullValue();
   };
 
   render() {
     const { classes, theme } = this.props;
-    const center= ({
-      textAlign: 'center'
-    }); 
+    const center= ({textAlign: 'center'}); 
     return (
     <div>
       <Button variant="contained" color="secondary" onClick={this.save} className={classes.button}>
@@ -308,6 +349,12 @@ class TabWebsite extends React.Component {
       valueHero2="HeroNo1"
       valueHero3="HeroNo2"
       valueHero4="HeroNo3"
+      selectedCarousel={this.state.selectedCarousel}
+      handleChangeCarousel={this.handleChangeSelectedCarousel}
+      valueCarousel1="none"
+      valueCarousel2="CarouselNo1"
+      valueCarousel3="CarouselNo2"
+      valueCarousel4="CarouselNo3"
       selectedWelcome={this.state.selectedWelcome}
       handleChangeWelcome={this.handleChangeSelectWelcome}
       valueWelcome1="none"
@@ -351,6 +398,12 @@ class TabWebsite extends React.Component {
       valueHero2="HeroNo1"
       valueHero3="HeroNo2"
       valueHero4="HeroNo3"
+      selectedCarousel={this.state.selectedCarousel}
+      handleChangeCarousel={this.handleChangeSelectedCarousel}
+      valueCarousel1="none"
+      valueCarousel2="CarouselNo1"
+      valueCarousel3="CarouselNo2"
+      valueCarousel4="CarouselNo3"
       selectedWelcome={this.state.selectedWelcome}
       handleChangeWelcome={this.handleChangeSelectWelcome}
       valueWelcome1="none"
@@ -453,7 +506,12 @@ class TabWebsite extends React.Component {
               heroButtonHBDColor={this.props.heroButtonHBDColor}
               heroButtonHoverColor={this.props.heroButtonHoverColor}
 
-              carousel={this.props.carousel}
+              carouselContent={this.props.carouselContent}
+              carouselSpeed={this.props.carouselSpeed}
+              carouselPauseOnHover={this.props.carouselPauseOnHover}
+              carouselDots={this.props.carouselDots}
+              carouselAutoplay={this.props.carouselAutoplay}
+              carouselVertical={this.props.carouselVertical}
             />
             </div>
           )))}   
@@ -470,7 +528,8 @@ TabWebsite.propTypes = {
   theme: PropTypes.object.isRequired,
 };
 const mapStateToPropsTabs = state => ({
-  tabs: state.tabs 
+  tabs: state.tabs ,
+  user:state.user
 })
 
 export default connect(mapStateToPropsTabs)(withStyles(styles, { withTheme: true })(TabWebsite));

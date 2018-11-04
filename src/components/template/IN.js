@@ -108,12 +108,22 @@ class IN extends React.Component {
   }
   if( this.props.Carousel === "CarouselNo1"){
     Carousel = <CarouselNo1
-    carousel={this.props.carousel}
+    carouselContent={this.props.carouselContent}
+    carouselSpeed={this.props.carouselSpeed}
+    carouselPauseOnHover={this.props.carouselPauseOnHover}
+    carouselDots={this.props.carouselDots}
+    carouselAutoplay={this.props.carouselAutoplay}
+    carouselVertical={this.props.carouselVertical}
     />
   }
   if( this.props.Carousel === "CarouselNo2"){
     Carousel = <CarouselNo1
-    carousel={this.props.carousel}
+    carouselContent={this.props.carouselContent}
+    carouselSpeed={this.props.carouselSpeed}
+    carouselPauseOnHover={this.props.carouselPauseOnHover}
+    carouselDots={this.props.carouselDots}
+    carouselAutoplay={this.props.carouselAutoplay}
+    carouselVertical={this.props.carouselVertical}
     />
   }
 return (

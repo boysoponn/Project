@@ -131,7 +131,24 @@ class ButtonForNewTab extends React.Component {
             label4="Hero No.3"
             />
           </ListItem>
-          </List>          
+          </List>    
+          <List>
+          <h1>Carousel</h1>
+          <ListItem>
+            <RadioButtons
+            selectedValue={this.props.selectedCarousel}
+            handleChange={this.props.handleChangeCarousel}
+            value1={this.props.valueCarousel1}
+            value2={this.props.valueCarousel2}
+            value3={this.props.valueCarousel3}
+            value4={this.props.valueCarousel4}
+            label1="None"
+            label2="Carousel No.1"
+            label3="Carousel No.2"
+            label4="Carousel No.3"
+            />
+          </ListItem>
+          </List>       
           <List>
           <h1>Welcome</h1>
           <ListItem>

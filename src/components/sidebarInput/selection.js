@@ -8,7 +8,7 @@ class Selection extends React.Component {
       let t = this.props.labelTrue;
       let f = this.props.labelFalse;
       let label;
-      if(this.props.value == true){
+      if(this.props.value === true){
         label=t;
       }else{
         label=f;

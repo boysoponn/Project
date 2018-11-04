@@ -73,7 +73,7 @@ class ModalChooseImage extends React.Component {
 }
 
   getData(){
-    const app = config.database().ref('/project/sopon/images');
+    const app = config.database().ref('image/'+this.props.user);
     app.on('value', async (snapshot) => { 
       const snapshotValue = snapshot.val();
       
@@ -86,7 +86,7 @@ class ModalChooseImage extends React.Component {
       }, []);
       
       const pictures = await Promise.all(snapshotArr.map(async (obj) => {
-        obj.imageName = await config.storage().ref(`images/${obj.imageName}`).getDownloadURL();
+        obj.imageName = await config.storage().ref(`${this.props.user}/${obj.imageName}`).getDownloadURL();
         return Promise.resolve(obj);
       }));
       this.setState({
@@ -97,7 +97,7 @@ class ModalChooseImage extends React.Component {
 
   imageOnClick = image => () => {
     // this.props.dispatch(getUrlImage(image.imageName));
-    let dbCon = config.database().ref('project/test/'+this.props.tabs+this.props.path);
+    let dbCon = config.database().ref('project/'+this.props.user+'/'+this.props.tabs+'/'+this.props.path);
     dbCon.update({
       image:image.imageName,
     }); 
@@ -136,10 +136,10 @@ class ModalChooseImage extends React.Component {
         </DialogTitle>
 
         <div className={classes.root}>
-        <GridList cellHeight={200} cellWidth={1000} className={classes.gridList}>
+        <GridList cellHeight={200} className={classes.gridList}>
         {this.state.images.map((image => (
-          <GridListTile >
-            <img src={image.imageName} key={image._key} className={classes.image} onClick={this.imageOnClick(image)} alt="gg" />
+          <GridListTile key={image._key}>
+            <img src={image.imageName}  className={classes.image} onClick={this.imageOnClick(image)} alt="gg" />
           </GridListTile>
         )))}
       </GridList>
@@ -158,6 +158,7 @@ ModalChooseImage.propTypes = {
 const ModalChooseImageWrapped = withStyles(styles)(ModalChooseImage);
 const mapStateToProps = state => ({
   tabs: state.tabs ,
+  user:state.user
 })
 
 export default connect(mapStateToProps)(ModalChooseImageWrapped);

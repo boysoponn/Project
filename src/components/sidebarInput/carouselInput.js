@@ -36,7 +36,6 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
   },
   button: {
-    marginTop:10,
     width:130
    },
    paper: {
@@ -52,6 +51,16 @@ const styles = theme => ({
     width: 100,
     marginRight: 5,
     float:'right',
+  },
+  nested: {
+    paddingLeft: theme.spacing.unit * 4,
+  },
+  imgitem:{
+    width:200,
+    height:100,
+    '&:hover': {
+      cursor: 'pointer',
+    },
   }
 });
 
@@ -65,15 +74,11 @@ class NestedList extends React.Component {
     image: null,
     anchorEl: null,
     anchorEl2: null,
-    speed:'',
-    pauseOnHover:true,
-    dots:true,
-    autoplay:true,
-    vertical:true
     };  
   }
+ 
   save =  () => {
-    let dbCon = config.database().ref('project/test/'+this.props.tabs+"/carouselContent/");
+    let dbCon = config.database().ref('project/'+this.props.user+'/'+this.props.tabs+"/carouselContent/");
     dbCon.child(this.state.carouselPath).update({
       title:this.state.carouselTitle,
       description:this.state.carouselDescription,
@@ -93,11 +98,11 @@ class NestedList extends React.Component {
     alert("saved") 
   };
   delete = carousel => () =>{
-    let dbCon = config.database().ref('project/test/'+this.props.tabs+"/carouselContent/");
+    let dbCon = config.database().ref('project/'+this.props.user+'/'+this.props.tabs+"/carouselContent/");
     dbCon.child(carousel._key).remove();
   }
   addItem=()=>{
-    let dbCon = config.database().ref('project/test/'+this.props.tabs+"/carouselContent/");
+    let dbCon = config.database().ref('project/'+this.props.user+'/'+this.props.tabs+"/carouselContent/");
     dbCon.push({
       title:'Title',
       description:'Description',
@@ -113,7 +118,7 @@ class NestedList extends React.Component {
       carouselDescriptionFontStyle:'normal',
       carouselDescriptionStatus:'block',
       carouselDescriptionColor:'#ffffff',  
-      image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/images%2Fhero-set3-b.jpg?alt=media&token=278896f0-391e-475b-b6d3-4cb1b834651b'
+      image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2F3038591-poster-p-1-secrets-of-the-most-productive-peoplehow-to-work-different-productivity-styles.jpg?alt=media&token=aca301c1-8ed2-4353-942e-39df3bff3ed0'
     })  
   }
   OpenItem = carousel => () => { this.setState({ 
@@ -157,12 +162,7 @@ class NestedList extends React.Component {
   carouselDescriptionOnChangeFontStyle = (e) => {this.setState({ carouselDescriptionFontStyle: e.target.value });};
   carouselDescriptionOnChangeStatus = (e) => {this.setState({ carouselDescriptionStatus: e.target.value });};
   carouselDescriptionOnChangeColor = (color) => {this.setState({ carouselDescriptionColor: color.hex });};
-  
-  onChangeSpeed = (e) => {this.setState({ speed: e.target.value });};  
-  onChangePauseOnHover = (e) => {this.setState({ pauseOnHover: e.target.checked });};   
-  onChangeDots = (e) => {this.setState({ dots: e.target.checked });};  
-  onChangeAutoplay = (e) => {this.setState({ autoplay: e.target.checked });};  
-  onChangeVertical = (e) => {this.setState({ vertical: e.target.checked });};  
+
 
   render() {
     const { classes } = this.props;
@@ -181,8 +181,9 @@ class NestedList extends React.Component {
           </ListItem>
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding={false}>
+            <ListItem className={classes.nested}>
             <Button variant="contained" onClick={this.handleClickOpen} component="span" color="secondary" className={classes.button}>
-             Carousel Items
+             Setting
             </Button>
             <Popover
               open={open}
@@ -194,56 +195,57 @@ class NestedList extends React.Component {
               }}
               transformOrigin={{
                 vertical: 'top',
-                horizontal: 'center',
+                horizontal: 'left',
               }}
             >
+            <ListItem>
+              <Dropdown 
+                label='Speed'
+                value={this.props.carouselSpeed}
+                onChange={this.props.carouselOnChangeSpeed}
+                choice = {[
+                  {_key:'1',value: '1500' , label: 'Slow'},
+                  {_key:'2',value: '1000', label: 'Normal'},
+                  {_key:'3',value: '750', label: 'Fast'}
+                ]}
+              />
+            </ListItem>
               <ListItem >
                 <Selection
-                value={this.state.vertical}
-                onChange={this.onChangeVertical}
+                value={this.props.carouselVertical}
+                onChange={this.props.carouselOnChangeVertical}
                 labelTrue="Vertical"
                 labelFalse="Horizotal"
                 />
               </ListItem >
               <ListItem >
                 <Selection
-                value={this.state.autoplay}
-                onChange={this.onChangeAutoplay}
+                value={this.props.carouselAutoplay}
+                onChange={this.props.carouselOnChangeAutoplay}
                 labelTrue="Autoplay"
                 labelFalse="Not autoplay"
                 />
               </ListItem>
               <ListItem >
                 <Selection
-                value={this.state.pauseOnHover}
-                onChange={this.onChangePauseOnHover}
+                value={this.props.carouselPauseOnHover}
+                onChange={this.props.carouselOnChangePauseOnHover}
                 labelTrue="Pause on hover"
                 labelFalse="Not pause on hover"
                 />
               </ListItem>
               <ListItem >
                 <Selection
-                value={this.state.dots}
-                onChange={this.onChangeDots}
+                value={this.props.carouselDots}
+                onChange={this.props.carouselOnChangeDots}
                 labelTrue="Have dots"
                 labelFalse="Not have dots"
                 />
               </ListItem>
-              <ListItem>
-              <Dropdown 
-                label='Speed'
-                value={this.state.speed}
-                onChange={this.onChangeSpeed}
-                choice = {[
-                  {value: '1500' , label: 'Fast'},
-                  {value: '1000', label: 'Normal'},
-                  {value: '500', label: 'Slow'}
-                ]}
-              />
-            </ListItem>
             </Popover>
-            <ListItem>
-            <Button variant="contained" onClick={this.handleClickOpen2} component="span" color="secondary" className={classes.button}>
+            </ListItem>
+            <ListItem className={classes.nested}>
+            <Button  variant="contained" onClick={this.handleClickOpen2} component="span" color="secondary" className={classes.button}>
              Carousel Items
             </Button>
             <Popover
@@ -256,14 +258,12 @@ class NestedList extends React.Component {
               }}
               transformOrigin={{
                 vertical: 'top',
-                horizontal: 'center',
+                horizontal: 'left',
               }}
             >
-            {this.props.carousel.map((carousel => (
+            {this.props.carouselContent.map((carousel => (
             <ListItem key={carousel._key}>
-            <Button variant="contained"  onClick={this.OpenItem(carousel)} component="span" color="secondary" className={classes.paper}>
-              {carousel.title}
-            </Button>
+            <img src={carousel.image} alt={carousel.title} className={classes.imgitem} onClick={this.OpenItem(carousel)}/>
             <DeleteIcon  onClick={this.delete(carousel)} className={classes.rightIcon}/>
             </ListItem>
              )))} 
@@ -350,7 +350,8 @@ NestedList.propTypes = {
 
 const mapStateToProps = state => ({
   urlImage: state.urlImage ,
-  tabs:state.tabs
+  tabs:state.tabs,
+  user:state.user
 })
 export default connect(mapStateToProps)(withStyles(styles)(NestedList));
 

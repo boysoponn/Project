@@ -6,6 +6,7 @@ import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import UploadPicture from './uploadPicture';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import { connect } from 'react-redux'
 
 const styles = theme => ({
   modal:{
@@ -82,8 +83,8 @@ class ModalUpload extends React.Component {
       let row=0; 
       while(row<this.state.Howmany){  
         const image = this.state.image[row] ; 
-        config.storage().ref(`images/${this.state.imageName[row]}`).put(image);
-      let dbCon = config.database().ref('/project/sopon/images');
+        config.storage().ref(`${this.props.user}/${this.state.imageName[row]}`).put(image);
+      let dbCon = config.database().ref('image/'+this.props.user);
       dbCon.push({
         imageName:this.state.imageName[row],
       }); 
@@ -133,5 +134,9 @@ ModalUpload.propTypes = {
 
 // We need an intermediary variable for handling the recursive nesting.
 const ModalUploadWrapped = withStyles(styles)(ModalUpload);
+const mapStateToProps = state => ({
+  tabs: state.tabs ,
+  user:state.user
+})
 
-export default ModalUploadWrapped;
+export default connect(mapStateToProps)(ModalUploadWrapped);

@@ -44,7 +44,7 @@ class Dropdown extends React.Component {
                         MenuProps={MenuProps}
                     >   
                     {this.props.choice.map((values => (
-                        <MenuItem value={values.value}>{values.label}</MenuItem>
+                        <MenuItem key={values._key} value={values.value}>{values.label}</MenuItem>
                         )))}
                     </Select>
                     </FormControl>

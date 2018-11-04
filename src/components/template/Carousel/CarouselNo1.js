@@ -18,9 +18,9 @@ class CarouselNo1 extends React.Component {
 
     return (
         <div style={background}> 
-            <Carousel autoplay speed='1000' dots={true} pauseOnHover= {false}>
-            {this.props.carousel.map((post => (
-                <div>
+            <Carousel vertical={this.props.carouselVertical} autoplay={this.props.carouselAutoplay} speed={this.props.carouselSpeed} dots={this.props.carouselDots} pauseOnHover= {this.props.carouselPauseOnHover}>
+            {this.props.carouselContent.map((post => (
+                <div key={post._key}>
                     <div style={{
                           backgroundImage:"url("+post.image+")",
                           height:'500',

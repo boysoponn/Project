@@ -20,7 +20,6 @@ import Button from '@material-ui/core/Button';
 import ExitIcon from '@material-ui/icons/ExitToApp';
 import TabWebsite from './template/tab'
 import { connect } from 'react-redux'
-import {getUrlImage} from './actions'
 
 const drawerWidth = 300;
 
@@ -110,55 +109,13 @@ const styles = theme => ({
 class CMS extends React.Component {
   constructor(props){
   super(props);
-  this.logout = this.logout.bind(this);
-  this.heroTitleOnChange = this.heroTitleOnChange.bind(this);  
-  this.heroTitleOnChangeAnimate = this.heroTitleOnChangeAnimate.bind(this); 
-  this.heroTitleOnChangeDuration = this.heroTitleOnChangeDuration.bind(this); 
-  this.heroTitleOnChangeFontFamily = this.heroTitleOnChangeFontFamily.bind(this); 
-  this.heroTitleOnChangeFontSize = this.heroTitleOnChangeFontSize.bind(this); 
-  this.heroTitleOnChangeFontWeight = this.heroTitleOnChangeFontWeight.bind(this); 
-  this.heroTitleOnChangeFontStyle = this.heroTitleOnChangeFontStyle.bind(this);
-  this.heroTitleOnChangeStatus = this.heroTitleOnChangeStatus.bind(this); 
-  this.heroTitleOnChangeStatus = this.heroTitleOnChangeStatus.bind(this); 
-  this.heroTitleOnChangeColor = this.heroTitleOnChangeColor.bind(this); 
-
-  this.heroDescriptionOnChange = this.heroDescriptionOnChange.bind(this); 
-  this.heroDescriptionOnChangeAnimate = this.heroDescriptionOnChangeAnimate.bind(this); 
-  this.heroDescriptionOnChangeDuration = this.heroDescriptionOnChangeDuration.bind(this); 
-  this.heroDescriptionOnChangeFontFamily = this.heroDescriptionOnChangeFontFamily.bind(this); 
-  this.heroDescriptionOnChangeFontSize = this.heroDescriptionOnChangeFontSize.bind(this); 
-  this.heroDescriptionOnChangeFontWeight = this.heroDescriptionOnChangeFontWeight.bind(this); 
-  this.heroDescriptionOnChangeFontStyle = this.heroDescriptionOnChangeFontStyle.bind(this);
-  this.heroDescriptionOnChangeStatus = this.heroDescriptionOnChangeStatus.bind(this); 
-  this.heroDescriptionOnChangeColor = this.heroDescriptionOnChangeColor.bind(this);
-
-
-  this.heroButtonOnChange = this.heroButtonOnChange.bind(this); 
-  this.heroButtonOnChangeSelected = this.heroButtonOnChangeSelected.bind(this);
-  this.heroButtonOnChangeAnimate = this.heroButtonOnChangeAnimate.bind(this); 
-  this.heroButtonOnChangeDuration = this.heroButtonOnChangeDuration.bind(this); 
-  this.heroButtonOnChangeFontFamily = this.heroButtonOnChangeFontFamily.bind(this); 
-  this.heroButtonOnChangeFontSize = this.heroButtonOnChangeFontSize.bind(this); 
-  this.heroButtonOnChangeFontWeight = this.heroButtonOnChangeFontWeight.bind(this); 
-  this.heroButtonOnChangeFontStyle = this.heroButtonOnChangeFontStyle.bind(this);
-  this.heroButtonOnChangeStatus = this.heroButtonOnChangeStatus.bind(this); 
-  this.heroButtonOnChangeColor = this.heroButtonOnChangeColor.bind(this);
-  this.heroButtonOnChangeHBDColor = this.heroButtonOnChangeHBDColor.bind(this); 
-  this.heroButtonOnChangeBDColor = this.heroButtonOnChangeBDColor.bind(this); 
-  this.heroButtonOnChangeHBGColor = this.heroButtonOnChangeHBGColor.bind(this); 
-  this.heroButtonOnChangeBGColor = this.heroButtonOnChangeBGColor.bind(this); 
-  this.heroButtonOnChangeRadius = this.heroButtonOnChangeRadius.bind(this);
-  this.heroButtonOnChangeLink = this.heroButtonOnChangeLink.bind(this); 
-  this.heroButtonOnChangeLinkTarget = this.heroButtonOnChangeLinkTarget.bind(this); 
-  this.heroButtonOnChangeSwap = this.heroButtonOnChangeSwap.bind(this);
-  this.heroButtonOnChangeSwapColor = this.heroButtonOnChangeSwapColor.bind(this);
-  this.heroButtonOnChangeHoverColor = this.heroButtonOnChangeHoverColor.bind(this);
   this.state = {
     // isLoaded: false,
     open: true,
     key:'',
+    hero:'none',
+    carousel:'none',
     heroBackgroundImage:'',
-
     heroTitle:'',
     heroTitleAnimate:'',
     heroTitleDuration:'',
@@ -191,18 +148,24 @@ class CMS extends React.Component {
     heroButtonColor:'',
     heroButtonHoverColor:'',
     heroButtonSwapColor:'',
-    carousel:[],
+    carouselContent:[],
+    carouselSpeed:'',
+    carouselPauseOnHover:'',
+    carouselDots:'',
+    carouselAutoplay:'',
+    carouselVertical:'',
   };
 }
 
 
 componentWillReceiveProps(nextProps){
-  let app = config.database().ref('project/test/'+nextProps.tabs);
+  let app = config.database().ref('project/'+this.props.user+'/'+nextProps.tabs);
   app.on('value', async (snapshot) => { 
   const snapshotValue = snapshot.val(); 
   let data = _(snapshotValue).value();
         this.setState({
           hero:data.hero,
+          carousel:data.carousel,
           heroBackgroundImage:data.heroContent.image,
           heroTitle:data.heroContent.heroTitle,
           heroTitleAnimate:data.heroContent.heroTitleAnimate,
@@ -244,11 +207,17 @@ componentWillReceiveProps(nextProps){
           heroButtonBDColor:data.heroContent.heroButtonBDColor,
           heroButtonHBDColor:data.heroContent.heroButtonHBDColor,
           heroButtonHoverColor:data.heroContent.heroButtonHoverColor,
+
+          carouselSpeed:data.carouselSetting.speed,
+          carouselPauseOnHover:data.carouselSetting.pauseOnHover,
+          carouselDots:data.carouselSetting.dots,
+          carouselAutoplay:data.carouselSetting.autoplay,
+          carouselVertical:data.carouselSetting.vertical
           // isLoaded: false
         }); 
   });
 
-  let carouselItems = config.database().ref('project/test/'+nextProps.tabs+'/carouselContent');
+  let carouselItems = config.database().ref('project/'+this.props.user+'/'+nextProps.tabs+'/carouselContent');
   carouselItems.on('value', async (snapshot) => { 
   const snapshotValue2 = snapshot.val(); 
   const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {
@@ -259,65 +228,63 @@ componentWillReceiveProps(nextProps){
     return prev;     
   }, []); 
   this.setState({
-    carousel:snapshotArr
+    carouselContent:snapshotArr
   });
 });
-
-
-  // let app2 = config.database().ref('project/test/'+nextProps.tabs+'/carouselContent/'+nextProps.url);
-  //   app2.on('value', async (snapshot) => { 
-  //   const snapshotValue3 = snapshot.val(); 
-  //   let data2 = _(snapshotValue3).value();
-  //   console.log(data2.title);  
-  //   });
 }
  
 
-  logout(){config.auth().signOut();window.location.reload(); };
+  logout =() => {config.auth().signOut();window.location.reload(); };
   handleDrawerOpen = () => {this.setState({ open: true ,});}
   handleDrawerClose = () => {this.setState({  open: false ,});};
 
-  heroTitleOnChange(e) {this.setState({heroTitle: e.target.value});};
-  heroTitleOnChangeAnimate (e) {this.setState({ heroTitleAnimate: e.target.value });};
-  heroTitleOnChangeDuration (e) {this.setState({ heroTitleDuration: e.target.value });};
-  heroTitleOnChangeFontFamily (e) {this.setState({ heroTitleFontFamily: e.target.value });};
-  heroTitleOnChangeFontSize (e) {this.setState({ heroTitleFontSize: e.target.value });};
-  heroTitleOnChangeFontStyle (e) {this.setState({ heroTitleFontStyle: e.target.value });};
-  heroTitleOnChangeFontWeight (e) {this.setState({ heroTitleFontWeight: e.target.value });};
-  heroTitleOnChangeStatus (e) {this.setState({ heroTitleStatus: e.target.value });};
-  heroTitleOnChangeColor (color) {this.setState({ heroTitleColor: color.hex});};
+  heroTitleOnChange = (e) => {this.setState({heroTitle: e.target.value});};
+  heroTitleOnChangeAnimate = (e) => {this.setState({ heroTitleAnimate: e.target.value });};
+  heroTitleOnChangeDuration = (e) => {this.setState({ heroTitleDuration: e.target.value });};
+  heroTitleOnChangeFontFamily = (e) => {this.setState({ heroTitleFontFamily: e.target.value });};
+  heroTitleOnChangeFontSize = (e) => {this.setState({ heroTitleFontSize: e.target.value });};
+  heroTitleOnChangeFontStyle = (e) => {this.setState({ heroTitleFontStyle: e.target.value });};
+  heroTitleOnChangeFontWeight = (e) => {this.setState({ heroTitleFontWeight: e.target.value });};
+  heroTitleOnChangeStatus = (e) => {this.setState({ heroTitleStatus: e.target.value });};
+  heroTitleOnChangeColor = (color) => {this.setState({ heroTitleColor: color.hex});};
 
-  heroDescriptionOnChange(e) {this.setState({heroDescription: e.target.value});};
-  heroDescriptionOnChangeAnimate (e) {this.setState({ heroDescriptionAnimate: e.target.value });};
-  heroDescriptionOnChangeDuration (e) {this.setState({ heroDescriptionDuration: e.target.value });};
-  heroDescriptionOnChangeFontFamily (e) {this.setState({ heroDescriptionFontFamily: e.target.value });};
-  heroDescriptionOnChangeFontSize (e) {this.setState({ heroDescriptionFontSize: e.target.value });};
-  heroDescriptionOnChangeFontStyle (e) {this.setState({ heroDescriptionFontStyle: e.target.value });};
-  heroDescriptionOnChangeFontWeight (e) {this.setState({ heroDescriptionFontWeight: e.target.value });};
-  heroDescriptionOnChangeStatus (e) {this.setState({ heroDescriptionStatus: e.target.value });};
-  heroDescriptionOnChangeColor (color) {this.setState({ heroDescriptionColor: color.hex });};
+  heroDescriptionOnChange= (e) => {this.setState({heroDescription: e.target.value});};
+  heroDescriptionOnChangeAnimate = (e) => {this.setState({ heroDescriptionAnimate: e.target.value });};
+  heroDescriptionOnChangeDuration = (e) => {this.setState({ heroDescriptionDuration: e.target.value });};
+  heroDescriptionOnChangeFontFamily = (e) => {this.setState({ heroDescriptionFontFamily: e.target.value });};
+  heroDescriptionOnChangeFontSize = (e) => {this.setState({ heroDescriptionFontSize: e.target.value });};
+  heroDescriptionOnChangeFontStyle = (e) => {this.setState({ heroDescriptionFontStyle: e.target.value });};
+  heroDescriptionOnChangeFontWeight = (e) => {this.setState({ heroDescriptionFontWeight: e.target.value });};
+  heroDescriptionOnChangeStatus = (e) => {this.setState({ heroDescriptionStatus: e.target.value });};
+  heroDescriptionOnChangeColor = (color) => {this.setState({ heroDescriptionColor: color.hex });};
 
   heroButtonOnChange = (e) => {this.setState({ heroButton: e.target.value });};
-  heroButtonOnChangeSelected = event => {this.setState({ heroButtonSelected: event.target.value });};
-  heroButtonOnChangeAnimate (e) {this.setState({ heroButtonAnimate: e.target.value });};
-  heroButtonOnChangeDuration (e) {this.setState({ heroButtonDuration: e.target.value });};
-  heroButtonOnChangeFontFamily (e) {this.setState({ heroButtonFontFamily: e.target.value });};
-  heroButtonOnChangeFontSize (e) {this.setState({ heroButtonFontSize: e.target.value });};
-  heroButtonOnChangeFontStyle (e) {this.setState({ heroButtonFontStyle: e.target.value });};
-  heroButtonOnChangeFontWeight (e) {this.setState({ heroButtonFontWeight: e.target.value });};
-  heroButtonOnChangeStatus (e) {this.setState({ heroButtonStatus: e.target.value });};
+  heroButtonOnChangeSelected = e => {this.setState({ heroButtonSelected: e.target.value });};
+  heroButtonOnChangeAnimate = (e) => {this.setState({ heroButtonAnimate: e.target.value });};
+  heroButtonOnChangeDuration = (e) => {this.setState({ heroButtonDuration: e.target.value });};
+  heroButtonOnChangeFontFamily = (e) => {this.setState({ heroButtonFontFamily: e.target.value });};
+  heroButtonOnChangeFontSize = (e) => {this.setState({ heroButtonFontSize: e.target.value });};
+  heroButtonOnChangeFontStyle = (e) => {this.setState({ heroButtonFontStyle: e.target.value });};
+  heroButtonOnChangeFontWeight = (e) => {this.setState({ heroButtonFontWeight: e.target.value });};
+  heroButtonOnChangeStatus = (e) => {this.setState({ heroButtonStatus: e.target.value });};
   heroButtonOnChangeSwap = (e) => {this.setState({ heroButtonSwap: e.target.value });};
-  heroButtonOnChangeLink (e) {this.setState({ heroButtonLink: e.target.value });};
-  heroButtonOnChangeLinkTarget (e) {this.setState({ heroButtonLinkTarget: e.target.value });};
-  heroButtonOnChangeRadius (e) {this.setState({ heroButtonRadius: e.target.value });};
-  heroButtonOnChangeBGColor (color) {this.setState({ heroButtonBGColor: color.hex });};
-  heroButtonOnChangeHBGColor (color) {this.setState({ heroButtonHBGColor: color.hex });};
-  heroButtonOnChangeBDColor (color) {this.setState({ heroButtonBDColor: color.hex });};
-  heroButtonOnChangeHBDColor (color) {this.setState({ heroButtonHBDColor: color.hex });};
-  heroButtonOnChangeColor (color) {this.setState({ heroButtonColor: color.hex });};
-  heroButtonOnChangeSwapColor(color) {this.setState({ heroButtonSwapColor: color.hex });};
-  heroButtonOnChangeHoverColor(color) {this.setState({ heroButtonHoverColor: color.hex });};
+  heroButtonOnChangeLink = (e) => {this.setState({ heroButtonLink: e.target.value });};
+  heroButtonOnChangeLinkTarget = (e) => {this.setState({ heroButtonLinkTarget: e.target.value });};
+  heroButtonOnChangeRadius = (e) => {this.setState({ heroButtonRadius: e.target.value });};
+  heroButtonOnChangeBGColor = (color) => {this.setState({ heroButtonBGColor: color.hex });};
+  heroButtonOnChangeHBGColor = (color) => {this.setState({ heroButtonHBGColor: color.hex });};
+  heroButtonOnChangeBDColor = (color) => {this.setState({ heroButtonBDColor: color.hex });};
+  heroButtonOnChangeHBDColor = (color) => {this.setState({ heroButtonHBDColor: color.hex });};
+  heroButtonOnChangeColor = (color) => {this.setState({ heroButtonColor: color.hex });};
+  heroButtonOnChangeSwapColor = (color) => {this.setState({ heroButtonSwapColor: color.hex });};
+  heroButtonOnChangeHoverColor = (color) => {this.setState({ heroButtonHoverColor: color.hex });};
   
+    
+  carouselOnChangeSpeed = (e) => {this.setState({ carouselSpeed: e.target.value });};  
+  carouselOnChangePauseOnHover = (e) => {this.setState({ carouselPauseOnHover: e.target.checked });};   
+  carouselOnChangeDots = (e) => {this.setState({ carouselDots: e.target.checked });};  
+  carouselOnChangeAutoplay = (e) => {this.setState({ carouselAutoplay: e.target.checked });};  
+  carouselOnChangeVertical = (e) => {this.setState({ carouselVertical: e.target.checked });};  
 
   render() {
     const { classes, theme } = this.props;
@@ -407,8 +374,27 @@ componentWillReceiveProps(nextProps){
       heroButtonOnChangeStatus={this.heroButtonOnChangeStatus}
       heroButtonOnChangeColor={this.heroButtonOnChangeColor}
       heroButtonOnChangeSwapColor={this.heroButtonOnChangeSwapColor}
+    />    
+    };
+    let carousel;
+    if( this.state.carousel !== "none"){
+      carousel =            
+      <CarouselInput
+      carouselContent={this.state.carouselContent}
+      carouselSpeed={this.state.carouselSpeed}
+      carouselPauseOnHover={this.state.carouselPauseOnHover}
+      carouselDots={this.state.carouselDots}
+      carouselAutoplay={this.state.carouselAutoplay}
+      carouselVertical={this.state.carouselVertical}
+      carouselOnChangePauseOnHover={this.carouselOnChangePauseOnHover}
+      carouselOnChangeAutoplay={this.carouselOnChangeAutoplay}
+      carouselOnChangeVertical={this.carouselOnChangeVertical}
+      carouselOnChangeSpeed={this.carouselOnChangeSpeed}
+      carouselOnChangeDots={this.carouselOnChangeDots}
     />
-    }
+    };
+      
+
     // if (!this.state.isLoaded) return null;
     return (
       <div className={classes.root} >
@@ -431,7 +417,7 @@ componentWillReceiveProps(nextProps){
             <Typography color="inherit" className={classes.grow} >
 
             </Typography>
-            <Typography variant="title" color="#000" >
+            <Typography variant="title" style={{color:"#000000"}} >
               Welcome : {this.props.user}
             </Typography>
             <Button variant="contained" color="primary" className={classes.button} onClick={this.logout}>Logout
@@ -455,9 +441,7 @@ componentWillReceiveProps(nextProps){
           <Divider />
             <List disablePadding={true}>
             {heroInput}
-            <CarouselInput
-            carousel={this.state.carousel}
-            />
+            {carousel}
             </List>
             
            <Divider />
@@ -549,6 +533,17 @@ componentWillReceiveProps(nextProps){
               heroButtonOnChangeSwapColor={this.heroButtonOnChangeSwapColor}
 
               carousel={this.state.carousel}
+              carouselContent={this.state.carouselContent}
+              carouselSpeed={this.state.carouselSpeed}
+              carouselPauseOnHover={this.state.carouselPauseOnHover}
+              carouselDots={this.state.carouselDots}
+              carouselAutoplay={this.state.carouselAutoplay}
+              carouselVertical={this.state.carouselVertical}
+              carouselOnChangePauseOnHover={this.carouselOnChangePauseOnHover}
+              carouselOnChangeAutoplay={this.carouselOnChangeAutoplay}
+              carouselOnChangeVertical={this.carouselOnChangeVertical}
+              carouselOnChangeSpeed={this.carouselOnChangeSpeed}
+              carouselOnChangeDots={this.carouselOnChangeDots}
             />       
         </main>
       </div>
