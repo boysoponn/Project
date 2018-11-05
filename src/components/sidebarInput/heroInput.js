@@ -55,7 +55,7 @@ class NestedList extends React.Component {
             <List component="div" disablePadding={false}>
               <ListItem  className={classes.nested}>
               <InputText 
-              label="Title" 
+              Label="Title" 
               value={this.props.heroTitle}  
               animate={this.props.heroTitleAnimate} 
               onChange={this.props.heroTitleOnChange} 

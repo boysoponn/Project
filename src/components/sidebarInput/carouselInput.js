@@ -12,6 +12,8 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Text from './inputText';
+import Selection from './selection';
+import Dropdown from './dropdown';
 import Textarea from './inputTextarea';
 import ModalPicture from './modalPicture';
 import Button from '@material-ui/core/Button';
@@ -32,9 +34,6 @@ const styles = theme => ({
     width: '100%',
     maxWidth: 550,
     backgroundColor: theme.palette.background.paper,
-  },
-  nested: {
-    paddingLeft: theme.spacing.unit * 4,
   },
   button: {
     marginTop:10,
@@ -65,7 +64,12 @@ class NestedList extends React.Component {
     openItem1:false,
     image: null,
     anchorEl: null,
-    carouselTitle:''
+    anchorEl2: null,
+    speed:'',
+    pauseOnHover:true,
+    dots:true,
+    autoplay:true,
+    vertical:true
     };  
   }
   save =  () => {
@@ -112,11 +116,6 @@ class NestedList extends React.Component {
       image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/images%2Fhero-set3-b.jpg?alt=media&token=278896f0-391e-475b-b6d3-4cb1b834651b'
     })  
   }
-  handleClick = () => {
-    this.setState(state => ({ open: !state.open }));
-  };
-  handleClickOpen = (event) => {this.setState({ anchorEl: event.currentTarget, });};
-  handleClose = () => {this.setState({ anchorEl: null, });};
   OpenItem = carousel => () => { this.setState({ 
     openItem1: true ,
     carouselTitle:carousel.title,
@@ -138,6 +137,11 @@ class NestedList extends React.Component {
   });
 };
   CloseItem = () => {this.setState({ openItem1: false });};
+  handleClick = () => {this.setState(state => ({ open: !state.open }));};
+  handleClickOpen = (event) => {this.setState({ anchorEl: event.currentTarget, });};
+  handleClose = () => {this.setState({ anchorEl: null, });};
+  handleClickOpen2 = (event) => {this.setState({ anchorEl2: event.currentTarget, });};
+  handleClose2 = () => {this.setState({ anchorEl2: null, });};
   carouselTitleOnChange = (e) => {this.setState({ carouselTitle: e.target.value });};
   carouselTitleOnChangeFontFamily = (e) => {this.setState({ carouselTitleFontFamily: e.target.value });};
   carouselTitleOnChangeFontWeight = (e) => {this.setState({ carouselTitleFontWeight: e.target.value });};
@@ -154,12 +158,17 @@ class NestedList extends React.Component {
   carouselDescriptionOnChangeStatus = (e) => {this.setState({ carouselDescriptionStatus: e.target.value });};
   carouselDescriptionOnChangeColor = (color) => {this.setState({ carouselDescriptionColor: color.hex });};
   
-
+  onChangeSpeed = (e) => {this.setState({ speed: e.target.value });};  
+  onChangePauseOnHover = (e) => {this.setState({ pauseOnHover: e.target.checked });};   
+  onChangeDots = (e) => {this.setState({ dots: e.target.checked });};  
+  onChangeAutoplay = (e) => {this.setState({ autoplay: e.target.checked });};  
+  onChangeVertical = (e) => {this.setState({ vertical: e.target.checked });};  
 
   render() {
     const { classes } = this.props;
-    const { anchorEl } = this.state;
+    const { anchorEl,anchorEl2 } = this.state;
     const open = Boolean(anchorEl);
+    const open2 = Boolean(anchorEl2);
     return (
       <div className={classes.root} >
         <List disablePadding={true}>
@@ -172,7 +181,6 @@ class NestedList extends React.Component {
           </ListItem>
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding={false}>
-            <ListItem  className={classes.nested}>
             <Button variant="contained" onClick={this.handleClickOpen} component="span" color="secondary" className={classes.button}>
              Carousel Items
             </Button>
@@ -180,6 +188,68 @@ class NestedList extends React.Component {
               open={open}
               anchorEl={anchorEl}
               onClose={this.handleClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+            >
+              <ListItem >
+                <Selection
+                value={this.state.vertical}
+                onChange={this.onChangeVertical}
+                labelTrue="Vertical"
+                labelFalse="Horizotal"
+                />
+              </ListItem >
+              <ListItem >
+                <Selection
+                value={this.state.autoplay}
+                onChange={this.onChangeAutoplay}
+                labelTrue="Autoplay"
+                labelFalse="Not autoplay"
+                />
+              </ListItem>
+              <ListItem >
+                <Selection
+                value={this.state.pauseOnHover}
+                onChange={this.onChangePauseOnHover}
+                labelTrue="Pause on hover"
+                labelFalse="Not pause on hover"
+                />
+              </ListItem>
+              <ListItem >
+                <Selection
+                value={this.state.dots}
+                onChange={this.onChangeDots}
+                labelTrue="Have dots"
+                labelFalse="Not have dots"
+                />
+              </ListItem>
+              <ListItem>
+              <Dropdown 
+                label='Speed'
+                value={this.state.speed}
+                onChange={this.onChangeSpeed}
+                choice = {[
+                  {value: '1500' , label: 'Fast'},
+                  {value: '1000', label: 'Normal'},
+                  {value: '500', label: 'Slow'}
+                ]}
+              />
+            </ListItem>
+            </Popover>
+            <ListItem>
+            <Button variant="contained" onClick={this.handleClickOpen2} component="span" color="secondary" className={classes.button}>
+             Carousel Items
+            </Button>
+            <Popover
+              open={open2}
+              anchorEl={anchorEl2}
+              onClose={this.handleClose2}
               anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'center',
