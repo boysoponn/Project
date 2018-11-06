@@ -131,7 +131,7 @@ class TabWebsite extends React.Component {
       dbCon.update({
       pageName: this.state.namePage,
       pathName: pathLower,
-      path: "/test/"+pathLower,
+      path: "/"+this.props.user+"/"+pathLower,
       hero: this.state.selectedHero,
       carousel: this.state.selectedCarousel,
       welcome: this.state.selectedWelcome,
@@ -168,7 +168,7 @@ class TabWebsite extends React.Component {
       gallery :this.state.selectedGallery,
       contact : this.state.selectedContact,
       heroContent: {      
-        image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Fphoto-1529460608-bc455fccd5a4.jpg?alt=media&token=4fd85984-d17a-4bbe-9936-eb855881e12f',
+        image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Fbusiness-2884023_1920.jpg?alt=media&token=f9810600-21b1-423a-8950-6e4f1d13a8e8',
         heroTitle:'Title',
         heroTitleAnimate:'none',
         heroTitleDuration:'1s',
@@ -188,7 +188,7 @@ class TabWebsite extends React.Component {
         heroDescriptionStatus:'block',
         heroDescriptionColor:'#fff',
         heroButton:'Button',
-        heroButtonSelected:'fillRight',
+        heroButtonSelected:'slideLeft',
         heroButtonAnimate:'none',
         heroButtonDuration:'1s',
         heroButtonFontFamily:'Roboto Mono',
@@ -202,9 +202,9 @@ class TabWebsite extends React.Component {
         heroButtonLink:"",
         heroButtonLinkTarget:"_blank",
         heroButtonRadius:"10px",
-        heroButtonBGColor:"#FFFFFF",
-        heroButtonHBGColor:"#228B22",
-        heroButtonBDColor:"#228B22",
+        heroButtonBGColor:"#d4d1d1",
+        heroButtonHBGColor:"#080404",
+        heroButtonBDColor:"#121214",
         heroButtonHBDColor:"#FFFFFF",
         heroButtonHoverColor:"#FFFFFF",
       },
@@ -231,7 +231,7 @@ class TabWebsite extends React.Component {
         carouselDescriptionFontStyle:'normal',
         carouselDescriptionStatus:'block',
         carouselDescriptionColor:'#ffffff',  
-        image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2F3038591-poster-p-1-secrets-of-the-most-productive-peoplehow-to-work-different-productivity-styles.jpg?alt=media&token=aca301c1-8ed2-4353-942e-39df3bff3ed0'  
+        image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Fbeard-2326422_1920.jpg?alt=media&token=b3a12c18-fe28-4574-a6cb-4076503312ea'  
         },
         Content2:{
           title:'Title',
@@ -248,8 +248,25 @@ class TabWebsite extends React.Component {
           carouselDescriptionFontStyle:'normal',
           carouselDescriptionStatus:'block',
           carouselDescriptionColor:'#ffffff',  
-          image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2F1.jpg?alt=media&token=ce74df4f-e4ea-437f-90b0-c39ec8970086'  
-          }
+          image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Furban-438393_1920.jpg?alt=media&token=a612bbf5-62c9-4782-b858-5602ac3e7770'  
+          },
+        Content3:{
+          title:'Title',
+          description:'Description',
+          carouselTitleFontFamily:'Montserrat',
+          carouselTitleFontWeight:'700',
+          carouselTitleFontSize:'70',
+          carouselTitleFontStyle:'normal',
+          carouselTitleStatus:'block',
+          carouselTitleColor:'#ffffff',
+          carouselDescriptionFontFamily:'Montserrat',
+          carouselDescriptionFontWeight:'400',
+          carouselDescriptionFontSize:'30',
+          carouselDescriptionFontStyle:'normal',
+          carouselDescriptionStatus:'block',
+          carouselDescriptionColor:'#ffffff',  
+          image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Furban-438393_1920.jpg?alt=media&token=a612bbf5-62c9-4782-b858-5602ac3e7770'  
+        },
       }
     });     
     }

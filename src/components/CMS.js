@@ -150,10 +150,10 @@ class CMS extends React.Component {
     heroButtonSwapColor:'',
     carouselContent:[],
     carouselSpeed:'',
-    carouselPauseOnHover:'',
-    carouselDots:'',
-    carouselAutoplay:'',
-    carouselVertical:'',
+    carouselPauseOnHover:false,
+    carouselDots:false,
+    carouselAutoplay:true,
+    carouselVertical:false,
   };
 }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../css/animate.min.css';
 import HeroNo1 from './Hero/HeroNo1'
+import MenubarNo1 from './Menubar/menubarNo1'
 import HeroNo2 from './Hero/HeroNo2'
 // import WelcomeNo1 from './Welcome/WelcomeNo1'
 // import WelcomeNo2 from './Welcome/WelcomeNo2'
@@ -14,8 +15,10 @@ class IN extends React.Component {
     height:200,
     backgroundColor:'none',
   };
+  let menubar;
   let Hero;
   let Carousel;
+  menubar=<MenubarNo1/>
   if( this.props.Hero === "HeroNo1"){
     Hero = <HeroNo1
     heroImagePick={this.props.heroImagePick}
@@ -127,7 +130,8 @@ class IN extends React.Component {
     />
   }
 return (
-      <div>   
+      <div> 
+      {menubar}  
       {Hero}
       {Carousel}
       <div style={End}></div>

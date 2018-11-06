@@ -182,8 +182,8 @@ class NestedList extends React.Component {
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding={false}>
             <ListItem className={classes.nested}>
-            <Button variant="contained" onClick={this.handleClickOpen} component="span" color="secondary" className={classes.button}>
-             Setting
+            <Button variant="contained" onClick={this.handleClickOpen} component="span" color="secondary" className={classes}>
+            Carousel Setting
             </Button>
             <Popover
               open={open}
