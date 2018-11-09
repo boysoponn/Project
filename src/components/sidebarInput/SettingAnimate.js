@@ -48,7 +48,6 @@ const MenuProps = {
 class SettingAnimate extends React.Component {
     constructor(props){
         super(props);
-        this.handleClick2 = this.handleClick2.bind(this);
         this.state = {
             open: false,
             open2: false,

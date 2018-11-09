@@ -18,6 +18,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Popover from '@material-ui/core/Popover';
+import ChooseLink from './chooseLink';
 
 function Transition(props) {
   return <Slide direction="right" {...props} />;
@@ -204,28 +205,12 @@ class InputButton extends React.Component {
          {"Setting Button"}
         </DialogTitle>
         <ListItem>
-          <Text
-            type="text"
-            label="Link"
+          <ChooseLink
             value={this.props.buttonLink}
             onChange={this.props.buttonOnChangeLink}
+            target={this.props.buttonLinkTarget}
+            onChangeTarget={this.props.buttonOnChangeLinkTarget}
           />
-        </ListItem>
-        <ListItem>
-                <form className={classes} autoComplete="off">
-                  <FormControl className={classes.formControl}>
-                  <InputLabel htmlFor="age-simple">Link Target</InputLabel>
-                  <Select 
-                    variant='outlined'
-                      value={this.props.buttonLinkTarget}
-                      onChange={this.props.buttonOnChangeLinkTarget}
-                      MenuProps={MenuProps}
-                  >   
-                      <MenuItem value={'_blank'}>New Window</MenuItem>
-                      <MenuItem value={'_self'}>Self</MenuItem>
-                  </Select>
-                  </FormControl>
-                </form>
         </ListItem>
         <List>
         <Button variant="contained" onClick={this.handleClick4} component="span" color="secondary" className={classes.buttonSetting}>
