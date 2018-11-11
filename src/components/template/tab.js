@@ -461,6 +461,8 @@ class TabWebsite extends React.Component {
             fullWidth
           >
           {this.state.news.map((New => (
+            New._key==='globel' ? null
+            :
             <Tab label={New.pageName} key={New._key}  onClick={() => this.props.dispatch(checkTab(New._key))}/>
             )))}
           
@@ -480,7 +482,9 @@ class TabWebsite extends React.Component {
               Carousel={New.carousel}
               Welcome={New.welcome}
               About={New.about}  
-
+              
+              menubar={this.props.menubar}
+              
               heroImagePick={this.props.heroBackgroundImage}
               heroTitle={this.props.heroTitle} 
               heroTitleAnimate={this.props.heroTitleAnimate}

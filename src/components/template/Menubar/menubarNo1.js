@@ -27,20 +27,20 @@ class Menubar extends React.Component {
         // onClick={this.handleClick}
         selectedKeys={[this.state.current]}
       >
-      {this.state.posts1.map((post) => 
-      post.id === 1 ?
-        <SubMenu title={<span className="submenu-title-wrapper"><Icon type="setting" />Navigation Three - Submenu</span>}>
+      {this.props.menubar.map((post) => 
+      post.typeGroup === true ?
+        <SubMenu key={post._key} title={<span className="submenu-title-wrapper">{post.label}</span>}>
           <MenuItemGroup>
-          {post.title.map((post1) => 
-          <Menu.Item key={post.id}>
-          <a href="https://ant.design"  target="_blank" rel="noopener noreferrer2">{post1.g}</a>
-        </Menu.Item>
-          )}
+          {/* {post.group.map((post) => 
+          <Menu.Item key={post._key}>
+          <a href="https://ant.design"  target="_blank" rel="noopener noreferrer2">{post.content}</a>
+          </Menu.Item>
+          )} */}
           </MenuItemGroup>
         </SubMenu>
         :
-        <Menu.Item key="alipay1">
-          <a href="https://ant.design" target="_blank" rel="noopener noreferrer">Navigation Four - Link</a>
+        <Menu.Item key={post._key}>
+          <a href="https://ant.design" target="_blank" rel="noopener noreferrer">{post.label}</a>
         </Menu.Item>
       )}
       </Menu>

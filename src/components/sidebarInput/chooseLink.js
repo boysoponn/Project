@@ -80,6 +80,7 @@ componentDidMount=()=> {
               }}
               >
                 {this.state.news.map((data) => 
+                data._key === 'globel' ? null :
                 <ListItem key={data._key}>
                 <Checkbox
                 checked={this.props.value === data.pageName}

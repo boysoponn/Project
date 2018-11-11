@@ -20,6 +20,7 @@ class Selection extends React.Component {
             <Switch
               checked={this.props.value}
               onChange={this.props.onChange}
+              onClick={this.props.onClick}
               value={this.props.value}
               color="primary"
             />

@@ -1,53 +1,72 @@
 // import React from 'react'
-// import { connect } from 'react-redux'
 
-// import { increment, decrement } from './actions'
 
 // class AppWithConnect extends React.Component {
+//     constructor(props){
+//         super(props);
+//         this.state={
+//         target:'none'    
+//         }
+//     }
+//     onChangeTarget=(e)=>{
+//       this.setState({
+//         target:e.target.value
+//       })
+//     }
+//     onChangehh=(e)=>{
+//       this.setState({
+//         hh:e.target.value
+//       })
+//     }
+//     gg=(e)=>{
+// e.preventDefault();
+// let score=0;
+// if(this.state.target==='true'){
+//   score++;
+// }
+// if(this.state.hh==='true'){
+//   score++;
+// }
+// alert(score);
+//     }
 //   render() {
-//     const { dispatch } = this.props;
+
 
 //     return (
-//   <div className="container">
-//     <div className="columns column is-12">
-//       <h1>Counter :{this.props.counter}</h1>
-//     </div>
+//       <div>
+//   <form onSubmit={this.gg}>
+//                     <input  type="checkbox" checked={this.state.target === '_self'}
+//                                 onChange={this.onChangeTarget}
+//                                 value={'_self'}
+//                 />
+//                 <input  type="checkbox" checked={this.state.target === 'true'}
+//                                 onChange={this.onChangeTarget}
+//                                 value={'true'}
+//                 />
+//                                 <input  type="checkbox" checked={this.state.target === 'none'}
+//                                 onChange={this.onChangeTarget}
+//                                 value={'none'}
+//                 />
 
-//     <div className="buttons">
-//       <button
-//         onClick={() => dispatch(increment(1))}
-//         className="button is-primary"
-//       >
-//         +1
-//       </button>
-//       <button onClick={() => dispatch(increment(2))} className="button is-link">
-//         +2
-//       </button>
-//       <button onClick={() => dispatch(increment(3))} className="button is-info">
-//         +3
-//       </button>
-//     </div>
+//     <input  type="checkbox" checked={this.state.hh === '_self'}
+//                 onChange={this.onChangehh}
+//                 value={'_self'}
+// />
+// <input  type="checkbox" checked={this.state.hh === 'true'}
+//                 onChange={this.onChangehh}
+//                 value={'true'}
+// />
+//                 <input  type="checkbox" checked={this.state.hh === 'none'}
+//                 onChange={this.onChangehh}
+//                 value={'none'}
+// />
 
-//     <div className="buttons">
-//       <button
-//         onClick={() => dispatch(decrement(1))}
-//         className="button is-primary"
-//       >
-//         -1
-//       </button>
-//       <button onClick={() => dispatch(decrement(2))} className="button is-link">
-//         -2
-//       </button>
-//       <button onClick={() => dispatch(decrement(3))} className="button is-info">
-//         -3
-//       </button>
-//     </div>
-//   </div>
+// <button type='submit'>ghjghj</button>
+// </form>
+// </div>
 //     )}}
 
-// const mapStateToProps = state => ({
-//   counter: state.counters || 0
-// })
 
 
-// export default connect(mapStateToProps)(AppWithConnect)
+
+// export default AppWithConnect;

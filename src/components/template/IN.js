@@ -18,7 +18,9 @@ class IN extends React.Component {
   let menubar;
   let Hero;
   let Carousel;
-  menubar=<MenubarNo1/>
+  menubar=<MenubarNo1
+  menubar={this.props.menubar}
+  />
   if( this.props.Hero === "HeroNo1"){
     Hero = <HeroNo1
     heroImagePick={this.props.heroImagePick}

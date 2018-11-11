@@ -16,6 +16,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import HeroInput from './sidebarInput/heroInput';
 import CarouselInput from './sidebarInput/carouselInput';
+import MenubarInput from './sidebarInput/menubarInput';
 import Button from '@material-ui/core/Button';
 import ExitIcon from '@material-ui/icons/ExitToApp';
 import TabWebsite from './template/tab'
@@ -154,6 +155,7 @@ class CMS extends React.Component {
     carouselDots:false,
     carouselAutoplay:true,
     carouselVertical:false,
+    menubar:[]
   };
 }
 
@@ -231,6 +233,22 @@ componentWillReceiveProps(nextProps){
     carouselContent:snapshotArr
   });
 });
+
+let globel = config.database().ref('project/'+this.props.user+'/globel/menubar/');
+globel.on('value', async (snapshot) => { 
+const snapshotValue2 = snapshot.val(); 
+const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {
+  prev.push({
+    _key: cur,
+    ...snapshotValue2[cur]
+  });
+  return prev;     
+}, []); 
+this.setState({
+  menubar:snapshotArr
+});
+});
+
 }
  
 
@@ -287,6 +305,7 @@ componentWillReceiveProps(nextProps){
   carouselOnChangeVertical = (e) => {this.setState({ carouselVertical: e.target.checked });};  
 
   render() {
+    console.log(this.state.heroButtonLinkTarget)
     const { classes, theme } = this.props;
     let heroInput;
     if( this.state.hero !== "none"){
@@ -393,7 +412,10 @@ componentWillReceiveProps(nextProps){
       carouselOnChangeDots={this.carouselOnChangeDots}
     />
     };
-      
+    let menubar =   <MenubarInput
+    menubar={this.state.menubar}
+    />
+
 
     // if (!this.state.isLoaded) return null;
     return (
@@ -440,6 +462,7 @@ componentWillReceiveProps(nextProps){
           </div>
           <Divider />
             <List disablePadding={true}>
+            {menubar}
             {heroInput}
             {carousel}
             </List>
@@ -448,7 +471,8 @@ componentWillReceiveProps(nextProps){
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} /> 
-            <TabWebsite       
+            <TabWebsite    
+              menubar={this.state.menubar}   
               heroBackgroundImage={this.state.heroBackgroundImage}
               heroTitle={this.state.heroTitle}             
               heroTitleAnimate={this.state.heroTitleAnimate} 
