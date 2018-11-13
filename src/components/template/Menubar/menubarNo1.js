@@ -40,7 +40,11 @@ class Menubar extends React.Component {
         </SubMenu>
         :
         <Menu.Item key={post._key}>
-          <a href="https://ant.design" target="_blank" rel="noopener noreferrer">{post.label}</a>
+          {post.link ?
+          <a href={post.link} target={post.linkTarget} rel="noopener noreferrer">{post.label}</a>
+          :
+          <a>{post.label}</a>
+          }
         </Menu.Item>
       )}
       </Menu>
