@@ -187,7 +187,7 @@ onChangeTypeGroup=menubar=>(e)=>{
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding={false}>
             <ListItem className={classes.nested}>
-            <Button variant="contained" onClick={this.handleClickOpen} component="span" color="secondary" className={classes}>
+            <Button variant="contained" onClick={this.handleClickOpen} component="span" color="secondary" >
             Menubar Setting
             </Button>
             <Popover

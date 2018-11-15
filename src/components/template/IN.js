@@ -6,6 +6,7 @@ import HeroNo2 from './Hero/HeroNo2'
 // import WelcomeNo1 from './Welcome/WelcomeNo1'
 // import WelcomeNo2 from './Welcome/WelcomeNo2'
 import CarouselNo1 from './Carousel/CarouselNo1'
+import GalleryNo1 from './Gallery/GalleryNo1'
 
 
 class IN extends React.Component {
@@ -131,11 +132,13 @@ class IN extends React.Component {
     carouselVertical={this.props.carouselVertical}
     />
   }
+  let Gallery =<GalleryNo1/>
 return (
       <div> 
       {menubar}  
       {Hero}
       {Carousel}
+      {Gallery}
       <div style={End}></div>
       </div>
 );

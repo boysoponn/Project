@@ -6,9 +6,20 @@ const MenuItemGroup = Menu.ItemGroup;
 
 class Menubar extends React.Component {
   state = {
+    myObj : {
+      name: 'zack',
+      height: 511
+    }
   }
 
   render() {
+   let myItem ;
+  {Object.keys(this.state.myObj).map((key,index) => {
+     myItem = this.state.myObj.height;
+console.log(myItem);
+})}
+  
+  
     return (
       <Menu
       mode="horizontal"
@@ -23,6 +34,11 @@ class Menubar extends React.Component {
           <a href="https://ant.design"  target="_blank" rel="noopener noreferrer2">{pgg.label}</a>
           </Menu.Item>
           )} */}
+          {/* {Object.keys(post.group).map((key,index) => {
+                    <Menu.Item >
+                    <h1>lkpll</h1>
+                    </Menu.Item>
+          })} */}
           </MenuItemGroup>
         </SubMenu>
         :
