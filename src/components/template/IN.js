@@ -19,6 +19,8 @@ class IN extends React.Component {
   let menubar;
   let Hero;
   let Carousel;
+  let Gallery;
+
   menubar=<MenubarNo1
   menubar={this.props.menubar}
   />
@@ -69,6 +71,7 @@ class IN extends React.Component {
   }
   if( this.props.Hero === "HeroNo2"){
     Hero = <HeroNo2
+    herobackgroundColor={this.props.herobackgroundColor}
     heroImagePick={this.props.heroImagePick}
     heroTitle={this.props.heroTitle} 
     heroTitleAnimate={this.props.heroTitleAnimate}
@@ -122,17 +125,33 @@ class IN extends React.Component {
     carouselVertical={this.props.carouselVertical}
     />
   }
-  if( this.props.Carousel === "CarouselNo2"){
-    Carousel = <CarouselNo1
-    carouselContent={this.props.carouselContent}
-    carouselSpeed={this.props.carouselSpeed}
-    carouselPauseOnHover={this.props.carouselPauseOnHover}
-    carouselDots={this.props.carouselDots}
-    carouselAutoplay={this.props.carouselAutoplay}
-    carouselVertical={this.props.carouselVertical}
-    />
+
+  if( this.props.Gallery === "GalleryNo1"){
+  Gallery =
+  <GalleryNo1
+  galleryContent={this.props.galleryContent}
+  galleryBackgroundColor={this.props.galleryBackgroundColor}
+  galleryTitle={this.props.galleryTitle}  
+  galleryTitleAnimate={this.props.galleryTitleAnimate} 
+  galleryTitleDuration={this.props.galleryTitleDuration}   
+  galleryTitleFontFamily={this.props.galleryTitleFontFamily}
+  galleryTitleFontSize={this.props.galleryTitleFontSize}
+  galleryTitleFontWeight={this.props.galleryTitleFontWeight}
+  galleryTitleFontStyle={this.props.galleryTitleFontStyle}
+  galleryTitleStatus={this.props.galleryTitleStatus}
+  galleryTitleColor={this.props.galleryTitleColor}
+
+  galleryDescription={this.props.galleryDescription}  
+  galleryDescriptionAnimate={this.props.galleryDescriptionAnimate} 
+  galleryDescriptionDuration={this.props.galleryDescriptionDuration}   
+  galleryDescriptionFontFamily={this.props.galleryDescriptionFontFamily}
+  galleryDescriptionFontSize={this.props.galleryDescriptionFontSize}
+  galleryDescriptionFontWeight={this.props.galleryDescriptionFontWeight}
+  galleryDescriptionFontStyle={this.props.galleryDescriptionFontStyle}
+  galleryDescriptionStatus={this.props.galleryDescriptionStatus}
+  galleryDescriptionColor={this.props.galleryDescriptionColor}
+  />
   }
-  let Gallery =<GalleryNo1/>
 return (
       <div> 
       {menubar}  

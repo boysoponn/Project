@@ -16,7 +16,7 @@ class HeroNo2 extends React.Component {
     const background ={
         backgroundImage:"url("+this.props.heroImagePick+")",
         backgroundSize:'cover',
-        height:'100%',
+        height:'800px',
         backgroundPosition: 'center center',
         backgroundRepeat:  'no-repeat',
         margin:0
@@ -102,7 +102,7 @@ class HeroNo2 extends React.Component {
   };
     return (
     <div>
-        <Grid container spacing={0}>
+        <Grid style={{backgroundColor:this.props.herobackgroundColor}}container spacing={0}>
          <Grid item xs={12} sm={6}>
             <div style={content}>
             <ScrollAnimation style={title} className={this.props.heroTitleAnimate} >

@@ -9,11 +9,11 @@ import Collapse from '@material-ui/core/Collapse';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import InputText from './inputText';
-import InputTextarea from './inputTextarea';
-import ModalChooseImage from './modalPicture';
-import InputButton from './inputButton';
-
+import InputText from './itemInput/inputText';
+import InputTextarea from './itemInput/inputTextarea';
+import ModalChooseImage from './itemInput/modalPicture';
+import InputButton from './itemInput/inputButton';
+import PickColor from './itemInput/pickColor'
 const styles = theme => ({
   root: {
     width: '100%',
@@ -41,6 +41,10 @@ class NestedList extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const pickColor={
+      fontSize: '16px',
+      marginLeft:10
+    };
     return (
       <div className={classes.root} >
         <List disablePadding={true}>
@@ -52,6 +56,21 @@ class NestedList extends React.Component {
             {this.state.open ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+          {this.props.hero === 'HeroNo2'?
+            <List component="div" disablePadding={false}>
+                <ListItem>
+                  <p style={pickColor}> Background Color&nbsp;&nbsp;&nbsp;</p>
+                  <PickColor
+                  padding="0"
+                  width="80px"
+                  height="20px"
+                  color={this.props.herobackgroundColor}
+                  onChange={this.props.herobackgroundOnChangeColor}
+                  />
+                </ListItem>
+            </List> 
+            :null
+          }
             <List component="div" disablePadding={false}>
               <ListItem  className={classes.nested}>
               <InputText 

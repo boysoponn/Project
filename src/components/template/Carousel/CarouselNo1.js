@@ -4,12 +4,6 @@ import './../tamplateCSS/carousel.css';
 
 
 class CarouselNo1 extends React.Component {
-    constructor(props){  
-      super(props);
-          this.state = {
-        
-          };   
-      }
 
   render() {
     const background ={

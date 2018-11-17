@@ -152,6 +152,7 @@ class TabWebsite extends React.Component {
   };
 
   addNewTab=()=>{
+    this.setNullValue();
     if(this.state.namePage){
       let pathUpper =this.state.namePage;
       let pathLower =pathUpper.toLowerCase();
@@ -167,7 +168,8 @@ class TabWebsite extends React.Component {
       about : this.state.selectedAbout,
       gallery :this.state.selectedGallery,
       contact : this.state.selectedContact,
-      heroContent: {      
+      heroContent: {  
+        backgroundColor:'#000000',  
         image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Fbusiness-2884023_1920.jpg?alt=media&token=f9810600-21b1-423a-8950-6e4f1d13a8e8',
         heroTitle:'Title',
         heroTitleAnimate:'none',
@@ -267,10 +269,42 @@ class TabWebsite extends React.Component {
           carouselDescriptionColor:'#ffffff',  
           image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Furban-438393_1920.jpg?alt=media&token=a612bbf5-62c9-4782-b858-5602ac3e7770'  
         },
+      },
+      galleryContent:{
+        title:'Title',
+        description:'Description',
+        titleFontFamily:'Montserrat',
+        titleFontWeight:'700',
+        titleFontSize:'80',
+        titleFontStyle:'normal',
+        titleStatus:'block',
+        titleColor:'#000000',
+        titleAnimate:'none',
+        titleDuration:'1s',
+        descriptionFontFamily:'Montserrat',
+        descriptionFontWeight:'400',
+        descriptionFontSize:'20',
+        descriptionFontStyle:'normal',
+        descriptionStatus:'block',
+        descriptionColor:'#000000',
+        descriptionAnimate:'none',
+        descriptionDuration:'1s',
+        backgroundColor:'#ffffff',
+      },
+      galleryItem:{
+        content1:{
+          image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Furban-438393_1920.jpg?alt=media&token=a612bbf5-62c9-4782-b858-5602ac3e7770'  
+        },
+        content2:{
+          image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Furban-438393_1920.jpg?alt=media&token=a612bbf5-62c9-4782-b858-5602ac3e7770'  
+        },
+        content3:{
+          image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Furban-438393_1920.jpg?alt=media&token=a612bbf5-62c9-4782-b858-5602ac3e7770'  
+        },
       }
+      
     });     
     }
-    this.setNullValue();
     this.handleClose();
   };
 
@@ -284,6 +318,7 @@ class TabWebsite extends React.Component {
     dbCon.update({
     heroContent:{
       image:this.props.heroBackgroundImage,
+      backgroundColor:this.props.herobackgroundColor,
       heroBackgroundImage:this.props.heroBackgroundImage,
       heroTitle:this.props.heroTitle,
       heroTitleAnimate:this.props.heroTitleAnimate,
@@ -332,6 +367,27 @@ class TabWebsite extends React.Component {
       dots:this.props.carouselDots,
       autoplay:this.props.carouselAutoplay,
       vertical:this.props.carouselVertical
+    },
+    galleryContent:{
+      title:this.props.galleryTitle,
+      description:this.props.galleryDescription,
+      titleFontFamily:this.props.galleryTitleFontFamily,
+      titleFontWeight:this.props.galleryTitleFontWeight,
+      titleFontSize:this.props.galleryTitleFontSize,
+      titleFontStyle:this.props.galleryTitleFontStyle,
+      titleStatus:this.props.galleryTitleStatus,
+      titleColor:this.props.galleryTitleColor,
+      titleAnimate:this.props.galleryTitleAnimate,
+      titleDuration:this.props.galleryTitleDuration,
+      descriptionFontFamily:this.props.galleryDescriptionFontFamily,
+      descriptionFontWeight:this.props.galleryDescriptionFontWeight,
+      descriptionFontSize:this.props.galleryDescriptionFontSize,
+      descriptionFontStyle:this.props.galleryDescriptionFontStyle,
+      descriptionStatus:this.props.galleryDescriptionStatus,
+      descriptionColor:this.props.galleryDescriptionColor,
+      descriptionAnimate:this.props.galleryDescriptionAnimate,
+      descriptionDuration:this.props.galleryDescriptionDuration,
+      backgroundColor:this.props.galleryBackgroundColor,
     }
     });
     alert("saved");
@@ -461,7 +517,7 @@ class TabWebsite extends React.Component {
             fullWidth
           >
           {this.state.news.map((New => (
-            New._key==='globel' ? null
+            New._key==='global' ? null
             :
             <Tab label={New.pageName} key={New._key}  onClick={() => this.props.dispatch(checkTab(New._key))}/>
             )))}
@@ -481,10 +537,11 @@ class TabWebsite extends React.Component {
               Hero={New.hero}
               Carousel={New.carousel}
               Welcome={New.welcome}
-              About={New.about}  
+              About={New.about} 
+              Gallery={New.gallery}  
               
               menubar={this.props.menubar}
-              
+              herobackgroundColor={this.props.herobackgroundColor}
               heroImagePick={this.props.heroBackgroundImage}
               heroTitle={this.props.heroTitle} 
               heroTitleAnimate={this.props.heroTitleAnimate}
@@ -533,6 +590,28 @@ class TabWebsite extends React.Component {
               carouselDots={this.props.carouselDots}
               carouselAutoplay={this.props.carouselAutoplay}
               carouselVertical={this.props.carouselVertical}
+
+              galleryContent={this.props.galleryContent}
+              galleryBackgroundColor={this.props.galleryBackgroundColor}
+              galleryTitle={this.props.galleryTitle}  
+              galleryTitleAnimate={this.props.galleryTitleAnimate} 
+              galleryTitleDuration={this.props.galleryTitleDuration}   
+              galleryTitleFontFamily={this.props.galleryTitleFontFamily}
+              galleryTitleFontSize={this.props.galleryTitleFontSize}
+              galleryTitleFontWeight={this.props.galleryTitleFontWeight}
+              galleryTitleFontStyle={this.props.galleryTitleFontStyle}
+              galleryTitleStatus={this.props.galleryTitleStatus}
+              galleryTitleColor={this.props.galleryTitleColor}
+          
+              galleryDescription={this.props.galleryDescription}  
+              galleryDescriptionAnimate={this.props.galleryDescriptionAnimate} 
+              galleryDescriptionDuration={this.props.galleryDescriptionDuration}   
+              galleryDescriptionFontFamily={this.props.galleryDescriptionFontFamily}
+              galleryDescriptionFontSize={this.props.galleryDescriptionFontSize}
+              galleryDescriptionFontWeight={this.props.galleryDescriptionFontWeight}
+              galleryDescriptionFontStyle={this.props.galleryDescriptionFontStyle}
+              galleryDescriptionStatus={this.props.galleryDescriptionStatus}
+              galleryDescriptionColor={this.props.galleryDescriptionColor}
             />
             </div>
           )))}   

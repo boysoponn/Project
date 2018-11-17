@@ -1,5 +1,5 @@
 import React from 'react';
-import config from './../../config';
+import config from '../../../config';
 import _ from 'lodash';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'

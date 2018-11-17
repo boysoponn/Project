@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../css/animate.min.css';
+import '../../../css/animate.min.css';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Settings from '@material-ui/icons/PlayCircleOutline';

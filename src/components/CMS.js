@@ -14,14 +14,15 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import HeroInput from './sidebarInput/heroInput';
-import CarouselInput from './sidebarInput/carouselInput';
-import MenubarInput from './sidebarInput/menubarInput';
 import Button from '@material-ui/core/Button';
 import ExitIcon from '@material-ui/icons/ExitToApp';
 import TabWebsite from './template/tab'
 import { connect } from 'react-redux'
-
+import HeroInput from './sidebarInput/heroInput';
+import CarouselInput from './sidebarInput/carouselInput';
+import MenubarInput from './sidebarInput/menubarInput';
+import GalleryInput from './sidebarInput/galleryInput';
+import { checkTab} from './actions'
 const drawerWidth = 300;
 
 const styles = theme => ({
@@ -113,54 +114,26 @@ class CMS extends React.Component {
   this.state = {
     // isLoaded: false,
     open: true,
-    key:'',
     hero:'none',
     carousel:'none',
-    heroBackgroundImage:'',
-    heroTitle:'',
-    heroTitleAnimate:'',
-    heroTitleDuration:'',
-    heroTitleFontFamily:'',
-    heroTitleFontSize:'',
-    heroTitleFontWeight:'',
-    heroTitleFontStyle:'',
-    heroTitleStatus:'',
-    heroTitleColor:'',
-
-    heroDescription:'',
-    heroDescriptionAnimate:'',
-    heroDescriptionDuration:'',
-    heroDescriptionFontFamily:'',
-    heroDescriptionFontSize:'',
-    heroDescriptionFontWeight:'',
-    heroDescriptionFontStyle:'',
-    heroDescriptionStatus:'',
-    heroDescriptionColor:'',
-
-    heroButton:'',
-    heroButtonSelected:'',
-    heroButtonAnimate:'',
-    heroButtonDuration:'',
-    heroButtonFontFamily:'',
-    heroButtonFontSize:'',
-    heroButtonFontWeight:'',
-    heroButtonFontStyle:'',
-    heroButtonStatus:'',
-    heroButtonColor:'',
-    heroButtonHoverColor:'',
-    heroButtonSwapColor:'',
+    gallery:'none',
     carouselContent:[],
-    carouselSpeed:'',
-    carouselPauseOnHover:false,
-    carouselDots:false,
-    carouselAutoplay:true,
-    carouselVertical:false,
-    menubar:[]
+    menubar:[],
+    galleryContent:[],
+
   };
 }
 
+componentDidMount=()=>{
+  let carouselItems = config.database().ref('project/'+this.props.user);
+  carouselItems.on('value', async (snapshot) => { 
+    const snapshotValue2 = snapshot.val(); 
+    const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev;}, []); 
+    this.setState({oneTab:snapshotArr[0]}); });
+}
 
 componentWillReceiveProps(nextProps){
+  if(this.state.oneTab !== 'global'){
   let app = config.database().ref('project/'+this.props.user+'/'+nextProps.tabs);
   app.on('value', async (snapshot) => { 
   const snapshotValue = snapshot.val(); 
@@ -168,6 +141,8 @@ componentWillReceiveProps(nextProps){
         this.setState({
           hero:data.hero,
           carousel:data.carousel,
+          gallery:data.gallery,
+          herobackgroundColor:data.heroContent.backgroundColor,
           heroBackgroundImage:data.heroContent.image,
           heroTitle:data.heroContent.heroTitle,
           heroTitleAnimate:data.heroContent.heroTitleAnimate,
@@ -214,103 +189,73 @@ componentWillReceiveProps(nextProps){
           carouselPauseOnHover:data.carouselSetting.pauseOnHover,
           carouselDots:data.carouselSetting.dots,
           carouselAutoplay:data.carouselSetting.autoplay,
-          carouselVertical:data.carouselSetting.vertical
+          carouselVertical:data.carouselSetting.vertical,
+
+          galleryBackgroundColor:data.galleryContent.backgroundColor,
+          galleryTitle:data.galleryContent.title,
+          galleryTitleAnimate:data.galleryContent.titleAnimate,
+          galleryTitleDuration:data.galleryContent.titleDuration,
+          galleryTitleFontFamily:data.galleryContent.titleFontFamily,
+          galleryTitleFontSize:data.galleryContent.titleFontSize,
+          galleryTitleFontWeight:data.galleryContent.titleFontWeight,
+          galleryTitleFontStyle:data.galleryContent.titleFontStyle,
+          galleryTitleStatus:data.galleryContent.titleStatus,
+          galleryTitleColor:data.galleryContent.titleColor,
+
+          galleryDescription:data.galleryContent.description,
+          galleryDescriptionAnimate:data.galleryContent.descriptionAnimate,
+          galleryDescriptionDuration:data.galleryContent.descriptionDuration,
+          galleryDescriptionFontFamily:data.galleryContent.descriptionFontFamily,
+          galleryDescriptionFontSize:data.galleryContent.descriptionFontSize,
+          galleryDescriptionFontWeight:data.galleryContent.descriptionFontWeight,
+          galleryDescriptionFontStyle:data.galleryContent.descriptionFontStyle,
+          galleryDescriptionStatus:data.galleryContent.descriptionStatus,
+          galleryDescriptionColor:data.galleryContent.descriptionColor,
+
           // isLoaded: false
         }); 
   });
-
+//สำหรับไอเทมที่เป็น Array
   let carouselItems = config.database().ref('project/'+this.props.user+'/'+nextProps.tabs+'/carouselContent');
   carouselItems.on('value', async (snapshot) => { 
-  const snapshotValue2 = snapshot.val(); 
-  const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {
-    prev.push({
-      _key: cur,
-      ...snapshotValue2[cur]
-    });
-    return prev;     
-  }, []); 
-  this.setState({
-    carouselContent:snapshotArr
-  });
-});
+    const snapshotValue2 = snapshot.val(); 
+    const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev;}, []); 
+    this.setState({carouselContent:snapshotArr}); });
 
-let globel = config.database().ref('project/'+this.props.user+'/globel/menubar/');
-globel.on('value', async (snapshot) => { 
-const snapshotValue2 = snapshot.val(); 
-const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {
-  prev.push({
-    _key: cur,
-    ...snapshotValue2[cur]
-  });
-  return prev;     
-}, []); 
-this.setState({
-  menubar:snapshotArr
-});
-});
+  let galleryContent = config.database().ref('project/'+this.props.user+'/'+nextProps.tabs+'/galleryItem');
+  galleryContent.on('value', async (snapshot) => { 
+    const snapshotValue2 = snapshot.val(); 
+    const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev;}, []); 
+    this.setState({galleryContent:snapshotArr}); });
 
+  let global = config.database().ref('project/'+this.props.user+'/global/menubar/');
+  global.on('value', async (snapshot) => { 
+    const snapshotValue2 = snapshot.val(); 
+    const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev; }, []); 
+    this.setState({ menubar:snapshotArr});});
+  }
 }
  
-
   logout =() => {config.auth().signOut();window.location.reload(); };
   handleDrawerOpen = () => {this.setState({ open: true ,});}
   handleDrawerClose = () => {this.setState({  open: false ,});};
-
-  heroTitleOnChange = (e) => {this.setState({heroTitle: e.target.value});};
-  heroTitleOnChangeAnimate = (e) => {this.setState({ heroTitleAnimate: e.target.value });};
-  heroTitleOnChangeDuration = (e) => {this.setState({ heroTitleDuration: e.target.value });};
-  heroTitleOnChangeFontFamily = (e) => {this.setState({ heroTitleFontFamily: e.target.value });};
-  heroTitleOnChangeFontSize = (e) => {this.setState({ heroTitleFontSize: e.target.value });};
-  heroTitleOnChangeFontStyle = (e) => {this.setState({ heroTitleFontStyle: e.target.value });};
-  heroTitleOnChangeFontWeight = (e) => {this.setState({ heroTitleFontWeight: e.target.value });};
-  heroTitleOnChangeStatus = (e) => {this.setState({ heroTitleStatus: e.target.value });};
-  heroTitleOnChangeColor = (color) => {this.setState({ heroTitleColor: color.hex});};
-
-  heroDescriptionOnChange= (e) => {this.setState({heroDescription: e.target.value});};
-  heroDescriptionOnChangeAnimate = (e) => {this.setState({ heroDescriptionAnimate: e.target.value });};
-  heroDescriptionOnChangeDuration = (e) => {this.setState({ heroDescriptionDuration: e.target.value });};
-  heroDescriptionOnChangeFontFamily = (e) => {this.setState({ heroDescriptionFontFamily: e.target.value });};
-  heroDescriptionOnChangeFontSize = (e) => {this.setState({ heroDescriptionFontSize: e.target.value });};
-  heroDescriptionOnChangeFontStyle = (e) => {this.setState({ heroDescriptionFontStyle: e.target.value });};
-  heroDescriptionOnChangeFontWeight = (e) => {this.setState({ heroDescriptionFontWeight: e.target.value });};
-  heroDescriptionOnChangeStatus = (e) => {this.setState({ heroDescriptionStatus: e.target.value });};
-  heroDescriptionOnChangeColor = (color) => {this.setState({ heroDescriptionColor: color.hex });};
-
-  heroButtonOnChange = (e) => {this.setState({ heroButton: e.target.value });};
-  heroButtonOnChangeSelected = e => {this.setState({ heroButtonSelected: e.target.value });};
-  heroButtonOnChangeAnimate = (e) => {this.setState({ heroButtonAnimate: e.target.value });};
-  heroButtonOnChangeDuration = (e) => {this.setState({ heroButtonDuration: e.target.value });};
-  heroButtonOnChangeFontFamily = (e) => {this.setState({ heroButtonFontFamily: e.target.value });};
-  heroButtonOnChangeFontSize = (e) => {this.setState({ heroButtonFontSize: e.target.value });};
-  heroButtonOnChangeFontStyle = (e) => {this.setState({ heroButtonFontStyle: e.target.value });};
-  heroButtonOnChangeFontWeight = (e) => {this.setState({ heroButtonFontWeight: e.target.value });};
-  heroButtonOnChangeStatus = (e) => {this.setState({ heroButtonStatus: e.target.value });};
-  heroButtonOnChangeSwap = (e) => {this.setState({ heroButtonSwap: e.target.value });};
-  heroButtonOnChangeLink = (e) => {this.setState({ heroButtonLink: e.target.value });};
-  heroButtonOnChangeLinkTarget = (e) => {this.setState({ heroButtonLinkTarget: e.target.value });};
-  heroButtonOnChangeRadius = (e) => {this.setState({ heroButtonRadius: e.target.value });};
-  heroButtonOnChangeBGColor = (color) => {this.setState({ heroButtonBGColor: color.hex });};
-  heroButtonOnChangeHBGColor = (color) => {this.setState({ heroButtonHBGColor: color.hex });};
-  heroButtonOnChangeBDColor = (color) => {this.setState({ heroButtonBDColor: color.hex });};
-  heroButtonOnChangeHBDColor = (color) => {this.setState({ heroButtonHBDColor: color.hex });};
-  heroButtonOnChangeColor = (color) => {this.setState({ heroButtonColor: color.hex });};
-  heroButtonOnChangeSwapColor = (color) => {this.setState({ heroButtonSwapColor: color.hex });};
-  heroButtonOnChangeHoverColor = (color) => {this.setState({ heroButtonHoverColor: color.hex });};
-  
-    
-  carouselOnChangeSpeed = (e) => {this.setState({ carouselSpeed: e.target.value });};  
-  carouselOnChangePauseOnHover = (e) => {this.setState({ carouselPauseOnHover: e.target.checked });};   
-  carouselOnChangeDots = (e) => {this.setState({ carouselDots: e.target.checked });};  
-  carouselOnChangeAutoplay = (e) => {this.setState({ carouselAutoplay: e.target.checked });};  
-  carouselOnChangeVertical = (e) => {this.setState({ carouselVertical: e.target.checked });};  
+  onChangeColor = name=> (color) => {this.setState({  [name]: color.hex });};
+  onChangeChecked = name=> (e) => {this.setState({  [name]: e.target.checked });};  
+  onChangeValue = name=> (e) => {this.setState({ [name]: e.target.value });};
 
   render() {
-    console.log(this.state.heroButtonLinkTarget)
+    if(this.state.oneTab !== undefined && this.state.oneTab !== 'global'){
+      let path=this.state.oneTab._key
+      this.props.dispatch(checkTab(path));
+    }
+    console.log(this.state.oneTab)
     const { classes, theme } = this.props;
     let heroInput;
     if( this.state.hero !== "none"){
     heroInput =
       <HeroInput 
+      hero={this.state.hero}
+      herobackgroundColor={this.state.herobackgroundColor}
       heroImagePick={this.state.heroBackgroundImage}
       heroTitle={this.state.heroTitle}             
       heroTitleAnimate={this.state.heroTitleAnimate} 
@@ -322,15 +267,16 @@ this.setState({
       heroTitleStatus={this.state.heroTitleStatus} 
       heroTitleColor={this.state.heroTitleColor}
 
-      heroTitleOnChange={this.heroTitleOnChange}
-      heroTitleOnChangeAnimate={this.heroTitleOnChangeAnimate}
-      heroTitleOnChangeDuration={this.heroTitleOnChangeDuration}           
-      heroTitleOnChangeFontFamily={this.heroTitleOnChangeFontFamily}            
-      heroTitleOnChangeFontSize={this.heroTitleOnChangeFontSize}             
-      heroTitleOnChangeFontWeight={this.heroTitleOnChangeFontWeight}          
-      heroTitleOnChangeFontStyle={this.heroTitleOnChangeFontStyle}
-      heroTitleOnChangeStatus={this.heroTitleOnChangeStatus}
-      heroTitleOnChangeColor={this.heroTitleOnChangeColor}
+      herobackgroundOnChangeColor={this.onChangeColor('herobackgroundColor')}
+      heroTitleOnChange={this.onChangeValue('heroTitle')}
+      heroTitleOnChangeAnimate={this.onChangeValue('heroTitleAnimate')}
+      heroTitleOnChangeDuration={this.onChangeValue('heroTitleDuration')}         
+      heroTitleOnChangeFontFamily={this.onChangeValue('heroTitleFontFamily')}      
+      heroTitleOnChangeFontSize={this.onChangeValue('heroTitleFontSize')}        
+      heroTitleOnChangeFontWeight={this.onChangeValue('heroTitleFontWeight')}        
+      heroTitleOnChangeFontStyle={this.onChangeValue('heroTitleFontStyle')}
+      heroTitleOnChangeStatus={this.onChangeValue('heroTitleStatus')}
+      heroTitleOnChangeColor={this.onChangeColor('heroTitleColor')}
 
       heroDescription={this.state.heroDescription}
       heroDescriptionAnimate={this.state.heroDescriptionAnimate}
@@ -342,15 +288,15 @@ this.setState({
       heroDescriptionStatus={this.state.heroDescriptionStatus}
       heroDescriptionColor={this.state.heroDescriptionColor}
 
-      heroDescriptionOnChange={this.heroDescriptionOnChange}
-      heroDescriptionOnChangeAnimate={this.heroDescriptionOnChangeAnimate}
-      heroDescriptionOnChangeDuration={this.heroDescriptionOnChangeDuration}           
-      heroDescriptionOnChangeFontFamily={this.heroDescriptionOnChangeFontFamily}            
-      heroDescriptionOnChangeFontSize={this.heroDescriptionOnChangeFontSize}             
-      heroDescriptionOnChangeFontWeight={this.heroDescriptionOnChangeFontWeight}          
-      heroDescriptionOnChangeFontStyle={this.heroDescriptionOnChangeFontStyle}
-      heroDescriptionOnChangeStatus={this.heroDescriptionOnChangeStatus}
-      heroDescriptionOnChangeColor={this.heroDescriptionOnChangeColor}
+      heroDescriptionOnChange={this.onChangeValue('heroDescription')}
+      heroDescriptionOnChangeAnimate={this.onChangeValue('heroDescriptionAnimate')}
+      heroDescriptionOnChangeDuration={this.onChangeValue('heroDescriptionDuration')}        
+      heroDescriptionOnChangeFontFamily={this.onChangeValue('heroDescriptionFontFamily')}            
+      heroDescriptionOnChangeFontSize={this.onChangeValue('heroDescriptionFontSize')}            
+      heroDescriptionOnChangeFontWeight={this.onChangeValue('heroDescriptionFontWeight')}          
+      heroDescriptionOnChangeFontStyle={this.onChangeValue('heroDescriptionFontStyle')}
+      heroDescriptionOnChangeStatus={this.onChangeValue('heroDescriptionStatus')}
+      heroDescriptionOnChangeColor={this.onChangeColor('heroDescriptionColor')}
 
       heroButton={this.state.heroButton} 
       heroButtonSelected={this.state.heroButtonSelected}
@@ -373,31 +319,31 @@ this.setState({
       heroButtonHBDColor={this.state.heroButtonHBDColor}
       heroButtonHoverColor={this.state.heroButtonHoverColor}
               
-      heroButtonOnChangeHoverColor={this.heroButtonOnChangeHoverColor}
-      heroButtonOnChangeHBDColor={this.heroButtonOnChangeHBDColor}
-      heroButtonOnChangeBDColor={this.heroButtonOnChangeBDColor}
-      heroButtonOnChangeHBGColor={this.heroButtonOnChangeHBGColor}
-      heroButtonOnChangeBGColor={this.heroButtonOnChangeBGColor}
-      heroButtonOnChangeRadius={this.heroButtonOnChangeRadius}
-      heroButtonOnChangeLink={this.heroButtonOnChangeLink}
-      heroButtonOnChangeLinkTarget={this.heroButtonOnChangeLinkTarget}
-      heroButtonOnChangeSwap={this.heroButtonOnChangeSwap}
-      heroButtonOnChangeSelected={this.heroButtonOnChangeSelected}
-      heroButtonOnChange={this.heroButtonOnChange}
-      heroButtonOnChangeFontFamily={this.heroButtonOnChangeFontFamily}
-      heroButtonOnChangeFontSize={this.heroButtonOnChangeFontSize}
-      heroButtonOnChangeDuration={this.heroButtonOnChangeDuration} 
-      heroButtonOnChangeAnimate={this.heroButtonOnChangeAnimate} 
-      heroButtonOnChangeFontWeight={this.heroButtonOnChangeFontWeight}
-      heroButtonOnChangeFontStyle={this.heroButtonOnChangeFontStyle}
-      heroButtonOnChangeStatus={this.heroButtonOnChangeStatus}
-      heroButtonOnChangeColor={this.heroButtonOnChangeColor}
-      heroButtonOnChangeSwapColor={this.heroButtonOnChangeSwapColor}
+      heroButtonOnChangeHoverColor={this.onChangeColor('heroButtonHoverColor')}
+      heroButtonOnChangeHBDColor={this.onChangeColor('heroButtonHBDColor')}
+      heroButtonOnChangeBDColor={this.onChangeColor('heroButtonBDColor')}
+      heroButtonOnChangeHBGColor={this.onChangeColor('heroButtonHBGColor')}
+      heroButtonOnChangeBGColor={this.onChangeColor('heroButtonBGColor')}
+      heroButtonOnChangeRadius={this.onChangeValue('heroButtonRadius')}
+      heroButtonOnChangeLink={this.onChangeValue('heroButtonLink')}
+      heroButtonOnChangeLinkTarget={this.onChangeValue('heroButtonLinkTarget')}
+      heroButtonOnChangeSwap={this.onChangeValue('heroButtonSwap')}
+      heroButtonOnChangeSelected={this.onChangeValue('heroButtonSelected')}
+      heroButtonOnChange={this.onChangeValue('heroButton')}
+      heroButtonOnChangeFontFamily={this.onChangeValue('heroButtonFontFamily')}
+      heroButtonOnChangeFontSize={this.onChangeValue('heroButtonFontSize')}
+      heroButtonOnChangeDuration={this.onChangeValue('heroButtonDuration')}
+      heroButtonOnChangeAnimate={this.onChangeValue('heroButtonAnimate')}
+      heroButtonOnChangeFontWeight={this.onChangeValue('heroButtonFontWeight')}
+      heroButtonOnChangeFontStyle={this.onChangeValue('heroButtonFontStyle')}
+      heroButtonOnChangeStatus={this.onChangeValue('heroButtonStatus')}
+      heroButtonOnChangeColor={this.onChangeColor('heroButtonColor')}
+      heroButtonOnChangeSwapColor={this.onChangeColor('heroButtonSwapColor')}
     />    
     };
-    let carousel;
+    let carouselInput;
     if( this.state.carousel !== "none"){
-      carousel =            
+      carouselInput =            
       <CarouselInput
       carouselContent={this.state.carouselContent}
       carouselSpeed={this.state.carouselSpeed}
@@ -405,18 +351,62 @@ this.setState({
       carouselDots={this.state.carouselDots}
       carouselAutoplay={this.state.carouselAutoplay}
       carouselVertical={this.state.carouselVertical}
-      carouselOnChangePauseOnHover={this.carouselOnChangePauseOnHover}
-      carouselOnChangeAutoplay={this.carouselOnChangeAutoplay}
-      carouselOnChangeVertical={this.carouselOnChangeVertical}
-      carouselOnChangeSpeed={this.carouselOnChangeSpeed}
-      carouselOnChangeDots={this.carouselOnChangeDots}
+      carouselOnChangePauseOnHover={this.onChangeChecked('carouselPauseOnHover')}
+      carouselOnChangeAutoplay={this.onChangeChecked('carouselAutoplay')}
+      carouselOnChangeVertical={this.onChangeChecked('carouselVertical')}
+      carouselOnChangeSpeed={this.onChangeValue('carouselSpeed')}
+      carouselOnChangeDots={this.onChangeChecked('carouselDots')}
     />
     };
     let menubar =   <MenubarInput
     menubar={this.state.menubar}
     />
+    let galleryInput ;
+    if( this.state.gallery !== "none"){
+    galleryInput = <GalleryInput
+    galleryContent={this.state.galleryContent}
+    galleryBackgroundColor={this.state.galleryBackgroundColor}
+    galleryTitle={this.state.galleryTitle}  
+    galleryTitleAnimate={this.state.galleryTitleAnimate} 
+    galleryTitleDuration={this.state.galleryTitleDuration}   
+    galleryTitleFontFamily={this.state.galleryTitleFontFamily}
+    galleryTitleFontSize={this.state.galleryTitleFontSize}
+    galleryTitleFontWeight={this.state.galleryTitleFontWeight}
+    galleryTitleFontStyle={this.state.galleryTitleFontStyle}
+    galleryTitleStatus={this.state.galleryTitleStatus}
+    galleryTitleColor={this.state.galleryTitleColor}
 
+    galleryBackgroundOnChangeColor={this.onChangeColor('galleryBackgroundColor')}
+    galleryTitleOnChange={this.onChangeValue('galleryTitle')} 
+    galleryTitleOnChangeAnimate={this.onChangeValue('galleryTitleAnimate')}           
+    galleryTitleOnChangeFontFamily={this.onChangeValue('galleryTitleFontFamily')}
+    galleryTitleOnChangeFontSize={this.onChangeValue('galleryTitleFontSize')}                         
+    galleryTitleOnChangeFontWeight={this.onChangeValue('galleryTitleFontWeight')}
+    galleryTitleOnChangeFontStyle={this.onChangeValue('galleryTitleFontStyle')}             
+    galleryTitleOnChangeStatus={this.onChangeValue('galleryTitleStatus')}
+    galleryTitleOnChangeColor={this.onChangeColor('galleryTitleColor')}
 
+    galleryDescription={this.state.galleryDescription}  
+    galleryDescriptionAnimate={this.state.galleryDescriptionAnimate} 
+    galleryDescriptionDuration={this.state.galleryDescriptionDuration}   
+    galleryDescriptionFontFamily={this.state.galleryDescriptionFontFamily}
+    galleryDescriptionFontSize={this.state.galleryDescriptionFontSize}
+    galleryDescriptionFontWeight={this.state.galleryDescriptionFontWeight}
+    galleryDescriptionFontStyle={this.state.galleryDescriptionFontStyle}
+    galleryDescriptionStatus={this.state.galleryDescriptionStatus}
+    galleryDescriptionColor={this.state.galleryDescriptionColor}
+
+    galleryDescriptionOnChange={this.onChangeValue('galleryDescription')} 
+    galleryDescriptionOnChangeAnimate={this.onChangeValue('galleryDescriptionAnimate')}             
+    galleryDescriptionOnChangeDuration={this.onChangeValue('galleryDescriptionDuration')}            
+    galleryDescriptionOnChangeFontFamily={this.onChangeValue('galleryDescriptionFontFamily')}
+    galleryDescriptionOnChangeFontSize={this.onChangeValue('galleryDescriptionFontSize')}                          
+    galleryDescriptionOnChangeFontWeight={this.onChangeValue('galleryDescriptionFontWeight')}
+    galleryDescriptionOnChangeFontStyle={this.onChangeValue('galleryDescriptionFontStyle')}             
+    galleryDescriptionOnChangeStatus={this.onChangeValue('galleryDescriptionStatus')}
+    galleryDescriptionOnChangeColor={this.onChangeColor('galleryDescriptionColor')}
+    />
+    }
     // if (!this.state.isLoaded) return null;
     return (
       <div className={classes.root} >
@@ -464,7 +454,8 @@ this.setState({
             <List disablePadding={true}>
             {menubar}
             {heroInput}
-            {carousel}
+            {carouselInput}
+            {galleryInput}
             </List>
             
            <Divider />
@@ -473,6 +464,7 @@ this.setState({
           <div className={classes.toolbar} /> 
             <TabWebsite    
               menubar={this.state.menubar}   
+              herobackgroundColor={this.state.herobackgroundColor}
               heroBackgroundImage={this.state.heroBackgroundImage}
               heroTitle={this.state.heroTitle}             
               heroTitleAnimate={this.state.heroTitleAnimate} 
@@ -484,16 +476,6 @@ this.setState({
               heroTitleStatus={this.state.heroTitleStatus} 
               heroTitleColor={this.state.heroTitleColor}
 
-              heroTitleOnChange={this.heroTitleOnChange}
-              heroTitleOnChangeAnimate={this.heroTitleOnChangeAnimate}
-              heroTitleOnChangeDuration={this.heroTitleOnChangeDuration}           
-              heroTitleOnChangeFontFamily={this.heroTitleOnChangeFontFamily}            
-              heroTitleOnChangeFontSize={this.heroTitleOnChangeFontSize}             
-              heroTitleOnChangeFontWeight={this.heroTitleOnChangeFontWeight}          
-              heroTitleOnChangeFontStyle={this.heroTitleOnChangeFontStyle}
-              heroTitleOnChangeStatus={this.heroTitleOnChangeStatus}
-              heroTitleOnChangeColor={this.heroTitleOnChangeColor}
-
               heroDescription={this.state.heroDescription}
               heroDescriptionAnimate={this.state.heroDescriptionAnimate}
               heroDescriptionDuration={this.state.heroDescriptionDuration} 
@@ -503,16 +485,6 @@ this.setState({
               heroDescriptionFontStyle={this.state.heroDescriptionFontStyle}
               heroDescriptionStatus={this.state.heroDescriptionStatus}
               heroDescriptionColor={this.state.heroDescriptionColor}
-
-              heroDescriptionOnChange={this.heroDescriptionOnChange}
-              heroDescriptionOnChangeAnimate={this.heroDescriptionOnChangeAnimate}
-              heroDescriptionOnChangeDuration={this.heroDescriptionOnChangeDuration}           
-              heroDescriptionOnChangeFontFamily={this.heroDescriptionOnChangeFontFamily}            
-              heroDescriptionOnChangeFontSize={this.heroDescriptionOnChangeFontSize}             
-              heroDescriptionOnChangeFontWeight={this.heroDescriptionOnChangeFontWeight}          
-              heroDescriptionOnChangeFontStyle={this.heroDescriptionOnChangeFontStyle}
-              heroDescriptionOnChangeStatus={this.heroDescriptionOnChangeStatus}
-              heroDescriptionOnChangeColor={this.heroDescriptionOnChangeColor}
 
               heroButton={this.state.heroButton} 
               heroButtonSelected={this.state.heroButtonSelected}
@@ -535,26 +507,6 @@ this.setState({
               heroButtonHBDColor={this.state.heroButtonHBDColor}
               heroButtonHoverColor={this.state.heroButtonHoverColor}
                       
-              heroButtonOnChangeHoverColor={this.herobuttonOnChangeHoverColor}
-              heroButtonOnChangeHBDColor={this.heroButtonOnChangeHBDColor}
-              heroButtonOnChangeBDColor={this.heroButtonOnChangeBDColor}
-              heroButtonOnChangeHBGColor={this.heroButtonOnChangeHBGColor}
-              heroButtonOnChangeBGColor={this.heroButtonOnChangeBGColor}
-              heroButtonOnChangeRadius={this.heroButtonOnChangeRadius}
-              heroButtonOnChangeLink={this.heroButtonOnChangeLink}
-              heroButtonOnChangeLinkTarget={this.heroButtonOnChangeLinkTarget}
-              heroButtonOnChangeSwap={this.heroButtonOnChangeSwap}
-              heroButtonOnChangeSelected={this.heroButtonOnChangeSelected}
-              heroButtonOnChange={this.heroButtonOnChange}
-              heroButtonOnChangeFontFamily={this.heroButtonOnChangeFontFamily}
-              heroButtonOnChangeFontSize={this.heroButtonOnChangeFontSize}
-              heroButtonOnChangeDuration={this.heroButtonOnChangeDuration} 
-              heroButtonOnChangeAnimate={this.heroButtonOnChangeAnimate} 
-              heroButtonOnChangeFontWeight={this.heroButtonOnChangeFontWeight}
-              heroButtonOnChangeFontStyle={this.heroButtonOnChangeFontStyle}
-              heroButtonOnChangeStatus={this.heroButtonOnChangeStatus}
-              heroButtonOnChangeColor={this.heroButtonOnChangeColor}
-              heroButtonOnChangeSwapColor={this.heroButtonOnChangeSwapColor}
 
               carousel={this.state.carousel}
               carouselContent={this.state.carouselContent}
@@ -568,6 +520,29 @@ this.setState({
               carouselOnChangeVertical={this.carouselOnChangeVertical}
               carouselOnChangeSpeed={this.carouselOnChangeSpeed}
               carouselOnChangeDots={this.carouselOnChangeDots}
+
+              galleryContent={this.state.galleryContent}
+              galleryBackgroundColor={this.state.galleryBackgroundColor}
+              galleryTitle={this.state.galleryTitle}  
+              galleryTitleAnimate={this.state.galleryTitleAnimate} 
+              galleryTitleDuration={this.state.galleryTitleDuration}   
+              galleryTitleFontFamily={this.state.galleryTitleFontFamily}
+              galleryTitleFontSize={this.state.galleryTitleFontSize}
+              galleryTitleFontWeight={this.state.galleryTitleFontWeight}
+              galleryTitleFontStyle={this.state.galleryTitleFontStyle}
+              galleryTitleStatus={this.state.galleryTitleStatus}
+              galleryTitleColor={this.state.galleryTitleColor}
+          
+              galleryDescription={this.state.galleryDescription}  
+              galleryDescriptionAnimate={this.state.galleryDescriptionAnimate} 
+              galleryDescriptionDuration={this.state.galleryDescriptionDuration}   
+              galleryDescriptionFontFamily={this.state.galleryDescriptionFontFamily}
+              galleryDescriptionFontSize={this.state.galleryDescriptionFontSize}
+              galleryDescriptionFontWeight={this.state.galleryDescriptionFontWeight}
+              galleryDescriptionFontStyle={this.state.galleryDescriptionFontStyle}
+              galleryDescriptionStatus={this.state.galleryDescriptionStatus}
+              galleryDescriptionColor={this.state.galleryDescriptionColor}
+
             />       
         </main>
       </div>

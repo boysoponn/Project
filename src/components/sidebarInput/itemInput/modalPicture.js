@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import config from '../../config';
+import config from '../../../config';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
 import Slide from '@material-ui/core/Slide';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import ModalUploadWrapped from './functionUpload/modalUpload';
+import ModalUploadWrapped from '../functionUpload/modalUpload';
 
 function Transition(props) {
   return <Slide direction="right" {...props} />;

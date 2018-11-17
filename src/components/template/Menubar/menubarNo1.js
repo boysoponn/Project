@@ -6,18 +6,20 @@ const MenuItemGroup = Menu.ItemGroup;
 
 class Menubar extends React.Component {
   state = {
+    h:[],
     myObj : {
       name: 'zack',
       height: 511
+      
     }
   }
 
   render() {
-   let myItem ;
-  {Object.keys(this.state.myObj).map((key,index) => {
-     myItem = this.state.myObj.height;
-console.log(myItem);
-})}
+//    let myItem ;
+//   {Object.keys(this.state.myObj).map((key,index) => {
+//      myItem = this.state.myObj.height;
+// console.log(myItem);
+// })}
   
   
     return (
@@ -29,11 +31,11 @@ console.log(myItem);
       post.typeGroup === true ?
         <SubMenu key={post._key} title={<span className="submenu-title-wrapper">{post.label}</span>}>
           <MenuItemGroup>
-          {/* {post.group.map((pgg) => 
+           {/* {post.group._key||this.state.h.map((pgg) => 
           <Menu.Item >
           <a href="https://ant.design"  target="_blank" rel="noopener noreferrer2">{pgg.label}</a>
           </Menu.Item>
-          )} */}
+          )}  */}
           {/* {Object.keys(post.group).map((key,index) => {
                     <Menu.Item >
                     <h1>lkpll</h1>
