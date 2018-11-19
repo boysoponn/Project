@@ -22,7 +22,8 @@ import HeroInput from './sidebarInput/heroInput';
 import CarouselInput from './sidebarInput/carouselInput';
 import MenubarInput from './sidebarInput/menubarInput';
 import GalleryInput from './sidebarInput/galleryInput';
-import { checkTab} from './actions'
+import { checkTab} from './actions';
+import BlockInput from './template/blockInput';
 const drawerWidth = 300;
 
 const styles = theme => ({
@@ -117,31 +118,29 @@ class CMS extends React.Component {
     hero:'none',
     carousel:'none',
     gallery:'none',
+    menubar:'none',
     carouselContent:[],
-    menubar:[],
+    menubarContent:[],
     galleryContent:[],
 
   };
 }
 
-componentDidMount=()=>{
-  let carouselItems = config.database().ref('project/'+this.props.user);
-  carouselItems.on('value', async (snapshot) => { 
-    const snapshotValue2 = snapshot.val(); 
-    const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev;}, []); 
-    this.setState({oneTab:snapshotArr[0]}); });
+componentDidMount(){
+  this.firstTabs();
 }
 
 componentWillReceiveProps(nextProps){
-  if(this.state.oneTab !== 'global'){
   let app = config.database().ref('project/'+this.props.user+'/'+nextProps.tabs);
   app.on('value', async (snapshot) => { 
   const snapshotValue = snapshot.val(); 
   let data = _(snapshotValue).value();
+  if(data !== null){
         this.setState({
           hero:data.hero,
           carousel:data.carousel,
           gallery:data.gallery,
+          menubar:data.menubar,
           herobackgroundColor:data.heroContent.backgroundColor,
           heroBackgroundImage:data.heroContent.image,
           heroTitle:data.heroContent.heroTitle,
@@ -211,10 +210,11 @@ componentWillReceiveProps(nextProps){
           galleryDescriptionFontStyle:data.galleryContent.descriptionFontStyle,
           galleryDescriptionStatus:data.galleryContent.descriptionStatus,
           galleryDescriptionColor:data.galleryContent.descriptionColor,
-
           // isLoaded: false
         }); 
+      }    
   });
+
 //สำหรับไอเทมที่เป็น Array
   let carouselItems = config.database().ref('project/'+this.props.user+'/'+nextProps.tabs+'/carouselContent');
   carouselItems.on('value', async (snapshot) => { 
@@ -228,14 +228,31 @@ componentWillReceiveProps(nextProps){
     const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev;}, []); 
     this.setState({galleryContent:snapshotArr}); });
 
-  let global = config.database().ref('project/'+this.props.user+'/global/menubar/');
-  global.on('value', async (snapshot) => { 
+  let globalContent = config.database().ref('global/'+this.props.user+'/menubarContent/');
+  globalContent.on('value', async (snapshot) => { 
     const snapshotValue2 = snapshot.val(); 
     const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev; }, []); 
-    this.setState({ menubar:snapshotArr});});
-  }
+    this.setState({ menubarContent:snapshotArr});});
+  
+    let global = config.database().ref('global/'+this.props.user+'/menubarLogo');
+    global.on('value', async (snapshot) => { 
+    const snapshotValue = snapshot.val(); 
+    let data = _(snapshotValue).value();
+    if(data !== null){this.setState({menubarLogo:data.image})}});
+    
 }
- 
+
+
+firstTabs=()=>{
+let carouselItems = config.database().ref('project/'+this.props.user);
+carouselItems.on('value', async (snapshot) => { 
+  const snapshotValue2 = snapshot.val(); 
+  const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev;}, []); 
+  if(snapshotArr[0] !== undefined){
+    this.props.dispatch(checkTab(snapshotArr[0]._key)); }
+  });
+}
+
   logout =() => {config.auth().signOut();window.location.reload(); };
   handleDrawerOpen = () => {this.setState({ open: true ,});}
   handleDrawerClose = () => {this.setState({  open: false ,});};
@@ -244,11 +261,7 @@ componentWillReceiveProps(nextProps){
   onChangeValue = name=> (e) => {this.setState({ [name]: e.target.value });};
 
   render() {
-    if(this.state.oneTab !== undefined && this.state.oneTab !== 'global'){
-      let path=this.state.oneTab._key
-      this.props.dispatch(checkTab(path));
-    }
-    console.log(this.state.oneTab)
+    
     const { classes, theme } = this.props;
     let heroInput;
     if( this.state.hero !== "none"){
@@ -358,9 +371,18 @@ componentWillReceiveProps(nextProps){
       carouselOnChangeDots={this.onChangeChecked('carouselDots')}
     />
     };
-    let menubar =   <MenubarInput
-    menubar={this.state.menubar}
+    let menubarInput; 
+    if( this.state.menubar !== "none"){
+      menubarInput= <MenubarInput
+      menubar={this.state.menubar}
+      menubarLogo={this.state.menubarLogo}
+      menubarContent={this.state.menubarContent}
+      linkLogo={this.props.linkLogo}
+      onChangeLinkLogo={this.onChangeChecked('linkLogo')}
+      linkLogoTarget={this.props.linkLogoTarget}
+      onChangeLinkLogoTarget={this.onChangeChecked('linkLogoTarget')}
     />
+    }
     let galleryInput ;
     if( this.state.gallery !== "none"){
     galleryInput = <GalleryInput
@@ -452,18 +474,27 @@ componentWillReceiveProps(nextProps){
           </div>
           <Divider />
             <List disablePadding={true}>
-            {menubar}
-            {heroInput}
-            {carouselInput}
-            {galleryInput}
-            </List>
-            
+            <BlockInput
+            label='Header'
+            content1={menubarInput}
+            />
+            <BlockInput
+            label='Content'
+            content1={heroInput}
+            content2={carouselInput}
+            content3={galleryInput}
+            />
+            <BlockInput
+            label='Footer'
+            />
+            </List>    
            <Divider />
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} /> 
             <TabWebsite    
-              menubar={this.state.menubar}   
+              menubarLogo={this.state.menubarLogo}
+              menubarContent={this.state.menubarContent}   
               herobackgroundColor={this.state.herobackgroundColor}
               heroBackgroundImage={this.state.heroBackgroundImage}
               heroTitle={this.state.heroTitle}             
@@ -507,8 +538,6 @@ componentWillReceiveProps(nextProps){
               heroButtonHBDColor={this.state.heroButtonHBDColor}
               heroButtonHoverColor={this.state.heroButtonHoverColor}
                       
-
-              carousel={this.state.carousel}
               carouselContent={this.state.carouselContent}
               carouselSpeed={this.state.carouselSpeed}
               carouselPauseOnHover={this.state.carouselPauseOnHover}

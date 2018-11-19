@@ -43,7 +43,9 @@ class HeroNo2 extends React.Component {
       fontSize:this.props.heroDescriptionFontSize,
       fontWeight:this.props.heroDescriptionFontWeight,
       fontStyle:this.props.heroDescriptionFontStyle,
-      display:this.props.heroDescriptionStatus
+      display:this.props.heroDescriptionStatus,
+      padding:' 0 50 0 50',
+      
   };
   const buttonAnimate={
     opacity: 1,

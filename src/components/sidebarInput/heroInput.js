@@ -52,7 +52,7 @@ class NestedList extends React.Component {
             <ListItemIcon>
               <InboxIcon />
             </ListItemIcon>
-            <ListItemText inset primary="Hero" />
+            <ListItemText inset primary="Cover" />
             {this.state.open ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>

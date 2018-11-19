@@ -8,6 +8,7 @@ class CarouselNo1 extends React.Component {
   render() {
     const background ={
         height:500,
+        margin:'-1'
     };
 
     return (

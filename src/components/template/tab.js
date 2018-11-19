@@ -48,13 +48,13 @@ class TabWebsite extends React.Component {
         news:[],
         open:false,
         openEdit:false,
-        namePage:'',
+        selectedMenubar:'none',
+        selectedCarousel:'none',
         selectedHero:'none',
         selectedAbout:'none',
         selectedGallery:'none',
         selectedWelcome:'none',
         selectedContact:'none',
-        selectedCarousel:'none'
       };   
     }
 
@@ -62,6 +62,8 @@ class TabWebsite extends React.Component {
     this.getData();
   }
     getData=()=>{
+      let new1=[];
+      let new2=[];
       const app = config.database().ref('project/'+this.props.user+'/');
       app.on('value', async (snapshot) => { 
         const snapshotValue = snapshot.val(); 
@@ -71,16 +73,32 @@ class TabWebsite extends React.Component {
             ...snapshotValue[cur]
           });
           return prev;     
-        }, []);  
-        this.setState({
-          news:snapshotArr
-        });
-    });
-  };
+        }, []); 
+        new1=snapshotArr;
+    
+  //   const global = config.database().ref('project/'+this.props.user+'/global');
+  //   global.on('value', async (snapshot) => { 
+  //     const snapshotValue = snapshot.val(); 
+  //     const snapshotArr = _.keys(snapshotValue).reduce((prev, cur) => {
+  //       prev.push({
+  //         _key: cur,
+  //         ...snapshotValue[cur]
+  //       });
+  //       return prev;     
+  //     }, []); 
+  //     new2=snapshotArr ;   
+  // });
+  let newConcat = new1.concat(new2);
+    this.setState({
+      news:newConcat
+    })
+  });
+};
 
   setNullValue=()=>{
     this.setState({
       namePage:'',
+      selectedMenubar:'none',
       selectedCarousel:'none',
       selectedHero:'none',
       selectedAbout:'none',
@@ -97,6 +115,7 @@ class TabWebsite extends React.Component {
       let data = _(snapshotValue).value();
         this.setState({
           namePage:data.pageName,
+          selectedMenubar:data.menubar,
           selectedHero:data.hero,
           selectedCarousel:data.carousel,
           selectedAbout:data.about,
@@ -113,13 +132,8 @@ class TabWebsite extends React.Component {
   handleCloseEdit = () => {this.setState({ openEdit: false});this.setNullValue();};
   handleOpen = () => {this.setState({ open: true });};
   handleClose = () => {this.setState({ open: false,}); this.setNullValue();};  
+  onChangeValue = name=> (e) => {this.setState({ [name]: e.target.value });};
   onChangeName=(e)=>{this.setState({ namePage: e.target.value});};
-  handleChangeSelectHero = event => {this.setState({ selectedHero: event.target.value });};
-  handleChangeSelectWelcome = event => {this.setState({ selectedWelcome: event.target.value });};
-  handleChangeSelectAbout = event => {this.setState({ selectedAbout: event.target.value });};
-  handleChangeSelectGallery = event => {this.setState({ selectedGallery: event.target.value });};
-  handleChangeSelectContact = event => {this.setState({ selectedContact: event.target.value });};
-  handleChangeSelectedCarousel = event => {this.setState({ selectedCarousel: event.target.value });};
   handleChange = (event, value) => {this.setState({ value });};
   handleChangeIndex = index => {this.setState({ value: index });};
 
@@ -137,7 +151,8 @@ class TabWebsite extends React.Component {
       welcome: this.state.selectedWelcome,
       about : this.state.selectedAbout,
       gallery :this.state.selectedGallery,
-      contact : this.state.selectedContact
+      contact : this.state.selectedContact,
+      menubar:this.state.selectedMenubar,
     });    
     this.setState({
       value:this.state.value,
@@ -152,7 +167,6 @@ class TabWebsite extends React.Component {
   };
 
   addNewTab=()=>{
-    this.setNullValue();
     if(this.state.namePage){
       let pathUpper =this.state.namePage;
       let pathLower =pathUpper.toLowerCase();
@@ -162,6 +176,7 @@ class TabWebsite extends React.Component {
       pageName: this.state.namePage,
       pathName:pathLower,
       path: "/"+this.props.user+"/"+pathLower,
+      menubar:this.state.selectedMenubar,
       hero: this.state.selectedHero,
       carousel: this.state.selectedCarousel,
       welcome: this.state.selectedWelcome,
@@ -305,10 +320,12 @@ class TabWebsite extends React.Component {
       
     });     
     }
+    this.setNullValue();
     this.handleClose();
   };
 
   deletePage=()=>{
+    this.props.dispatch(checkTab('null'));
     let dbCon = config.database().ref('project/'+this.props.user+'/');
     dbCon.child(this.props.tabs).remove();
   };
@@ -396,7 +413,6 @@ class TabWebsite extends React.Component {
 
   render() {
     const { classes, theme } = this.props;
-    const center= ({textAlign: 'center'}); 
     return (
     <div>
       <Button variant="contained" color="secondary" onClick={this.save} className={classes.button}>
@@ -416,38 +432,44 @@ class TabWebsite extends React.Component {
       TransitionComponent={Transition}
       onChangeName={this.onChangeName}
       valueName={this.state.namePage}
+      selectedMenubar={this.state.selectedMenubar}
+      handleChangeMenubar={this.onChangeValue('selectedMenubar')}
+      valueMenubar1="none"
+      valueMenubar2="MenubarNo1"
+      valueMenubar3="MenubarNo2"
+      valueMenubar4="MenubarNo3"
       selectedHero={this.state.selectedHero}
-      handleChangeHero={this.handleChangeSelectHero}
+      handleChangeHero={this.onChangeValue('selectedHero')}
       valueHero1="none"
       valueHero2="HeroNo1"
       valueHero3="HeroNo2"
       valueHero4="HeroNo3"
       selectedCarousel={this.state.selectedCarousel}
-      handleChangeCarousel={this.handleChangeSelectedCarousel}
+      handleChangeCarousel={this.onChangeValue('selectedCarousel')}
       valueCarousel1="none"
       valueCarousel2="CarouselNo1"
       valueCarousel3="CarouselNo2"
       valueCarousel4="CarouselNo3"
       selectedWelcome={this.state.selectedWelcome}
-      handleChangeWelcome={this.handleChangeSelectWelcome}
+      handleChangeWelcome={this.onChangeValue('selectedWelcome')}
       valueWelcome1="none"
       valueWelcome2="WelcomeNo1"
       valueWelcome3="WelcomeNo2"
       valueWelcome4="WelcomeNo3"
       selectedAbout={this.state.selectedAbout}
-      handleChangeAbout={this.handleChangeSelectAbout}
+      handleChangeAbout={this.onChangeValue('selectedAbout')}
       valueAbout1="none"
       valueAbout2="AboutNo1"
       valueAbout3="AboutNo2"
       valueAbout4="AboutNo3"
       selectedGallery={this.state.selectedGallery}
-      handleChangeGallery={this.handleChangeSelectGallery}
+      handleChangeGallery={this.onChangeValue('selectedGallery')}
       valueGallery1="none"
       valueGallery2="GalleryNo1"
       valueGallery3="GalleryNo2"
       valueGallery4="GalleryNo3"
       selectedContact={this.state.selectedContact}
-      handleChangeContact={this.handleChangeSelectContact}
+      handleChangeContact={this.onChangeValue('selectedContact')}
       valueContact1="none"
       valueContact2="ContactNo1"
       valueContact3="ContactNo2"
@@ -465,38 +487,44 @@ class TabWebsite extends React.Component {
       TransitionComponent={Transition}
       onChangeName={this.onChangeName}
       valueName={this.state.namePage}
+      selectedMenubar={this.state.selectedMenubar}
+      handleChangeMenubar={this.onChangeValue('selectedMenubar')}
+      valueMenubar1="none"
+      valueMenubar2="MenubarNo1"
+      valueMenubar3="MenubarNo2"
+      valueMenubar4="MenubarNo3"
       selectedHero={this.state.selectedHero}
-      handleChangeHero={this.handleChangeSelectHero}
+      handleChangeHero={this.onChangeValue('selectedHero')}
       valueHero1="none"
       valueHero2="HeroNo1"
       valueHero3="HeroNo2"
       valueHero4="HeroNo3"
       selectedCarousel={this.state.selectedCarousel}
-      handleChangeCarousel={this.handleChangeSelectedCarousel}
+      handleChangeCarousel={this.onChangeValue('selectedCarousel')}
       valueCarousel1="none"
       valueCarousel2="CarouselNo1"
       valueCarousel3="CarouselNo2"
       valueCarousel4="CarouselNo3"
       selectedWelcome={this.state.selectedWelcome}
-      handleChangeWelcome={this.handleChangeSelectWelcome}
+      handleChangeWelcome={this.onChangeValue('selectedWelcome')}
       valueWelcome1="none"
       valueWelcome2="WelcomeNo1"
       valueWelcome3="WelcomeNo2"
       valueWelcome4="WelcomeNo3"
       selectedAbout={this.state.selectedAbout}
-      handleChangeAbout={this.handleChangeSelectAbout}
+      handleChangeAbout={this.onChangeValue('selectedAbout')}
       valueAbout1="none"
       valueAbout2="AboutNo1"
       valueAbout3="AboutNo2"
       valueAbout4="AboutNo3"
       selectedGallery={this.state.selectedGallery}
-      handleChangeGallery={this.handleChangeSelectGallery}
+      handleChangeGallery={this.onChangeValue('selectedGallery')}
       valueGallery1="none"
       valueGallery2="GalleryNo1"
       valueGallery3="GalleryNo2"
       valueGallery4="GalleryNo3"
       selectedContact={this.state.selectedContact}
-      handleChangeContact={this.handleChangeSelectContact}
+      handleChangeContact={this.onChangeValue('selectedContact')}
       valueContact1="none"
       valueContact2="ContactNo1"
       valueContact3="ContactNo2"
@@ -517,8 +545,6 @@ class TabWebsite extends React.Component {
             fullWidth
           >
           {this.state.news.map((New => (
-            New._key==='global' ? null
-            :
             <Tab label={New.pageName} key={New._key}  onClick={() => this.props.dispatch(checkTab(New._key))}/>
             )))}
           
@@ -532,15 +558,16 @@ class TabWebsite extends React.Component {
         > 
           {this.state.news.map((New => (
             <div key={New._key} className={classes.content}>
-            <h1 style={center}>{New.pageName}</h1>
             <IN         
               Hero={New.hero}
               Carousel={New.carousel}
               Welcome={New.welcome}
               About={New.about} 
               Gallery={New.gallery}  
-              
-              menubar={this.props.menubar}
+              Menubar={New.menubar}
+
+              menubarLogo={this.props.menubarLogo}
+              menubarContent={this.props.menubarContent}
               herobackgroundColor={this.props.herobackgroundColor}
               heroImagePick={this.props.heroBackgroundImage}
               heroTitle={this.props.heroTitle} 

@@ -27,7 +27,7 @@ class Menubar extends React.Component {
       mode="horizontal"
         selectedKeys={[this.state.current]}
       >
-      {this.props.menubar.map((post) => 
+      {this.props.menubarContent.map((post) => 
       post.typeGroup === true ?
         <SubMenu key={post._key} title={<span className="submenu-title-wrapper">{post.label}</span>}>
           <MenuItemGroup>

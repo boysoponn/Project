@@ -21,8 +21,6 @@ const styles = {
 };
 
 class RadioButtons extends React.Component {
-  state = {
-  };
 
 
   render() {

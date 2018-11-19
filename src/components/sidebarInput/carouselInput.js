@@ -176,7 +176,7 @@ class NestedList extends React.Component {
             <ListItemIcon>
               <InboxIcon />
             </ListItemIcon>
-            <ListItemText inset primary="Carousel" />
+            <ListItemText inset primary="Image Slide" />
             {this.state.open ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>

@@ -26,6 +26,7 @@ class InputText extends React.Component {
         onChangeStatus={this.props.onChangeStatus}
         color={this.props.color}
         onChange={this.props.onChangeColor}
+        displayAnimate={this.props.displayAnimate}
         />
         <Text
         type="text"

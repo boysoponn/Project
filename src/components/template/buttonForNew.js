@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
 import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
 import AppBar from '@material-ui/core/AppBar';
@@ -16,7 +13,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import RadioButtons from './choosetemplant'
 import AddIcon from '@material-ui/icons/AddCircle';
 import CreateIcon from '@material-ui/icons/Create';
-
+import Text from '../sidebarInput/itemInput/Text';
 const styles = {
   appBar: {
     position: 'relative',
@@ -94,29 +91,31 @@ class ButtonForNewTab extends React.Component {
           </AppBar>
           <div className={classes.marginContent}>
           <List>     
-            <FormControl >  
-                <InputLabel
-                    FormLabelClasses={{
-                    root: classes.cssLabel,
-                    focused: classes.cssFocused,
-                    }}
-                    htmlFor="custom-css-input"
-                    children="NAME PAGE"
-                >
-                </InputLabel>
-                <Input
-                    classes={{
-                    underline: classes.cssUnderline,
-                    }}
-                    id="custom-css-input"
-                    onChange={this.props.onChangeName}
-                    value={this.props.valueName}
-                />
-                
-            </FormControl>
-          </List>           
+            <Text
+              label='Name Page'
+              onChange={this.props.onChangeName}
+              value={this.props.valueName}
+            />
+          </List>   
           <List>
-          <h1>Hero</h1>
+          <h1>Menubar</h1>
+          <ListItem>
+            <RadioButtons
+            selectedValue={this.props.selectedMenubar}
+            handleChange={this.props.handleChangeMenubar}
+            value1={this.props.valueMenubar1}
+            value2={this.props.valueMenubar2}
+            value3={this.props.valueMenubar3}
+            value4={this.props.valueMenubar4}
+            label1="None"
+            label2="Menubar No.1"
+            label3="Menubar No.2"
+            label4="Menubar No.3"
+            />
+          </ListItem>
+          </List>         
+          <List>
+          <h1>Cover</h1>
           <ListItem>
             <RadioButtons
             selectedValue={this.props.selectedHero}
@@ -133,7 +132,7 @@ class ButtonForNewTab extends React.Component {
           </ListItem>
           </List>    
           <List>
-          <h1>Carousel</h1>
+          <h1>Image Slide</h1>
           <ListItem>
             <RadioButtons
             selectedValue={this.props.selectedCarousel}
