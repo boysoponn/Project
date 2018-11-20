@@ -1,20 +1,27 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+import Facebook from '../tamplateCSS/facebook.png';
+import Youtube from '../tamplateCSS/youtube.png';
+import Twitter from '../tamplateCSS/twitter.png';
 import Grid from '@material-ui/core/Grid';
+import ScrollAnimation from 'react-animate-on-scroll';
 import styled from 'styled-components'
+
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
     backgroundColor:'grey',
-    height:200
   },
   paper: {
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
+  img:{
+    width:40,
+    padding:5
+  }
 });
 
 
@@ -26,24 +33,54 @@ constructor(props){
   }
 }
   render() { 
+    const content={
+      textAlign: 'center',
+      backgroundColor:this.props.footerbackgroundColor,
+  };
+  const title ={
+      color:this.props.footerTitleColor,
+      opacity: 1,
+      animationDuration: this.props.footerTitleDuration,
+      fontFamily:this.props.footerTitleFontFamily,
+      fontSize:this.props.footerTitleFontSize,
+      fontWeight:this.props.footerTitleFontWeight,
+      fontStyle:this.props.footerTitleFontStyle,
+      display:this.props.footerTitleStatus
+  };
+  const description={
+      opacity: 1,
+      color:this.props.footerDescriptionColor,
+      animationDuration: this.props.footerDescriptionDuration,
+      fontFamily:this.props.footerDescriptionFontFamily,
+      fontSize:this.props.footerDescriptionFontSize,
+      fontWeight:this.props.footerDescriptionFontWeight,
+      fontStyle:this.props.footerDescriptionFontStyle,
+      display:this.props.footerDescriptionStatus,
+      padding:' 0 50 0 50',
+      wordWrap: 'break-word'
+  };
     const { classes} = this.props;
     return (
       <div className={classes.root}>
-      {/* <Grid container spacing={24}>
-        <Grid item xs={5}>
-        <div  >
-        <div style={{textAlign:'center', float:'right'}}>
-          <h1>ddddd</h1>
-          <div><a>dffdf</a></div>
-          <div><a>dffdf</a></div><div><a>dffdf</a></div>
-        </div>
-        </div>
+      <Grid style={content}container spacing={24}>
+        <Grid item xs={9}>
+          <ScrollAnimation style={title} className={this.props.footerTitleAnimate} >
+            {this.props.footerTitle}
+            </ScrollAnimation> 
+            <ScrollAnimation style={description} className={this.props.footerDescriptionAnimate} >
+            {this.props.footerDescription}
+          </ScrollAnimation> 
+
+          {this.props.footerContent.map((footer)=>
+           <a href={footer.link} target={footer.target} style={{padding:5}}>{footer.label}</a>
+            )}
         </Grid>
-        <Grid item xs={7}>
-         
-         </Grid>
-      </Grid> */}
-      <h1 style={{textAlign:'center',fontSize:50,color:'#fff'}}>Footer</h1>
+        <Grid item xs={3}>  
+        <a href="#"><img className={classes.img}  src={Facebook} alt="Facebook" /></a>
+        <a href="#"><img className={classes.img}  src={Youtube} alt="Youtube"/></a>
+        <a href="#"><img className={classes.img}  src={Twitter} alt="Twitter"/></a>
+        </Grid>
+      </Grid>
     </div>
     );
   }

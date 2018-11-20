@@ -20,6 +20,7 @@ import Popover from '@material-ui/core/Popover';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/AddCircle';
 import ChooseLink from './itemInput/chooseLink';
+import InputTextarea from './itemInput/inputTextarea';
 import ModalPictureGlobal from './itemInput/modalPictureGlobal';
 // import Selection from './itemInput/selection';
 import _ from 'lodash';
@@ -84,16 +85,7 @@ class CarouselInput extends React.Component {
   }
 
   save =  () => {
-    let dbCon = config.database().ref('global/'+this.props.user+'/menubarContent/');
-    dbCon.child(this.state.key).update({
-      link:this.state.link,
-      linkTarget:this.state.linkTarget,
-      label:this.state.label,
-    });
-    alert("saved") 
-  };
-  saveInGroup =  () => {
-    let dbCon = config.database().ref('global/'+this.props.user+'/menubarContent/'+this.state.keys+'/group');
+    let dbCon = config.database().ref('global/'+this.props.user+'/footerContent/');
     dbCon.child(this.state.key).update({
       link:this.state.link,
       linkTarget:this.state.linkTarget,
@@ -102,24 +94,11 @@ class CarouselInput extends React.Component {
     alert("saved") 
   };
   delete = menubar => () =>{
-    let dbCon = config.database().ref('global/'+this.props.user+'/menubarContent/');
+    let dbCon = config.database().ref('global/'+this.props.user+'/footerContent/');
     dbCon.child(menubar._key).remove();
-  }
-  deleteInGroup = menubar => () =>{
-    let dbCon = config.database().ref('global/'+this.props.user+'/menubarContent/'+this.state.keys+'/group');
-    dbCon.child(menubar._key).remove();
-  }
-  addItemLittle= () => {
-    let dbCon = config.database().ref('global/'+this.props.user+'/menubarContent/'+this.state.keys+'/group');
-    dbCon.push({
-          label:'Link',
-          link:'',
-          linkTarget:'_blank',
-          typeGroup:true
-    }) 
   }
   addItem=()=>{
-    let dbCon = config.database().ref('global/'+this.props.user+'/menubarContent/');
+    let dbCon = config.database().ref('global/'+this.props.user+'/footerContent/');
     dbCon.push({
       typeGroup:false,
       label:'Link',
@@ -146,7 +125,7 @@ class CarouselInput extends React.Component {
   });
 };
 onChangeTypeGroup=menubar=>(e)=>{
-  let dbCon = config.database().ref('global/'+this.props.user+'/menubarContent');
+  let dbCon = config.database().ref('global/'+this.props.user+'/footerContent');
   dbCon.child(menubar._key).update({
     typeGroup:e.target.checked ,
   });
@@ -157,13 +136,6 @@ onChangeTypeGroup=menubar=>(e)=>{
   handleClose = () => {this.setState({ anchorEl: null, });};
   handleClickOpen2 = (event) => {this.setState({ anchorEl2: event.currentTarget, });};
   handleClose2 = () => {this.setState({ anchorEl2: null, });};
-  handleClickOpen3 = menubar => (event) => {
-    let global = config.database().ref('global/'+this.props.user+'/menubarContent/'+menubar._key+'/group');
-    global.on('value', async (snapshot) => { 
-    const snapshotValue2 = snapshot.val(); 
-    const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => { prev.push({_key: cur,...snapshotValue2[cur]});return prev;}, []); 
-    this.setState({groupData:snapshotArr,});});
-    this.setState({anchorEl3: event.currentTarget,keys:menubar._key,typeGroup:menubar.typeGroup});};
   handleClose3 = () => {this.setState({ anchorEl3: null, });};
   onChangeLinkTarget = (e) =>{this.setState({ linkTarget:e.target.value})};
   onChangeLink = (e) =>{this.setState({ link:e.target.value})};
@@ -182,14 +154,14 @@ onChangeTypeGroup=menubar=>(e)=>{
             <ListItemIcon>
               <InboxIcon />
             </ListItemIcon>
-            <ListItemText inset primary="Menubar" />
+            <ListItemText inset primary="Footer" />
             {this.state.open ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding={false}>
             <ListItem className={classes.nested}>
             <Button variant="contained" onClick={this.handleClickOpen} component="span" color="secondary" >
-            Menubar Setting
+            Footer Setting
             </Button>
             <Popover
               open={open}
@@ -207,26 +179,58 @@ onChangeTypeGroup=menubar=>(e)=>{
             </Popover>
             </ListItem>
             </List>
-          {this.props.menubar === 'MenubarNo2' ?
-          <List component="div" disablePadding={false}>
-              <ListItem className={classes.nested}>
-              <ModalPictureGlobal
-              label='Should use Image height 80px'
-              imagePick={this.props.menubarLogo}
-              path="/menubarLogo"
-              />
-              </ListItem>
-              <ListItem>
-              <ChooseLink
-                  value={this.props.linkLogo}
-                  onChange={this.props.onChangeLinkLogo}
-                  target={this.props.linkLogoTarget}
-                  onChangeTarget={this.props.onChangeLinkLogoTarget}
+            <List component="div" disablePadding={false}>
+              <ListItem  className={classes.nested}>
+              <InputText 
+              Label="Title" 
+              value={this.props.footerTitle}  
+              animate={this.props.footerTitleAnimate} 
+              onChange={this.props.footerTitleOnChange} 
+              duration={this.props.footerTitleDuration}   
+              FontFamily={this.props.footerTitleFontFamily}
+              FontSize={this.props.footerTitleFontSize}
+              FontWeight={this.props.footerTitleFontWeight}
+              FontStyle={this.props.footerTitleFontStyle}
+              Status={this.props.footerTitleStatus}
+              onChangeAnimate={this.props.footerTitleOnChangeAnimate}              
+              onChangeDuration={this.props.footerTitleOnChangeDuration}            
+              onChangeFontFamily={this.props.footerTitleOnChangeFontFamily}
+              onChangeFontSize={this.props.footerTitleOnChangeFontSize}                           
+              onChangeFontWeight={this.props.footerTitleOnChangeFontWeight}
+              onChangeFontStyle={this.props.footerTitleOnChangeFontStyle}              
+              onChangeStatus={this.props.footerTitleOnChangeStatus}
+              color={this.props.footerTitleColor}
+              onChangeColor={this.props.footerTitleOnChangeColor}
               />
               </ListItem>
             </List>
-            :null
-          }
+
+            <List component="div" disablePadding={false}>
+              <ListItem  className={classes.nested}>
+              <InputTextarea 
+              label="Description" 
+              value={this.props.footerDescription}  
+              animate={this.props.footerDescriptionAnimate} 
+              onChange={this.props.footerDescriptionOnChange} 
+              duration={this.props.footerDescriptionDuration}   
+              FontFamily={this.props.footerDescriptionFontFamily}
+              FontSize={this.props.footerDescriptionFontSize}
+              FontWeight={this.props.footerDescriptionFontWeight}
+              FontStyle={this.props.footerDescriptionFontStyle}
+              Status={this.props.footerDescriptionStatus}
+              onChangeAnimate={this.props.footerDescriptionOnChangeAnimate}              
+              onChangeDuration={this.props.footerDescriptionOnChangeDuration}            
+              onChangeFontFamily={this.props.footerDescriptionOnChangeFontFamily}
+              onChangeFontSize={this.props.footerDescriptionOnChangeFontSize}                           
+              onChangeFontWeight={this.props.footerDescriptionOnChangeFontWeight}
+              onChangeFontStyle={this.props.footerDescriptionOnChangeFontStyle}              
+              onChangeStatus={this.props.footerDescriptionOnChangeStatus}
+              color={this.props.footerDescriptionColor}
+              onChangeColor={this.props.footerDescriptionOnChangeColor}
+              />
+              </ListItem>
+            </List>
+
             <List component="div" disablePadding={false}>
             <ListItem className={classes.nested}>
             <Button  variant="contained" onClick={this.handleClickOpen2} component="span" color="secondary" className={classes.button}>
@@ -245,20 +249,13 @@ onChangeTypeGroup=menubar=>(e)=>{
                 horizontal: 'left',
               }}
             >
-            {this.props.menubarContent  .map((menubar => (
-              menubar.typeGroup === false ? 
+            {this.props.footerContent.map((menubar => (
             <ListItem key={menubar._key}>
              <Button  variant="contained" onClick={this.OpenItem(menubar)} component="span" color="secondary" className={classes.button}>{menubar.label}</Button>
             <DeleteIcon  onClick={this.delete(menubar)} className={classes.rightIcon}/>
-            {/* <Selection value={menubar.typeGroup}labelTrue='Group 'labelFalse='Not Group'onClick={this.onChangeTypeGroup(menubar)}/> */}
             </ListItem>
-            :
-            <ListItem key={menubar._key}>
-             <Button  variant="contained" onClick={this.handleClickOpen3(menubar)} component="span" color="secondary" className={classes.button}>{menubar.label}</Button>
-               <DeleteIcon  onClick={this.delete(menubar)} className={classes.rightIcon}/>
-               {/* <Selection value={menubar.typeGroup}labelTrue='Group 'labelFalse='Not Group'onClick={this.onChangeTypeGroup(menubar)}/> */}
-            </ListItem> 
-             )))}    
+             )))}  
+
              <ListItem>
             <Button variant="contained"  onClick={this.addItem} component="span" color="secondary" className={classes.paper}>
               ADD
@@ -321,32 +318,6 @@ onChangeTypeGroup=menubar=>(e)=>{
               </ListItem>
               </List>
               </Dialog>
-                 <Popover
-              open={open3}
-              anchorEl={anchorEl3}
-              onClose={this.handleClose3}
-              anchorOrigin={{
-                vertical: 'center',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'center',
-                horizontal: 'left',
-              }}
-            >
-              {this.state.groupData.map((menubar => (
-                <ListItem key={menubar._key}>
-                 <Button  variant="contained" onClick={this.OpenItem(menubar)} component="span" color="secondary" className={classes.button}>{menubar.label}</Button>
-                <DeleteIcon  onClick={this.deleteInGroup(menubar)} className={classes.rightIcon}/>
-                </ListItem>
-                 )))}
-            <ListItem>
-            <Button variant="contained"  onClick={this.addItemLittle} component="span" color="secondary" className={classes.paper}>
-              ADD
-              <AddIcon className={classes.rightIcon} />
-            </Button>
-            </ListItem>
-                 </Popover>
             </Popover>
             </ListItem>           
             </List>

@@ -25,7 +25,7 @@ constructor(props){
           )}
         </Nav>
         <Logo>
-          <img style={{width:'100%',height:80}}src={this.props.menubarLogo} alt="logo"/>
+          <img style={{height:80}}src={this.props.menubarLogo} alt="logo"/>
         </Logo>
       </Navbar>
           </Header>

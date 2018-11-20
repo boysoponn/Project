@@ -22,6 +22,7 @@ import HeroInput from './sidebarInput/heroInput';
 import CarouselInput from './sidebarInput/carouselInput';
 import MenubarInput from './sidebarInput/menubarInput';
 import GalleryInput from './sidebarInput/galleryInput';
+import FooterInput from './sidebarInput/footerInput';
 import { checkTab} from './actions';
 import BlockInput from './template/blockInput';
 const drawerWidth = 300;
@@ -119,6 +120,8 @@ class CMS extends React.Component {
     carousel:'none',
     gallery:'none',
     menubar:'none',
+    footer:'none',
+    footerContent:[],
     carouselContent:[],
     menubarContent:[],
     galleryContent:[],
@@ -129,6 +132,46 @@ class CMS extends React.Component {
 componentDidMount(){
   this.firstTabs();
 }
+
+firstTabs=()=>{
+  let carouselItems = config.database().ref('project/'+this.props.user);
+  carouselItems.on('value', async (snapshot) => { 
+    const snapshotValue2 = snapshot.val(); 
+    const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev;}, []); 
+  
+    if(snapshotArr[0] !== undefined){
+      this.props.dispatch(checkTab(snapshotArr[0]._key)); this.setState({undefinedOneTab:false})}
+      else{ this.setState({undefinedOneTab:true})
+      }
+    });
+  
+    let global = config.database().ref('global/'+this.props.user+'/content');
+    global.on('value', async (snapshot) => { 
+    const snapshotValue = snapshot.val(); 
+    let data = _(snapshotValue).value();
+    if(data !== null){this.setState({
+      footerTitle:data.footerTitle,
+      footerDescription:data.footerDescription,
+      footerbackgroundColor:data.footerbackgroundColor,
+      footerTitleAnimate:data.footerTitleAnimate,
+      footerTitleDuration:data.footerTitleDuration,
+      footerTitleFontFamily:data.footerTitleFontFamily,
+      footerTitleFontSize:data.footerTitleFontSize,
+      footerTitleFontWeight:data.footerTitleFontWeight,
+      footerTitleFontStyle:data.footerTitleFontStyle,
+      footerTitleStatus:data.footerTitleStatus,
+      footerTitleColor:data.footerTitleColor,
+  
+      footerDescriptionAnimate:data.footerDescriptionAnimate,
+      footerDescriptionDuration:data.footerDescriptionDuration,
+      footerDescriptionFontFamily:data.footerDescriptionFontFamily,
+      footerDescriptionFontSize:data.footerDescriptionFontSize,
+      footerDescriptionFontWeight:data.footerDescriptionFontWeight,
+      footerDescriptionFontStyle:data.footerDescriptionFontStyle,
+      footerDescriptionStatus:data.footerDescriptionStatus,
+      footerDescriptionColor:data.footerDescriptionColor,
+    })}});
+  }
 
 componentWillReceiveProps(nextProps){
   let app = config.database().ref('project/'+this.props.user+'/'+nextProps.tabs);
@@ -141,6 +184,7 @@ componentWillReceiveProps(nextProps){
           carousel:data.carousel,
           gallery:data.gallery,
           menubar:data.menubar,
+          footer:data.footer,
           herobackgroundColor:data.heroContent.backgroundColor,
           heroBackgroundImage:data.heroContent.image,
           heroTitle:data.heroContent.heroTitle,
@@ -212,6 +256,8 @@ componentWillReceiveProps(nextProps){
           galleryDescriptionColor:data.galleryContent.descriptionColor,
           // isLoaded: false
         }); 
+      }else{
+          this.setState({undefinedOneTab:true,menubar:'none',footer:'none'})        
       }    
   });
 
@@ -233,25 +279,20 @@ componentWillReceiveProps(nextProps){
     const snapshotValue2 = snapshot.val(); 
     const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev; }, []); 
     this.setState({ menubarContent:snapshotArr});});
+
+  let footerContent = config.database().ref('global/'+this.props.user+'/footerContent/');
+  footerContent.on('value', async (snapshot) => { 
+    const snapshotValue2 = snapshot.val(); 
+    const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev; }, []); 
+    this.setState({ footerContent:snapshotArr});});
   
     let global = config.database().ref('global/'+this.props.user+'/menubarLogo');
     global.on('value', async (snapshot) => { 
     const snapshotValue = snapshot.val(); 
     let data = _(snapshotValue).value();
     if(data !== null){this.setState({menubarLogo:data.image})}});
-    
 }
 
-
-firstTabs=()=>{
-let carouselItems = config.database().ref('project/'+this.props.user);
-carouselItems.on('value', async (snapshot) => { 
-  const snapshotValue2 = snapshot.val(); 
-  const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev;}, []); 
-  if(snapshotArr[0] !== undefined){
-    this.props.dispatch(checkTab(snapshotArr[0]._key)); }
-  });
-}
 
   logout =() => {config.auth().signOut();window.location.reload(); };
   handleDrawerOpen = () => {this.setState({ open: true ,});}
@@ -428,8 +469,61 @@ carouselItems.on('value', async (snapshot) => {
     galleryDescriptionOnChangeStatus={this.onChangeValue('galleryDescriptionStatus')}
     galleryDescriptionOnChangeColor={this.onChangeColor('galleryDescriptionColor')}
     />
+    
+    }
+
+    
+    let footerInput ;
+    if( this.state.footer !== "none"){
+    footerInput=<FooterInput
+    footerContent={this.state.footerContent}
+
+    footerTitle={this.state.footerTitle}
+    footerDescription={this.state.footerDescription}
+    footerbackgroundColor={this.state.footerbackgroundColor}
+    footerTitleAnimate={this.state.footerTitleAnimate}
+    footerTitleDuration={this.state.footerTitleDuration}
+    footerTitleFontFamily={this.state.footerTitleFontFamily}
+    footerTitleFontSize={this.state.footerTitleFontSize}
+    footerTitleFontWeight={this.state.footerTitleFontWeight}
+    footerTitleFontStyle={this.state.footerTitleFontStyle}
+    footerTitleStatus={this.state.footerTitleStatus}
+    footerTitleColor={this.state.footerTitleColor}
+
+    footerbackgroundOnChangeColor={this.onChangeColor('footerbackgroundColor')}
+    footerTitleOnChange={this.onChangeValue('footerTitle')}
+    footerTitleOnChangeAnimate={this.onChangeValue('footerTitleAnimate')}
+    footerTitleOnChangeDuration={this.onChangeValue('footerTitleDuration')}         
+    footerTitleOnChangeFontFamily={this.onChangeValue('footerTitleFontFamily')}      
+    footerTitleOnChangeFontSize={this.onChangeValue('footerTitleFontSize')}        
+    footerTitleOnChangeFontWeight={this.onChangeValue('footerTitleFontWeight')}        
+    footerTitleOnChangeFontStyle={this.onChangeValue('footerTitleFontStyle')}
+    footerTitleOnChangeStatus={this.onChangeValue('footerTitleStatus')}
+    footerTitleOnChangeColor={this.onChangeColor('footerTitleColor')}
+
+    footerDescriptionAnimate={this.state.footerDescriptionAnimate}
+    footerDescriptionDuration={this.state.footerDescriptionDuration}
+    footerDescriptionFontFamily={this.state.footerDescriptionFontFamily}
+    footerDescriptionFontSize={this.state.footerDescriptionFontSize}
+    footerDescriptionFontWeight={this.state.footerDescriptionFontWeight}
+    footerDescriptionFontStyle={this.state.footerDescriptionFontStyle}
+    footerDescriptionStatus={this.state.footerDescriptionStatus}
+    footerDescriptionColor={this.state.footerDescriptionColor}
+
+    footerDescriptionOnChange={this.onChangeValue('footerDescription')}
+    footerDescriptionOnChangeAnimate={this.onChangeValue('footerDescriptionAnimate')}
+    footerDescriptionOnChangeDuration={this.onChangeValue('footerDescriptionDuration')}        
+    footerDescriptionOnChangeFontFamily={this.onChangeValue('footerDescriptionFontFamily')}            
+    footerDescriptionOnChangeFontSize={this.onChangeValue('footerDescriptionFontSize')}            
+    footerDescriptionOnChangeFontWeight={this.onChangeValue('footerDescriptionFontWeight')}          
+    footerDescriptionOnChangeFontStyle={this.onChangeValue('footerDescriptionFontStyle')}
+    footerDescriptionOnChangeStatus={this.onChangeValue('footerDescriptionStatus')}
+    footerDescriptionOnChangeColor={this.onChangeColor('footerDescriptionColor')}
+    
+    />
     }
     // if (!this.state.isLoaded) return null;
+    
     return (
       <div className={classes.root} >
         <AppBar
@@ -486,13 +580,16 @@ carouselItems.on('value', async (snapshot) => {
             />
             <BlockInput
             label='Footer'
+            content1={footerInput}
             />
             </List>    
            <Divider />
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} /> 
-            <TabWebsite    
+            <TabWebsite   
+              undefinedOneTab={this.state.undefinedOneTab}
+            
               menubarLogo={this.state.menubarLogo}
               menubarContent={this.state.menubarContent}   
               herobackgroundColor={this.state.herobackgroundColor}
@@ -572,6 +669,27 @@ carouselItems.on('value', async (snapshot) => {
               galleryDescriptionStatus={this.state.galleryDescriptionStatus}
               galleryDescriptionColor={this.state.galleryDescriptionColor}
 
+              footerContent={this.state.footerContent}
+              footerTitle={this.state.footerTitle}
+              footerDescription={this.state.footerDescription}
+              footerbackgroundColor={this.state.footerbackgroundColor}
+              footerTitleAnimate={this.state.footerTitleAnimate}
+              footerTitleDuration={this.state.footerTitleDuration}
+              footerTitleFontFamily={this.state.footerTitleFontFamily}
+              footerTitleFontSize={this.state.footerTitleFontSize}
+              footerTitleFontWeight={this.state.footerTitleFontWeight}
+              footerTitleFontStyle={this.state.footerTitleFontStyle}
+              footerTitleStatus={this.state.footerTitleStatus}
+              footerTitleColor={this.state.footerTitleColor}
+          
+              footerDescriptionAnimate={this.state.footerDescriptionAnimate}
+              footerDescriptionDuration={this.state.footerDescriptionDuration}
+              footerDescriptionFontFamily={this.state.footerDescriptionFontFamily}
+              footerDescriptionFontSize={this.state.footerDescriptionFontSize}
+              footerDescriptionFontWeight={this.state.footerDescriptionFontWeight}
+              footerDescriptionFontStyle={this.state.footerDescriptionFontStyle}
+              footerDescriptionStatus={this.state.footerDescriptionStatus}
+              footerDescriptionColor={this.state.footerDescriptionColor}
             />       
         </main>
       </div>

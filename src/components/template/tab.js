@@ -48,6 +48,7 @@ class TabWebsite extends React.Component {
         news:[],
         open:false,
         openEdit:false,
+        selectedFooter:'none',
         selectedMenubar:'none',
         selectedCarousel:'none',
         selectedHero:'none',
@@ -98,6 +99,7 @@ class TabWebsite extends React.Component {
   setNullValue=()=>{
     this.setState({
       namePage:'',
+      selectedFooter:'none',
       selectedMenubar:'none',
       selectedCarousel:'none',
       selectedHero:'none',
@@ -113,8 +115,10 @@ class TabWebsite extends React.Component {
     OpenEdit.on('value', async (snapshot) => { 
       const snapshotValue = snapshot.val(); 
       let data = _(snapshotValue).value();
+      if(data !== null){
         this.setState({
           namePage:data.pageName,
+          selectedFooter:data.footer,
           selectedMenubar:data.menubar,
           selectedHero:data.hero,
           selectedCarousel:data.carousel,
@@ -123,6 +127,7 @@ class TabWebsite extends React.Component {
           selectedWelcome:data.welcome,
           selectedContact:data.contact,
         }); 
+      }
     });
     this.setState({
       openEdit:true
@@ -153,6 +158,7 @@ class TabWebsite extends React.Component {
       gallery :this.state.selectedGallery,
       contact : this.state.selectedContact,
       menubar:this.state.selectedMenubar,
+      footer:this.state.selectedFooter,
     });    
     this.setState({
       value:this.state.value,
@@ -166,6 +172,38 @@ class TabWebsite extends React.Component {
     }
   };
 
+  addGlobal=()=>{
+      let dbCon = config.database().ref('global/'+this.props.user+'/');
+      dbCon.update({
+        menubarLogo:{
+         image: "https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Developers%2FLogo-80-px-high-1.png?alt=media&token=075f8052-74b6-44f6-be21-1b2f75846712"
+        },
+        content:{
+        footerTitle:'Title',
+        footerDescription:'Description',
+        footerbackgroundColor:'#000000',
+        footerTitleAnimate:'none',
+        footerTitleDuration:'1s',
+        footerTitleFontFamily:'Roboto Mono',
+        footerTitleFontSize:'30',
+        footerTitleFontWeight:'400',
+        footerTitleFontStyle:'normal',
+        footerTitleStatus:'block',
+        footerTitleColor:'#ffffff',
+    
+        footerDescriptionAnimate:'none',
+        footerDescriptionDuration:'1s',
+        footerDescriptionFontFamily:'Roboto Mono',
+        footerDescriptionFontSize:'20',
+        footerDescriptionFontWeight:'400',
+        footerDescriptionFontStyle:'normal',
+        footerDescriptionStatus:'block',
+        footerDescriptionColor:'#ffffff',
+        }
+    });  
+    this.handleOpen(); 
+    }
+
   addNewTab=()=>{
     if(this.state.namePage){
       let pathUpper =this.state.namePage;
@@ -177,6 +215,7 @@ class TabWebsite extends React.Component {
       pathName:pathLower,
       path: "/"+this.props.user+"/"+pathLower,
       menubar:this.state.selectedMenubar,
+      footer:this.state.selectedFooter,
       hero: this.state.selectedHero,
       carousel: this.state.selectedCarousel,
       welcome: this.state.selectedWelcome,
@@ -194,7 +233,7 @@ class TabWebsite extends React.Component {
         heroTitleFontWeight:'400',
         heroTitleFontStyle:'normal',
         heroTitleStatus:'block',
-        heroTitleColor:'#fff',
+        heroTitleColor:'#ffffff',
         heroDescription:'description',
         heroDescriptionAnimate:'none',
         heroDescriptionDuration:'1s',
@@ -203,7 +242,7 @@ class TabWebsite extends React.Component {
         heroDescriptionFontWeight:'400',
         heroDescriptionFontStyle:'normal',
         heroDescriptionStatus:'block',
-        heroDescriptionColor:'#fff',
+        heroDescriptionColor:'#ffffff',
         heroButton:'Button',
         heroButtonSelected:'slideLeft',
         heroButtonAnimate:'none',
@@ -407,6 +446,30 @@ class TabWebsite extends React.Component {
       backgroundColor:this.props.galleryBackgroundColor,
     }
     });
+    let global = config.database().ref('global/'+this.props.user+'/content');
+    global.update({
+      footerTitle:this.props.footerTitle,
+      footerDescription:this.props.footerDescription,
+      footerbackgroundColor:this.props.footerbackgroundColor,
+      footerTitleAnimate:this.props.footerTitleAnimate,
+      footerTitleDuration:this.props.footerTitleDuration,
+      footerTitleFontFamily:this.props.footerTitleFontFamily,
+      footerTitleFontSize:this.props.footerTitleFontSize,
+      footerTitleFontWeight:this.props.footerTitleFontWeight,
+      footerTitleFontStyle:this.props.footerTitleFontStyle,
+      footerTitleStatus:this.props.footerTitleStatus,
+      footerTitleColor:this.props.footerTitleColor,
+  
+      footerDescriptionAnimate:this.props.footerDescriptionAnimate,
+      footerDescriptionDuration:this.props.footerDescriptionDuration,
+      footerDescriptionFontFamily:this.props.footerDescriptionFontFamily,
+      footerDescriptionFontSize:this.props.footerDescriptionFontSize,
+      footerDescriptionFontWeight:this.props.footerDescriptionFontWeight,
+      footerDescriptionFontStyle:this.props.footerDescriptionFontStyle,
+      footerDescriptionStatus:this.props.footerDescriptionStatus,
+      footerDescriptionColor:this.props.footerDescriptionColor,
+
+    })
     alert("saved");
     this.setNullValue();
   };
@@ -415,12 +478,17 @@ class TabWebsite extends React.Component {
     const { classes, theme } = this.props;
     return (
     <div>
+      {this.props.undefinedOneTab === true?
+      <Button variant="contained" color="secondary" className={classes.button} onClick={this.addGlobal}>Start Your Project</Button>
+      :
       <Button variant="contained" color="secondary" onClick={this.save} className={classes.button}>
         SAVE
         <SaveIcon className={classes.rightIcon} />
       </Button>
+      }
       <div>
       <ButtonForNewTab
+      undefinedOneTab={this.props.undefinedOneTab}
       icon="add"
       labelbox="Create page"
       labelButton="ADD"
@@ -450,32 +518,39 @@ class TabWebsite extends React.Component {
       valueCarousel2="CarouselNo1"
       valueCarousel3="CarouselNo2"
       valueCarousel4="CarouselNo3"
-      selectedWelcome={this.state.selectedWelcome}
-      handleChangeWelcome={this.onChangeValue('selectedWelcome')}
-      valueWelcome1="none"
-      valueWelcome2="WelcomeNo1"
-      valueWelcome3="WelcomeNo2"
-      valueWelcome4="WelcomeNo3"
-      selectedAbout={this.state.selectedAbout}
-      handleChangeAbout={this.onChangeValue('selectedAbout')}
-      valueAbout1="none"
-      valueAbout2="AboutNo1"
-      valueAbout3="AboutNo2"
-      valueAbout4="AboutNo3"
+      // selectedWelcome={this.state.selectedWelcome}
+      // handleChangeWelcome={this.onChangeValue('selectedWelcome')}
+      // valueWelcome1="none"
+      // valueWelcome2="WelcomeNo1"
+      // valueWelcome3="WelcomeNo2"
+      // valueWelcome4="WelcomeNo3"
+      // selectedAbout={this.state.selectedAbout}
+      // handleChangeAbout={this.onChangeValue('selectedAbout')}
+      // valueAbout1="none"
+      // valueAbout2="AboutNo1"
+      // valueAbout3="AboutNo2"
+      // valueAbout4="AboutNo3"
       selectedGallery={this.state.selectedGallery}
       handleChangeGallery={this.onChangeValue('selectedGallery')}
       valueGallery1="none"
       valueGallery2="GalleryNo1"
       valueGallery3="GalleryNo2"
       valueGallery4="GalleryNo3"
-      selectedContact={this.state.selectedContact}
-      handleChangeContact={this.onChangeValue('selectedContact')}
-      valueContact1="none"
-      valueContact2="ContactNo1"
-      valueContact3="ContactNo2"
-      valueContact4="ContactNo3"
+      // selectedContact={this.state.selectedContact}
+      // handleChangeContact={this.onChangeValue('selectedContact')}
+      // valueContact1="none"
+      // valueContact2="ContactNo1"
+      // valueContact3="ContactNo2"
+      // valueContact4="ContactNo3"
+      selectedFooter={this.state.selectedFooter}
+      handleChangeFooter={this.onChangeValue('selectedFooter')}
+      valueFooter1="none"
+      valueFooter2="FooterNo1"
+      valueFooter3="FooterNo2"
+      valueFooter4="FooterNo3"
       />
       <ButtonForNewTab
+      undefinedOneTab={this.props.undefinedOneTab}
       icon="edit"
       labelbox="Edit page"
       labelButton="Edit"
@@ -505,35 +580,45 @@ class TabWebsite extends React.Component {
       valueCarousel2="CarouselNo1"
       valueCarousel3="CarouselNo2"
       valueCarousel4="CarouselNo3"
-      selectedWelcome={this.state.selectedWelcome}
-      handleChangeWelcome={this.onChangeValue('selectedWelcome')}
-      valueWelcome1="none"
-      valueWelcome2="WelcomeNo1"
-      valueWelcome3="WelcomeNo2"
-      valueWelcome4="WelcomeNo3"
-      selectedAbout={this.state.selectedAbout}
-      handleChangeAbout={this.onChangeValue('selectedAbout')}
-      valueAbout1="none"
-      valueAbout2="AboutNo1"
-      valueAbout3="AboutNo2"
-      valueAbout4="AboutNo3"
+      // selectedWelcome={this.state.selectedWelcome}
+      // handleChangeWelcome={this.onChangeValue('selectedWelcome')}
+      // valueWelcome1="none"
+      // valueWelcome2="WelcomeNo1"
+      // valueWelcome3="WelcomeNo2"
+      // valueWelcome4="WelcomeNo3"
+      // selectedAbout={this.state.selectedAbout}
+      // handleChangeAbout={this.onChangeValue('selectedAbout')}
+      // valueAbout1="none"
+      // valueAbout2="AboutNo1"
+      // valueAbout3="AboutNo2"
+      // valueAbout4="AboutNo3"
       selectedGallery={this.state.selectedGallery}
       handleChangeGallery={this.onChangeValue('selectedGallery')}
       valueGallery1="none"
       valueGallery2="GalleryNo1"
       valueGallery3="GalleryNo2"
       valueGallery4="GalleryNo3"
-      selectedContact={this.state.selectedContact}
-      handleChangeContact={this.onChangeValue('selectedContact')}
-      valueContact1="none"
-      valueContact2="ContactNo1"
-      valueContact3="ContactNo2"
-      valueContact4="ContactNo3"
+      // selectedContact={this.state.selectedContact}
+      // handleChangeContact={this.onChangeValue('selectedContact')}
+      // valueContact1="none"
+      // valueContact2="ContactNo1"
+      // valueContact3="ContactNo2"
+      // valueContact4="ContactNo3"
+      selectedFooter={this.state.selectedFooter}
+      handleChangeFooter={this.onChangeValue('selectedFooter')}
+      valueFooter1="none"
+      valueFooter2="FooterNo1"
+      valueFooter3="FooterNo2"
+      valueFooter4="FooterNo3"
       />
+      {this.props.undefinedOneTab !== true?
       <Button variant="contained" color="secondary" className={classes.button} onClick={this.deletePage}>Delete
       <DeleteIcon className={classes.rightIcon}/>
       </Button>
+      :null
+      }
       </div>
+      {this.props.undefinedOneTab !== true?
       <div className={classes.root}>
         <AppBar position="static" color="default">
           <Tabs
@@ -555,7 +640,7 @@ class TabWebsite extends React.Component {
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
-        > 
+        >            
           {this.state.news.map((New => (
             <div key={New._key} className={classes.content}>
             <IN         
@@ -565,6 +650,7 @@ class TabWebsite extends React.Component {
               About={New.about} 
               Gallery={New.gallery}  
               Menubar={New.menubar}
+              Footer={New.footer}
 
               menubarLogo={this.props.menubarLogo}
               menubarContent={this.props.menubarContent}
@@ -639,12 +725,34 @@ class TabWebsite extends React.Component {
               galleryDescriptionFontStyle={this.props.galleryDescriptionFontStyle}
               galleryDescriptionStatus={this.props.galleryDescriptionStatus}
               galleryDescriptionColor={this.props.galleryDescriptionColor}
+
+              footerContent={this.props.footerContent}
+              footerTitle={this.props.footerTitle}
+              footerDescription={this.props.footerDescription}
+              footerbackgroundColor={this.props.footerbackgroundColor}
+              footerTitleAnimate={this.props.footerTitleAnimate}
+              footerTitleDuration={this.props.footerTitleDuration}
+              footerTitleFontFamily={this.props.footerTitleFontFamily}
+              footerTitleFontSize={this.props.footerTitleFontSize}
+              footerTitleFontWeight={this.props.footerTitleFontWeight}
+              footerTitleFontStyle={this.props.footerTitleFontStyle}
+              footerTitleStatus={this.props.footerTitleStatus}
+              footerTitleColor={this.props.footerTitleColor}
+          
+              footerDescriptionAnimate={this.props.footerDescriptionAnimate}
+              footerDescriptionDuration={this.props.footerDescriptionDuration}
+              footerDescriptionFontFamily={this.props.footerDescriptionFontFamily}
+              footerDescriptionFontSize={this.props.footerDescriptionFontSize}
+              footerDescriptionFontWeight={this.props.footerDescriptionFontWeight}
+              footerDescriptionFontStyle={this.props.footerDescriptionFontStyle}
+              footerDescriptionStatus={this.props.footerDescriptionStatus}
+              footerDescriptionColor={this.props.footerDescriptionColor}
             />
             </div>
           )))}   
         </SwipeableViews>
-      
       </div>
+      :null}
       </div>
     );
   }

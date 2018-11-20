@@ -4,12 +4,11 @@ import HeroNo1 from './Hero/HeroNo1'
 import HeroNo2 from './Hero/HeroNo2'
 import MenubarNo1 from './Menubar/menubarNo1'
 import MenubarNo2 from './Menubar/menubarNo2'
-import FooterNo1 from './Footer/FooterNo1'
 // import WelcomeNo1 from './Welcome/WelcomeNo1'
 // import WelcomeNo2 from './Welcome/WelcomeNo2'
 import CarouselNo1 from './Carousel/CarouselNo1'
 import GalleryNo1 from './Gallery/GalleryNo1'
-
+import FooterNo1 from './Footer/FooterNo1'
 
 class IN extends React.Component {
 
@@ -162,13 +161,41 @@ class IN extends React.Component {
   galleryDescriptionColor={this.props.galleryDescriptionColor}
   />
   }
+  
+  let Footer;
+  if( this.props.Footer === "FooterNo1"){
+  Footer=<FooterNo1
+  footerContent={this.props.footerContent}
+
+  footerTitle={this.props.footerTitle}
+  footerDescription={this.props.footerDescription}
+  footerbackgroundColor={this.props.footerbackgroundColor}
+  footerTitleAnimate={this.props.footerTitleAnimate}
+  footerTitleDuration={this.props.footerTitleDuration}
+  footerTitleFontFamily={this.props.footerTitleFontFamily}
+  footerTitleFontSize={this.props.footerTitleFontSize}
+  footerTitleFontWeight={this.props.footerTitleFontWeight}
+  footerTitleFontStyle={this.props.footerTitleFontStyle}
+  footerTitleStatus={this.props.footerTitleStatus}
+  footerTitleColor={this.props.footerTitleColor}
+
+  footerDescriptionAnimate={this.props.footerDescriptionAnimate}
+  footerDescriptionDuration={this.props.footerDescriptionDuration}
+  footerDescriptionFontFamily={this.props.footerDescriptionFontFamily}
+  footerDescriptionFontSize={this.props.footerDescriptionFontSize}
+  footerDescriptionFontWeight={this.props.footerDescriptionFontWeight}
+  footerDescriptionFontStyle={this.props.footerDescriptionFontStyle}
+  footerDescriptionStatus={this.props.footerDescriptionStatus}
+  footerDescriptionColor={this.props.footerDescriptionColor}
+  />
+  }
 return (
       <div> 
       {menubar}  
       {Hero}
       {Carousel}
       {Gallery}
-      <FooterNo1/>
+      {Footer}
       <div style={End}></div>
       </div>
 );

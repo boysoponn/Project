@@ -67,9 +67,10 @@ class ButtonForNewTab extends React.Component {
     }
     return (
       <div>
-        <Button variant="contained" color="secondary"  className={classes.button} onClick={this.props.handleOpen}>{this.props.labelButton}
-        {icon}
-        </Button>
+        {this.props.undefinedOneTab === true?
+        null:<Button variant="contained" color="secondary"  className={classes.button} onClick={this.props.handleOpen}>{this.props.labelButton}{icon}</Button>
+        }
+
         <Dialog
           fullScreen
           open={this.props.open}
@@ -125,9 +126,9 @@ class ButtonForNewTab extends React.Component {
             value3={this.props.valueHero3}
             value4={this.props.valueHero4}
             label1="None"
-            label2="Hero No.1"
-            label3="Hero No.2"
-            label4="Hero No.3"
+            label2="Cover No.1"
+            label3="Cover No.2"
+            label4="Cover No.3"
             />
           </ListItem>
           </List>    
@@ -142,13 +143,13 @@ class ButtonForNewTab extends React.Component {
             value3={this.props.valueCarousel3}
             value4={this.props.valueCarousel4}
             label1="None"
-            label2="Carousel No.1"
-            label3="Carousel No.2"
-            label4="Carousel No.3"
+            label2="Image Slide No.1"
+            label3="Image Slide No.2"
+            label4="Image Slide No.3"
             />
           </ListItem>
           </List>       
-          <List>
+          {/* <List>
           <h1>Welcome</h1>
           <ListItem>
             <RadioButtons
@@ -164,8 +165,8 @@ class ButtonForNewTab extends React.Component {
             label4="Welcome No.3"
             />
           </ListItem>
-          </List>          
-          <List>
+          </List>           */}
+          {/* <List>
           <h1>About</h1>
           <ListItem>
             <RadioButtons
@@ -181,7 +182,7 @@ class ButtonForNewTab extends React.Component {
             label4="About No.3"
             />
           </ListItem>
-          </List>
+          </List> */}
           <List>
           <h1>Gallery</h1>
           <ListItem>
@@ -199,7 +200,7 @@ class ButtonForNewTab extends React.Component {
             />
           </ListItem>
           </List>
-          <List>
+          {/* <List>
           <h1>Contact</h1>
           <ListItem>
             <RadioButtons
@@ -213,6 +214,23 @@ class ButtonForNewTab extends React.Component {
             label2="Contact No.1"
             label3="Contact No.2"
             label4="Contact No.3"
+            />
+          </ListItem>
+          </List> */}
+          <List>
+          <h1>Footer</h1>
+          <ListItem>
+            <RadioButtons
+            selectedValue={this.props.selectedFooter}
+            handleChange={this.props.handleChangeFooter}
+            value1={this.props.valueFooter1}
+            value2={this.props.valueFooter2}
+            value3={this.props.valueFooter3}
+            value4={this.props.valueFooter4}
+            label1="None"
+            label2="Footer No.1"
+            label3="Footer No.2"
+            label4="Footer No.3"
             />
           </ListItem>
           </List>
