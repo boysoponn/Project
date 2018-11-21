@@ -125,6 +125,14 @@ class CarouselInput extends React.Component {
       label:'Link',
       link:'',
       linkTarget:'_blank',
+      Animate:'none',
+      Duration:'1s',
+      FontFamily:'Roboto Mono',
+      FontSize:'20',
+      FontWeight:'400',
+      FontStyle:'normal',
+      Status:'block',
+      Color:'#ffffff',
       // group:{
       //   link1:{
       //     label:'Link',
@@ -142,7 +150,15 @@ class CarouselInput extends React.Component {
     link:menubar.link,
     key:menubar._key,
     label:menubar.label,
-    typeGroup:menubar.typeGroup
+    typeGroup:menubar.typeGroup,
+    Animate:menubar.Animate,
+    Duration:menubar.Duration,
+    FontFamily:menubar.FontFamily,
+    FontSize:menubar.FontSize,
+    FontWeight:menubar.FontWeight,
+    FontStyle:menubar.FontStyle,
+    Status:menubar.Status,
+    Color:menubar.Color,
   });
 };
 onChangeTypeGroup=menubar=>(e)=>{
@@ -165,9 +181,10 @@ onChangeTypeGroup=menubar=>(e)=>{
     this.setState({groupData:snapshotArr,});});
     this.setState({anchorEl3: event.currentTarget,keys:menubar._key,typeGroup:menubar.typeGroup});};
   handleClose3 = () => {this.setState({ anchorEl3: null, });};
-  onChangeLinkTarget = (e) =>{this.setState({ linkTarget:e.target.value})};
-  onChangeLink = (e) =>{this.setState({ link:e.target.value})};
-  onChangeLabel = (e) =>{this.setState({ label:e.target.value})};
+
+
+  onChangeColor = name=> (color) => {this.setState({  [name]: color.hex });};
+  onChangeValue = name=> (e) => {this.setState({ [name]: e.target.value });};
 
   render() {
     const { classes } = this.props;
@@ -291,32 +308,34 @@ onChangeTypeGroup=menubar=>(e)=>{
               <InputText 
               Label="Label" 
               value={this.state.label}  
-              animate={this.props.heroTitleAnimate} 
-              onChange={this.onChangeLabel} 
-              duration={this.props.heroTitleDuration}   
-              FontFamily={this.props.heroTitleFontFamily}
-              FontSize={this.props.heroTitleFontSize}
-              FontWeight={this.props.heroTitleFontWeight}
-              FontStyle={this.props.heroTitleFontStyle}
-              Status={this.props.heroTitleStatus}
+              color={this.state.Color}
+              animate={this.state.Animate} 
+              duration={this.state.Duration}   
+              FontFamily={this.state.FontFamily}
+              FontSize={this.state.FontSize}
+              FontWeight={this.state.FontWeight}
+              FontStyle={this.state.FontStyle}
+              Status={this.state.Status}
+              color={this.state.Color}
               displayAnimate ={'none'}
-              onChangeAnimate={this.props.heroTitleOnChangeAnimate}              
-              onChangeDuration={this.props.heroTitleOnChangeDuration}            
-              onChangeFontFamily={this.props.heroTitleOnChangeFontFamily}
-              onChangeFontSize={this.props.heroTitleOnChangeFontSize}                           
-              onChangeFontWeight={this.props.heroTitleOnChangeFontWeight}
-              onChangeFontStyle={this.props.heroTitleOnChangeFontStyle}              
-              onChangeStatus={this.props.heroTitleOnChangeStatus}
-              color={this.props.heroTitleColor}
-              onChangeColor={this.props.heroTitleOnChangeColor}
+
+              onChange={this.onChangeValue('label')}
+              onChangeAnimate={this.onChangeValue('Animate')}           
+              onChangeDuration={this.onChangeValue('Duration')}            
+              onChangeFontFamily={this.onChangeValue('FontFamily')}
+              onChangeFontSize={this.onChangeValue('FontSize')}                           
+              onChangeFontWeight={this.onChangeValue('FontWeight')}
+              onChangeFontStyle={this.onChangeValue('FontStyle')}              
+              onChangeStatus={this.onChangeValue('Status')}
+              onChangeColor={this.onChangeColor('Color')}
               />
               </ListItem>
               <ListItem>
               <ChooseLink
                   value={this.state.link}
-                  onChange={this.onChangeLink}
+                  onChange={this.onChangeValue('link')}
                   target={this.state.linkTarget}
-                  onChangeTarget={this.onChangeLinkTarget}
+                  onChangeTarget={this.onChangeValue('target')}
               />
               </ListItem>
               </List>

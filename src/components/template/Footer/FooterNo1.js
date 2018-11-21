@@ -72,8 +72,12 @@ constructor(props){
           </ScrollAnimation> 
 
           {this.props.footerContent.map((footer)=>
+          // {footer.link  ?
            <a href={footer.link} target={footer.target} style={{padding:5}}>{footer.label}</a>
-            )}
+          //  :
+          //  <a>{footer.label}</a>
+          //   }
+          )}
         </Grid>
         <Grid item xs={3}>  
         <a href="#"><img className={classes.img}  src={Facebook} alt="Facebook" /></a>

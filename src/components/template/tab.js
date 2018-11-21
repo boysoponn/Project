@@ -176,7 +176,7 @@ class TabWebsite extends React.Component {
       let dbCon = config.database().ref('global/'+this.props.user+'/');
       dbCon.update({
         menubarLogo:{
-         image: "https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Developers%2FLogo-80-px-high-1.png?alt=media&token=075f8052-74b6-44f6-be21-1b2f75846712"
+         image: "https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Flogo2.png?alt=media&token=9921fb9f-f0b0-4d97-bfd1-41195d22d594"
         },
         content:{
         footerTitle:'Title',
@@ -199,7 +199,39 @@ class TabWebsite extends React.Component {
         footerDescriptionFontStyle:'normal',
         footerDescriptionStatus:'block',
         footerDescriptionColor:'#ffffff',
-        }
+        },
+        menubarContent:{
+          Link1:{
+            typeGroup:false,
+            label:'Link',
+            link:'',
+            linkTarget:'_blank',
+            Animate:'none',
+            Duration:'1s',
+            FontFamily:'Roboto Mono',
+            FontSize:'20',
+            FontWeight:'400',
+            FontStyle:'normal',
+            Status:'block',
+            Color:'#ffffff',
+          }
+        },
+        footerContent:{
+          Link1:{
+            typeGroup:false,
+            label:'Link',
+            link:'',
+            linkTarget:'_blank',
+            Animate:'none',
+            Duration:'1s',
+            FontFamily:'Roboto Mono',
+            FontSize:'20',
+            FontWeight:'400',
+            FontStyle:'normal',
+            Status:'block',
+            Color:'#ffffff',
+          }
+        },
     });  
     this.handleOpen(); 
     }
