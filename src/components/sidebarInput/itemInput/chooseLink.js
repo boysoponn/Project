@@ -82,9 +82,9 @@ componentDidMount=()=> {
                 {this.state.news.map((data) => 
                 <ListItem key={data._key}>
                 <Checkbox
-                checked={this.props.value === 'http://localhost:3001/'+this.props.user+'/'+data.pageName}
+                checked={this.props.value === data.pageName}
                 onChange={this.props.onChange}
-                value={'http://localhost:3001/'+this.props.user+'/'+data.pageName}
+                value={data.pageName}
                 />
                 <p>{data.pageName}</p>
                 </ListItem>

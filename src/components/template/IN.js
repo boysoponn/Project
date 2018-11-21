@@ -25,6 +25,7 @@ class IN extends React.Component {
   if( this.props.Menubar === "MenubarNo1"){
   menubar=<MenubarNo1
   menubarContent={this.props.menubarContent}
+  menubarbackgroundColor={this.props.menubarbackgroundColor}
   />
   }
   if( this.props.Menubar === "MenubarNo2"){
