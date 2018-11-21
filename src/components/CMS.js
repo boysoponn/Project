@@ -25,7 +25,8 @@ import GalleryInput from './sidebarInput/galleryInput';
 import FooterInput from './sidebarInput/footerInput';
 import { checkTab} from './actions';
 import BlockInput from './template/blockInput';
-const drawerWidth = 300;
+
+const drawerWidth = 320;
 
 const styles = theme => ({
   buttonGroup:{
