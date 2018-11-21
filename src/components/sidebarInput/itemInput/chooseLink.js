@@ -82,11 +82,11 @@ componentDidMount=()=> {
                 {this.state.news.map((data) => 
                 <ListItem key={data._key}>
                 <Checkbox
-                checked={this.props.value === data.pageName}
+                checked={this.props.value === data.pathName}
                 onChange={this.props.onChange}
-                value={data.pageName}
+                value={data.pathName}
                 />
-                <p>{data.pageName}</p>
+                <p>{data.pathName}</p>
                 </ListItem>
                 )}
               </Popover>

@@ -181,6 +181,7 @@ componentWillReceiveProps(nextProps){
   let data = _(snapshotValue).value();
   if(data !== null){
         this.setState({
+          path:data.path,
           hero:data.hero,
           carousel:data.carousel,
           gallery:data.gallery,
@@ -591,6 +592,7 @@ componentWillReceiveProps(nextProps){
         <main className={classes.content}>
           <div className={classes.toolbar} /> 
             <TabWebsite   
+              path={this.state.path}
               undefinedOneTab={this.state.undefinedOneTab}
             
               menubarLogo={this.state.menubarLogo}

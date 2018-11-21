@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Slide from '@material-ui/core/Slide';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
+import PreviewIcon from '@material-ui/icons/Dvr';
 import { withStyles } from '@material-ui/core/styles';
 import SwipeableViews from 'react-swipeable-views';
 import AppBar from '@material-ui/core/AppBar';
@@ -651,9 +652,14 @@ class TabWebsite extends React.Component {
       valueFooter4="FooterNo3"
       />
       {this.props.undefinedOneTab !== true?
+      <div>
       <Button variant="contained" color="secondary" className={classes.button} onClick={this.deletePage}>Delete
       <DeleteIcon className={classes.rightIcon}/>
       </Button>
+      <Button variant="contained" color="secondary" style={{float:'right'}} className={classes.button} ><a href={'http://localhost:3001'+this.props.path} style={{color:'#ffffff'}} target="_blank">Preview</a>
+      <PreviewIcon className={classes.rightIcon}/>
+      </Button>
+      </div>
       :null
       }
       </div>
