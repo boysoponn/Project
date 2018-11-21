@@ -22,6 +22,7 @@ import AddIcon from '@material-ui/icons/AddCircle';
 import ChooseLink from './itemInput/chooseLink';
 import InputTextarea from './itemInput/inputTextarea';
 import ModalPictureGlobal from './itemInput/modalPictureGlobal';
+import PickColor from './itemInput/pickColor'
 // import Selection from './itemInput/selection';
 import _ from 'lodash';
 import InputText from './itemInput/inputText';
@@ -90,6 +91,14 @@ class CarouselInput extends React.Component {
       link:this.state.link,
       linkTarget:this.state.linkTarget,
       label:this.state.label,
+      Animate:this.state.Animate,
+      Duration:this.state.Duration,
+      FontFamily:this.state.FontFamily,
+      FontSize:this.state.FontSize,
+      FontWeight:this.state.FontWeight,
+      FontStyle:this.state.FontStyle,
+      Status:this.state.Status,
+      Color:this.state.Color,
     });
     alert("saved") 
   };
@@ -107,11 +116,11 @@ class CarouselInput extends React.Component {
       Animate:'none',
       Duration:'1s',
       FontFamily:'Roboto Mono',
-      FontSize:'20',
+      FontSize:'16',
       FontWeight:'400',
       FontStyle:'normal',
       Status:'block',
-      Color:'#ffffff',
+      Color:'#000000',
       // group:{
       //   link1:{
       //     label:'Link',
@@ -158,11 +167,11 @@ onChangeTypeGroup=menubar=>(e)=>{
   onChangeValue = name=> (e) => {this.setState({ [name]: e.target.value });};
 
   render() {
+    const pickColor={fontSize: '16px',marginLeft:10};
     const { classes } = this.props;
-    const { anchorEl,anchorEl2 ,anchorEl3} = this.state;
+    const { anchorEl,anchorEl2 } = this.state;
     const open = Boolean(anchorEl);
     const open2 = Boolean(anchorEl2);
-    const open3 = Boolean(anchorEl3);
     return (
       <div className={classes.root} >
         <List disablePadding={true}>
@@ -192,6 +201,16 @@ onChangeTypeGroup=menubar=>(e)=>{
                 horizontal: 'left',
               }}
             >
+             <ListItem>
+              <p style={pickColor}> Background Color&nbsp;&nbsp;&nbsp;</p>
+              <PickColor
+              padding="0"
+              width="80px"
+              height="20px"
+              color={this.props.footerbackgroundColor}
+              onChange={this.props.footerbackgroundOnChangeColor}
+              />
+            </ListItem>
             </Popover>
             </ListItem>
             </List>
@@ -250,7 +269,7 @@ onChangeTypeGroup=menubar=>(e)=>{
             <List component="div" disablePadding={false}>
             <ListItem className={classes.nested}>
             <Button  variant="contained" onClick={this.handleClickOpen2} component="span" color="secondary" className={classes.button}>
-             Menubar Items
+             Footer Items
             </Button>
             <Popover
               open={open2}
@@ -331,7 +350,7 @@ onChangeTypeGroup=menubar=>(e)=>{
                   value={this.state.link}
                   onChange={this.onChangeValue('link')}
                   target={this.state.linkTarget}
-                  onChangeTarget={this.onChangeValue('target')}
+                  onChangeTarget={this.onChangeValue('linkTarget')}
               />
               </ListItem>
               </List>

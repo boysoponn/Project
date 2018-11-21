@@ -70,14 +70,26 @@ constructor(props){
             <ScrollAnimation style={description} className={this.props.footerDescriptionAnimate} >
             {this.props.footerDescription}
           </ScrollAnimation> 
-
+          <div style={{display:'inline'}}>
           {this.props.footerContent.map((footer)=>
           // {footer.link  ?
-           <a href={footer.link} target={footer.target} style={{padding:5}}>{footer.label}</a>
+           <a href={footer.link} target={footer.target} 
+           style={{
+             padding:5,
+             color:footer.Color,
+             animationDuration: footer.Duration,
+             fontFamily:footer.FontFamily,
+             fontSize:footer.FontSize,
+             fontWeight:footer.FontWeight,
+             fontStyle:footer.FontStyle,
+             display:footer.Status
+          }}>
+          {footer.label}</a>
           //  :
           //  <a>{footer.label}</a>
           //   }
           )}
+          </div>
         </Grid>
         <Grid item xs={3}>  
         <a href="#"><img className={classes.img}  src={Facebook} alt="Facebook" /></a>

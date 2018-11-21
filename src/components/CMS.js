@@ -287,11 +287,11 @@ componentWillReceiveProps(nextProps){
     const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev; }, []); 
     this.setState({ footerContent:snapshotArr});});
   
-    let global = config.database().ref('global/'+this.props.user+'/menubarLogo');
+    let global = config.database().ref('global/'+this.props.user+'/');
     global.on('value', async (snapshot) => { 
     const snapshotValue = snapshot.val(); 
     let data = _(snapshotValue).value();
-    if(data !== null){this.setState({menubarLogo:data.image})}});
+    if(data !== null){this.setState({menubarLogo:data.menubarLogo.image ,menubarbackgroundColor:data.menubarSetting.menubarbackgroundColor})}});
 }
 
 
@@ -418,11 +418,13 @@ componentWillReceiveProps(nextProps){
       menubarInput= <MenubarInput
       menubar={this.state.menubar}
       menubarLogo={this.state.menubarLogo}
+      menubarbackgroundColor={this.state.menubarbackgroundColor}
       menubarContent={this.state.menubarContent}
       linkLogo={this.props.linkLogo}
       onChangeLinkLogo={this.onChangeChecked('linkLogo')}
       linkLogoTarget={this.props.linkLogoTarget}
       onChangeLinkLogoTarget={this.onChangeChecked('linkLogoTarget')}
+      menubarbackgroundOnChangeColor={this.onChangeColor('menubarbackgroundColor')}
     />
     }
     let galleryInput ;
@@ -592,6 +594,7 @@ componentWillReceiveProps(nextProps){
               undefinedOneTab={this.state.undefinedOneTab}
             
               menubarLogo={this.state.menubarLogo}
+              menubarbackgroundColor={this.state.menubarbackgroundColor}
               menubarContent={this.state.menubarContent}   
               herobackgroundColor={this.state.herobackgroundColor}
               heroBackgroundImage={this.state.heroBackgroundImage}

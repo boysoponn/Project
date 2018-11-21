@@ -23,13 +23,14 @@ class Menubar extends React.Component {
   
   
     return (
+      <div style={{backgroundColor:this.props.menubarbackgroundColor}}>
       <Menu
       mode="horizontal"
-        selectedKeys={[this.state.current]}
+        selectedKeys={[this.state.current]}   
       >
-      {this.props.menubarContent.map((post) => 
-      post.typeGroup === true ?
-        <SubMenu key={post._key} title={<span className="submenu-title-wrapper">{post.label}</span>}>
+      {this.props.menubarContent.map((menubar) => 
+      menubar.typeGroup === true ?
+        <SubMenu key={menubar._key} title={<span className="submenu-title-wrapper">{menubar.label}</span>}>
           <MenuItemGroup>
            {/* {post.group._key||this.state.h.map((pgg) => 
           <Menu.Item >
@@ -44,15 +45,36 @@ class Menubar extends React.Component {
           </MenuItemGroup>
         </SubMenu>
         :
-        <Menu.Item key={post._key}>
-          {post.link ?
-          <a href={post.link} target={post.linkTarget} rel="noopener noreferrer">{post.label}</a>
+        <Menu.Item key={menubar._key}>
+          {menubar.link ?
+          <a href={menubar.link} target={menubar.linkTarget} rel="noopener noreferrer"
+          style={{
+            color:menubar.Color,
+            animationDuration: menubar.Duration,
+            fontFamily:menubar.FontFamily,
+            fontSize:menubar.FontSize,
+            fontWeight:menubar.FontWeight,
+            fontStyle:menubar.FontStyle,
+            display:menubar.Status
+         }}
+          >{menubar.label}</a>
           :
-          <a>{post.label}</a>
+          <a
+          style={{
+            color:menubar.Color,
+            animationDuration: menubar.Duration,
+            fontFamily:menubar.FontFamily,
+            fontSize:menubar.FontSize,
+            fontWeight:menubar.FontWeight,
+            fontStyle:menubar.FontStyle,
+            display:menubar.Status
+         }}
+          >{menubar.label}</a>
           }
         </Menu.Item>
       )}
       </Menu>
+      </div>
     );
   }
 }

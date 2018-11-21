@@ -11,15 +11,36 @@ constructor(props){
   render() { 
     return (
       <Div>
-      <Header>
+      <Header style={{backgroundColor:this.props.menubarbackgroundColor}}>
       <Navbar >
         <Nav >
           {this.props.menubarContent.map((menubar)=>
           <Item key={menubar._key}>
             {menubar.link === ''?
-            <A >{menubar.label}</A>
+            <A            
+            style={{
+              padding:5,
+              color:menubar.Color,
+              animationDuration: menubar.Duration,
+              fontFamily:menubar.FontFamily,
+              fontSize:menubar.FontSize,
+              fontWeight:menubar.FontWeight,
+              fontStyle:menubar.FontStyle,
+              display:menubar.Status
+           }}>{menubar.label}</A>
             :
-            <A href={menubar.link} target={menubar.linkTarget} >{menubar.label}</A>
+            <A href={menubar.link} target={menubar.linkTarget} 
+            style={{
+              padding:5,
+              color:menubar.Color,
+              animationDuration: menubar.Duration,
+              fontFamily:menubar.FontFamily,
+              fontSize:menubar.FontSize,
+              fontWeight:menubar.FontWeight,
+              fontStyle:menubar.FontStyle,
+              display:menubar.Status
+           }}
+            >{menubar.label}</A>
           }
           </Item> 
           )}
@@ -47,7 +68,6 @@ position: fixed;
 top: 0;
 width: 100%;
 z-index: 10;
-background-color:#ffffff;
 `; 
 const Navbar = styled.div`
 position: relative;

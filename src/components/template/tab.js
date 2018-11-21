@@ -176,12 +176,15 @@ class TabWebsite extends React.Component {
       let dbCon = config.database().ref('global/'+this.props.user+'/');
       dbCon.update({
         menubarLogo:{
-         image: "https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Flogo2.png?alt=media&token=9921fb9f-f0b0-4d97-bfd1-41195d22d594"
+         image: "https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Flogo2.png?alt=media&token=9921fb9f-f0b0-4d97-bfd1-41195d22d594",
         },
+        menubarSetting:{
+          menubarbackgroundColor:'#ffffff',
+         },
         content:{
         footerTitle:'Title',
         footerDescription:'Description',
-        footerbackgroundColor:'#000000',
+        footerbackgroundColor:'#b5b5b5',
         footerTitleAnimate:'none',
         footerTitleDuration:'1s',
         footerTitleFontFamily:'Roboto Mono',
@@ -209,11 +212,11 @@ class TabWebsite extends React.Component {
             Animate:'none',
             Duration:'1s',
             FontFamily:'Roboto Mono',
-            FontSize:'20',
+            FontSize:'16',
             FontWeight:'400',
             FontStyle:'normal',
             Status:'block',
-            Color:'#ffffff',
+            Color:'#000000',
           }
         },
         footerContent:{
@@ -225,11 +228,11 @@ class TabWebsite extends React.Component {
             Animate:'none',
             Duration:'1s',
             FontFamily:'Roboto Mono',
-            FontSize:'20',
+            FontSize:'16',
             FontWeight:'400',
             FontStyle:'normal',
             Status:'block',
-            Color:'#ffffff',
+            Color:'#000000',
           }
         },
     });  
@@ -478,8 +481,12 @@ class TabWebsite extends React.Component {
       backgroundColor:this.props.galleryBackgroundColor,
     }
     });
-    let global = config.database().ref('global/'+this.props.user+'/content');
-    global.update({
+    let global = config.database().ref('global/'+this.props.user+'/');
+    global.update({ 
+      menubarSetting:{
+        menubarbackgroundColor:this.props.menubarbackgroundColor
+      },  
+      content:{
       footerTitle:this.props.footerTitle,
       footerDescription:this.props.footerDescription,
       footerbackgroundColor:this.props.footerbackgroundColor,
@@ -500,7 +507,7 @@ class TabWebsite extends React.Component {
       footerDescriptionFontStyle:this.props.footerDescriptionFontStyle,
       footerDescriptionStatus:this.props.footerDescriptionStatus,
       footerDescriptionColor:this.props.footerDescriptionColor,
-
+      }
     })
     alert("saved");
     this.setNullValue();
@@ -685,6 +692,7 @@ class TabWebsite extends React.Component {
               Footer={New.footer}
 
               menubarLogo={this.props.menubarLogo}
+              menubarbackgroundColor={this.props.menubarbackgroundColor}
               menubarContent={this.props.menubarContent}
               herobackgroundColor={this.props.herobackgroundColor}
               heroImagePick={this.props.heroBackgroundImage}
