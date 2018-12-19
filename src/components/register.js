@@ -53,27 +53,41 @@ class Register extends Component {
 
     register(e){
       e.preventDefault();  
-      const email = this.state.Email ;
-      const pathemail=email.replace(".","");  
-      let dbCon = config.database().ref('/user/'+pathemail);
-        dbCon.push({
-          Firstname:this.state.Firstname,
-          Lastname:this.state.Lastname,
-          Username:this.state.Username,
-          Email:this.state.Email,
-          Password:this.state.Password
-        }); 
+      // const email = this.state.Email ;
+      // const pathemail=email.replace(".","");  
+      // let dbCon = config.database().ref('/user/'+pathemail);
+      //   dbCon.push({
+      //     Firstname:this.state.Firstname,
+      //     Lastname:this.state.Lastname,
+      //     Username:this.state.Username,
+      //     Email:this.state.Email,
+      //     Password:this.state.Password
+      //   }); 
         this.signUp();
-        alert("สมัครเรียบร้อย");
     }
     signUp(){
-      config.auth().createUserWithEmailAndPassword(this.state.Email,this.state.Password)
-    }
-
+      config.auth().createUserWithEmailAndPassword(this.state.Email,this.state.Password).then(function(user) {      
+        alert("สมัครเรียบร้อย");
+      }, function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // [START_EXCLUDE]
+        if (errorCode == 'auth/weak-password') {
+            alert('The password is too weak.');
+        } else {
+            console.error(error);
+        }
+        // [END_EXCLUDE]
+    });
+  }
     render() {  
       const style = {
         margin: "15px 0"
       };
+      const email = this.state.Email ;
+      const pathemail=email.replace(".","");  
+      console.log(pathemail)
       return (
         <form onSubmit={this.register}>
         <div  className="login-container " >

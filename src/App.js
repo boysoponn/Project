@@ -17,36 +17,45 @@ class App extends Component {
 
   componentDidMount() {
     config.auth().onAuthStateChanged((authenticated) => {
-      authenticated
-        ? this.setState ({
+      authenticated ? 
+        authenticated.displayName ?
+        this.setState ({
             authenticated: true,
-            email:authenticated.email
+            email:authenticated.email,
+            username:authenticated.displayName,
           })
-        : this.setState(() => ({
+        :
+        this.setState ({
+          authenticated: true,
+          username:authenticated.email.replace(/@.*/, ""),
+          email:authenticated.email,
+        })
+      : 
+      this.setState(() => ({
             authenticated: false,
-          }));      
-        if(this.state.authenticated){
-          const pathemail=this.state.email.replace(".","");
-          let app = config.database().ref('user/'+pathemail);
-          app.on('value', snapshot => { 
-          let dataVal = snapshot.val();
-          let data = _(dataVal)
-                          .keys()
-                          .map(dataKey => {
-                            let cloned = _.clone(dataVal[dataKey]);
-                            cloned.key = dataKey;
-                            return cloned;
-                          }).value();
-                          this.setState({
-                            username: _.map(data,'Username'),
-                          }); 
-          }); 
-        }
+      }));      
+        // if(this.state.authenticated){
+        //   const pathemail=this.state.email.replace(".","");
+        //   let app = config.database().ref('user/'+pathemail);
+        //   app.on('value', snapshot => { 
+        //   let dataVal = snapshot.val();
+        //   let data = _(dataVal)
+        //                   .keys()
+        //                   .map(dataKey => {
+        //                     let cloned = _.clone(dataVal[dataKey]);
+        //                     cloned.key = dataKey;
+        //                     return cloned;
+        //                   }).value();
+        //                   this.setState({
+        //                     username: _.map(data,'Username'),
+        //                   }); 
+        //   }); 
+        // }
     }); 
   }
 
   render() {
- this.props.dispatch(login(this.state.username));
+    this.props.dispatch(login(this.state.username));
     const user = this.state.username;
     function withRestriction(WrappedComponent) {
       return class RestrictedComponent extends React.Component {

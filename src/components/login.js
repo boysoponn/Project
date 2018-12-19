@@ -3,6 +3,7 @@ import {  withRouter } from 'react-router-dom';
 import '../css/login.css';
 import FluidInput from './fluidinput';
 import config from '../config';
+import  firebase from 'firebase';
 
 class LoginContainer extends Component {    
 
@@ -39,26 +40,50 @@ class LoginContainer extends Component {
   config.auth().signInWithEmailAndPassword(this.state.inputEmail, this.state.inputPassword).then((user) => {
     this.props.history.push('/');
   })
-  // let row=0; 
-  //   while(row<this.state.howmanyuser){     
-  //     if(this.state.user[row]=== this.state.inputEmail){
-  //       if(this.state.password[row]=== this.state.inputPassword){
-  //           localStorage.setItem('user', this.state.username[row]);
-  //           alert("เข้ามาละง้าบ");
-  //           // return this.props.history.push('/cms');
-  //           window.location.reload(true);
-  //       }else{
-  //         alert("รหัสผ่านผิดครับ")
-  //         break;
-  //       }      
-  //     }
-  //     row++;
-  //     if(row>=this.state.howmanyuser){
-  //     alert("อีเมลผิดค่าบบ")
-  //     break;
-  //     }
-  // }
 }
+
+  loginGmail = () => {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    config.auth().signInWithPopup(provider).then(function(result) {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      var token = result.credential.accessToken;
+      // The signed-in user info.
+      var user = result.user;
+      // ...
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      // ...
+    });
+  }
+
+  loginFacebook = () => {
+    var provider = new firebase.auth.FacebookAuthProvider();
+    config.auth().signInWithPopup(provider).then(function(result) {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      var token = result.credential.accessToken;
+      // The signed-in user info.
+      var user = result.user;
+      // ...
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      // ...
+    });
+  }
+
+
+
   render() {
     const style = {
       margin: "15px 0"
@@ -73,6 +98,8 @@ class LoginContainer extends Component {
           <button className="login-button" type="submit">SIGN IN</button>
         </div>
         </form>
+        <button onClick={this.loginGmail} >Gmail</button>
+        <button onClick={this.loginFacebook} >Facebook</button>
         </div>
       )}
 }
