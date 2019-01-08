@@ -135,7 +135,7 @@ componentDidMount(){
 }
 
 firstTabs=()=>{
-  let carouselItems = config.database().ref('project/'+this.props.user);
+  let carouselItems = config.database().ref('project/'+this.props.email);
   carouselItems.on('value', async (snapshot) => { 
     const snapshotValue2 = snapshot.val(); 
     const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev;}, []); 
@@ -146,7 +146,7 @@ firstTabs=()=>{
       }
     });
   
-    let global = config.database().ref('global/'+this.props.user+'/content');
+    let global = config.database().ref('global/'+this.props.email+'/content');
     global.on('value', async (snapshot) => { 
     const snapshotValue = snapshot.val(); 
     let data = _(snapshotValue).value();
@@ -175,7 +175,7 @@ firstTabs=()=>{
   }
 
 componentWillReceiveProps(nextProps){
-  let app = config.database().ref('project/'+this.props.user+'/'+nextProps.tabs);
+  let app = config.database().ref('project/'+this.props.email+'/'+nextProps.tabs);
   app.on('value', async (snapshot) => { 
   const snapshotValue = snapshot.val(); 
   let data = _(snapshotValue).value();
@@ -264,31 +264,31 @@ componentWillReceiveProps(nextProps){
   });
 
 //สำหรับไอเทมที่เป็น Array
-  let carouselItems = config.database().ref('project/'+this.props.user+'/'+nextProps.tabs+'/carouselContent');
+  let carouselItems = config.database().ref('project/'+this.props.email+'/'+nextProps.tabs+'/carouselContent');
   carouselItems.on('value', async (snapshot) => { 
     const snapshotValue2 = snapshot.val(); 
     const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev;}, []); 
     this.setState({carouselContent:snapshotArr}); });
 
-  let galleryContent = config.database().ref('project/'+this.props.user+'/'+nextProps.tabs+'/galleryItem');
+  let galleryContent = config.database().ref('project/'+this.props.email+'/'+nextProps.tabs+'/galleryItem');
   galleryContent.on('value', async (snapshot) => { 
     const snapshotValue2 = snapshot.val(); 
     const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev;}, []); 
     this.setState({galleryContent:snapshotArr}); });
 
-  let globalContent = config.database().ref('global/'+this.props.user+'/menubarContent/');
+  let globalContent = config.database().ref('global/'+this.props.email+'/menubarContent/');
   globalContent.on('value', async (snapshot) => { 
     const snapshotValue2 = snapshot.val(); 
     const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev; }, []); 
     this.setState({ menubarContent:snapshotArr});});
 
-  let footerContent = config.database().ref('global/'+this.props.user+'/footerContent/');
+  let footerContent = config.database().ref('global/'+this.props.email+'/footerContent/');
   footerContent.on('value', async (snapshot) => { 
     const snapshotValue2 = snapshot.val(); 
     const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev; }, []); 
     this.setState({ footerContent:snapshotArr});});
   
-    let global = config.database().ref('global/'+this.props.user+'/');
+    let global = config.database().ref('global/'+this.props.email+'/');
     global.on('value', async (snapshot) => { 
     const snapshotValue = snapshot.val(); 
     let data = _(snapshotValue).value();
@@ -711,7 +711,8 @@ CMS.propTypes = {
 const mapStateToProps = state => ({
   tabs: state.tabs ,
   url: state.urlImage ,
-  user:state.user
+  user:state.user,
+  email:state.email
 })
 
 export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(CMS));

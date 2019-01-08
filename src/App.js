@@ -7,12 +7,14 @@ import Cms from './components/CMS';
 import AppWithConnect from './components/header';
 import config from './config'
 import { connect } from 'react-redux'
-import {login} from './components/actions'
+import {login,loginEmail} from './components/actions'
+
 
 class App extends Component {
   state = {
     authenticated: false,
-    username:""
+    username:"",
+    email:""
   };
 
   componentDidMount() {
@@ -21,14 +23,14 @@ class App extends Component {
         authenticated.displayName ?
         this.setState ({
             authenticated: true,
-            email:authenticated.email,
+            email:authenticated.email.replace(/\.|@|com/g,""),
             username:authenticated.displayName,
           })
         :
         this.setState ({
           authenticated: true,
           username:authenticated.email.replace(/@.*/, ""),
-          email:authenticated.email,
+          email:authenticated.email.replace(/\.|@|com/g,""),
         })
       : 
       this.setState(() => ({
@@ -55,6 +57,7 @@ class App extends Component {
   }
 
   render() {
+    this.props.dispatch(loginEmail(this.state.email));
     this.props.dispatch(login(this.state.username));
     const user = this.state.username;
     function withRestriction(WrappedComponent) {

@@ -11,4 +11,9 @@ export const getUrlImage = (url) => ({
   type: 'getUrlImage',
   url
 })
+
+export const loginEmail = (email) => ({
+  type: 'loginEmail',
+  email
+})
   

@@ -32,7 +32,7 @@ componentDidMount=()=> {
     this.getData();
   }
     getData=()=>{
-      const app = config.database().ref('project/'+this.props.user+'/');
+      const app = config.database().ref('project/'+this.props.email+'/');
       app.on('value', async (snapshot) => { 
         const snapshotValue = snapshot.val(); 
         const snapshotArr = _.keys(snapshotValue).reduce((prev, cur) => {
@@ -126,6 +126,7 @@ componentDidMount=()=> {
   }
 }
 const mapStateToPropsTabs = state => ({
-    user:state.user
+    user:state.user,
+    email:state.email
   })
 export default connect(mapStateToPropsTabs)(withStyles(styles)(ChooseLink));

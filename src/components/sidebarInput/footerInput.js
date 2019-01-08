@@ -86,7 +86,7 @@ class CarouselInput extends React.Component {
   }
 
   save =  () => {
-    let dbCon = config.database().ref('global/'+this.props.user+'/footerContent/');
+    let dbCon = config.database().ref('global/'+this.props.email+'/footerContent/');
     dbCon.child(this.state.key).update({
       link:this.state.link,
       linkTarget:this.state.linkTarget,
@@ -103,11 +103,11 @@ class CarouselInput extends React.Component {
     alert("saved") 
   };
   delete = menubar => () =>{
-    let dbCon = config.database().ref('global/'+this.props.user+'/footerContent/');
+    let dbCon = config.database().ref('global/'+this.props.email+'/footerContent/');
     dbCon.child(menubar._key).remove();
   }
   addItem=()=>{
-    let dbCon = config.database().ref('global/'+this.props.user+'/footerContent/');
+    let dbCon = config.database().ref('global/'+this.props.email+'/footerContent/');
     dbCon.push({
       typeGroup:false,
       label:'Link',
@@ -150,7 +150,7 @@ class CarouselInput extends React.Component {
   });
 };
 onChangeTypeGroup=menubar=>(e)=>{
-  let dbCon = config.database().ref('global/'+this.props.user+'/footerContent');
+  let dbCon = config.database().ref('global/'+this.props.email+'/footerContent');
   dbCon.child(menubar._key).update({
     typeGroup:e.target.checked ,
   });
@@ -372,7 +372,8 @@ CarouselInput.propTypes = {
 const mapStateToProps = state => ({
   urlImage: state.urlImage ,
   tabs:state.tabs,
-  user:state.user
+  user:state.user,
+  email:state.email
 })
 export default connect(mapStateToProps)(withStyles(styles)(CarouselInput));
 

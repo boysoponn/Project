@@ -73,11 +73,11 @@ class NestedList extends React.Component {
   }
 
   delete = gallery => () =>{
-    let dbCon = config.database().ref('project/'+this.props.user+'/'+this.props.tabs+"/galleryItem");
+    let dbCon = config.database().ref('project/'+this.props.email+'/'+this.props.tabs+"/galleryItem");
     dbCon.child(gallery._key).remove();
   }
   addItem=()=>{
-    let dbCon = config.database().ref('project/'+this.props.user+'/'+this.props.tabs+"/galleryItem");
+    let dbCon = config.database().ref('project/'+this.props.email+'/'+this.props.tabs+"/galleryItem");
     dbCon.push({
       image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2F3038591-poster-p-1-secrets-of-the-most-productive-peoplehow-to-work-different-productivity-styles.jpg?alt=media&token=aca301c1-8ed2-4353-942e-39df3bff3ed0'
     })  
@@ -237,7 +237,8 @@ NestedList.propTypes = {
 const mapStateToProps = state => ({
   urlImage: state.urlImage ,
   tabs:state.tabs,
-  user:state.user
+  user:state.user,
+  email:state.email
 })
 
 export default connect(mapStateToProps)(withStyles(styles)(NestedList));

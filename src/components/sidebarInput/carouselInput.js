@@ -78,7 +78,7 @@ class NestedList extends React.Component {
   }
  
   save =  () => {
-    let dbCon = config.database().ref('project/'+this.props.user+'/'+this.props.tabs+"/carouselContent/");
+    let dbCon = config.database().ref('project/'+this.props.email+'/'+this.props.tabs+"/carouselContent/");
     dbCon.child(this.state.carouselPath).update({
       title:this.state.carouselTitle,
       description:this.state.carouselDescription,
@@ -98,11 +98,11 @@ class NestedList extends React.Component {
     alert("saved") 
   };
   delete = carousel => () =>{
-    let dbCon = config.database().ref('project/'+this.props.user+'/'+this.props.tabs+"/carouselContent/");
+    let dbCon = config.database().ref('project/'+this.props.email+'/'+this.props.tabs+"/carouselContent/");
     dbCon.child(carousel._key).remove();
   }
   addItem=()=>{
-    let dbCon = config.database().ref('project/'+this.props.user+'/'+this.props.tabs+"/carouselContent/");
+    let dbCon = config.database().ref('project/'+this.props.email+'/'+this.props.tabs+"/carouselContent/");
     dbCon.push({
       title:'Title',
       description:'Description',
@@ -351,7 +351,8 @@ NestedList.propTypes = {
 const mapStateToProps = state => ({
   urlImage: state.urlImage ,
   tabs:state.tabs,
-  user:state.user
+  user:state.user,
+  email:state.email
 })
 export default connect(mapStateToProps)(withStyles(styles)(NestedList));
 

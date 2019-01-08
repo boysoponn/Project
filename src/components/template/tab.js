@@ -66,7 +66,7 @@ class TabWebsite extends React.Component {
     getData=()=>{
       let new1=[];
       let new2=[];
-      const app = config.database().ref('project/'+this.props.user+'/');
+      const app = config.database().ref('project/'+this.props.email+'/');
       app.on('value', async (snapshot) => { 
         const snapshotValue = snapshot.val(); 
         const snapshotArr = _.keys(snapshotValue).reduce((prev, cur) => {
@@ -78,7 +78,7 @@ class TabWebsite extends React.Component {
         }, []); 
         new1=snapshotArr;
     
-  //   const global = config.database().ref('project/'+this.props.user+'/global');
+  //   const global = config.database().ref('project/'+this.props.email+'/global');
   //   global.on('value', async (snapshot) => { 
   //     const snapshotValue = snapshot.val(); 
   //     const snapshotArr = _.keys(snapshotValue).reduce((prev, cur) => {
@@ -112,7 +112,7 @@ class TabWebsite extends React.Component {
   };
 
   handleOpenEdit = () => {
-    let OpenEdit = config.database().ref('project/'+this.props.user+'/'+this.props.tabs);
+    let OpenEdit = config.database().ref('project/'+this.props.email+'/'+this.props.tabs);
     OpenEdit.on('value', async (snapshot) => { 
       const snapshotValue = snapshot.val(); 
       let data = _(snapshotValue).value();
@@ -147,11 +147,11 @@ class TabWebsite extends React.Component {
     if(this.state.namePage){
       let pathUpper =this.state.namePage;
       let pathLower =pathUpper.toLowerCase();
-      let dbCon = config.database().ref('project/'+this.props.user+'/'+this.props.tabs);
+      let dbCon = config.database().ref('project/'+this.props.email+'/'+this.props.tabs);
       dbCon.update({
       pageName: this.state.namePage,
       pathName: pathLower,
-      path: "/"+this.props.user+"/"+pathLower,
+      path: "/"+this.props.email+"/"+pathLower,
       hero: this.state.selectedHero,
       carousel: this.state.selectedCarousel,
       welcome: this.state.selectedWelcome,
@@ -174,7 +174,7 @@ class TabWebsite extends React.Component {
   };
 
   addGlobal=()=>{
-      let dbCon = config.database().ref('global/'+this.props.user+'/');
+      let dbCon = config.database().ref('global/'+this.props.email+'/');
       dbCon.update({
         menubarLogo:{
          image: "https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Flogo2.png?alt=media&token=9921fb9f-f0b0-4d97-bfd1-41195d22d594",
@@ -244,12 +244,12 @@ class TabWebsite extends React.Component {
     if(this.state.namePage){
       let pathUpper =this.state.namePage;
       let pathLower =pathUpper.toLowerCase();
-      let dbCon = config.database().ref('project/'+this.props.user+'/');
+      let dbCon = config.database().ref('project/'+this.props.email+'/');
       dbCon.push({
       key:this.state.num,
       pageName: this.state.namePage,
       pathName:pathLower,
-      path: "/"+this.props.user+"/"+pathLower,
+      path: "/"+this.props.email+"/"+pathLower,
       menubar:this.state.selectedMenubar,
       footer:this.state.selectedFooter,
       hero: this.state.selectedHero,
@@ -401,12 +401,12 @@ class TabWebsite extends React.Component {
 
   deletePage=()=>{
     this.props.dispatch(checkTab('null'));
-    let dbCon = config.database().ref('project/'+this.props.user+'/');
+    let dbCon = config.database().ref('project/'+this.props.email+'/');
     dbCon.child(this.props.tabs).remove();
   };
 
   save=()=>{
-    let dbCon = config.database().ref('project/'+this.props.user+'/'+this.props.tabs);
+    let dbCon = config.database().ref('project/'+this.props.email+'/'+this.props.tabs);
     dbCon.update({
     heroContent:{
       image:this.props.heroBackgroundImage,
@@ -482,7 +482,7 @@ class TabWebsite extends React.Component {
       backgroundColor:this.props.galleryBackgroundColor,
     }
     });
-    let global = config.database().ref('global/'+this.props.user+'/');
+    let global = config.database().ref('global/'+this.props.email+'/');
     global.update({ 
       menubarSetting:{
         menubarbackgroundColor:this.props.menubarbackgroundColor
@@ -810,7 +810,8 @@ TabWebsite.propTypes = {
 };
 const mapStateToPropsTabs = state => ({
   tabs: state.tabs ,
-  user:state.user
+  user:state.user,
+  email:state.email
 })
 
 export default connect(mapStateToPropsTabs)(withStyles(styles, { withTheme: true })(TabWebsite));

@@ -83,8 +83,8 @@ class ModalUpload extends React.Component {
       let row=0; 
       while(row<this.state.Howmany){  
         const image = this.state.image[row] ; 
-        config.storage().ref(`${this.props.user}/${this.state.imageName[row]}`).put(image);
-      let dbCon = config.database().ref('image/'+this.props.user);
+        config.storage().ref(`${this.props.email}/${this.state.imageName[row]}`).put(image);
+      let dbCon = config.database().ref('image/'+this.props.email);
       dbCon.push({
         imageName:this.state.imageName[row],
       }); 
@@ -136,7 +136,8 @@ ModalUpload.propTypes = {
 const ModalUploadWrapped = withStyles(styles)(ModalUpload);
 const mapStateToProps = state => ({
   tabs: state.tabs ,
-  user:state.user
+  user:state.user,
+  email:state.email
 })
 
 export default connect(mapStateToProps)(ModalUploadWrapped);

@@ -73,7 +73,7 @@ class ModalPictureGlobal extends React.Component {
 }
 
   getData(){
-    const app = config.database().ref('image/'+this.props.user);
+    const app = config.database().ref('image/'+this.props.email);
     app.on('value', async (snapshot) => { 
       const snapshotValue = snapshot.val();
       
@@ -86,7 +86,7 @@ class ModalPictureGlobal extends React.Component {
       }, []);
       
       const pictures = await Promise.all(snapshotArr.map(async (obj) => {
-        obj.imageName = await config.storage().ref(`${this.props.user}/${obj.imageName}`).getDownloadURL();
+        obj.imageName = await config.storage().ref(`${this.props.email}/${obj.imageName}`).getDownloadURL();
         return Promise.resolve(obj);
       }));
       this.setState({
@@ -97,7 +97,7 @@ class ModalPictureGlobal extends React.Component {
 
   imageOnClick = image => () => {
     // this.props.dispatch(getUrlImage(image.imageName));
-    let dbCon = config.database().ref('global/'+this.props.user+'/'+this.props.path);
+    let dbCon = config.database().ref('global/'+this.props.email+'/'+this.props.path);
     dbCon.update({
       image:image.imageName,
     }); 
@@ -160,7 +160,8 @@ ModalPictureGlobal.propTypes = {
 const ModalPictureGlobalWrapped = withStyles(styles)(ModalPictureGlobal);
 const mapStateToProps = state => ({
   tabs: state.tabs ,
-  user:state.user
+  user:state.user,
+  email:state.email
 })
 
 export default connect(mapStateToProps)(ModalPictureGlobalWrapped);

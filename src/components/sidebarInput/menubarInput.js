@@ -85,7 +85,7 @@ class CarouselInput extends React.Component {
   }
 
   save =  () => {
-    let dbCon = config.database().ref('global/'+this.props.user+'/menubarContent/');
+    let dbCon = config.database().ref('global/'+this.props.email+'/menubarContent/');
     dbCon.child(this.state.key).update({
       link:this.state.link,
       linkTarget:this.state.linkTarget,
@@ -102,7 +102,7 @@ class CarouselInput extends React.Component {
     alert("saved") 
   };
   saveInGroup =  () => {
-    let dbCon = config.database().ref('global/'+this.props.user+'/menubarContent/'+this.state.keys+'/group');
+    let dbCon = config.database().ref('global/'+this.props.email+'/menubarContent/'+this.state.keys+'/group');
     dbCon.child(this.state.key).update({
       link:this.state.link,
       linkTarget:this.state.linkTarget,
@@ -111,15 +111,15 @@ class CarouselInput extends React.Component {
     alert("saved") 
   };
   delete = menubar => () =>{
-    let dbCon = config.database().ref('global/'+this.props.user+'/menubarContent/');
+    let dbCon = config.database().ref('global/'+this.props.email+'/menubarContent/');
     dbCon.child(menubar._key).remove();
   }
   deleteInGroup = menubar => () =>{
-    let dbCon = config.database().ref('global/'+this.props.user+'/menubarContent/'+this.state.keys+'/group');
+    let dbCon = config.database().ref('global/'+this.props.email+'/menubarContent/'+this.state.keys+'/group');
     dbCon.child(menubar._key).remove();
   }
   addItemLittle= () => {
-    let dbCon = config.database().ref('global/'+this.props.user+'/menubarContent/'+this.state.keys+'/group');
+    let dbCon = config.database().ref('global/'+this.props.email+'/menubarContent/'+this.state.keys+'/group');
     dbCon.push({
           label:'Link',
           link:'',
@@ -128,7 +128,7 @@ class CarouselInput extends React.Component {
     }) 
   }
   addItem=()=>{
-    let dbCon = config.database().ref('global/'+this.props.user+'/menubarContent/');
+    let dbCon = config.database().ref('global/'+this.props.email+'/menubarContent/');
     dbCon.push({
       typeGroup:false,
       label:'Link',
@@ -171,7 +171,7 @@ class CarouselInput extends React.Component {
   });
 };
 onChangeTypeGroup=menubar=>(e)=>{
-  let dbCon = config.database().ref('global/'+this.props.user+'/menubarContent');
+  let dbCon = config.database().ref('global/'+this.props.email+'/menubarContent');
   dbCon.child(menubar._key).update({
     typeGroup:e.target.checked ,
   });
@@ -183,7 +183,7 @@ onChangeTypeGroup=menubar=>(e)=>{
   handleClickOpen2 = (event) => {this.setState({ anchorEl2: event.currentTarget, });};
   handleClose2 = () => {this.setState({ anchorEl2: null, });};
   handleClickOpen3 = menubar => (event) => {
-    let global = config.database().ref('global/'+this.props.user+'/menubarContent/'+menubar._key+'/group');
+    let global = config.database().ref('global/'+this.props.email+'/menubarContent/'+menubar._key+'/group');
     global.on('value', async (snapshot) => { 
     const snapshotValue2 = snapshot.val(); 
     const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => { prev.push({_key: cur,...snapshotValue2[cur]});return prev;}, []); 
@@ -403,7 +403,8 @@ CarouselInput.propTypes = {
 const mapStateToProps = state => ({
   urlImage: state.urlImage ,
   tabs:state.tabs,
-  user:state.user
+  user:state.user,
+  email:state.email
 })
 export default connect(mapStateToProps)(withStyles(styles)(CarouselInput));
 

@@ -54,7 +54,7 @@ class Register extends Component {
     register(e){
       e.preventDefault();  
       // const email = this.state.Email ;
-      // const pathemail=email.replace(".","");  
+      // const pathemail=email.replace(/\.|@|com/g,"");  
       // let dbCon = config.database().ref('/user/'+pathemail);
       //   dbCon.push({
       //     Firstname:this.state.Firstname,
@@ -84,17 +84,11 @@ class Register extends Component {
     render() {  
       const style = {
         margin: "15px 0"
-      };
-      const email = this.state.Email ;
-      const pathemail=email.replace(".","");  
-      console.log(pathemail)
+      }; 
       return (
         <form onSubmit={this.register}>
         <div  className="login-container " >
-              <div className="title">Register</div>
-              <FluidInput type="text"     label="Firstname"  value={this.state.Firstname} onChange={this.onChangeFirstname} style={style} />
-              <FluidInput type="text"     label="Lastname"   value={this.state.Lastname}  onChange={this.onChangeLastname}  style={style} />
-              <FluidInput type="text"     label="Username"   value={this.state.Username}  onChange={this.onChangeUsername}  style={style} />            
+              <div className="title">Register</div>           
               <FluidInput type="email"    label="Email"      value={this.state.Email}     onChange={this.onChangeEmail}     style={style} />
               <FluidInput type="password" label="Password"   value={this.state.Password}  onChange={this.onChangePassword}  style={style} />
               <button type="submit" className="login-button">SIGN UP</button>
