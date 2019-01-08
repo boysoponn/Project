@@ -40,6 +40,17 @@ class LoginContainer extends Component {
   config.auth().signInWithEmailAndPassword(this.state.inputEmail, this.state.inputPassword).then((user) => {
     this.props.history.push('/');
   })
+  .catch(function(error) {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+
+    if (errorCode === 'auth/wrong-password') {
+        alert('Wrong password.');
+    } else {
+        alert(errorMessage);         
+    }
+    console.log(error);
+});
 }
 
   loginGmail = () => {
