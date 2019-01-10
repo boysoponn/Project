@@ -2,6 +2,7 @@ import React from 'react';
 import ScrollAnimation from 'react-animate-on-scroll';
 import { connect } from 'react-redux'
 import styled from 'styled-components'
+import {chooseTemplate} from './../../../components/actions'
 
 class HeroNo1 extends React.Component {
     constructor(props){  
@@ -9,6 +10,10 @@ class HeroNo1 extends React.Component {
           this.state = {
           };   
       }
+      
+  chooseTemplate=()=>{
+    this.props.dispatch(chooseTemplate('hero'));
+  }
 
   render() {
     const background ={
@@ -100,8 +105,9 @@ class HeroNo1 extends React.Component {
       </ScrollAnimation > 
     };
     return (
-        <div style={background}>  
-            <div style={content}>
+      <div onClick={this.chooseTemplate}>
+        <div style={background} >  
+            <div style={content} >
             <ScrollAnimation style={title} className={this.props.heroTitleAnimate} >
             {this.props.heroTitle}
             </ScrollAnimation> 
@@ -111,6 +117,7 @@ class HeroNo1 extends React.Component {
             {checkButton}
             </div>
         </div> 
+        </div>
     );
   }
 }

@@ -126,7 +126,7 @@ class CMS extends React.Component {
     carouselContent:[],
     menubarContent:[],
     galleryContent:[],
-
+    openHeader:false
   };
 }
 
@@ -260,7 +260,7 @@ componentWillReceiveProps(nextProps){
         }); 
       }else{
           this.setState({undefinedOneTab:true,menubar:'none',footer:'none'})        
-      }    
+      }
   });
 
 //สำหรับไอเทมที่เป็น Array
@@ -304,7 +304,6 @@ componentWillReceiveProps(nextProps){
   onChangeValue = name=> (e) => {this.setState({ [name]: e.target.value });};
 
   render() {
-    
     const { classes, theme } = this.props;
     let heroInput;
     if( this.state.hero !== "none"){
@@ -573,16 +572,19 @@ componentWillReceiveProps(nextProps){
           <Divider />
             <List disablePadding={true}>
             <BlockInput
+            open={this.state.openHeader}
             label='Header'
             content1={menubarInput}
             />
             <BlockInput
+            open={this.state.openHeader}
             label='Content'
             content1={heroInput}
             content2={carouselInput}
             content3={galleryInput}
             />
             <BlockInput
+            open={this.state.openHeader}
             label='Footer'
             content1={footerInput}
             />
@@ -712,7 +714,8 @@ const mapStateToProps = state => ({
   tabs: state.tabs ,
   url: state.urlImage ,
   user:state.user,
-  email:state.email
+  email:state.email,
+  chooseTemplate:state.chooseTemplate
 })
 
 export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(CMS));

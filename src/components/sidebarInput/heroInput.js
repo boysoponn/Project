@@ -14,6 +14,9 @@ import InputTextarea from './itemInput/inputTextarea';
 import ModalChooseImage from './itemInput/modalPicture';
 import InputButton from './itemInput/inputButton';
 import PickColor from './itemInput/pickColor'
+import { connect } from 'react-redux'
+import {chooseTemplate} from './../../components/actions'
+
 const styles = theme => ({
   root: {
     width: '100%',
@@ -33,6 +36,12 @@ class NestedList extends React.Component {
     image: null,
     };  
   }
+  componentWillReceiveProps(nextProps){
+    if(nextProps.chooseTemplate==='hero'){
+      this.setState({open:true})
+      this.props.dispatch(chooseTemplate(null));
+    }
+  }
 
   handleClick = () => {
     this.setState(state => ({ open: !state.open }));
@@ -40,11 +49,13 @@ class NestedList extends React.Component {
   
 
   render() {
+
     const { classes } = this.props;
     const pickColor={
       fontSize: '16px',
       marginLeft:10
     };
+
     return (
       <div className={classes.root} >
         <List disablePadding={true}>
@@ -203,5 +214,8 @@ class NestedList extends React.Component {
 NestedList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+const mapStateToProps = state => ({
+  chooseTemplate: state.chooseTemplate ,
+})
 
-export default withStyles(styles)(NestedList);
+export default connect(mapStateToProps)(withStyles(styles)(NestedList));

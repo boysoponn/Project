@@ -55,7 +55,7 @@ class NestedList extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-    open: false,
+    open: true,
     };  
   }
 
@@ -78,7 +78,7 @@ class NestedList extends React.Component {
               
             </ListItemIcon>
             <ListItemText inset primary={this.props.label} />
-            {this.state.open ? <ExpandLess /> : <ExpandMore />}
+            {this.state.open ?  <ExpandLess /> : <ExpandMore />}
           </ListItem>
 
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>    

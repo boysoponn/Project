@@ -61,6 +61,7 @@ class LoginContainer extends Component {
       // The signed-in user info.
       var user = result.user;
       // ...
+      this.props.history.push('/');
     }).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
@@ -81,6 +82,7 @@ class LoginContainer extends Component {
       // The signed-in user info.
       var user = result.user;
       // ...
+      this.props.history.push('/');
     }).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;

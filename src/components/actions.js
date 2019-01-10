@@ -16,4 +16,9 @@ export const loginEmail = (email) => ({
   type: 'loginEmail',
   email
 })
-  
+
+export const chooseTemplate = (chooseTemplate) => ({
+  type: 'chooseTemplate',
+  chooseTemplate
+})
+
