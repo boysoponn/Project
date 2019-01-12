@@ -25,10 +25,15 @@ import GalleryInput from './sidebarInput/galleryInput';
 import FooterInput from './sidebarInput/footerInput';
 import { checkTab} from './actions';
 import BlockInput from './template/blockInput';
-
+import Popup from './template/popup'
+import Avatar from '@material-ui/core/Avatar';
+import avatarImage from './image/avatar.png'
 const drawerWidth = 320;
 
 const styles = theme => ({
+  bigAvatar: {
+    margin: 10,
+  },
   buttonGroup:{
     justifyContent: 'flex-start',
   },
@@ -295,7 +300,8 @@ componentWillReceiveProps(nextProps){
     if(data !== null){this.setState({menubarLogo:data.menubarLogo.image ,menubarbackgroundColor:data.menubarSetting.menubarbackgroundColor})}});
 }
 
-
+  popupLogout = () => {this.setState({ popupLogout: true });};
+  popupLogoutClose = () => {this.setState({ popupLogout: false });};
   logout =() => {config.auth().signOut();window.location.reload(); };
   handleDrawerOpen = () => {this.setState({ open: true ,});}
   handleDrawerClose = () => {this.setState({  open: false ,});};
@@ -551,9 +557,18 @@ componentWillReceiveProps(nextProps){
             <Typography variant="title" style={{color:"#000000"}} >
               Welcome : {this.props.user}
             </Typography>
-            <Button variant="contained" color="primary" className={classes.button} onClick={this.logout}>Logout
+            <Avatar alt="Remy Sharp" src={this.props.photoURL? this.props.photoURL:avatarImage} className={classes.bigAvatar} />
+            <Button variant="contained" color="primary" className={classes.button} onClick={this.popupLogout}>Logout
             <ExitIcon className={classes.rightIcon}/>
             </Button>
+            <Popup
+              open={this.state.popupLogout}
+              close={this.popupLogoutClose}
+              title="Are you sure Logout"
+              description="eeeeeeeeeeeeee"
+              yes={this.logout}
+              no={this.popupLogoutClose}
+            />
           </Toolbar>
         </AppBar>
 
@@ -715,7 +730,8 @@ const mapStateToProps = state => ({
   url: state.urlImage ,
   user:state.user,
   email:state.email,
-  chooseTemplate:state.chooseTemplate
+  chooseTemplate:state.chooseTemplate,
+  photoURL:state.photoURL
 })
 
 export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(CMS));

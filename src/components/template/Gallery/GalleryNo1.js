@@ -10,7 +10,7 @@ class GalleryNo1 extends React.Component {
       }
   render() {
     const background={
-      paddingTop: 50,
+      paddingTop: 100,
       backgroundColor:this.props.galleryBackgroundColor,
       textAlign: 'center'
     }

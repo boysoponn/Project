@@ -16,6 +16,7 @@ import ButtonForNewTab from './buttonForNew'
 import { connect } from 'react-redux'
 import { checkTab} from '../actions'
 import SaveIcon from '@material-ui/icons/Save';
+import Popup from './popup';
 
 
 const styles = theme => ({
@@ -399,11 +400,19 @@ class TabWebsite extends React.Component {
     this.handleClose();
   };
 
+
   deletePage=()=>{
     this.props.dispatch(checkTab('null'));
     let dbCon = config.database().ref('project/'+this.props.email+'/');
     dbCon.child(this.props.tabs).remove();
   };
+  popupDelete = () => {this.setState({ popupDelete: true });};
+
+  popupDeleteClose = () => {this.setState({ popupDelete: false });};
+
+  popupSave = () => {this.setState({ popupSave: true });};
+
+  popupSaveClose = () => {this.setState({ popupSave: false });};
 
   save=()=>{
     let dbCon = config.database().ref('project/'+this.props.email+'/'+this.props.tabs);
@@ -518,10 +527,26 @@ class TabWebsite extends React.Component {
     const { classes, theme } = this.props;
     return (
     <div>
+      <Popup
+      open={this.state.popupSave}
+      close={this.popupSaveClose}
+      title="Are you sure save"
+      description="eeeeeeeeeeeeeeee"
+      yes={this.save}
+      no={this.popupSaveClose}
+      />
+      <Popup
+      open={this.state.popupDelete}
+      close={this.popupDeleteClose}
+      title="Are you sure delete"
+      description="eeeeeeeeeeeeee"
+      yes={this.deletePage}
+      no={this.popupDeleteClose}
+      />
       {this.props.undefinedOneTab === true?
       <Button variant="contained" color="secondary" className={classes.button} onClick={this.addGlobal}>Start Your Project</Button>
       :
-      <Button variant="contained" color="secondary" onClick={this.save} className={classes.button}>
+      <Button variant="contained" color="secondary" onClick={this.popupSave} className={classes.button}>
         SAVE
         <SaveIcon className={classes.rightIcon} />
       </Button>
@@ -653,7 +678,7 @@ class TabWebsite extends React.Component {
       />
       {this.props.undefinedOneTab !== true?
       <div>
-      <Button variant="contained" color="secondary" className={classes.button} onClick={this.deletePage}>Delete
+      <Button variant="contained" color="secondary" className={classes.button} onClick={this.popupDelete}>Delete
       <DeleteIcon className={classes.rightIcon}/>
       </Button>
       <Button variant="contained" color="secondary" style={{float:'right'}} className={classes.button} ><a href={'https://webshow-efb30.firebaseapp.com'+this.props.path} style={{color:'#ffffff'}} target="_blank">Preview</a>

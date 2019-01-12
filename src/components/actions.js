@@ -22,3 +22,8 @@ export const chooseTemplate = (chooseTemplate) => ({
   chooseTemplate
 })
 
+export const photoURL = (photoURL) => ({
+  type: 'photoURL',
+  photoURL
+})
+

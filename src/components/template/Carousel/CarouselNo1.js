@@ -7,18 +7,18 @@ class CarouselNo1 extends React.Component {
 
   render() {
     const background ={
-        height:500,
+        height:800,
         margin:'-1'
     };
 
     return (
         <div style={background}> 
-            <Carousel autoplay={this.props.carouselAutoplay} vertical={this.props.carouselVertical}  speed={this.props.carouselSpeed} dots={this.props.carouselDots} pauseOnHover= {this.props.carouselPauseOnHover}>
+            <Carousel  effect="fade" autoplay={this.props.carouselAutoplay} vertical={this.props.carouselVertical}  speed={this.props.carouselSpeed} dots={this.props.carouselDots} pauseOnHover= {this.props.carouselPauseOnHover}>
             {this.props.carouselContent.map((post => (
                 <div key={post._key}>
                     <div style={{
                           backgroundImage:"url("+post.image+")",
-                          height:'500',
+                          height:'800',
                           backgroundSize:'cover', 
                           backgroundPosition: 'center center',
                           backgroundRepeat:  'no-repeat',}} key={post._key}>
