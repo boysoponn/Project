@@ -16,7 +16,7 @@ class HeroNo2 extends React.Component {
     const background ={
         backgroundImage:"url("+this.props.heroImagePick+")",
         backgroundSize:'cover',
-        height:'800px',
+        height: '100%',
         backgroundPosition: 'center center',
         backgroundRepeat:  'no-repeat',
         margin:0

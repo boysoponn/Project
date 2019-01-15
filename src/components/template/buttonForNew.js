@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -14,6 +13,17 @@ import RadioButtons from './choosetemplant'
 import AddIcon from '@material-ui/icons/AddCircle';
 import CreateIcon from '@material-ui/icons/Create';
 import Text from '../sidebarInput/itemInput/Text';
+import Grid from '@material-ui/core/Grid';
+import None from '../image/none.jpg'
+import Cover1 from '../image/cover.jpg'
+import Cover2 from '../image/cover2.jpg'
+import Gallery from '../image/gallery.jpg'
+import Menu1 from '../image/menu1.jpg'
+import Menu2 from '../image/comingsoon.jpg'
+import Footer from '../image/comingsoon.jpg'
+import ImageSilde from '../image/imagesilde.jpg'
+
+
 const styles = {
   appBar: {
     position: 'relative',
@@ -45,8 +55,6 @@ const styles = {
     marginLeft:5,
   },
 };
-
-
 
 class ButtonForNewTab extends React.Component {
   constructor(props){  
@@ -97,143 +105,146 @@ class ButtonForNewTab extends React.Component {
               onChange={this.props.onChangeName}
               value={this.props.valueName}
             />
-          </List>   
+          </List>  
+
           <List>
-          <h1>Menubar</h1>
-          <ListItem>
-            <RadioButtons
-            selectedValue={this.props.selectedMenubar}
-            handleChange={this.props.handleChangeMenubar}
-            value1={this.props.valueMenubar1}
-            value2={this.props.valueMenubar2}
-            value3={this.props.valueMenubar3}
-            value4={this.props.valueMenubar4}
-            label1="None"
-            label2="Menubar No.1"
-            label3="Menubar No.2"
-            label4="Menubar No.3"
-            />
-          </ListItem>
-          </List>         
+            <h1>Menubar</h1>
+            <Grid container spacing={40}>
+              <Grid item  sm={6} md={4} lg={3}>
+                <RadioButtons
+                selectedValue={this.props.selectedMenubar}
+                handleChange={this.props.handleChangeMenubar}
+                value={this.props.valueMenubar1}
+                label='None'
+                image={None}
+                />
+              </Grid>
+              <Grid item  sm={6} md={4} lg={3}>
+                <RadioButtons
+                selectedValue={this.props.selectedMenubar}
+                handleChange={this.props.handleChangeMenubar}
+                value={this.props.valueMenubar2}
+                label='Menubar 1'
+                image={Menu1}
+                />
+              </Grid>
+              <Grid item  sm={6} md={4} lg={3}>
+                <RadioButtons
+                selectedValue={this.props.selectedMenubar}
+                handleChange={this.props.handleChangeMenubar}
+                value={this.props.valueMenubar3}
+                label='Menubar 2'
+                image={Menu2}
+                />
+              </Grid>
+            </Grid>
+          </List>  
+
           <List>
           <h1>Cover</h1>
-          <ListItem>
-            <RadioButtons
-            selectedValue={this.props.selectedHero}
-            handleChange={this.props.handleChangeHero}
-            value1={this.props.valueHero1}
-            value2={this.props.valueHero2}
-            value3={this.props.valueHero3}
-            value4={this.props.valueHero4}
-            label1="None"
-            label2="Cover No.1"
-            label3="Cover No.2"
-            label4="Cover No.3"
-            />
-          </ListItem>
-          </List>    
+          <Grid container spacing={40}>
+              <Grid item  sm={6} md={4} lg={3}>
+                <RadioButtons
+                  selectedValue={this.props.selectedHero}
+                  handleChange={this.props.handleChangeHero}
+                  value={this.props.valueHero1}
+                  label='None'
+                  image={None}
+                />
+              </Grid>
+              <Grid item  sm={6} md={4} lg={3}>
+                <RadioButtons
+                  selectedValue={this.props.selectedHero}
+                  handleChange={this.props.handleChangeHero}
+                  value={this.props.valueHero2}
+                  label='Cover 1'
+                  image={Cover1}
+                />
+              </Grid>
+              <Grid item  sm={6} md={4} lg={3}>
+                <RadioButtons
+                  selectedValue={this.props.selectedHero}
+                  handleChange={this.props.handleChangeHero}
+                  value={this.props.valueHero3}
+                  label='Cover 2'
+                  image={Cover2}
+                />
+              </Grid>
+            </Grid>
+          </List> 
+
           <List>
           <h1>Image Slide</h1>
-          <ListItem>
-            <RadioButtons
-            selectedValue={this.props.selectedCarousel}
-            handleChange={this.props.handleChangeCarousel}
-            value1={this.props.valueCarousel1}
-            value2={this.props.valueCarousel2}
-            value3={this.props.valueCarousel3}
-            value4={this.props.valueCarousel4}
-            label1="None"
-            label2="Image Slide No.1"
-            label3="Image Slide No.2"
-            label4="Image Slide No.3"
-            />
-          </ListItem>
+          <Grid container spacing={40}>
+            <Grid item  sm={6} md={4} lg={3}>
+              <RadioButtons
+              selectedValue={this.props.selectedCarousel}
+              handleChange={this.props.handleChangeCarousel}
+              value={this.props.valueCarousel1}
+              label='None'
+              image={None}
+              />
+            </Grid>
+            <Grid item  sm={6} md={4} lg={3}>
+              <RadioButtons
+              selectedValue={this.props.selectedCarousel}
+              handleChange={this.props.handleChangeCarousel}
+              value={this.props.valueCarousel2}
+              label='Image Silde 1'
+              image={ImageSilde}
+              />
+            </Grid>
+          </Grid>
           </List>       
-          {/* <List>
-          <h1>Welcome</h1>
-          <ListItem>
-            <RadioButtons
-            selectedValue={this.props.selectedWelcome}
-            handleChange={this.props.handleChangeWelcome}
-            value1={this.props.valueWelcome1}
-            value2={this.props.valueWelcome2}
-            value3={this.props.valueWelcome3}
-            value4={this.props.valueWelcome4}
-            label1="None"
-            label2="Welcome No.1"
-            label3="Welcome No.2"
-            label4="Welcome No.3"
-            />
-          </ListItem>
-          </List>           */}
-          {/* <List>
-          <h1>About</h1>
-          <ListItem>
-            <RadioButtons
-            selectedValue={this.props.selectedAbout}
-            handleChange={this.props.handleChangeAbout}
-            value1={this.props.valueAbout1}
-            value2={this.props.valueAbout2}
-            value3={this.props.valueAbout3}
-            value4={this.props.valueAbout4}
-            label1="None"
-            label2="About No.1"
-            label3="About No.2"
-            label4="About No.3"
-            />
-          </ListItem>
-          </List> */}
+
           <List>
           <h1>Gallery</h1>
-          <ListItem>
-            <RadioButtons
-            selectedValue={this.props.selectedGallery}
-            handleChange={this.props.handleChangeGallery}
-            value1={this.props.valueGallery1}
-            value2={this.props.valueGallery2}
-            value3={this.props.valueGallery3}
-            value4={this.props.valueGallery4}
-            label1="None"
-            label2="Gallery No.1"
-            label3="Gallery No.2"
-            label4="Gallery No.3"
-            />
-          </ListItem>
+          <Grid container spacing={40}>
+            <Grid item  sm={6} md={4} lg={3}>
+              <RadioButtons
+              selectedValue={this.props.selectedGallery}
+              handleChange={this.props.handleChangeGallery}
+              value={this.props.valueGallery1}
+              label='None'
+              image={None}
+              />
+            </Grid>
+            <Grid item  sm={6} md={4} lg={3}>
+              <RadioButtons
+              selectedValue={this.props.selectedGallery}
+              handleChange={this.props.handleChangeGallery}
+              value={this.props.valueGallery2}
+              label='Gallery 1'
+              image={Gallery}
+              />
+            </Grid>
+          </Grid>
           </List>
-          {/* <List>
-          <h1>Contact</h1>
-          <ListItem>
-            <RadioButtons
-            selectedValue={this.props.selectedContact}
-            handleChange={this.props.handleChangeContact}
-            value1={this.props.valueContact1}
-            value2={this.props.valueContact2}
-            value3={this.props.valueContact3}
-            value4={this.props.valueContact4}
-            label1="None"
-            label2="Contact No.1"
-            label3="Contact No.2"
-            label4="Contact No.3"
-            />
-          </ListItem>
-          </List> */}
+          
           <List>
           <h1>Footer</h1>
-          <ListItem>
-            <RadioButtons
-            selectedValue={this.props.selectedFooter}
-            handleChange={this.props.handleChangeFooter}
-            value1={this.props.valueFooter1}
-            value2={this.props.valueFooter2}
-            value3={this.props.valueFooter3}
-            value4={this.props.valueFooter4}
-            label1="None"
-            label2="Footer No.1"
-            label3="Footer No.2"
-            label4="Footer No.3"
-            />
-          </ListItem>
+          <Grid container spacing={40}>
+            <Grid item  sm={6} md={4} lg={3}>
+              <RadioButtons
+                selectedValue={this.props.selectedFooter}
+                handleChange={this.props.handleChangeFooter}
+                value={this.props.valueFooter1}
+                label='None'
+                image={None}
+              />
+            </Grid>
+            <Grid item  sm={6} md={4} lg={3}>
+              <RadioButtons
+                selectedValue={this.props.selectedFooter}
+                handleChange={this.props.handleChangeFooter}
+                value={this.props.valueFooter2}
+                label='Footer 1'
+                image={Footer}
+              />
+            </Grid>
+          </Grid>
           </List>
+          
           </div>
         </Dialog>
       </div>

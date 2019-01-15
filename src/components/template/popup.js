@@ -7,6 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import { withStyles } from '@material-ui/core/styles';
+import Message from './snackbar';
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -30,6 +31,12 @@ class AlertDialogSlide extends React.Component {
   render() {
     const { classes } = this.props;
     return (
+      <div>
+      <Message
+      message={this.props.message}
+      messageOpen={this.props.messageOpen}
+      messageClose={this.props.messageClose}
+      />
       <div>
         <Dialog
           open={this.props.open}
@@ -57,6 +64,7 @@ class AlertDialogSlide extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
+      </div>
       </div>
     );
   }

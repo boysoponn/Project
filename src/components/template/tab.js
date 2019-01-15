@@ -18,7 +18,6 @@ import { checkTab} from '../actions'
 import SaveIcon from '@material-ui/icons/Save';
 import Popup from './popup';
 
-
 const styles = theme => ({
   button:{
     width: 100,
@@ -143,6 +142,8 @@ class TabWebsite extends React.Component {
   onChangeName=(e)=>{this.setState({ namePage: e.target.value});};
   handleChange = (event, value) => {this.setState({ value });};
   handleChangeIndex = index => {this.setState({ value: index });};
+  popup = name=> () => {this.setState({ [name]: true });};
+  popupClose = name=> () => {this.setState({ [name]: false });};
 
   saveEdit=()=>{
     if(this.state.namePage){
@@ -405,14 +406,8 @@ class TabWebsite extends React.Component {
     this.props.dispatch(checkTab('null'));
     let dbCon = config.database().ref('project/'+this.props.email+'/');
     dbCon.child(this.props.tabs).remove();
+    this.setState({popupDelete:false,messageDeleteOpen:true});
   };
-  popupDelete = () => {this.setState({ popupDelete: true });};
-
-  popupDeleteClose = () => {this.setState({ popupDelete: false });};
-
-  popupSave = () => {this.setState({ popupSave: true });};
-
-  popupSaveClose = () => {this.setState({ popupSave: false });};
 
   save=()=>{
     let dbCon = config.database().ref('project/'+this.props.email+'/'+this.props.tabs);
@@ -519,34 +514,42 @@ class TabWebsite extends React.Component {
       footerDescriptionColor:this.props.footerDescriptionColor,
       }
     })
-    alert("saved");
+    this.setState({popupSave:false,messageSaveOpen:true});
     this.setNullValue();
   };
-
+  inputPageName=()=>{
+   alert("Please input page name")
+  }
   render() {
     const { classes, theme } = this.props;
     return (
     <div>
       <Popup
       open={this.state.popupSave}
-      close={this.popupSaveClose}
+      close={this.popupClose('popupSave')}
       title="Are you sure save"
       description="eeeeeeeeeeeeeeee"
       yes={this.save}
-      no={this.popupSaveClose}
+      no={this.popupClose('popupSave')}
+      message="Page Saved"
+      messageOpen={this.state.messageSaveOpen}
+      messageClose={this.popupClose('messageSaveOpen')}
       />
       <Popup
       open={this.state.popupDelete}
-      close={this.popupDeleteClose}
+      close={this.popupClose('popupDelete')}
       title="Are you sure delete"
       description="eeeeeeeeeeeeee"
       yes={this.deletePage}
-      no={this.popupDeleteClose}
+      no={this.popupClose('popupDelete')}
+      message="Page Deteled"
+      messageOpen={this.state.messageDeleteOpen}
+      messageClose={this.popupClose('messageDeleteOpen')}
       />
       {this.props.undefinedOneTab === true?
       <Button variant="contained" color="secondary" className={classes.button} onClick={this.addGlobal}>Start Your Project</Button>
       :
-      <Button variant="contained" color="secondary" onClick={this.popupSave} className={classes.button}>
+      <Button variant="contained" color="secondary" onClick={this.popup('popupSave')} className={classes.button}>
         SAVE
         <SaveIcon className={classes.rightIcon} />
       </Button>
@@ -557,7 +560,7 @@ class TabWebsite extends React.Component {
       icon="add"
       labelbox="Create page"
       labelButton="ADD"
-      onClickSave={this.addNewTab}
+      onClickSave={this.state.namePage? this.addNewTab:this.inputPageName}
       handleClose={this.handleClose}
       handleOpen={this.handleOpen}
       open={this.state.open}
@@ -583,30 +586,12 @@ class TabWebsite extends React.Component {
       valueCarousel2="CarouselNo1"
       valueCarousel3="CarouselNo2"
       valueCarousel4="CarouselNo3"
-      // selectedWelcome={this.state.selectedWelcome}
-      // handleChangeWelcome={this.onChangeValue('selectedWelcome')}
-      // valueWelcome1="none"
-      // valueWelcome2="WelcomeNo1"
-      // valueWelcome3="WelcomeNo2"
-      // valueWelcome4="WelcomeNo3"
-      // selectedAbout={this.state.selectedAbout}
-      // handleChangeAbout={this.onChangeValue('selectedAbout')}
-      // valueAbout1="none"
-      // valueAbout2="AboutNo1"
-      // valueAbout3="AboutNo2"
-      // valueAbout4="AboutNo3"
       selectedGallery={this.state.selectedGallery}
       handleChangeGallery={this.onChangeValue('selectedGallery')}
       valueGallery1="none"
       valueGallery2="GalleryNo1"
       valueGallery3="GalleryNo2"
       valueGallery4="GalleryNo3"
-      // selectedContact={this.state.selectedContact}
-      // handleChangeContact={this.onChangeValue('selectedContact')}
-      // valueContact1="none"
-      // valueContact2="ContactNo1"
-      // valueContact3="ContactNo2"
-      // valueContact4="ContactNo3"
       selectedFooter={this.state.selectedFooter}
       handleChangeFooter={this.onChangeValue('selectedFooter')}
       valueFooter1="none"
@@ -619,7 +604,7 @@ class TabWebsite extends React.Component {
       icon="edit"
       labelbox="Edit page"
       labelButton="Edit"
-      onClickSave={this.saveEdit}
+      onClickSave={this.state.namePage? this.saveEdit:this.inputPageName}
       handleClose={this.handleCloseEdit}
       handleOpen={this.handleOpenEdit}
       open={this.state.openEdit}
@@ -645,30 +630,12 @@ class TabWebsite extends React.Component {
       valueCarousel2="CarouselNo1"
       valueCarousel3="CarouselNo2"
       valueCarousel4="CarouselNo3"
-      // selectedWelcome={this.state.selectedWelcome}
-      // handleChangeWelcome={this.onChangeValue('selectedWelcome')}
-      // valueWelcome1="none"
-      // valueWelcome2="WelcomeNo1"
-      // valueWelcome3="WelcomeNo2"
-      // valueWelcome4="WelcomeNo3"
-      // selectedAbout={this.state.selectedAbout}
-      // handleChangeAbout={this.onChangeValue('selectedAbout')}
-      // valueAbout1="none"
-      // valueAbout2="AboutNo1"
-      // valueAbout3="AboutNo2"
-      // valueAbout4="AboutNo3"
       selectedGallery={this.state.selectedGallery}
       handleChangeGallery={this.onChangeValue('selectedGallery')}
       valueGallery1="none"
       valueGallery2="GalleryNo1"
       valueGallery3="GalleryNo2"
       valueGallery4="GalleryNo3"
-      // selectedContact={this.state.selectedContact}
-      // handleChangeContact={this.onChangeValue('selectedContact')}
-      // valueContact1="none"
-      // valueContact2="ContactNo1"
-      // valueContact3="ContactNo2"
-      // valueContact4="ContactNo3"
       selectedFooter={this.state.selectedFooter}
       handleChangeFooter={this.onChangeValue('selectedFooter')}
       valueFooter1="none"
@@ -678,7 +645,7 @@ class TabWebsite extends React.Component {
       />
       {this.props.undefinedOneTab !== true?
       <div>
-      <Button variant="contained" color="secondary" className={classes.button} onClick={this.popupDelete}>Delete
+      <Button variant="contained" color="secondary" className={classes.button} onClick={this.popup('popupDelete')}>Delete
       <DeleteIcon className={classes.rightIcon}/>
       </Button>
       <Button variant="contained" color="secondary" style={{float:'right'}} className={classes.button} ><a href={'https://webshow-efb30.firebaseapp.com'+this.props.path} style={{color:'#ffffff'}} target="_blank">Preview</a>

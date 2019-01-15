@@ -131,7 +131,8 @@ class CMS extends React.Component {
     carouselContent:[],
     menubarContent:[],
     galleryContent:[],
-    openHeader:false
+    openHeader:false,
+    undefinedOneTab:true
   };
 }
 
