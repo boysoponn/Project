@@ -38,23 +38,6 @@ class App extends Component {
       this.setState(() => ({
             authenticated: false,
       }));      
-        // if(this.state.authenticated){
-        //   const pathemail=this.state.email.replace(".","");
-        //   let app = config.database().ref('user/'+pathemail);
-        //   app.on('value', snapshot => { 
-        //   let dataVal = snapshot.val();
-        //   let data = _(dataVal)
-        //                   .keys()
-        //                   .map(dataKey => {
-        //                     let cloned = _.clone(dataVal[dataKey]);
-        //                     cloned.key = dataKey;
-        //                     return cloned;
-        //                   }).value();
-        //                   this.setState({
-        //                     username: _.map(data,'Username'),
-        //                   }); 
-        //   }); 
-        // }
     }); 
   }
 

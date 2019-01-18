@@ -8,6 +8,7 @@ import MenubarNo2 from './Menubar/menubarNo2'
 // import WelcomeNo2 from './Welcome/WelcomeNo2'
 import CarouselNo1 from './Carousel/CarouselNo1'
 import GalleryNo1 from './Gallery/GalleryNo1'
+import GalleryNo2 from './Gallery/GalleryNo2'
 import FooterNo1 from './Footer/FooterNo1'
 
 class IN extends React.Component {
@@ -139,7 +140,7 @@ class IN extends React.Component {
 
   if( this.props.Gallery === "GalleryNo1"){
   Gallery =
-  <GalleryNo1
+  <GalleryNo2
   galleryContent={this.props.galleryContent}
   galleryBackgroundColor={this.props.galleryBackgroundColor}
   galleryTitle={this.props.galleryTitle}  

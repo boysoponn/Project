@@ -57,8 +57,7 @@ export default GalleryNo1;
  const Gallery = styled.div`
  display: grid;
  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
- grid-gap: 2em;
- padding: 2em;
+ padding: 20px;
 `; 
 
 const Img = styled.img`
