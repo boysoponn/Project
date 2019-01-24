@@ -44,7 +44,7 @@ class GalleryNo2 extends React.Component {
 			<Grid>
 				{this.props.galleryContent.map((post) => 
 			
-					<Figure style={{width:'31.3%'}} className={'effect-'+post.galleryHover}>	
+					<Figure width='31.3%' className={'effect-'+post.galleryHover}>	
 						<Img Src={"url("+post.image+")"}/>
 						<Figcaption>
 							<div>
@@ -93,9 +93,8 @@ position: relative;
 float: left;
 overflow: hidden;
 margin: 10px 1%;
-width:100%;
-height: 500;
-// width: ${props => props.width};
+width: ${props => props.width};
+height: 500px;
 text-align: center;
 cursor: pointer;
 `;
@@ -106,7 +105,7 @@ position: relative;
 height: 100%; 
 background-position: center;
 background-repeat: no-repeat;
-background-size: 100%;
+background-size:  cover;
 `;
 const Figcaption = styled.figcaption`
 padding: 2em;

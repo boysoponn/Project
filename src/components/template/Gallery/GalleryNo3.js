@@ -43,8 +43,9 @@ class GalleryNo2 extends React.Component {
 			<ScrollAnimation style={description} className={this.props.galleryDescriptionAnimate}>{this.props.galleryDescription}</ScrollAnimation> 
 			<Grid>
 				{this.props.galleryContent.map((post) => 
+			
 					<Figure width='48%' className={'effect-'+post.galleryHover}>	
-						<Img src={post.image} key={post._key} alt={"item"+post._key}/>
+						<Img Src={"url("+post.image+")"}/>
 						<Figcaption>
 							<div>
 								<H2
@@ -67,6 +68,7 @@ class GalleryNo2 extends React.Component {
 							{post.link === '#'? null:<A href={post.link} target={post.linkTarget}></A>}
 						</Figcaption>			
 					</Figure>
+					
 				)}
 			</Grid>
 		</div>
@@ -91,17 +93,19 @@ position: relative;
 float: left;
 overflow: hidden;
 margin: 10px 1%;
-height: 50%;
 width: ${props => props.width};
+height: 500px;
 text-align: center;
 cursor: pointer;
 `;
 
-const Img = styled.img`
+const Img = styled.div`
+background-image:${props => props.Src};
 position: relative;
-display: block;
-height: 100%;
-width: 100%;
+height: 100%; 
+background-position: center;
+background-repeat: no-repeat;
+background-size:  cover;
 `;
 const Figcaption = styled.figcaption`
 padding: 2em;
