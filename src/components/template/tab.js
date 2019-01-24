@@ -35,6 +35,7 @@ const styles = theme => ({
     marginLeft:5,
   },
 
+
 });
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -210,7 +211,7 @@ class TabWebsite extends React.Component {
           Link1:{
             typeGroup:false,
             label:'Link',
-            link:'',
+            link:'#',
             linkTarget:'_blank',
             Animate:'none',
             Duration:'1s',
@@ -226,7 +227,7 @@ class TabWebsite extends React.Component {
           Link1:{
             typeGroup:false,
             label:'Link',
-            link:'',
+            link:'#',
             linkTarget:'_blank',
             Animate:'none',
             Duration:'1s',
@@ -293,7 +294,7 @@ class TabWebsite extends React.Component {
         heroButtonColor:'#228B22',
         heroButtonSwapColor:"#FFFFFF",
         heroButtonSwap:"Let go",
-        heroButtonLink:"",
+        heroButtonLink:"#",
         heroButtonLinkTarget:"_blank",
         heroButtonRadius:"10px",
         heroButtonBGColor:"#d4d1d1",
@@ -302,12 +303,33 @@ class TabWebsite extends React.Component {
         heroButtonHBDColor:"#FFFFFF",
         heroButtonHoverColor:"#FFFFFF",
       },
+      carouselMain:{ 
+        carouselTitle:'Title',
+        carouselDescription:'Description',
+        carouselTitleFontFamily:'Montserrat',
+        carouselTitleFontWeight:'700',
+        carouselTitleFontSize:'70',
+        carouselTitleFontStyle:'normal',
+        carouselTitleStatus:'block',
+        carouselTitleColor:'#000000',
+        carouselTitleAnimate:'none',
+        carouselTitleDuration:'1s',
+        carouselDescriptionFontFamily:'Montserrat',
+        carouselDescriptionFontWeight:'400',
+        carouselDescriptionFontSize:'30',
+        carouselDescriptionFontStyle:'normal',
+        carouselDescriptionStatus:'block',
+        carouselDescriptionColor:'#000000',
+        carouselDescriptionAnimate:'none',
+        carouselDescriptionDuration:'1s',
+        carouselBackgroundColor:'#ffffff'
+      },
       carouselSetting:{ 
         speed:'1000',
         pauseOnHover:true,
         dots:true,
         autoplay:true,
-        vertical:true  
+        vertical:true,
       },
       carouselContent:{
         Content1:{
@@ -385,13 +407,76 @@ class TabWebsite extends React.Component {
       },
       galleryItem:{
         content1:{
-          image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Furban-438393_1920.jpg?alt=media&token=a612bbf5-62c9-4782-b858-5602ac3e7770'  
+          image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2F1.jpg?alt=media&token=ce74df4f-e4ea-437f-90b0-c39ec8970086', 
+          title:'title',
+          titleAnimate:'none',
+          titleDuration:'1s',
+          titleFontFamily:'Roboto Mono',
+          titleFontSize:'25',
+          titleFontWeight:'400',
+          titleFontStyle:'normal',
+          titleStatus:'block',
+          titleColor:'#ffffff',
+          description:'description',
+          descriptionAnimate:'none',
+          descriptionDuration:'1s',
+          descriptionFontFamily:'Roboto Mono',
+          descriptionFontSize:'13',
+          descriptionFontWeight:'400',
+          descriptionFontStyle:'normal',
+          descriptionStatus:'block',
+          descriptionColor:'#ffffff',
+          link:'#',
+          linkTarget:'_blank',
+          galleryHover:'none'
         },
         content2:{
-          image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Furban-438393_1920.jpg?alt=media&token=a612bbf5-62c9-4782-b858-5602ac3e7770'  
+          image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Fbeard-2326422_1920.jpg?alt=media&token=b3a12c18-fe28-4574-a6cb-4076503312ea' ,
+          title:'title',
+          titleAnimate:'none',
+          titleDuration:'1s',
+          titleFontFamily:'Roboto Mono',
+          titleFontSize:'25',
+          titleFontWeight:'400',
+          titleFontStyle:'normal',
+          titleStatus:'block',
+          titleColor:'#ffffff',
+          description:'description',
+          descriptionAnimate:'none',
+          descriptionDuration:'1s',
+          descriptionFontFamily:'Roboto Mono',
+          descriptionFontSize:'13',
+          descriptionFontWeight:'400',
+          descriptionFontStyle:'normal',
+          descriptionStatus:'block',
+          descriptionColor:'#ffffff',
+          link:'#',
+          linkTarget:'_blank',
+          galleryHover:'none'
         },
         content3:{
-          image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Furban-438393_1920.jpg?alt=media&token=a612bbf5-62c9-4782-b858-5602ac3e7770'  
+          image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2F3038591-poster-p-1-secrets-of-the-most-productive-peoplehow-to-work-different-productivity-styles.jpg?alt=media&token=aca301c1-8ed2-4353-942e-39df3bff3ed0',  
+          title:'title',
+          titleAnimate:'none',
+          titleDuration:'1s',
+          titleFontFamily:'Roboto Mono',
+          titleFontSize:'25',
+          titleFontWeight:'400',
+          titleFontStyle:'normal',
+          titleStatus:'block',
+          titleColor:'#ffffff',
+          description:'description',
+          descriptionAnimate:'none',
+          descriptionDuration:'1s',
+          descriptionFontFamily:'Roboto Mono',
+          descriptionFontSize:'13',
+          descriptionFontWeight:'400',
+          descriptionFontStyle:'normal',
+          descriptionStatus:'block',
+          descriptionColor:'#ffffff',
+          link:'#',
+          linkTarget:'_blank',
+          galleryHover:'none'
         },
       }
       
@@ -457,12 +542,33 @@ class TabWebsite extends React.Component {
       heroButtonHBDColor:this.props.heroButtonHBDColor,
       heroButtonHoverColor:this.props.heroButtonHoverColor,
     },
+    carouselMain:{
+      carouselBackgroundColor:this.props.carouselBackgroundColor,
+      carouselTitle:this.props.carouselTitle,
+      carouselDescription:this.props.carouselDescription,
+      carouselTitleAnimate:this.props.carouselTitleAnimate,
+      carouselTitleDuration:this.props.carouselTitleDuration,
+      carouselTitleFontFamily:this.props.carouselTitleFontFamily,
+      carouselTitleFontSize:this.props.carouselTitleFontSize,
+      carouselTitleFontWeight:this.props.carouselTitleFontWeight,
+      carouselTitleFontStyle:this.props.carouselTitleFontStyle,
+      carouselTitleStatus:this.props.carouselTitleStatus,
+      carouselTitleColor:this.props.carouselTitleColor,
+      carouselDescriptionAnimate:this.props.carouselDescriptionAnimate,
+      carouselDescriptionDuration:this.props.carouselDescriptionDuration,
+      carouselDescriptionFontFamily:this.props.carouselDescriptionFontFamily,
+      carouselDescriptionFontSize:this.props.carouselDescriptionFontSize,
+      carouselDescriptionFontWeight:this.props.carouselDescriptionFontWeight,
+      carouselDescriptionFontStyle:this.props.carouselDescriptionFontStyle,
+      carouselDescriptionStatus:this.props.carouselDescriptionStatus,
+      carouselDescriptionColor:this.props.carouselDescriptionColor,
+    },
     carouselSetting:{
       speed:this.props.carouselSpeed,
       pauseOnHover:this.props.carouselPauseOnHover,
       dots:this.props.carouselDots,
       autoplay:this.props.carouselAutoplay,
-      vertical:this.props.carouselVertical
+      vertical:this.props.carouselVertical,
     },
     galleryContent:{
       title:this.props.galleryTitle,
@@ -677,6 +783,7 @@ class TabWebsite extends React.Component {
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
+          className={classes.gg}
         >            
           {this.state.news.map((New => (
             <div key={New._key} className={classes.content}>
@@ -735,12 +842,31 @@ class TabWebsite extends React.Component {
               heroButtonHBDColor={this.props.heroButtonHBDColor}
               heroButtonHoverColor={this.props.heroButtonHoverColor}
 
+              carouselBackgroundColor={this.props.carouselBackgroundColor}
               carouselContent={this.props.carouselContent}
               carouselSpeed={this.props.carouselSpeed}
               carouselPauseOnHover={this.props.carouselPauseOnHover}
               carouselDots={this.props.carouselDots}
               carouselAutoplay={this.props.carouselAutoplay}
               carouselVertical={this.props.carouselVertical}
+              carouselTitle={this.props.carouselTitle}
+              carouselDescription={this.props.carouselDescription}
+              carouselTitleAnimate={this.props.carouselTitleAnimate}
+              carouselTitleDuration={this.props.carouselTitleDuration}
+              carouselTitleFontFamily={this.props.carouselTitleFontFamily}
+              carouselTitleFontSize={this.props.carouselTitleFontSize}
+              carouselTitleFontWeight={this.props.carouselTitleFontWeight}
+              carouselTitleFontStyle={this.props.carouselTitleFontStyle}
+              carouselTitleStatus={this.props.carouselTitleStatus}
+              carouselTitleColor={this.props.carouselTitleColor}
+              carouselDescriptionAnimate={this.props.carouselDescriptionAnimate}
+              carouselDescriptionDuration={this.props.carouselDescriptionDuration}
+              carouselDescriptionFontFamily={this.props.carouselDescriptionFontFamily}
+              carouselDescriptionFontSize={this.props.carouselDescriptionFontSize}
+              carouselDescriptionFontWeight={this.props.carouselDescriptionFontWeight}
+              carouselDescriptionFontStyle={this.props.carouselDescriptionFontStyle}
+              carouselDescriptionStatus={this.props.carouselDescriptionStatus}
+              carouselDescriptionColor={this.props.carouselDescriptionColor}
 
               galleryContent={this.props.galleryContent}
               galleryBackgroundColor={this.props.galleryBackgroundColor}

@@ -11,7 +11,8 @@ class GalleryNo2 extends React.Component {
       }
   render() {
 	const background={
-		padding:'10%',
+		paddingBottom:'10%',
+		paddingTop:'10%',
 		backgroundColor:this.props.galleryBackgroundColor,
 		textAlign: 'center',
 	  }
@@ -42,7 +43,7 @@ class GalleryNo2 extends React.Component {
 			<ScrollAnimation style={description} className={this.props.galleryDescriptionAnimate}>{this.props.galleryDescription}</ScrollAnimation> 
 			<Grid>
 				{this.props.galleryContent.map((post) => 
-					<Figure className={'effect-'+post.galleryHover}>	
+					<Figure width='48%' className={'effect-'+post.galleryHover}>	
 						<Img src={post.image} key={post._key} alt={"item"+post._key}/>
 						<Figcaption>
 							<div>
@@ -84,13 +85,14 @@ text-align: center;
 display: inline-block;
 width:100%;
 `; 
+
 const Figure = styled.figure`
 position: relative;
 float: left;
 overflow: hidden;
 margin: 10px 1%;
-height: 360px;
-// width: ${props => props.width};
+height: 50%;
+width: ${props => props.width};
 text-align: center;
 cursor: pointer;
 `;
@@ -99,10 +101,8 @@ const Img = styled.img`
 position: relative;
 display: block;
 height: 100%;
-// width: 100%;
-// opacity: 0.8;
+width: 100%;
 `;
-
 const Figcaption = styled.figcaption`
 padding: 2em;
 color: #fff;
@@ -155,3 +155,4 @@ display: ${props => props.status};
 font-family: ${props => props.family};
 font-style:${props => props.fontStyle};
 `;
+

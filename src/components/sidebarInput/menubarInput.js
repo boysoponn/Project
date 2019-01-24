@@ -132,7 +132,7 @@ class CarouselInput extends React.Component {
     dbCon.push({
       typeGroup:false,
       label:'Link',
-      link:'',
+      link:'#',
       linkTarget:'_blank',
       Animate:'none',
       Duration:'1s',

@@ -46,7 +46,8 @@ const styles = theme => ({
   },
   button: {
    marginTop:10,
-   width:130
+   width:130,
+   fontSize:'13px'
   },
   image:{
     '&:hover': {
@@ -96,7 +97,9 @@ class ModalChooseImage extends React.Component {
  }
 
   imageOnClick = image => () => {
-    // this.props.dispatch(getUrlImage(image.imageName));
+    this.setState({
+      imageOnClick:image.imageName,
+    });
     let dbCon = config.database().ref('project/'+this.props.email+'/'+this.props.tabs+'/'+this.props.path);
     dbCon.update({
       image:image.imageName,
@@ -117,7 +120,7 @@ class ModalChooseImage extends React.Component {
     return (
       <div>
         <div className={classes.imgUpload}>
-        <img className={classes.gg} src={this.props.imagePick} alt="uploadPicture"/>
+        <img className={classes.gg} src={this.state.imageOnClick? this.state.imageOnClick:this.props.imagePick} alt="uploadPicture"/>
         </div>
         <Button variant="contained" onClick={this.handleOpen} component="span" color="secondary" className={classes.button}>
         Choose image

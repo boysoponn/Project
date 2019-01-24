@@ -8,6 +8,7 @@ import HomeRounded from '@material-ui/icons/Link';
 import Filter_none from '@material-ui/icons/FilterNone';
 import Checkbox from '@material-ui/core/Checkbox';
 import ListItem from '@material-ui/core/ListItem';
+import List from '@material-ui/core/List';
 import Text from './Text';
 
 const styles = theme => ({
@@ -104,6 +105,7 @@ componentDidMount=()=> {
                 horizontal: 'left',
               }}
               >
+              <List>
                 <ListItem >
                 <Checkbox
                 checked={this.props.target === '_blank'}
@@ -120,6 +122,7 @@ componentDidMount=()=> {
                 />
                 <p>Self</p>
                 </ListItem>
+              </List>
               </Popover>
       </div>
     )

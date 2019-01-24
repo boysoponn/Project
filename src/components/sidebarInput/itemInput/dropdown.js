@@ -34,22 +34,21 @@ class Dropdown extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-                <form className={classes} autoComplete="off">
-                    <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor="age-simple">{this.props.label}</InputLabel>
-                    <Select 
-                      variant='outlined'
-                        value={this.props.value}
-                        onChange={this.props.onChange}
-                        MenuProps={MenuProps}
-                    >   
-                    {this.props.choice.map((values => (
-                        <MenuItem key={values._key} value={values.value}>{values.label}</MenuItem>
-                        )))}
-                    </Select>
-                    </FormControl>
-                </form>         
-
+        <form  autoComplete="off">
+            <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="age-simple">{this.props.label}</InputLabel>
+            <Select 
+              variant='outlined'
+                value={this.props.value}
+                onChange={this.props.onChange}
+                MenuProps={MenuProps}
+            >   
+            {this.props.choice.map((values => (
+                <MenuItem key={values._key} value={values.value}>{values.label}</MenuItem>
+                )))}
+            </Select>
+            </FormControl>
+        </form>         
     );
   }
 }

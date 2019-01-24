@@ -17,7 +17,9 @@ import Grid from '@material-ui/core/Grid';
 import None from '../image/none.jpg'
 import Cover1 from '../image/cover.jpg'
 import Cover2 from '../image/cover2.jpg'
-import Gallery from '../image/gallery.jpg'
+import GalleryNo1 from '../image/gallery1.jpg'
+import GalleryNo2 from '../image/gallery2.jpg'
+import GalleryNo3 from '../image/gallery3.jpg'
 import Menu1 from '../image/menu1.jpg'
 import Menu2 from '../image/comingsoon.jpg'
 import Footer from '../image/comingsoon.jpg'
@@ -215,7 +217,25 @@ class ButtonForNewTab extends React.Component {
               handleChange={this.props.handleChangeGallery}
               value={this.props.valueGallery2}
               label='Gallery 1'
-              image={Gallery}
+              image={GalleryNo1}
+              />
+            </Grid>
+            <Grid item  sm={6} md={4} lg={3}>
+              <RadioButtons
+              selectedValue={this.props.selectedGallery}
+              handleChange={this.props.handleChangeGallery}
+              value={this.props.valueGallery3}
+              label='Gallery 1'
+              image={GalleryNo2}
+              />
+            </Grid>
+            <Grid item  sm={6} md={4} lg={3}>
+              <RadioButtons
+              selectedValue={this.props.selectedGallery}
+              handleChange={this.props.handleChangeGallery}
+              value={this.props.valueGallery4}
+              label='Gallery 1'
+              image={GalleryNo3}
               />
             </Grid>
           </Grid>

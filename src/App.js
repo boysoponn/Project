@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import exmessage from './components/ex-message';
 import Member from './components/Member';
 import Cms from './components/CMS';
+import Cdd from './components/template/Gallery/GalleryNo3';
 import AppWithConnect from './components/header';
 import config from './config'
 import { connect } from 'react-redux'
@@ -78,7 +79,8 @@ const LoginWithRestriction = withRestriction2(Member);
           <Route path="/login" component={LoginWithRestriction} />   
           <Route path="/message" component={exmessage} /> 
           <Route path="/cms" component={CMSWithRestriction} />   
-          <Route path="/header" component={AppWithConnect} />                
+          <Route path="/header" component={AppWithConnect} /> 
+          <Route path="/Cdd" component={Cdd} />                
         </div>
       </Router>
     );

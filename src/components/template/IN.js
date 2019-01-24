@@ -7,21 +7,24 @@ import MenubarNo2 from './Menubar/menubarNo2'
 // import WelcomeNo1 from './Welcome/WelcomeNo1'
 // import WelcomeNo2 from './Welcome/WelcomeNo2'
 import CarouselNo1 from './Carousel/CarouselNo1'
+import CarouselNo2 from './Carousel/CarouselNo2'
 import GalleryNo1 from './Gallery/GalleryNo1'
 import GalleryNo2 from './Gallery/GalleryNo2'
+import GalleryNo3 from './Gallery/GalleryNo3'
 import FooterNo1 from './Footer/FooterNo1'
 
 class IN extends React.Component {
 
   render() {
   const End={
-    height:200,
+    height:300,
     backgroundColor:'none',
   };
   let menubar;
   let Hero;
   let Carousel;
   let Gallery;
+  let Footer;
 
   if( this.props.Menubar === "MenubarNo1"){
   menubar=<MenubarNo1
@@ -128,19 +131,38 @@ class IN extends React.Component {
     />
   }
   if( this.props.Carousel === "CarouselNo1"){
-    Carousel = <CarouselNo1
+    Carousel = <CarouselNo2
+    carouselBackgroundColor={this.props.carouselBackgroundColor}
     carouselContent={this.props.carouselContent}
     carouselSpeed={this.props.carouselSpeed}
     carouselPauseOnHover={this.props.carouselPauseOnHover}
     carouselDots={this.props.carouselDots}
     carouselAutoplay={this.props.carouselAutoplay}
     carouselVertical={this.props.carouselVertical}
+    carouselTitle={this.props.carouselTitle}
+    carouselDescription={this.props.carouselDescription}
+    carouselTitleAnimate={this.props.carouselTitleAnimate}
+    carouselTitleDuration={this.props.carouselTitleDuration}
+    carouselTitleFontFamily={this.props.carouselTitleFontFamily}
+    carouselTitleFontSize={this.props.carouselTitleFontSize}
+    carouselTitleFontWeight={this.props.carouselTitleFontWeight}
+    carouselTitleFontStyle={this.props.carouselTitleFontStyle}
+    carouselTitleStatus={this.props.carouselTitleStatus}
+    carouselTitleColor={this.props.carouselTitleColor}
+    carouselDescriptionAnimate={this.props.carouselDescriptionAnimate}
+    carouselDescriptionDuration={this.props.carouselDescriptionDuration}
+    carouselDescriptionFontFamily={this.props.carouselDescriptionFontFamily}
+    carouselDescriptionFontSize={this.props.carouselDescriptionFontSize}
+    carouselDescriptionFontWeight={this.props.carouselDescriptionFontWeight}
+    carouselDescriptionFontStyle={this.props.carouselDescriptionFontStyle}
+    carouselDescriptionStatus={this.props.carouselDescriptionStatus}
+    carouselDescriptionColor={this.props.carouselDescriptionColor}
     />
   }
 
   if( this.props.Gallery === "GalleryNo1"){
   Gallery =
-  <GalleryNo2
+  <GalleryNo1
   galleryContent={this.props.galleryContent}
   galleryBackgroundColor={this.props.galleryBackgroundColor}
   galleryTitle={this.props.galleryTitle}  
@@ -164,8 +186,59 @@ class IN extends React.Component {
   galleryDescriptionColor={this.props.galleryDescriptionColor}
   />
   }
+  if( this.props.Gallery === "GalleryNo2"){
+    Gallery =
+    <GalleryNo2
+    galleryContent={this.props.galleryContent}
+    galleryBackgroundColor={this.props.galleryBackgroundColor}
+    galleryTitle={this.props.galleryTitle}  
+    galleryTitleAnimate={this.props.galleryTitleAnimate} 
+    galleryTitleDuration={this.props.galleryTitleDuration}   
+    galleryTitleFontFamily={this.props.galleryTitleFontFamily}
+    galleryTitleFontSize={this.props.galleryTitleFontSize}
+    galleryTitleFontWeight={this.props.galleryTitleFontWeight}
+    galleryTitleFontStyle={this.props.galleryTitleFontStyle}
+    galleryTitleStatus={this.props.galleryTitleStatus}
+    galleryTitleColor={this.props.galleryTitleColor}
   
-  let Footer;
+    galleryDescription={this.props.galleryDescription}  
+    galleryDescriptionAnimate={this.props.galleryDescriptionAnimate} 
+    galleryDescriptionDuration={this.props.galleryDescriptionDuration}   
+    galleryDescriptionFontFamily={this.props.galleryDescriptionFontFamily}
+    galleryDescriptionFontSize={this.props.galleryDescriptionFontSize}
+    galleryDescriptionFontWeight={this.props.galleryDescriptionFontWeight}
+    galleryDescriptionFontStyle={this.props.galleryDescriptionFontStyle}
+    galleryDescriptionStatus={this.props.galleryDescriptionStatus}
+    galleryDescriptionColor={this.props.galleryDescriptionColor}
+    />
+    }
+  if( this.props.Gallery === "GalleryNo3"){
+    Gallery =
+    <GalleryNo3
+    galleryContent={this.props.galleryContent}
+    galleryBackgroundColor={this.props.galleryBackgroundColor}
+    galleryTitle={this.props.galleryTitle}  
+    galleryTitleAnimate={this.props.galleryTitleAnimate} 
+    galleryTitleDuration={this.props.galleryTitleDuration}   
+    galleryTitleFontFamily={this.props.galleryTitleFontFamily}
+    galleryTitleFontSize={this.props.galleryTitleFontSize}
+    galleryTitleFontWeight={this.props.galleryTitleFontWeight}
+    galleryTitleFontStyle={this.props.galleryTitleFontStyle}
+    galleryTitleStatus={this.props.galleryTitleStatus}
+    galleryTitleColor={this.props.galleryTitleColor}
+  
+    galleryDescription={this.props.galleryDescription}  
+    galleryDescriptionAnimate={this.props.galleryDescriptionAnimate} 
+    galleryDescriptionDuration={this.props.galleryDescriptionDuration}   
+    galleryDescriptionFontFamily={this.props.galleryDescriptionFontFamily}
+    galleryDescriptionFontSize={this.props.galleryDescriptionFontSize}
+    galleryDescriptionFontWeight={this.props.galleryDescriptionFontWeight}
+    galleryDescriptionFontStyle={this.props.galleryDescriptionFontStyle}
+    galleryDescriptionStatus={this.props.galleryDescriptionStatus}
+    galleryDescriptionColor={this.props.galleryDescriptionColor}
+    />
+    }
+  
   if( this.props.Footer === "FooterNo1"){
   Footer=<FooterNo1
   footerContent={this.props.footerContent}
@@ -193,7 +266,7 @@ class IN extends React.Component {
   />
   }
 return (
-      <div> 
+      <div style={{height:'100%'}}> 
       {menubar}  
       {Hero}
       {Carousel}

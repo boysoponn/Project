@@ -236,11 +236,30 @@ componentWillReceiveProps(nextProps){
           heroButtonHBDColor:data.heroContent.heroButtonHBDColor,
           heroButtonHoverColor:data.heroContent.heroButtonHoverColor,
 
+          carouselBackgroundColor:data.carouselMain.carouselBackgroundColor,
           carouselSpeed:data.carouselSetting.speed,
           carouselPauseOnHover:data.carouselSetting.pauseOnHover,
           carouselDots:data.carouselSetting.dots,
           carouselAutoplay:data.carouselSetting.autoplay,
           carouselVertical:data.carouselSetting.vertical,
+          carouselTitle:data.carouselMain.carouselTitle,
+          carouselDescription:data.carouselMain.carouselDescription,
+          carouselTitleAnimate:data.carouselMain.carouselTitleAnimate,
+          carouselTitleDuration:data.carouselMain.carouselTitleDuration,
+          carouselTitleFontFamily:data.carouselMain.carouselTitleFontFamily,
+          carouselTitleFontSize:data.carouselMain.carouselTitleFontSize,
+          carouselTitleFontWeight:data.carouselMain.carouselTitleFontWeight,
+          carouselTitleFontStyle:data.carouselMain.carouselTitleFontStyle,
+          carouselTitleStatus:data.carouselMain.carouselTitleStatus,
+          carouselTitleColor:data.carouselMain.carouselTitleColor,
+          carouselDescriptionAnimate:data.carouselMain.carouselDescriptionAnimate,
+          carouselDescriptionDuration:data.carouselMain.carouselDescriptionDuration,
+          carouselDescriptionFontFamily:data.carouselMain.carouselDescriptionFontFamily,
+          carouselDescriptionFontSize:data.carouselMain.carouselDescriptionFontSize,
+          carouselDescriptionFontWeight:data.carouselMain.carouselDescriptionFontWeight,
+          carouselDescriptionFontStyle:data.carouselMain.carouselDescriptionFontStyle,
+          carouselDescriptionStatus:data.carouselMain.carouselDescriptionStatus,
+          carouselDescriptionColor:data.carouselMain.carouselDescriptionColor,
 
           galleryBackgroundColor:data.galleryContent.backgroundColor,
           galleryTitle:data.galleryContent.title,
@@ -413,11 +432,50 @@ componentWillReceiveProps(nextProps){
       carouselDots={this.state.carouselDots}
       carouselAutoplay={this.state.carouselAutoplay}
       carouselVertical={this.state.carouselVertical}
+      carouselBackgroundColor={this.state.carouselBackgroundColor}
+      carouselTitle={this.state.carouselTitle}
+      carouselDescription={this.state.carouselDescription}
+      carouselTitleAnimate={this.state.carouselTitleAnimate}
+      carouselTitleDuration={this.state.carouselTitleDuration}
+      carouselTitleFontFamily={this.state.carouselTitleFontFamily}
+      carouselTitleFontSize={this.state.carouselTitleFontSize}
+      carouselTitleFontWeight={this.state.carouselTitleFontWeight}
+      carouselTitleFontStyle={this.state.carouselTitleFontStyle}
+      carouselTitleStatus={this.state.carouselTitleStatus}
+      carouselTitleColor={this.state.carouselTitleColor}
+      carouselDescriptionAnimate={this.state.carouselDescriptionAnimate}
+      carouselDescriptionDuration={this.state.carouselDescriptionDuration}
+      carouselDescriptionFontFamily={this.state.carouselDescriptionFontFamily}
+      carouselDescriptionFontSize={this.state.carouselDescriptionFontSize}
+      carouselDescriptionFontWeight={this.state.carouselDescriptionFontWeight}
+      carouselDescriptionFontStyle={this.state.carouselDescriptionFontStyle}
+      carouselDescriptionStatus={this.state.carouselDescriptionStatus}
+      carouselDescriptionColor={this.state.carouselDescriptionColor}
+      carouselOnChangeBackgroundColor={this.onChangeColor('carouselBackgroundColor')}
       carouselOnChangePauseOnHover={this.onChangeChecked('carouselPauseOnHover')}
       carouselOnChangeAutoplay={this.onChangeChecked('carouselAutoplay')}
       carouselOnChangeVertical={this.onChangeChecked('carouselVertical')}
       carouselOnChangeSpeed={this.onChangeValue('carouselSpeed')}
       carouselOnChangeDots={this.onChangeChecked('carouselDots')}
+      carouselOnChangeTitle={this.onChangeValue('carouselTitle')}
+      carouselOnChangeDescription={this.onChangeValue('carouselDescription')}
+      carouselOnChangeTitleAnimate={this.onChangeValue('carouselTitleAnimate')}
+      carouselOnChangeTitleDuration={this.onChangeValue('carouselTitleDuration')}
+      carouselOnChangeTitleFontFamily={this.onChangeValue('carouselTitleFontFamily')}
+      carouselOnChangeTitleFontSize={this.onChangeValue('carouselTitleFontSize')}
+      carouselOnChangeTitleFontWeight={this.onChangeValue('carouselTitleFontWeight')}
+      carouselOnChangeTitleFontStyle={this.onChangeValue('carouselTitleFontStyle')}
+      carouselOnChangeTitleStatus={this.onChangeValue('carouselTitleStatus')}
+      carouselOnChangeTitleColor={this.onChangeColor('carouselTitleColor')}
+      carouselOnChangeDescriptionAnimate={this.onChangeValue('carouselDescriptionAnimate')}
+      carouselOnChangeDescriptionDuration={this.onChangeValue('carouselDescriptionDuration')}
+      carouselOnChangeDescriptionFontFamily={this.onChangeValue('carouselDescriptionFontFamily')}
+      carouselOnChangeDescriptionFontSize={this.onChangeValue('carouselDescriptionFontSize')}
+      carouselOnChangeDescriptionFontWeight={this.onChangeValue('carouselDescriptionFontWeight')}
+      carouselOnChangeDescriptionFontStyle={this.onChangeValue('carouselDescriptionFontStyle')}
+      carouselOnChangeDescriptionStatus={this.onChangeValue('carouselDescriptionStatus')}
+      carouselOnChangeDescriptionColor={this.onChangeColor('carouselDescriptionColor')}
+
     />
     };
     let menubarInput; 
@@ -659,17 +717,31 @@ componentWillReceiveProps(nextProps){
               heroButtonHBDColor={this.state.heroButtonHBDColor}
               heroButtonHoverColor={this.state.heroButtonHoverColor}
                       
+              carouselBackgroundColor={this.state.carouselBackgroundColor}
               carouselContent={this.state.carouselContent}
               carouselSpeed={this.state.carouselSpeed}
               carouselPauseOnHover={this.state.carouselPauseOnHover}
               carouselDots={this.state.carouselDots}
               carouselAutoplay={this.state.carouselAutoplay}
               carouselVertical={this.state.carouselVertical}
-              carouselOnChangePauseOnHover={this.carouselOnChangePauseOnHover}
-              carouselOnChangeAutoplay={this.carouselOnChangeAutoplay}
-              carouselOnChangeVertical={this.carouselOnChangeVertical}
-              carouselOnChangeSpeed={this.carouselOnChangeSpeed}
-              carouselOnChangeDots={this.carouselOnChangeDots}
+              carouselTitle={this.state.carouselTitle}
+              carouselDescription={this.state.carouselDescription}
+              carouselTitleAnimate={this.state.carouselTitleAnimate}
+              carouselTitleDuration={this.state.carouselTitleDuration}
+              carouselTitleFontFamily={this.state.carouselTitleFontFamily}
+              carouselTitleFontSize={this.state.carouselTitleFontSize}
+              carouselTitleFontWeight={this.state.carouselTitleFontWeight}
+              carouselTitleFontStyle={this.state.carouselTitleFontStyle}
+              carouselTitleStatus={this.state.carouselTitleStatus}
+              carouselTitleColor={this.state.carouselTitleColor}
+              carouselDescriptionAnimate={this.state.carouselDescriptionAnimate}
+              carouselDescriptionDuration={this.state.carouselDescriptionDuration}
+              carouselDescriptionFontFamily={this.state.carouselDescriptionFontFamily}
+              carouselDescriptionFontSize={this.state.carouselDescriptionFontSize}
+              carouselDescriptionFontWeight={this.state.carouselDescriptionFontWeight}
+              carouselDescriptionFontStyle={this.state.carouselDescriptionFontStyle}
+              carouselDescriptionStatus={this.state.carouselDescriptionStatus}
+              carouselDescriptionColor={this.state.carouselDescriptionColor}
 
               galleryContent={this.state.galleryContent}
               galleryBackgroundColor={this.state.galleryBackgroundColor}

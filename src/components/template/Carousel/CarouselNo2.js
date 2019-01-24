@@ -1,24 +1,53 @@
 import React from 'react';
+import ScrollAnimation from 'react-animate-on-scroll';
 import { Carousel } from 'antd';
-import './../tamplateCSS/carousel.css';
+import './../tamplateCSS/carousel2.css';
 
 
 class CarouselNo1 extends React.Component {
 
   render() {
     const background ={
-        height:800,
-        margin:'-1'
+        padding:'10%',
+        backgroundColor:this.props.carouselBackgroundColor,
+		textAlign: 'center',
     };
 
+	const title ={
+		color:this.props.carouselTitleColor,
+		opacity: 1,
+		animationDuration: this.props.carouselTitleDuration,
+		fontFamily:this.props.carouselTitleFontFamily,
+		fontSize:this.props.carouselTitleFontSize,
+		fontWeight:this.props.carouselTitleFontWeight,
+		fontStyle:this.props.carouselTitleFontStyle,
+		display:this.props.carouselTitleStatus
+	};
+	const description={
+		opacity: 1,
+		color:this.props.carouselDescriptionColor,
+		animationDuration: this.props.carouselDescriptionDuration,
+		fontFamily:this.props.carouselDescriptionFontFamily,
+		fontSize:this.props.carouselDescriptionFontSize,
+		fontWeight:this.props.carouselDescriptionFontWeight,
+		fontStyle:this.props.carouselDescriptionFontStyle,
+		display:this.props.carouselDescriptionStatus
+    };
+    
     return (
         <div style={background}> 
+            <ScrollAnimation style={title} className={this.props.carouselTitleAnimate} >
+            {this.props.carouselTitle}
+            </ScrollAnimation> 
+            <ScrollAnimation style={description} className={this.props.carouselDescriptionAnimate} >
+            {this.props.carouselDescription}
+            </ScrollAnimation> 
             <Carousel   autoplay={this.props.carouselAutoplay} vertical={this.props.carouselVertical}  speed={this.props.carouselSpeed} dots={this.props.carouselDots} pauseOnHover= {this.props.carouselPauseOnHover}>
             {this.props.carouselContent.map((post => (
                 <div key={post._key}>
                     <div style={{
                           backgroundImage:"url("+post.image+")",
-                          height:'800',
+                          height:'400',
                           backgroundSize:'cover', 
                           backgroundPosition: 'center center',
                           backgroundRepeat:  'no-repeat',}} key={post._key}>

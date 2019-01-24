@@ -20,6 +20,7 @@ class Textarea extends React.Component {
           onChange={this.props.onChange}
           value={this.props.value}
           margin="normal"
+          autoComplete="off"
         />
         </FormControl>
       </div>

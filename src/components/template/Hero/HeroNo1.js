@@ -20,7 +20,7 @@ class HeroNo1 extends React.Component {
         backgroundImage:"url("+this.props.heroImagePick+")",
         backgroundSize:'cover',
         height:'100%',
-        margin:0
+        margin:0,
     };
     const content={
         textAlign: 'center',
@@ -93,7 +93,7 @@ class HeroNo1 extends React.Component {
     };
         
     let checkButton;
-    if(this.props.heroButtonLink !== ""){
+    if(this.props.heroButtonLink !== "#"){
       checkButton = 
       <ScrollAnimation style={buttonAnimate} className={this.props.heroButtonAnimate}>
       <a href={this.props.heroButtonLink} target={this.props.heroButtonLinkTarget}>{button}</a>

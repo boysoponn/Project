@@ -41,6 +41,7 @@ class Text extends React.Component {
             classes={{
               underline: classes.cssUnderline,
             }}
+            autoComplete="off"
             type={this.props.type}
             id="custom-css-input"
             onChange={this.props.onChange}

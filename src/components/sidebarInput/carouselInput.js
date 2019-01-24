@@ -24,7 +24,9 @@ import SaveIcon from '@material-ui/icons/Save';
 import Popover from '@material-ui/core/Popover';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/AddCircle';
-
+import PickColor from './itemInput/pickColor'
+import InputText from './itemInput/inputText';
+import InputTextarea from './itemInput/inputTextarea';
 function Transition(props) {
   return <Slide direction="right" {...props} />;
 }
@@ -169,6 +171,10 @@ class NestedList extends React.Component {
     const { anchorEl,anchorEl2 } = this.state;
     const open = Boolean(anchorEl);
     const open2 = Boolean(anchorEl2);
+    const pickColor={
+      fontSize: '16px',
+      marginLeft:10
+    };
     return (
       <div className={classes.root} >
         <List disablePadding={true}>
@@ -180,6 +186,68 @@ class NestedList extends React.Component {
             {this.state.open ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding={false}>
+                <ListItem>
+                  <p style={pickColor}> Background Color&nbsp;&nbsp;&nbsp;</p>
+                  <PickColor
+                  padding="0"
+                  width="80px"
+                  height="20px"
+                  color={this.props.carouselBackgroundColor}
+                  onChange={this.props.carouselOnChangeBackgroundColor}
+                  />
+                </ListItem>
+              </List> 
+            <List component="div" disablePadding={false}>
+              <ListItem  className={classes.nested}>
+              <InputText 
+              Label="Title" 
+              value={this.props.carouselTitle}  
+              animate={this.props.carouselTitleAnimate} 
+              onChange={this.props.carouselOnChangeTitle} 
+              duration={this.props.carouselTitleDuration}   
+              FontFamily={this.props.carouselTitleFontFamily}
+              FontSize={this.props.carouselTitleFontSize}
+              FontWeight={this.props.carouselTitleFontWeight}
+              FontStyle={this.props.carouselTitleFontStyle}
+              Status={this.props.carouselTitleStatus}
+              onChangeAnimate={this.props.carouselOnChangeTitleAnimate}              
+              onChangeDuration={this.props.carouselOnChangeTitleDuration}            
+              onChangeFontFamily={this.props.carouselOnChangeTitleFontFamily}
+              onChangeFontSize={this.props.carouselOnChangeTitleFontSize}                           
+              onChangeFontWeight={this.props.carouselOnChangeTitleFontWeight}
+              onChangeFontStyle={this.props.carouselOnChangeTitleFontStyle}              
+              onChangeStatus={this.props.carouselOnChangeTitleStatus}
+              color={this.props.carouselTitleColor}
+              onChangeColor={this.props.carouselOnChangeTitleColor}
+              />
+              </ListItem>
+            </List>
+            <List component="div" disablePadding={false}>
+              <ListItem  className={classes.nested}>
+              <InputTextarea 
+              label="Description" 
+              value={this.props.carouselDescription}  
+              animate={this.props.carouselDescriptionAnimate} 
+              onChange={this.props.carouselOnChangeDescription} 
+              duration={this.props.carouselDescriptionDuration}   
+              FontFamily={this.props.carouselDescriptionFontFamily}
+              FontSize={this.props.carouselDescriptionFontSize}
+              FontWeight={this.props.carouselDescriptionFontWeight}
+              FontStyle={this.props.carouselDescriptionFontStyle}
+              Status={this.props.carouselDescriptionStatus}
+              onChangeAnimate={this.props.carouselOnChangeDescriptionAnimate}              
+              onChangeDuration={this.props.carouselOnChangeDescriptionDuration}            
+              onChangeFontFamily={this.props.carouselnOnChangeDescriptioFontFamily}
+              onChangeFontSize={this.props.carouselOnChangeDescriptionFontSize}                           
+              onChangeFontWeight={this.props.carouselOnChangeDescriptionFontWeight}
+              onChangeFontStyle={this.props.carouselOnChangeDescriptionFontStyle}              
+              onChangeStatus={this.props.carouselOnChangeDescriptionStatus}
+              color={this.props.carouselDescriptionColor}
+              onChangeColor={this.props.carouselOnChangeDescriptionColor}
+              />
+              </ListItem>
+            </List>
             <List component="div" disablePadding={false}>
             <ListItem className={classes.nested}>
             <Button variant="contained" onClick={this.handleClickOpen} component="span" color="secondary" className={classes}>

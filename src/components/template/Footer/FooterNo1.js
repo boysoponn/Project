@@ -1,8 +1,8 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Facebook from '../tamplateCSS/facebook.png';
-import Youtube from '../tamplateCSS/youtube.png';
-import Twitter from '../tamplateCSS/twitter.png';
+import Facebook from '../../image/facebook.png';
+import Youtube from '../../image/youtube.png';
+import Twitter from '../../image/twitter.png';
 import Grid from '@material-ui/core/Grid';
 import ScrollAnimation from 'react-animate-on-scroll';
 import styled from 'styled-components'
@@ -10,8 +10,7 @@ import styled from 'styled-components'
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
-    backgroundColor:'grey',
+    // height:'100%'
   },
   paper: {
     padding: theme.spacing.unit * 2,
