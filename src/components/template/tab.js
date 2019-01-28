@@ -264,6 +264,7 @@ class TabWebsite extends React.Component {
       heroContent: {  
         backgroundColor:'#000000',  
         image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Fbusiness-2884023_1920.jpg?alt=media&token=f9810600-21b1-423a-8950-6e4f1d13a8e8',
+        heroYoutubeID:'6lt2JfJdGSY',
         heroTitle:'Title',
         heroTitleAnimate:'none',
         heroTitleDuration:'1s',
@@ -500,6 +501,7 @@ class TabWebsite extends React.Component {
     heroContent:{
       image:this.props.heroBackgroundImage,
       backgroundColor:this.props.herobackgroundColor,
+      heroYoutubeID:this.props.heroYoutubeID,
       heroBackgroundImage:this.props.heroBackgroundImage,
       heroTitle:this.props.heroTitle,
       heroTitleAnimate:this.props.heroTitleAnimate,
@@ -799,6 +801,7 @@ class TabWebsite extends React.Component {
               menubarLogo={this.props.menubarLogo}
               menubarbackgroundColor={this.props.menubarbackgroundColor}
               menubarContent={this.props.menubarContent}
+              heroYoutubeID={this.props.heroYoutubeID}
               herobackgroundColor={this.props.herobackgroundColor}
               heroImagePick={this.props.heroBackgroundImage}
               heroTitle={this.props.heroTitle} 

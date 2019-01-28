@@ -11,9 +11,10 @@ class GalleryNo2 extends React.Component {
       }
   render() {
 	const background={
-		padding:'10%',
+		padding:'5% 10% 10% 10%',
 		backgroundColor:this.props.galleryBackgroundColor,
 		textAlign: 'center',
+		position:'relative',
 	  }
 
 	const title ={
@@ -38,8 +39,10 @@ class GalleryNo2 extends React.Component {
 	};
     return (
 		<div style={background}>
+			<Content>
 			<ScrollAnimation style={title} className={this.props.galleryTitleAnimate} >{this.props.galleryTitle}</ScrollAnimation> 
 			<ScrollAnimation style={description} className={this.props.galleryDescriptionAnimate}>{this.props.galleryDescription}</ScrollAnimation> 
+			</Content> 
 			<Grid>
 				{this.props.galleryContent.map((post) => 
 					<Figure className={'effect-'+post.galleryHover}>	
@@ -75,6 +78,9 @@ class GalleryNo2 extends React.Component {
 
 export default GalleryNo2;
 
+const Content = styled.div`
+padding-bottom:5%;
+`; 
 const Grid = styled.div`
 position: relative;
 margin: 0 auto;

@@ -16,7 +16,7 @@ import InputButton from './itemInput/inputButton';
 import PickColor from './itemInput/pickColor'
 import { connect } from 'react-redux'
 import {chooseTemplate} from './../../components/actions'
-
+import Text from './itemInput/Text'
 const styles = theme => ({
   root: {
     width: '100%',
@@ -198,10 +198,18 @@ class NestedList extends React.Component {
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding={false}>
               <ListItem className={classes.nested}>
+              {this.props.hero === 'HeroNo3'?
+              <Text
+              label='Youtube ID'
+              value={this.props.heroYoutubeID}
+              onChange={this.props.heroOnChangeYoutubeID}
+              />
+              :
               <ModalChooseImage
               imagePick={this.props.heroImagePick}
               path="/heroContent"
               />
+              }
               </ListItem>
             </List>
           </Collapse>

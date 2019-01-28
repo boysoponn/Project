@@ -17,13 +17,16 @@ import Grid from '@material-ui/core/Grid';
 import None from '../image/none.jpg'
 import Cover1 from '../image/cover.jpg'
 import Cover2 from '../image/cover2.jpg'
+import Cover3 from '../image/comingsoon.jpg'
 import GalleryNo1 from '../image/gallery1.jpg'
 import GalleryNo2 from '../image/gallery2.jpg'
 import GalleryNo3 from '../image/gallery3.jpg'
 import Menu1 from '../image/menu1.jpg'
 import Menu2 from '../image/comingsoon.jpg'
+import Menu3 from '../image/comingsoon.jpg'
 import Footer from '../image/comingsoon.jpg'
 import ImageSilde from '../image/imagesilde.jpg'
+import ImageSilde2 from '../image/comingsoon.jpg'
 
 
 const styles = {
@@ -139,6 +142,15 @@ class ButtonForNewTab extends React.Component {
                 image={Menu2}
                 />
               </Grid>
+              <Grid item  sm={6} md={4} lg={3}>
+                <RadioButtons
+                selectedValue={this.props.selectedMenubar}
+                handleChange={this.props.handleChangeMenubar}
+                value={this.props.valueMenubar4}
+                label='Menubar 3'
+                image={Menu3}
+                />
+              </Grid>
             </Grid>
           </List>  
 
@@ -172,6 +184,15 @@ class ButtonForNewTab extends React.Component {
                   image={Cover2}
                 />
               </Grid>
+              <Grid item  sm={6} md={4} lg={3}>
+                <RadioButtons
+                  selectedValue={this.props.selectedHero}
+                  handleChange={this.props.handleChangeHero}
+                  value={this.props.valueHero4}
+                  label='Cover 3'
+                  image={Cover3}
+                />
+              </Grid>
             </Grid>
           </List> 
 
@@ -194,6 +215,15 @@ class ButtonForNewTab extends React.Component {
               value={this.props.valueCarousel2}
               label='Image Silde 1'
               image={ImageSilde}
+              />
+            </Grid>
+            <Grid item  sm={6} md={4} lg={3}>
+              <RadioButtons
+              selectedValue={this.props.selectedCarousel}
+              handleChange={this.props.handleChangeCarousel}
+              value={this.props.valueCarousel3}
+              label='Image Silde 2'
+              image={ImageSilde2}
               />
             </Grid>
           </Grid>
@@ -225,7 +255,7 @@ class ButtonForNewTab extends React.Component {
               selectedValue={this.props.selectedGallery}
               handleChange={this.props.handleChangeGallery}
               value={this.props.valueGallery3}
-              label='Gallery 1'
+              label='Gallery 2'
               image={GalleryNo2}
               />
             </Grid>
@@ -234,7 +264,7 @@ class ButtonForNewTab extends React.Component {
               selectedValue={this.props.selectedGallery}
               handleChange={this.props.handleChangeGallery}
               value={this.props.valueGallery4}
-              label='Gallery 1'
+              label='Gallery 3'
               image={GalleryNo3}
               />
             </Grid>

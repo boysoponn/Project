@@ -193,6 +193,7 @@ componentWillReceiveProps(nextProps){
           gallery:data.gallery,
           menubar:data.menubar,
           footer:data.footer,
+          heroYoutubeID:data.heroContent.heroYoutubeID,
           herobackgroundColor:data.heroContent.backgroundColor,
           heroBackgroundImage:data.heroContent.image,
           heroTitle:data.heroContent.heroTitle,
@@ -336,6 +337,7 @@ componentWillReceiveProps(nextProps){
     heroInput =
       <HeroInput 
       hero={this.state.hero}
+      heroYoutubeID={this.state.heroYoutubeID}
       herobackgroundColor={this.state.herobackgroundColor}
       heroImagePick={this.state.heroBackgroundImage}
       heroTitle={this.state.heroTitle}             
@@ -348,6 +350,7 @@ componentWillReceiveProps(nextProps){
       heroTitleStatus={this.state.heroTitleStatus} 
       heroTitleColor={this.state.heroTitleColor}
 
+      heroOnChangeYoutubeID={this.onChangeValue('heroYoutubeID')}
       herobackgroundOnChangeColor={this.onChangeColor('herobackgroundColor')}
       heroTitleOnChange={this.onChangeValue('heroTitle')}
       heroTitleOnChangeAnimate={this.onChangeValue('heroTitleAnimate')}
@@ -676,6 +679,7 @@ componentWillReceiveProps(nextProps){
               menubarContent={this.state.menubarContent}   
               herobackgroundColor={this.state.herobackgroundColor}
               heroBackgroundImage={this.state.heroBackgroundImage}
+              heroYoutubeID={this.state.heroYoutubeID}
               heroTitle={this.state.heroTitle}             
               heroTitleAnimate={this.state.heroTitleAnimate} 
               heroTitleDuration={this.state.heroTitleDuration} 

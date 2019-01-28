@@ -12,9 +12,10 @@ class GalleryNo2 extends React.Component {
   render() {
 	const background={
 		paddingBottom:'10%',
-		paddingTop:'10%',
+		paddingTop:'5%',
 		backgroundColor:this.props.galleryBackgroundColor,
 		textAlign: 'center',
+		position:'relative',
 	  }
 
 	const title ={
@@ -39,8 +40,10 @@ class GalleryNo2 extends React.Component {
 	};
     return (
 		<div style={background}>
+			<Content>
 			<ScrollAnimation style={title} className={this.props.galleryTitleAnimate} >{this.props.galleryTitle}</ScrollAnimation> 
 			<ScrollAnimation style={description} className={this.props.galleryDescriptionAnimate}>{this.props.galleryDescription}</ScrollAnimation> 
+			</Content>
 			<Grid>
 				{this.props.galleryContent.map((post) => 
 			
@@ -77,6 +80,10 @@ class GalleryNo2 extends React.Component {
 }
 
 export default GalleryNo2;
+
+const Content = styled.div`
+padding-bottom:5%;
+`; 
 
 const Grid = styled.div`
 position: relative;

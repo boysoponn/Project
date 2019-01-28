@@ -6,24 +6,13 @@ const MenuItemGroup = Menu.ItemGroup;
 
 class Menubar extends React.Component {
   state = {
-    h:[],
-    myObj : {
-      name: 'zack',
-      height: 511
-      
-    }
   }
 
   render() {
-//    let myItem ;
-//   {Object.keys(this.state.myObj).map((key,index) => {
-//      myItem = this.state.myObj.height;
-// console.log(myItem);
-// })}
   
   
     return (
-      <div style={{backgroundColor:this.props.menubarbackgroundColor}}>
+      <div style={{backgroundColor:this.props.menubarbackgroundColor,position:'relative'}}>
       <Menu
       mode="horizontal"
         selectedKeys={[this.state.current]}   

@@ -11,7 +11,7 @@ constructor(props){
   render() { 
     return (
       <Div>
-      <Header style={{backgroundColor:this.props.menubarbackgroundColor}}>
+      <Header color={this.props.menubarbackgroundColor}>
       <Navbar >
         <Nav >
           {this.props.menubarContent.map((menubar)=>
@@ -56,7 +56,7 @@ constructor(props){
 }
 export default MenubarNo2;
 const Div = styled.div`
-position: absolute;
+position: relative;
 top: 0;
 margin: 0;
 padding: 0;
@@ -68,6 +68,8 @@ position: fixed;
 top: 0;
 width: 100%;
 z-index: 10;
+background-color:${props=> props.color};
+box-shadow: 0px 2px 2px ${props=> props.color};
 `; 
 const Navbar = styled.div`
 position: relative;

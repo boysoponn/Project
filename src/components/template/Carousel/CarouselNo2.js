@@ -8,11 +8,14 @@ class CarouselNo1 extends React.Component {
 
   render() {
     const background ={
-        padding:'10%',
+        padding:'5% 10%  10% 10%',
         backgroundColor:this.props.carouselBackgroundColor,
-		textAlign: 'center',
+        textAlign: 'center',
+        position:'relative',
     };
-
+    const content={
+        paddingBottom:'5%'
+    };
 	const title ={
 		color:this.props.carouselTitleColor,
 		opacity: 1,
@@ -33,24 +36,23 @@ class CarouselNo1 extends React.Component {
 		fontStyle:this.props.carouselDescriptionFontStyle,
 		display:this.props.carouselDescriptionStatus
     };
-    
+
     return (
         <div style={background}> 
-            <ScrollAnimation style={title} className={this.props.carouselTitleAnimate} >
-            {this.props.carouselTitle}
-            </ScrollAnimation> 
-            <ScrollAnimation style={description} className={this.props.carouselDescriptionAnimate} >
-            {this.props.carouselDescription}
-            </ScrollAnimation> 
+            <div style={content}>
+            <ScrollAnimation style={title} className={this.props.carouselTitleAnimate}>{this.props.carouselTitle}</ScrollAnimation> 
+            <ScrollAnimation style={description} className={this.props.carouselDescriptionAnimate} >{this.props.carouselDescription} </ScrollAnimation> 
+            </div>
             <Carousel   autoplay={this.props.carouselAutoplay} vertical={this.props.carouselVertical}  speed={this.props.carouselSpeed} dots={this.props.carouselDots} pauseOnHover= {this.props.carouselPauseOnHover}>
             {this.props.carouselContent.map((post => (
                 <div key={post._key}>
-                    <div style={{
-                          backgroundImage:"url("+post.image+")",
-                          height:'400',
-                          backgroundSize:'cover', 
-                          backgroundPosition: 'center center',
-                          backgroundRepeat:  'no-repeat',}} key={post._key}>
+                    <div style={{        
+                        backgroundImage:"url("+post.image+")",
+                        height:'400',
+                        backgroundSize:'cover', 
+                        backgroundPosition: 'center center',
+                        backgroundRepeat:  'no-repeat'
+                        }} key={post._key}>
                       <h1 style={{
                         position: 'absolute',
                         top:' 50%',
@@ -63,19 +65,18 @@ class CarouselNo1 extends React.Component {
                         fontStyle:post.carouselTitleFontStyle,
                         display:post.carouselTitleStatus,
                       }}>{post.title}</h1>
-                      <p 
-                      style={{
-                        position: 'absolute',
-                        top:' 70%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        color:post.carouselDescriptionColor,
-                        fontFamily:post.carouselDescriptionFontFamily,
-                        fontSize:post.carouselDescriptionFontSize,
-                        fontWeight:post.carouselDescriptionFontWeight,
-                        fontStyle:post.carouselDescriptionFontStyle,
-                        display:post.carouselDescriptionStatus, 
-                      }}>{post.description}</p>
+                      <p style={{        
+                          position: 'absolute',
+                            top:' 70%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            color:post.carouselDescriptionColor,
+                            fontFamily:post.carouselDescriptionFontFamily,
+                            fontSize:post.carouselDescriptionFontSize,
+                            fontWeight:post.carouselDescriptionFontWeight,
+                            fontStyle:post.carouselDescriptionFontStyle,
+                            display:post.carouselDescriptionStatus, 
+                        }}>{post.description}</p>
                       </div>
                 </div>
             )))}

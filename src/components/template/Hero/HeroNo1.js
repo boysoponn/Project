@@ -21,6 +21,7 @@ class HeroNo1 extends React.Component {
         backgroundSize:'cover',
         height:'100%',
         margin:0,
+        position:'relative',
     };
     const content={
         textAlign: 'center',
@@ -105,7 +106,7 @@ class HeroNo1 extends React.Component {
       </ScrollAnimation > 
     };
     return (
-      <div onClick={this.chooseTemplate}>
+      // <div onClick={this.chooseTemplate}>
         <div style={background} >  
             <div style={content} >
             <ScrollAnimation style={title} className={this.props.heroTitleAnimate} >
@@ -117,7 +118,7 @@ class HeroNo1 extends React.Component {
             {checkButton}
             </div>
         </div> 
-        </div>
+        // </div>
     );
   }
 }

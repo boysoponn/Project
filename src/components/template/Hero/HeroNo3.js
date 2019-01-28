@@ -2,112 +2,108 @@ import React from 'react';
 import ScrollAnimation from 'react-animate-on-scroll';
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import Grid from '@material-ui/core/Grid';
+import {chooseTemplate} from './../../../components/actions'
 
-
-class HeroNo2 extends React.Component {
+class HeroNo1 extends React.Component {
     constructor(props){  
       super(props);
           this.state = {
           };   
       }
+  chooseTemplate=()=>{
+    this.props.dispatch(chooseTemplate('hero'));
+  }
 
   render() {
     const background ={
         backgroundImage:"url("+this.props.heroImagePick+")",
         backgroundSize:'cover',
-        height: '100%',
-        backgroundPosition: 'center center',
-        backgroundRepeat:  'no-repeat',
+        height:'100%',
         margin:0,
-        position:'relative',
-    };
-    const content={
-        textAlign: 'center',
-        paddingTop: '30%',
     };
     const title ={
-      color:this.props.heroTitleColor,
+        color:this.props.heroTitleColor,
+        opacity: 1,
+        animationDuration: this.props.heroTitleDuration,
+        fontFamily:this.props.heroTitleFontFamily,
+        fontSize:this.props.heroTitleFontSize,
+        fontWeight:this.props.heroTitleFontWeight,
+        fontStyle:this.props.heroTitleFontStyle,
+        display:this.props.heroTitleStatus
+    };
+    const description={
+        opacity: 1,
+        color:this.props.heroDescriptionColor,
+        animationDuration: this.props.heroDescriptionDuration,
+        fontFamily:this.props.heroDescriptionFontFamily,
+        fontSize:this.props.heroDescriptionFontSize,
+        fontWeight:this.props.heroDescriptionFontWeight,
+        fontStyle:this.props.heroDescriptionFontStyle,
+        display:this.props.heroDescriptionStatus,
+        padding:' 0 50 0 50',
+        wordWrap: 'break-word'
+    };
+    const buttonAnimate={
       opacity: 1,
-      animationDuration: this.props.heroTitleDuration,
-      fontFamily:this.props.heroTitleFontFamily,
-      fontSize:this.props.heroTitleFontSize,
-      fontWeight:this.props.heroTitleFontWeight,
-      fontStyle:this.props.heroTitleFontStyle,
-      display:this.props.heroTitleStatus
-  };
-  const description={
-      opacity: 1,
-      color:this.props.heroDescriptionColor,
-      animationDuration: this.props.heroDescriptionDuration,
-      fontFamily:this.props.heroDescriptionFontFamily,
-      fontSize:this.props.heroDescriptionFontSize,
-      fontWeight:this.props.heroDescriptionFontWeight,
-      fontStyle:this.props.heroDescriptionFontStyle,
-      display:this.props.heroDescriptionStatus,
-      padding:' 0 50 0 50',
-      
-  };
-  const buttonAnimate={
-    opacity: 1,
-    animationDuration: this.props.heroButtonDuration,
-    display:this.props.heroButtonStatus
-  };
-
-  let button;
-  if(this.props.heroButtonSelected !== "slideLeft" && this.props.heroButtonSelected !== "slide" ){
-    button =         
-    <ChoiceButton  
-    className={this.props.heroButtonSelected} 
-    FontFamily={this.props.heroButtonFontFamily}
-    FontWeight={this.props.heroButtonFontWeight}
-    FontSize={this.props.heroButtonFontSize}
-    FontStyle={this.props.heroButtonFontStyle}
-    buttonHoverColor={this.props.heroButtonHoverColor}
-    buttonHBGColor={this.props.heroButtonHBGColor}
-    buttonColor={this.props.heroButtonColor}
-    buttonBDColor={this.props.heroButtonBDColor}
-    buttonRadius={this.props.heroButtonRadius}
-    buttonBGColor={this.props.heroButtonBGColor}
-    buttonHBDColor={this.props.heroButtonHBDColor}
-  >{this.props.heroButton}</ChoiceButton>
-  }
-  else{
-    button = 
-    <ChoiceButton content={this.props.heroButton} 
-    swapContent={this.props.heroButtonSwap} 
-    className={this.props.heroButtonSelected} 
-    FontFamily={this.props.heroButtonFontFamily}
-    FontWeight={this.props.heroButtonFontWeight}
-    FontSize={this.props.heroButtonFontSize}
-    FontStyle={this.props.heroButtonFontStyle}
-    buttonSwapColor={this.props.heroButtonSwapColor}
-    buttonHBGColor={this.props.heroButtonHBGColor}
-    buttonColor={this.props.heroButtonColor}
-    buttonBDColor={this.props.heroButtonBDColor}
-    buttonRadius={this.props.heroButtonRadius}
-    buttonBGColor={this.props.heroButtonBGColor}
-    buttonHBDColor={this.props.heroButtonHBDColor}
-  >
-  &nbsp;</ChoiceButton>
-  };
-  let checkButton;
-  if(this.props.heroButtonLink !== "#"){
-    checkButton = 
-    <ScrollAnimation style={buttonAnimate} className={this.props.heroButtonAnimate}>
-    <a href={this.props.heroButtonLink} target={this.props.heroButtonLinkTarget}>{button}</a>
-    </ScrollAnimation > 
-  }else{
-    checkButton = 
-    <ScrollAnimation style={buttonAnimate} className={this.props.heroButtonAnimate}>
-    {button}
-    </ScrollAnimation > 
-  };
+      animationDuration: this.props.heroButtonDuration,
+      display:this.props.heroButtonStatus
+    };
+    let button;
+    if(this.props.heroButtonSelected !== "slideLeft" && this.props.heroButtonSelected !== "slide" ){
+      button =         
+      <ChoiceButton  
+      className={this.props.heroButtonSelected} 
+      FontFamily={this.props.heroButtonFontFamily}
+      FontWeight={this.props.heroButtonFontWeight}
+      FontSize={this.props.heroButtonFontSize}
+      FontStyle={this.props.heroButtonFontStyle}
+      buttonHoverColor={this.props.heroButtonHoverColor}
+      buttonHBGColor={this.props.heroButtonHBGColor}
+      buttonColor={this.props.heroButtonColor}
+      buttonBDColor={this.props.heroButtonBDColor}
+      buttonRadius={this.props.heroButtonRadius}
+      buttonBGColor={this.props.heroButtonBGColor}
+      buttonHBDColor={this.props.heroButtonHBDColor}
+    >{this.props.heroButton}</ChoiceButton>
+    }
+    else{
+      button = 
+      <ChoiceButton 
+      content={this.props.heroButton} 
+      swapContent={this.props.heroButtonSwap} 
+      className={this.props.heroButtonSelected}  
+      FontFamily={this.props.heroButtonFontFamily}
+      FontWeight={this.props.heroButtonFontWeight}
+      FontSize={this.props.heroButtonFontSize}
+      FontStyle={this.props.heroButtonFontStyle}
+      buttonSwapColor={this.props.heroButtonSwapColor}
+      buttonHBGColor={this.props.heroButtonHBGColor}
+      buttonColor={this.props.heroButtonColor}
+      buttonBDColor={this.props.heroButtonBDColor}
+      buttonRadius={this.props.heroButtonRadius}
+      buttonBGColor={this.props.heroButtonBGColor}
+      buttonHBDColor={this.props.heroButtonHBDColor}
+    >
+    &nbsp;</ChoiceButton>
+    };
+        
+    let checkButton;
+    if(this.props.heroButtonLink !== "#"){
+      checkButton = 
+      <ScrollAnimation style={buttonAnimate} className={this.props.heroButtonAnimate}>
+      <a href={this.props.heroButtonLink} target={this.props.heroButtonLinkTarget}>{button}</a>
+      </ScrollAnimation > 
+    }else{
+      checkButton = 
+      <ScrollAnimation style={buttonAnimate} className={this.props.heroButtonAnimate}>
+      {button}
+      </ScrollAnimation > 
+    };
     return (
-    <div>
-        <Grid style={{backgroundColor:this.props.herobackgroundColor}}container spacing={0}>
-         <Grid item xs={12} sm={6}>
-            <div style={content}>
+      // <div onClick={this.chooseTemplate}>
+        <BG>
+        <Iframe  src={"https://www.youtube.com/embed/"+this.props.heroYoutubeID+"?rel=0&amp&autoplay=1&mute=1&iv_load_policy=3&modestbranding=1;controls=0&amp;showinfo=0&loop=1"} frameborder="0" allowfullscreen ></Iframe>
+            <Content >
             <ScrollAnimation style={title} className={this.props.heroTitleAnimate} >
             {this.props.heroTitle}
             </ScrollAnimation> 
@@ -115,19 +111,43 @@ class HeroNo2 extends React.Component {
             {this.props.heroDescription}
             </ScrollAnimation> 
             {checkButton}
-            </div>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-        <div style={background}></div> 
-        </Grid>
-       
-        </Grid>  
-        </div>
+            </Content>
+        </BG> 
+        // </div>
     );
   }
 }
 
-export default connect()(HeroNo2);
+export default connect()(HeroNo1);
+
+const Content = styled.div`
+text-align: center;
+padding-top: 20%;
+height:100%;
+width:100%;
+position:absolute;
+z-index:2;
+`;
+
+const BG = styled.div`
+height: 100%;
+overflow: hidden; 
+margin:0;
+position:relative;
+z-index:1;
+`;
+
+const Iframe = styled.iframe`
+box-sizing: border-box;
+height: 56.25vw;
+left: 50%;
+min-height: 100%;
+min-width: 100%;
+transform: translate(-50%, -50%);
+position: absolute;
+top: 50%;
+width: 177.77777778vh;
+`;
 
 const ChoiceButton = styled.button`
   position: relative;
@@ -273,7 +293,6 @@ const ChoiceButton = styled.button`
       top: 0;
       z-index: -1;
       -webkit-transition: all 0.09s ease-in;
-
     }
     :hover:before {
       left: 0;
@@ -311,7 +330,6 @@ const ChoiceButton = styled.button`
       position:absolute;
       color:${props => props.buttonHoverColor};
       left: 83%;
-
       opacity: 0;
       -webkit-transition: all 250ms cubic-bezier(0.680, -0.550, 0.265, 1.550); 
     }
