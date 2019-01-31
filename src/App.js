@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import exmessage from './components/ex-message';
 import Member from './components/Member';
 import Cms from './components/CMS';
-import Cdd from './components/template/Gallery/GalleryNo3';
+import Cdd from './components/template/Carousel/CarouselNo2';
 import AppWithConnect from './components/header';
 import config from './config'
 import { connect } from 'react-redux'

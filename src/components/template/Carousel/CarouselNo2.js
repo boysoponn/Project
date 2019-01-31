@@ -1,7 +1,7 @@
 import React from 'react';
 import ScrollAnimation from 'react-animate-on-scroll';
 import { Carousel } from 'antd';
-import './../tamplateCSS/carousel2.css';
+import './../tamplateCSS/carousel.css';
 
 
 class CarouselNo1 extends React.Component {
@@ -43,7 +43,7 @@ class CarouselNo1 extends React.Component {
             <ScrollAnimation style={title} className={this.props.carouselTitleAnimate}>{this.props.carouselTitle}</ScrollAnimation> 
             <ScrollAnimation style={description} className={this.props.carouselDescriptionAnimate} >{this.props.carouselDescription} </ScrollAnimation> 
             </div>
-            <Carousel   autoplay={this.props.carouselAutoplay} vertical={this.props.carouselVertical}  speed={this.props.carouselSpeed} dots={this.props.carouselDots} pauseOnHover= {this.props.carouselPauseOnHover}>
+            <Carousel  className='slick-slide2' autoplay={this.props.carouselAutoplay} vertical={this.props.carouselVertical}  speed={this.props.carouselSpeed} dots={this.props.carouselDots} pauseOnHover= {this.props.carouselPauseOnHover}>
             {this.props.carouselContent.map((post => (
                 <div key={post._key}>
                     <div style={{        
