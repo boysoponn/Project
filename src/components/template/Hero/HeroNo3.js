@@ -26,27 +26,29 @@ class HeroNo1 extends React.Component {
         opacity: 1,
         animationDuration: this.props.heroTitleDuration,
         fontFamily:this.props.heroTitleFontFamily,
-        fontSize:this.props.heroTitleFontSize,
+        fontSize:'calc('+this.props.heroTitleFontSize+ 'vw / 15 )',
         fontWeight:this.props.heroTitleFontWeight,
         fontStyle:this.props.heroTitleFontStyle,
-        display:this.props.heroTitleStatus
+        display:this.props.heroTitleStatus,
+        textAlign: this.props.heroTitlePosition,
+        
     };
     const description={
         opacity: 1,
         color:this.props.heroDescriptionColor,
         animationDuration: this.props.heroDescriptionDuration,
         fontFamily:this.props.heroDescriptionFontFamily,
-        fontSize:this.props.heroDescriptionFontSize,
+        fontSize:'calc('+this.props.heroDescriptionFontSize+ 'vw / 15 )',
         fontWeight:this.props.heroDescriptionFontWeight,
         fontStyle:this.props.heroDescriptionFontStyle,
         display:this.props.heroDescriptionStatus,
-        padding:' 0 50 0 50',
-        wordWrap: 'break-word'
+        textAlign: this.props.heroDescriptionPosition,
     };
     const buttonAnimate={
       opacity: 1,
       animationDuration: this.props.heroButtonDuration,
-      display:this.props.heroButtonStatus
+      display:this.props.heroButtonStatus,
+      textAlign:this.props.heroButtonPosition
     };
     let button;
     if(this.props.heroButtonSelected !== "slideLeft" && this.props.heroButtonSelected !== "slide" ){
@@ -121,12 +123,11 @@ class HeroNo1 extends React.Component {
 export default connect()(HeroNo1);
 
 const Content = styled.div`
-text-align: center;
-padding-top: 20%;
 height:100%;
 width:100%;
 position:absolute;
-z-index:2;
+z-index:5;
+padding: 20% 10% 10%;
 `;
 
 const BG = styled.div`

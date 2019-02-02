@@ -11,9 +11,8 @@ class GalleryNo2 extends React.Component {
       }
   render() {
 	const background={
-		padding:'5% 10% 10% 10%',
+		padding:'2.5% 10% 10% 10%',
 		backgroundColor:this.props.galleryBackgroundColor,
-		textAlign: 'center',
 		position:'relative',
 	  }
 
@@ -22,20 +21,22 @@ class GalleryNo2 extends React.Component {
 		opacity: 1,
 		animationDuration: this.props.galleryTitleDuration,
 		fontFamily:this.props.galleryTitleFontFamily,
-		fontSize:this.props.galleryTitleFontSize,
+		fontSize:'calc('+this.props.galleryTitleFontSize+ 'vw / 15 )',
 		fontWeight:this.props.galleryTitleFontWeight,
 		fontStyle:this.props.galleryTitleFontStyle,
-		display:this.props.galleryTitleStatus
+		display:this.props.galleryTitleStatus,
+		textAlign: this.props.galleryTitlePosition,
 	};
 	const description={
 		opacity: 1,
 		color:this.props.galleryDescriptionColor,
 		animationDuration: this.props.galleryDescriptionDuration,
 		fontFamily:this.props.galleryDescriptionFontFamily,
-		fontSize:this.props.galleryDescriptionFontSize,
+		fontSize:'calc('+this.props.galleryDescriptionFontSize+ 'vw / 15 )',
 		fontWeight:this.props.galleryDescriptionFontWeight,
 		fontStyle:this.props.galleryDescriptionFontStyle,
-		display:this.props.galleryDescriptionStatus
+		display:this.props.galleryDescriptionStatus,
+		textAlign:this.props.galleryDescriptionPosition,
 	};
     return (
 		<div style={background}>
@@ -54,7 +55,7 @@ class GalleryNo2 extends React.Component {
 								weight={post.titleWeight}
 								color={post.titleColor}
 								status={post.titleStatus}
-								family={post.titleFontWeight}
+								family={post.titleFontFamily}
 								fontStyle={post.titleFontStyle}
 								>{post.title}</H2>
 								<P
@@ -143,7 +144,7 @@ const H2 = styled.h2`
 word-spacing: -0.15em;
 font-weight: ${props => props.weight};
 margin: 0;
-font-size: ${props => props.size};
+font-size: calc(${props => props.size}vw / 15);
 display: ${props => props.status};
 font-family: ${props => props.family};
 font-style:${props => props.fontStyle};
@@ -154,7 +155,7 @@ const P = styled.p`
 margin: 0;
 letter-spacing: 1px;
 font-size: 68.5%;
-font-size: ${props => props.size};
+font-size: calc(${props => props.size}vw / 15);
 font-weight: ${props => props.weight};
 color:${props => props.color};
 display: ${props => props.status};

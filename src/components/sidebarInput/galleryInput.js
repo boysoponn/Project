@@ -26,6 +26,7 @@ import Grid from '@material-ui/core/Grid';
 import ChooseLink from './itemInput/chooseLink';
 import SaveIcon from '@material-ui/icons/Save';
 import Dropdown from './itemInput/dropdown';
+import Message from './../template/snackbar';
 
 function Transition(props) {
   return <Slide direction="right" {...props} />;
@@ -84,6 +85,7 @@ class NestedList extends React.Component {
   delete = gallery => () =>{
     let dbCon = config.database().ref('project/'+this.props.email+'/'+this.props.tabs+"/galleryItem");
     dbCon.child(gallery._key).remove();
+    this.setState({messageDelete:true})
   }
   addItem=()=>{
     let dbCon = config.database().ref('project/'+this.props.email+'/'+this.props.tabs+"/galleryItem");
@@ -109,8 +111,9 @@ class NestedList extends React.Component {
       descriptionColor:'#ffffff',
       link:'#',
       linkTarget:'_blank',
-      galleryHover:'none'
+      galleryHover:'sadie'
     })  
+    this.setState({messageAdd:true})
   }
   OpenItem = gallery => () => { this.setState({ 
     openItem1: true ,
@@ -165,8 +168,9 @@ class NestedList extends React.Component {
     linkTarget:this.state.galleryLinkTarget,
     galleryHover:this.state.galleryHover
   });
+  this.setState({messageSave:true})
   };
-
+  onChangeFalse= name=>()=>{this.setState({[name]:false})};
   handleClick = () => {this.setState(state => ({ open: !state.open }));};
   handleClickOpen = (event) => {this.setState({ anchorEl: event.currentTarget, });};
   handleClose = () => {this.setState({ anchorEl: null, });};
@@ -185,6 +189,23 @@ class NestedList extends React.Component {
     
     return (
       <div className={classes.root} >
+        <Message
+        message='Item Saved'
+        messageOpen={this.state.messageSave}
+        messageClose={this.onChangeFalse('messageSave')}
+        />
+        <Message
+        message='Item Deleted'
+        variant='error'
+        messageOpen={this.state.messageDelete}
+        messageClose={this.onChangeFalse('messageDelete')}
+        />
+        <Message
+        message='Item Added'
+        variant='warning'
+        messageOpen={this.state.messageAdd}
+        messageClose={this.onChangeFalse('messageAdd')}
+        />
         <List disablePadding={true}>
           <ListItem button onClick={this.handleClick}>
             <ListItemIcon>
@@ -220,6 +241,8 @@ class NestedList extends React.Component {
               FontWeight={this.props.galleryTitleFontWeight}
               FontStyle={this.props.galleryTitleFontStyle}
               Status={this.props.galleryTitleStatus}
+              position={this.props.galleryTitlePosition}
+              onChangePosition={this.props.galleryTitleOnChangePosition}   
               onChangeAnimate={this.props.galleryTitleOnChangeAnimate}              
               onChangeDuration={this.props.galleryTitleOnChangeDuration}            
               onChangeFontFamily={this.props.galleryTitleOnChangeFontFamily}
@@ -245,6 +268,8 @@ class NestedList extends React.Component {
               FontWeight={this.props.galleryDescriptionFontWeight}
               FontStyle={this.props.galleryDescriptionFontStyle}
               Status={this.props.galleryDescriptionStatus}
+              position={this.props.galleryDescriptionPosition}
+              onChangePosition={this.props.galleryDescriptionOnChangePosition}
               onChangeAnimate={this.props.galleryDescriptionOnChangeAnimate}              
               onChangeDuration={this.props.galleryDescriptionOnChangeDuration}            
               onChangeFontFamily={this.props.galleryDescriptionOnChangeFontFamily}

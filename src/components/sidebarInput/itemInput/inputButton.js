@@ -175,6 +175,7 @@ class InputButton extends React.Component {
         FontWeight={this.props.FontWeight}
         FontStyle={this.props.FontStyle}
         Status={this.props.Status}
+        position={this.props.position}
         onChangeFontFamily={this.props.buttonOnChangeFontFamily}
         onChangeFontSize={this.props.buttonOnChangeFontSize}
         onChangeDuration={this.props.buttonOnChangeDuration} 
@@ -184,6 +185,7 @@ class InputButton extends React.Component {
         onChangeStatus={this.props.buttonOnChangeStatus}
         color={this.props.buttonColor}
         onChange={this.props.buttonOnChangeColor}
+        onChangePosition={this.props.buttonOnChangePosition}
         />
         <Text
         type="text"

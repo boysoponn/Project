@@ -11,7 +11,8 @@ import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 import Popover from '@material-ui/core/Popover';
 import PickColor from './pickColor'
-
+import Dropdown from './dropdown'
+import Grid from '@material-ui/core/Grid';
 
 const styles = theme => ({
   label:{
@@ -99,10 +100,10 @@ class SettingAnimate extends React.Component {
       displayAnimate = {display:'none'}
     }
     
-
     return (
       
       <div className={classes.full}>
+
         <div className={classes.left} style={displayFont}>
             <SettingsFonts className={classes.button} onClick={this.handleClick} />
             <Popover
@@ -117,7 +118,9 @@ class SettingAnimate extends React.Component {
                 vertical: 'top',
                 horizontal: 'left',
               }}
-            >
+            >      
+          <Grid container spacing={24}>
+            <Grid item xs={6}>
               <form className={classes} autoComplete="off">
                     <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="age-simple">Status</InputLabel>
@@ -131,7 +134,7 @@ class SettingAnimate extends React.Component {
                         <MenuItem value={'none'}>Off</MenuItem>
                     </Select>
                     </FormControl>
-                    </form>
+                </form>
 
                 <form className={classes} autoComplete="off">
                     <FormControl className={classes.formControl}>
@@ -171,10 +174,23 @@ class SettingAnimate extends React.Component {
                         onChange={this.props.onChangeFontSize}
                         value={this.props.FontSize}
                       />
-                      
                     </FormControl>
                     </form>
-                      
+
+                    <Dropdown
+                      label='position'
+                      value={this.props.position}
+                      onChange={this.props.onChangePosition}
+                      choice = {[
+                        {_key:'1',value: 'center' , label: 'Center'},
+                        {_key:'2',value: 'right', label: 'Right'},
+                        {_key:'3',value: 'left', label: 'Left'}
+                      ]}
+                    />
+                    
+                    </Grid>
+
+                    <Grid item xs={6}>
                     <form className={classes} autoComplete="off">
                     <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="age-simple">Font Weight</InputLabel>
@@ -216,9 +232,10 @@ class SettingAnimate extends React.Component {
                     onChange={this.props.onChange}
                     />
                     </div>
-                    </Popover>
+                  </Grid>
+                </Grid>
+              </Popover>   
       </div>
-
       <div className={classes.right} style={displayAnimate}>
             <Settings className={classes.button} root='outline' onClick={this.handleClick2} />
             <Popover

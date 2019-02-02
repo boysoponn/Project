@@ -11,10 +11,8 @@ import Collapse from '@material-ui/core/Collapse';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import Text from './itemInput/inputText';
 import Selection from './itemInput/selection';
 import Dropdown from './itemInput/dropdown';
-import Textarea from './itemInput/inputTextarea';
 import ModalPicture from './itemInput/modalPicture';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -27,11 +25,16 @@ import AddIcon from '@material-ui/icons/AddCircle';
 import PickColor from './itemInput/pickColor'
 import InputText from './itemInput/inputText';
 import InputTextarea from './itemInput/inputTextarea';
+import Message from './../template/snackbar';
+
 function Transition(props) {
   return <Slide direction="right" {...props} />;
 }
 
 const styles = theme => ({
+  popover:{
+    height:500
+  },
   root: {
     width: '100%',
     maxWidth: 550,
@@ -78,50 +81,52 @@ class NestedList extends React.Component {
     anchorEl2: null,
     };  
   }
- 
+
   save =  () => {
     let dbCon = config.database().ref('project/'+this.props.email+'/'+this.props.tabs+"/carouselContent/");
     dbCon.child(this.state.carouselPath).update({
       title:this.state.carouselTitle,
       description:this.state.carouselDescription,
-      carouselTitleFontFamily:this.state.carouselTitleFontFamily,
-      carouselTitleFontWeight:this.state.carouselTitleFontWeight,
-      carouselTitleFontSize:this.state.carouselTitleFontSize,
-      carouselTitleFontStyle:this.state.carouselTitleFontStyle,
-      carouselTitleStatus:this.state.carouselTitleStatus,
-      carouselTitleColor:this.state.carouselTitleColor,
-      carouselDescriptionFontFamily:this.state.carouselDescriptionFontFamily,
-      carouselDescriptionFontWeight:this.state.carouselDescriptionFontWeight,
-      carouselDescriptionFontStyle:this.state.carouselDescriptionFontStyle,
-      carouselDescriptionFontSize:this.state.carouselDescriptionFontSize,
-      carouselDescriptionStatus:this.state.carouselDescriptionStatus,
-      carouselDescriptionColor:this.state.carouselDescriptionColor,
+      titleFontFamily:this.state.carouselTitleFontFamily,
+      titleFontWeight:this.state.carouselTitleFontWeight,
+      titleFontSize:this.state.carouselTitleFontSize,
+      titleFontStyle:this.state.carouselTitleFontStyle,
+      titleStatus:this.state.carouselTitleStatus,
+      titleColor:this.state.carouselTitleColor,
+      descriptionFontFamily:this.state.carouselDescriptionFontFamily,
+      descriptionFontWeight:this.state.carouselDescriptionFontWeight,
+      descriptionFontStyle:this.state.carouselDescriptionFontStyle,
+      descriptionFontSize:this.state.carouselDescriptionFontSize,
+      descriptionStatus:this.state.carouselDescriptionStatus,
+      descriptionColor:this.state.carouselDescriptionColor,
     });
-    alert("saved") 
+    this.setState({messageSave:true})
   };
   delete = carousel => () =>{
     let dbCon = config.database().ref('project/'+this.props.email+'/'+this.props.tabs+"/carouselContent/");
     dbCon.child(carousel._key).remove();
+    this.setState({messageDelete:true})
   }
   addItem=()=>{
     let dbCon = config.database().ref('project/'+this.props.email+'/'+this.props.tabs+"/carouselContent/");
     dbCon.push({
       title:'Title',
       description:'Description',
-      carouselTitleFontFamily:'Montserrat',
-      carouselTitleFontWeight:'700',
-      carouselTitleFontSize:'70',
-      carouselTitleFontStyle:'normal',
-      carouselTitleStatus:'block',
-      carouselTitleColor:'#ffffff',
-      carouselDescriptionFontFamily:'Montserrat',
-      carouselDescriptionFontWeight:'400',
-      carouselDescriptionFontSize:'30',
-      carouselDescriptionFontStyle:'normal',
-      carouselDescriptionStatus:'block',
-      carouselDescriptionColor:'#ffffff',  
+      titleFontFamily:'Montserrat',
+      titleFontWeight:'700',
+      titleFontSize:'70',
+      titleFontStyle:'normal',
+      titleStatus:'block',
+      titleColor:'#ffffff',
+      descriptionFontFamily:'Montserrat',
+      descriptionFontWeight:'400',
+      descriptionFontSize:'30',
+      descriptionFontStyle:'normal',
+      descriptionStatus:'block',
+      descriptionColor:'#ffffff',  
       image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2F3038591-poster-p-1-secrets-of-the-most-productive-peoplehow-to-work-different-productivity-styles.jpg?alt=media&token=aca301c1-8ed2-4353-942e-39df3bff3ed0'
-    })  
+    }) 
+    this.setState({messageAdd:true})
   }
   OpenItem = carousel => () => { this.setState({ 
     openItem1: true ,
@@ -129,18 +134,18 @@ class NestedList extends React.Component {
     carouselDescription:carousel.description,
     carouselImage:carousel.image,
     carouselPath:carousel._key,
-    carouselTitleFontFamily:carousel.carouselTitleFontFamily,
-    carouselTitleFontWeight:carousel.carouselTitleFontWeight,
-    carouselTitleFontStyle:carousel.carouselTitleFontStyle,
-    carouselTitleFontSize:carousel.carouselTitleFontSize,
-    carouselTitleStatus:carousel.carouselTitleStatus,
-    carouselTitleColor:carousel.carouselTitleColor,
-    carouselDescriptionFontFamily:carousel.carouselDescriptionFontFamily,
-    carouselDescriptionFontWeight:carousel.carouselDescriptionFontWeight,
-    carouselDescriptionFontStyle:carousel.carouselDescriptionFontStyle,
-    carouselDescriptionStatus:carousel.carouselDescriptionStatus,
-    carouselDescriptionFontSize:carousel.carouselDescriptionFontSize,
-    carouselDescriptionColor:carousel.carouselDescriptionColor,
+    carouselTitleFontFamily:carousel.titleFontFamily,
+    carouselTitleFontWeight:carousel.titleFontWeight,
+    carouselTitleFontStyle:carousel.titleFontStyle,
+    carouselTitleFontSize:carousel.titleFontSize,
+    carouselTitleStatus:carousel.titleStatus,
+    carouselTitleColor:carousel.titleColor,
+    carouselDescriptionFontFamily:carousel.descriptionFontFamily,
+    carouselDescriptionFontWeight:carousel.descriptionFontWeight,
+    carouselDescriptionFontStyle:carousel.descriptionFontStyle,
+    carouselDescriptionStatus:carousel.descriptionStatus,
+    carouselDescriptionFontSize:carousel.descriptionFontSize,
+    carouselDescriptionColor:carousel.descriptionColor,
   });
 };
   CloseItem = () => {this.setState({ openItem1: false });};
@@ -149,22 +154,9 @@ class NestedList extends React.Component {
   handleClose = () => {this.setState({ anchorEl: null, });};
   handleClickOpen2 = (event) => {this.setState({ anchorEl2: event.currentTarget, });};
   handleClose2 = () => {this.setState({ anchorEl2: null, });};
-  carouselTitleOnChange = (e) => {this.setState({ carouselTitle: e.target.value });};
-  carouselTitleOnChangeFontFamily = (e) => {this.setState({ carouselTitleFontFamily: e.target.value });};
-  carouselTitleOnChangeFontWeight = (e) => {this.setState({ carouselTitleFontWeight: e.target.value });};
-  carouselTitleOnChangeFontSize = (e) => {this.setState({ carouselTitleFontSize: e.target.value });};
-  carouselTitleOnChangeFontStyle = (e) => {this.setState({ carouselTitleFontStyle: e.target.value });};
-  carouselTitleOnChangeStatus = (e) => {this.setState({ carouselTitleStatus: e.target.value });};
-  carouselTitleOnChangeColor = (color) => {this.setState({ carouselTitleColor: color.hex });};
-
-  carouselDescriptionOnChange = (e) => {this.setState({ carouselDescription: e.target.value });};
-  carouselDescriptionOnChangeFontFamily = (e) => {this.setState({ carouselDescriptionFontFamily: e.target.value });};
-  carouselDescriptionOnChangeFontWeight = (e) => {this.setState({ carouselDescriptionFontWeight: e.target.value });};
-  carouselDescriptionOnChangeFontSize = (e) => {this.setState({ carouselDescriptionFontSize: e.target.value });};
-  carouselDescriptionOnChangeFontStyle = (e) => {this.setState({ carouselDescriptionFontStyle: e.target.value });};
-  carouselDescriptionOnChangeStatus = (e) => {this.setState({ carouselDescriptionStatus: e.target.value });};
-  carouselDescriptionOnChangeColor = (color) => {this.setState({ carouselDescriptionColor: color.hex });};
-
+  onChangeColor = name=> (color) => {this.setState({  [name]: color.hex });};
+  onChangeValue = name=> (e) => {this.setState({ [name]: e.target.value });};
+  onChangeFalse= name=>()=>{this.setState({[name]:false})};
 
   render() {
     const { classes } = this.props;
@@ -177,6 +169,23 @@ class NestedList extends React.Component {
     };
     return (
       <div className={classes.root} >
+        <Message
+        message='Item Saved'
+        messageOpen={this.state.messageSave}
+        messageClose={this.onChangeFalse('messageSave')}
+        />
+        <Message
+        message='Item Deleted'
+        variant='error'
+        messageOpen={this.state.messageDelete}
+        messageClose={this.onChangeFalse('messageDelete')}
+        />
+        <Message
+        message='Item Added'
+        variant='warning'
+        messageOpen={this.state.messageAdd}
+        messageClose={this.onChangeFalse('messageAdd')}
+        />
         <List disablePadding={true}>
           <ListItem button onClick={this.handleClick}>
             <ListItemIcon>
@@ -211,6 +220,9 @@ class NestedList extends React.Component {
               FontWeight={this.props.carouselTitleFontWeight}
               FontStyle={this.props.carouselTitleFontStyle}
               Status={this.props.carouselTitleStatus}
+              position={this.props.carouselTitlePosition}
+              color={this.props.carouselTitleColor}
+              onChangePosition={this.props.carouselOnChangeTitlePosition} 
               onChangeAnimate={this.props.carouselOnChangeTitleAnimate}              
               onChangeDuration={this.props.carouselOnChangeTitleDuration}            
               onChangeFontFamily={this.props.carouselOnChangeTitleFontFamily}
@@ -218,7 +230,6 @@ class NestedList extends React.Component {
               onChangeFontWeight={this.props.carouselOnChangeTitleFontWeight}
               onChangeFontStyle={this.props.carouselOnChangeTitleFontStyle}              
               onChangeStatus={this.props.carouselOnChangeTitleStatus}
-              color={this.props.carouselTitleColor}
               onChangeColor={this.props.carouselOnChangeTitleColor}
               />
               </ListItem>
@@ -236,14 +247,16 @@ class NestedList extends React.Component {
               FontWeight={this.props.carouselDescriptionFontWeight}
               FontStyle={this.props.carouselDescriptionFontStyle}
               Status={this.props.carouselDescriptionStatus}
-              onChangeAnimate={this.props.carouselOnChangeDescriptionAnimate}              
+              position={this.props.carouselDescriptionPosition}
+              color={this.props.carouselDescriptionColor}
+              onChangeAnimate={this.props.carouselOnChangeDescriptionAnimate} 
+              onChangePosition={this.props.carouselOnChangeDescriptionPosition}              
               onChangeDuration={this.props.carouselOnChangeDescriptionDuration}            
               onChangeFontFamily={this.props.carouselnOnChangeDescriptioFontFamily}
               onChangeFontSize={this.props.carouselOnChangeDescriptionFontSize}                           
               onChangeFontWeight={this.props.carouselOnChangeDescriptionFontWeight}
               onChangeFontStyle={this.props.carouselOnChangeDescriptionFontStyle}              
               onChangeStatus={this.props.carouselOnChangeDescriptionStatus}
-              color={this.props.carouselDescriptionColor}
               onChangeColor={this.props.carouselOnChangeDescriptionColor}
               />
               </ListItem>
@@ -317,15 +330,16 @@ class NestedList extends React.Component {
              Carousel Items
             </Button>
             <Popover
+              className={classes.popover}
               open={open2}
               anchorEl={anchorEl2}
               onClose={this.handleClose2}
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center',
+                vertical: 'top',
+                horizontal: 'right',
               }}
               transformOrigin={{
-                vertical: 'top',
+                vertical: 'bottom',
                 horizontal: 'left',
               }}
             >
@@ -355,44 +369,43 @@ class NestedList extends React.Component {
             </Button>
             </DialogTitle> 
             <ListItem>
-            <Text
+            <InputText
               displayAnimate='none'
-              type="text"
-              label="title"
+              Label="Title"
               value={this.state.carouselTitle}
-              onChange={this.carouselTitleOnChange}
               FontFamily={this.state.carouselTitleFontFamily}
               FontSize={this.state.carouselTitleFontSize}
               FontWeight={this.state.carouselTitleFontWeight}
               FontStyle={this.state.carouselTitleFontStyle}
               Status={this.state.carouselTitleStatus}
               color={this.state.carouselTitleColor}
-              onChangeFontFamily={this.carouselTitleOnChangeFontFamily}
-              onChangeFontSize={this.carouselTitleOnChangeFontSize}
-              onChangeFontWeight={this.carouselTitleOnChangeFontWeight}
-              onChangeFontStyle={this.carouselTitleOnChangeFontStyle}
-              onChangeStatus={this.carouselTitleOnChangeStatus}
-              onChangeColor={this.carouselTitleOnChangeColor}
+              onChange={this.onChangeValue('carouselTitle')}
+              onChangeFontFamily={this.onChangeValue('carouselTitleFontFamily')}
+              onChangeFontSize={this.onChangeValue('carouselTitleFontSize')}
+              onChangeFontWeight={this.onChangeValue('carouselTitleFontWeight')}
+              onChangeFontStyle={this.onChangeValue('carouselTitleFontStyle')}
+              onChangeStatus={this.onChangeValue('carouselTitleStatus')}
+              onChangeColor={this.onChangeColor('carouselTitleColor')}
               />   
               </ListItem>
               <ListItem> 
-            <Textarea
+            <InputTextarea
               displayAnimate='none'
               label="description"
               value={this.state.carouselDescription}
-              onChange={this.carouselDescriptionOnChange}
               FontFamily={this.state.carouselDescriptionFontFamily}
               FontSize={this.state.carouselDescriptionFontSize}
               FontWeight={this.state.carouselDescriptionFontWeight}
               FontStyle={this.state.carouselDescriptionFontStyle}
               Status={this.state.carouselDescriptionStatus}
-              color={this.state.carouselDescriptionColor}
-              onChangeFontFamily={this.carouselDescriptionOnChangeFontFamily}
-              onChangeFontSize={this.carouselDescriptionOnChangeFontSize}
-              onChangeFontWeight={this.carouselDescriptionOnChangeFontWeight}
-              onChangeFontStyle={this.carouselDescriptionOnChangeFontStyle}
-              onChangeStatus={this.carouselDescriptionOnChangeStatus}
-              onChangeColor={this.carouselDescriptionOnChangeColor}
+              color={this.state.carouselDescriptionColor} 
+              onChange={this.onChangeValue('carouselDescription')}
+              onChangeFontFamily={this.onChangeValue('carouselDescriptionFontFamily')}
+              onChangeFontSize={this.onChangeValue('carouselDescriptionFontSize')}
+              onChangeFontWeight={this.onChangeValue('carouselDescriptionFontWeight')}
+              onChangeFontStyle={this.onChangeValue('carouselDescriptionFontStyle')}
+              onChangeStatus={this.onChangeValue('carouselDescriptionStatus')}
+              onChangeColor={this.onChangeColor('carouselDescriptionColor')}
               />  
               </ListItem>
               <ListItem>

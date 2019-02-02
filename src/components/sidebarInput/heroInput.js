@@ -95,6 +95,8 @@ class NestedList extends React.Component {
               FontWeight={this.props.heroTitleFontWeight}
               FontStyle={this.props.heroTitleFontStyle}
               Status={this.props.heroTitleStatus}
+              position={this.props.heroTitlePosition}
+              onChangePosition={this.props.heroTitleOnChangePosition}  
               onChangeAnimate={this.props.heroTitleOnChangeAnimate}              
               onChangeDuration={this.props.heroTitleOnChangeDuration}            
               onChangeFontFamily={this.props.heroTitleOnChangeFontFamily}
@@ -122,6 +124,8 @@ class NestedList extends React.Component {
               FontWeight={this.props.heroDescriptionFontWeight}
               FontStyle={this.props.heroDescriptionFontStyle}
               Status={this.props.heroDescriptionStatus}
+              position={this.props.heroDescriptionPosition}
+              onChangePosition={this.props.heroDescriptionOnChangePosition}  
               onChangeAnimate={this.props.heroDescriptionOnChangeAnimate}              
               onChangeDuration={this.props.heroDescriptionOnChangeDuration}            
               onChangeFontFamily={this.props.heroDescriptionOnChangeFontFamily}
@@ -154,7 +158,7 @@ class NestedList extends React.Component {
               buttonHBDColor={this.props.heroButtonHBDColor}
               buttonOnChange={this.props.heroButtonOnChange}
               buttonHoverColor={this.props.heroButtonHoverColor}
-
+              
               buttonOnChangeHoverColor={this.props.heroButtonOnChangeHoverColor}
               buttonOnChangeFontFamily={this.props.heroButtonOnChangeFontFamily}
               buttonOnChangeFontSize={this.props.heroButtonOnChangeFontSize}
@@ -174,6 +178,7 @@ class NestedList extends React.Component {
               buttonOnChangeLinkTarget={this.props.heroButtonOnChangeLinkTarget}
               buttonOnChangeSwap={this.props.heroButtonOnChangeSwap}
               buttonOnChangeSelected={this.props.heroButtonOnChangeSelected}
+              buttonOnChangePosition={this.props.heroButtonOnChangePosition}
               value2="fillUp"
               value3="fillDown"
               value4="fillLeft"
@@ -185,6 +190,7 @@ class NestedList extends React.Component {
               value11="slide"
               value12="slideLeft"
               animate={this.props.heroButtonAnimate} 
+              position={this.props.heroButtonPosition} 
               duration={this.props.heroButtonDuration} 
               FontFamily={this.props.heroButtonFontFamily}
               FontSize={this.props.heroButtonFontSize}

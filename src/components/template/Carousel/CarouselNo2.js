@@ -8,9 +8,8 @@ class CarouselNo1 extends React.Component {
 
   render() {
     const background ={
-        padding:'5% 10%  10% 10%',
+        padding:'5% 10% 2.5% 10%',
         backgroundColor:this.props.carouselBackgroundColor,
-        textAlign: 'center',
         position:'relative',
     };
     const content={
@@ -21,20 +20,22 @@ class CarouselNo1 extends React.Component {
 		opacity: 1,
 		animationDuration: this.props.carouselTitleDuration,
 		fontFamily:this.props.carouselTitleFontFamily,
-		fontSize:this.props.carouselTitleFontSize,
+        fontSize:'calc('+this.props.carouselTitleFontSize+ 'vw / 15 )',
 		fontWeight:this.props.carouselTitleFontWeight,
 		fontStyle:this.props.carouselTitleFontStyle,
-		display:this.props.carouselTitleStatus
+        display:this.props.carouselTitleStatus,
+        textAlign: this.props.carouselTitlePosition,
 	};
 	const description={
 		opacity: 1,
 		color:this.props.carouselDescriptionColor,
 		animationDuration: this.props.carouselDescriptionDuration,
 		fontFamily:this.props.carouselDescriptionFontFamily,
-		fontSize:this.props.carouselDescriptionFontSize,
+        fontSize:'calc('+this.props.carouselDescriptionFontSize+ 'vw / 15 )',
 		fontWeight:this.props.carouselDescriptionFontWeight,
 		fontStyle:this.props.carouselDescriptionFontStyle,
-		display:this.props.carouselDescriptionStatus
+        display:this.props.carouselDescriptionStatus,
+        textAlign: this.props.carouselDescriptionPosition,
     };
 
     return (
@@ -58,24 +59,24 @@ class CarouselNo1 extends React.Component {
                         top:' 50%',
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
-                        color:post.carouselTitleColor,
-                        fontFamily:post.carouselTitleFontFamily,
-                        fontSize:post.carouselTitleFontSize,
-                        fontWeight:post.carouselTitleFontWeight,
-                        fontStyle:post.carouselTitleFontStyle,
-                        display:post.carouselTitleStatus,
+                        color:post.titleColor,
+                        fontFamily:post.titleFontFamily,
+                        fontSize:'calc('+post.titleFontSize+ 'vw / 15 )',
+                        fontWeight:post.titleFontWeight,
+                        fontStyle:post.titleFontStyle,
+                        display:post.titleStatus,
                       }}>{post.title}</h1>
                       <p style={{        
                           position: 'absolute',
                             top:' 70%',
                             left: '50%',
                             transform: 'translate(-50%, -50%)',
-                            color:post.carouselDescriptionColor,
-                            fontFamily:post.carouselDescriptionFontFamily,
-                            fontSize:post.carouselDescriptionFontSize,
-                            fontWeight:post.carouselDescriptionFontWeight,
-                            fontStyle:post.carouselDescriptionFontStyle,
-                            display:post.carouselDescriptionStatus, 
+                            color:post.descriptionColor,
+                            fontFamily:post.descriptionFontFamily,
+                            fontSize:'calc('+post.descriptionFontSize+ 'vw / 15 )',
+                            fontWeight:post.descriptionFontWeight,
+                            fontStyle:post.descriptionFontStyle,
+                            display:post.descriptionStatus, 
                         }}>{post.description}</p>
                       </div>
                 </div>

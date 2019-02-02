@@ -24,6 +24,7 @@ class InputTextarea extends React.Component {
         FontWeight={this.props.FontWeight}
         FontStyle={this.props.FontStyle}
         Status={this.props.Status}
+        position={this.props.position}
         onChangeFontFamily={this.props.onChangeFontFamily}
         onChangeFontSize={this.props.onChangeFontSize}
         onChangeDuration={this.props.onChangeDuration} 
@@ -31,6 +32,7 @@ class InputTextarea extends React.Component {
         onChangeFontWeight={this.props.onChangeFontWeight}
         onChangeFontStyle={this.props.onChangeFontStyle}
         onChangeStatus={this.props.onChangeStatus}
+        onChangePosition={this.props.onChangePosition}
         color={this.props.color}
         onChange={this.props.onChangeColor}
         />
@@ -39,7 +41,7 @@ class InputTextarea extends React.Component {
           id="multiline-static"
           label={this.props.label}
           multiline
-          rows="4"
+          rows="10"
           onChange={this.props.onChange}
           value={this.props.value}
           margin="normal"

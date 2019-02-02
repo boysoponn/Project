@@ -107,6 +107,8 @@ const styles = theme => ({
   },
   grow: {
     flexGrow: 1,
+    fontSize:'1vw',
+    color:"#000000"
   },
   rightIcon: {
     marginLeft: theme.spacing.unit,
@@ -193,77 +195,84 @@ componentWillReceiveProps(nextProps){
           gallery:data.gallery,
           menubar:data.menubar,
           footer:data.footer,
-          heroYoutubeID:data.heroContent.heroYoutubeID,
+          heroYoutubeID:data.heroContent.youtubeID,
           herobackgroundColor:data.heroContent.backgroundColor,
           heroBackgroundImage:data.heroContent.image,
-          heroTitle:data.heroContent.heroTitle,
-          heroTitleAnimate:data.heroContent.heroTitleAnimate,
-          heroTitleDuration:data.heroContent.heroTitleDuration,
-          heroTitleFontFamily:data.heroContent.heroTitleFontFamily,
-          heroTitleFontSize:data.heroContent.heroTitleFontSize,
-          heroTitleFontWeight:data.heroContent.heroTitleFontWeight,
-          heroTitleFontStyle:data.heroContent.heroTitleFontStyle,
-          heroTitleStatus:data.heroContent.heroTitleStatus,
-          heroTitleColor:data.heroContent.heroTitleColor,
+          heroTitle:data.heroContent.title,
+          heroTitleAnimate:data.heroContent.titleAnimate,
+          heroTitleDuration:data.heroContent.titleDuration,
+          heroTitleFontFamily:data.heroContent.titleFontFamily,
+          heroTitleFontSize:data.heroContent.titleFontSize,
+          heroTitleFontWeight:data.heroContent.titleFontWeight,
+          heroTitleFontStyle:data.heroContent.titleFontStyle,
+          heroTitleStatus:data.heroContent.titleStatus,
+          heroTitleColor:data.heroContent.titleColor,
+          heroTitlePosition:data.heroContent.titlePosition,
 
-          heroDescription:data.heroContent.heroDescription,
-          heroDescriptionAnimate:data.heroContent.heroDescriptionAnimate,
-          heroDescriptionDuration:data.heroContent.heroDescriptionDuration,
-          heroDescriptionFontFamily:data.heroContent.heroDescriptionFontFamily,
-          heroDescriptionFontSize:data.heroContent.heroDescriptionFontSize,
-          heroDescriptionFontWeight:data.heroContent.heroDescriptionFontWeight,
-          heroDescriptionFontStyle:data.heroContent.heroDescriptionFontStyle,
-          heroDescriptionStatus:data.heroContent.heroDescriptionStatus,
-          heroDescriptionColor:data.heroContent.heroDescriptionColor,
+          heroDescription:data.heroContent.description,
+          heroDescriptionAnimate:data.heroContent.descriptionAnimate,
+          heroDescriptionDuration:data.heroContent.descriptionDuration,
+          heroDescriptionFontFamily:data.heroContent.descriptionFontFamily,
+          heroDescriptionFontSize:data.heroContent.descriptionFontSize,
+          heroDescriptionFontWeight:data.heroContent.descriptionFontWeight,
+          heroDescriptionFontStyle:data.heroContent.descriptionFontStyle,
+          heroDescriptionStatus:data.heroContent.descriptionStatus,
+          heroDescriptionColor:data.heroContent.descriptionColor,
+          heroDescriptionPosition:data.heroContent.descriptionPosition,
 
-          heroButton:data.heroContent.heroButton,
-          heroButtonSelected:data.heroContent.heroButtonSelected,
-          heroButtonAnimate:data.heroContent.heroButtonAnimate,
-          heroButtonDuration:data.heroContent.heroButtonDuration,
-          heroButtonFontFamily:data.heroContent.heroButtonFontFamily,
-          heroButtonFontSize:data.heroContent.heroButtonFontSize,
-          heroButtonFontWeight:data.heroContent.heroButtonFontWeight,
-          heroButtonFontStyle:data.heroContent.heroButtonFontStyle,
-          heroButtonStatus:data.heroContent.heroButtonStatus,
-          heroButtonColor:data.heroContent.heroButtonColor,
-          heroButtonSwapColor:data.heroContent.heroButtonSwapColor,
-          heroButtonSwap:data.heroContent.heroButtonSwap,
-          heroButtonLink:data.heroContent.heroButtonLink,
-          heroButtonLinkTarget:data.heroContent.heroButtonLinkTarget,
-          heroButtonRadius:data.heroContent.heroButtonRadius,
-          heroButtonBGColor:data.heroContent.heroButtonBGColor,
-          heroButtonHBGColor:data.heroContent.heroButtonHBGColor,
-          heroButtonBDColor:data.heroContent.heroButtonBDColor,
-          heroButtonHBDColor:data.heroContent.heroButtonHBDColor,
-          heroButtonHoverColor:data.heroContent.heroButtonHoverColor,
+          heroButton:data.heroContent.button,
+          heroButtonPosition:data.heroContent.buttonPosition,
+          heroButtonSelected:data.heroContent.buttonSelected,
+          heroButtonAnimate:data.heroContent.buttonAnimate,
+          heroButtonDuration:data.heroContent.buttonDuration,
+          heroButtonFontFamily:data.heroContent.buttonFontFamily,
+          heroButtonFontSize:data.heroContent.buttonFontSize,
+          heroButtonFontWeight:data.heroContent.buttonFontWeight,
+          heroButtonFontStyle:data.heroContent.buttonFontStyle,
+          heroButtonStatus:data.heroContent.buttonStatus,
+          heroButtonColor:data.heroContent.buttonColor,
+          heroButtonSwapColor:data.heroContent.buttonSwapColor,
+          heroButtonSwap:data.heroContent.buttonSwap,
+          heroButtonLink:data.heroContent.buttonLink,
+          heroButtonLinkTarget:data.heroContent.buttonLinkTarget,
+          heroButtonRadius:data.heroContent.buttonRadius,
+          heroButtonBGColor:data.heroContent.buttonBGColor,
+          heroButtonHBGColor:data.heroContent.buttonHBGColor,
+          heroButtonBDColor:data.heroContent.buttonBDColor,
+          heroButtonHBDColor:data.heroContent.buttonHBDColor,
+          heroButtonHoverColor:data.heroContent.buttonHoverColor,
 
-          carouselBackgroundColor:data.carouselMain.carouselBackgroundColor,
+          carouselBackgroundColor:data.carouselMain.backgroundColor,
           carouselSpeed:data.carouselSetting.speed,
           carouselPauseOnHover:data.carouselSetting.pauseOnHover,
           carouselDots:data.carouselSetting.dots,
           carouselAutoplay:data.carouselSetting.autoplay,
           carouselVertical:data.carouselSetting.vertical,
-          carouselTitle:data.carouselMain.carouselTitle,
-          carouselDescription:data.carouselMain.carouselDescription,
-          carouselTitleAnimate:data.carouselMain.carouselTitleAnimate,
-          carouselTitleDuration:data.carouselMain.carouselTitleDuration,
-          carouselTitleFontFamily:data.carouselMain.carouselTitleFontFamily,
-          carouselTitleFontSize:data.carouselMain.carouselTitleFontSize,
-          carouselTitleFontWeight:data.carouselMain.carouselTitleFontWeight,
-          carouselTitleFontStyle:data.carouselMain.carouselTitleFontStyle,
-          carouselTitleStatus:data.carouselMain.carouselTitleStatus,
-          carouselTitleColor:data.carouselMain.carouselTitleColor,
-          carouselDescriptionAnimate:data.carouselMain.carouselDescriptionAnimate,
-          carouselDescriptionDuration:data.carouselMain.carouselDescriptionDuration,
-          carouselDescriptionFontFamily:data.carouselMain.carouselDescriptionFontFamily,
-          carouselDescriptionFontSize:data.carouselMain.carouselDescriptionFontSize,
-          carouselDescriptionFontWeight:data.carouselMain.carouselDescriptionFontWeight,
-          carouselDescriptionFontStyle:data.carouselMain.carouselDescriptionFontStyle,
-          carouselDescriptionStatus:data.carouselMain.carouselDescriptionStatus,
-          carouselDescriptionColor:data.carouselMain.carouselDescriptionColor,
+          carouselTitle:data.carouselMain.title,
+          carouselTitlePosition:data.carouselMain.titlePosition,
+
+          carouselDescriptionPosition:data.carouselMain.descriptionPosition,
+          carouselDescription:data.carouselMain.description,
+          carouselTitleAnimate:data.carouselMain.titleAnimate,
+          carouselTitleDuration:data.carouselMain.titleDuration,
+          carouselTitleFontFamily:data.carouselMain.titleFontFamily,
+          carouselTitleFontSize:data.carouselMain.titleFontSize,
+          carouselTitleFontWeight:data.carouselMain.titleFontWeight,
+          carouselTitleFontStyle:data.carouselMain.titleFontStyle,
+          carouselTitleStatus:data.carouselMain.titleStatus,
+          carouselTitleColor:data.carouselMain.titleColor,
+          carouselDescriptionAnimate:data.carouselMain.descriptionAnimate,
+          carouselDescriptionDuration:data.carouselMain.descriptionDuration,
+          carouselDescriptionFontFamily:data.carouselMain.descriptionFontFamily,
+          carouselDescriptionFontSize:data.carouselMain.descriptionFontSize,
+          carouselDescriptionFontWeight:data.carouselMain.descriptionFontWeight,
+          carouselDescriptionFontStyle:data.carouselMain.descriptionFontStyle,
+          carouselDescriptionStatus:data.carouselMain.descriptionStatus,
+          carouselDescriptionColor:data.carouselMain.descriptionColor,
 
           galleryBackgroundColor:data.galleryContent.backgroundColor,
           galleryTitle:data.galleryContent.title,
+          galleryTitlePosition:data.galleryContent.titlePosition,
           galleryTitleAnimate:data.galleryContent.titleAnimate,
           galleryTitleDuration:data.galleryContent.titleDuration,
           galleryTitleFontFamily:data.galleryContent.titleFontFamily,
@@ -274,6 +283,7 @@ componentWillReceiveProps(nextProps){
           galleryTitleColor:data.galleryContent.titleColor,
 
           galleryDescription:data.galleryContent.description,
+          galleryDescriptionPosition:data.galleryContent.descriptionPosition,
           galleryDescriptionAnimate:data.galleryContent.descriptionAnimate,
           galleryDescriptionDuration:data.galleryContent.descriptionDuration,
           galleryDescriptionFontFamily:data.galleryContent.descriptionFontFamily,
@@ -349,6 +359,7 @@ componentWillReceiveProps(nextProps){
       heroTitleFontStyle={this.state.heroTitleFontStyle}
       heroTitleStatus={this.state.heroTitleStatus} 
       heroTitleColor={this.state.heroTitleColor}
+      heroTitlePosition={this.state.heroTitlePosition} 
 
       heroOnChangeYoutubeID={this.onChangeValue('heroYoutubeID')}
       herobackgroundOnChangeColor={this.onChangeColor('herobackgroundColor')}
@@ -361,6 +372,7 @@ componentWillReceiveProps(nextProps){
       heroTitleOnChangeFontStyle={this.onChangeValue('heroTitleFontStyle')}
       heroTitleOnChangeStatus={this.onChangeValue('heroTitleStatus')}
       heroTitleOnChangeColor={this.onChangeColor('heroTitleColor')}
+      heroTitleOnChangePosition={this.onChangeValue('heroTitlePosition')}
 
       heroDescription={this.state.heroDescription}
       heroDescriptionAnimate={this.state.heroDescriptionAnimate}
@@ -371,6 +383,7 @@ componentWillReceiveProps(nextProps){
       heroDescriptionFontStyle={this.state.heroDescriptionFontStyle}
       heroDescriptionStatus={this.state.heroDescriptionStatus}
       heroDescriptionColor={this.state.heroDescriptionColor}
+      heroDescriptionPosition={this.state.heroDescriptionPosition}
 
       heroDescriptionOnChange={this.onChangeValue('heroDescription')}
       heroDescriptionOnChangeAnimate={this.onChangeValue('heroDescriptionAnimate')}
@@ -381,8 +394,10 @@ componentWillReceiveProps(nextProps){
       heroDescriptionOnChangeFontStyle={this.onChangeValue('heroDescriptionFontStyle')}
       heroDescriptionOnChangeStatus={this.onChangeValue('heroDescriptionStatus')}
       heroDescriptionOnChangeColor={this.onChangeColor('heroDescriptionColor')}
+      heroDescriptionOnChangePosition={this.onChangeValue('heroDescriptionPosition')}
 
       heroButton={this.state.heroButton} 
+      heroButtonPosition={this.state.heroButtonPosition} 
       heroButtonSelected={this.state.heroButtonSelected}
       heroButtonAnimate={this.state.heroButtonAnimate} 
       heroButtonDuration={this.state.heroButtonDuration} 
@@ -414,6 +429,7 @@ componentWillReceiveProps(nextProps){
       heroButtonOnChangeSwap={this.onChangeValue('heroButtonSwap')}
       heroButtonOnChangeSelected={this.onChangeValue('heroButtonSelected')}
       heroButtonOnChange={this.onChangeValue('heroButton')}
+      heroButtonOnChangePosition={this.onChangeValue('heroButtonPosition')}
       heroButtonOnChangeFontFamily={this.onChangeValue('heroButtonFontFamily')}
       heroButtonOnChangeFontSize={this.onChangeValue('heroButtonFontSize')}
       heroButtonOnChangeDuration={this.onChangeValue('heroButtonDuration')}
@@ -436,8 +452,8 @@ componentWillReceiveProps(nextProps){
       carouselAutoplay={this.state.carouselAutoplay}
       carouselVertical={this.state.carouselVertical}
       carouselBackgroundColor={this.state.carouselBackgroundColor}
+
       carouselTitle={this.state.carouselTitle}
-      carouselDescription={this.state.carouselDescription}
       carouselTitleAnimate={this.state.carouselTitleAnimate}
       carouselTitleDuration={this.state.carouselTitleDuration}
       carouselTitleFontFamily={this.state.carouselTitleFontFamily}
@@ -446,6 +462,9 @@ componentWillReceiveProps(nextProps){
       carouselTitleFontStyle={this.state.carouselTitleFontStyle}
       carouselTitleStatus={this.state.carouselTitleStatus}
       carouselTitleColor={this.state.carouselTitleColor}
+      carouselTitlePosition={this.state.carouselTitlePosition}
+
+      carouselDescription={this.state.carouselDescription}
       carouselDescriptionAnimate={this.state.carouselDescriptionAnimate}
       carouselDescriptionDuration={this.state.carouselDescriptionDuration}
       carouselDescriptionFontFamily={this.state.carouselDescriptionFontFamily}
@@ -454,14 +473,17 @@ componentWillReceiveProps(nextProps){
       carouselDescriptionFontStyle={this.state.carouselDescriptionFontStyle}
       carouselDescriptionStatus={this.state.carouselDescriptionStatus}
       carouselDescriptionColor={this.state.carouselDescriptionColor}
+      carouselDescriptionPosition={this.state.carouselDescriptionPosition}
+
       carouselOnChangeBackgroundColor={this.onChangeColor('carouselBackgroundColor')}
       carouselOnChangePauseOnHover={this.onChangeChecked('carouselPauseOnHover')}
       carouselOnChangeAutoplay={this.onChangeChecked('carouselAutoplay')}
       carouselOnChangeVertical={this.onChangeChecked('carouselVertical')}
       carouselOnChangeSpeed={this.onChangeValue('carouselSpeed')}
       carouselOnChangeDots={this.onChangeChecked('carouselDots')}
+
       carouselOnChangeTitle={this.onChangeValue('carouselTitle')}
-      carouselOnChangeDescription={this.onChangeValue('carouselDescription')}
+      carouselOnChangeTitlePosition={this.onChangeValue('carouselTitlePosition')}
       carouselOnChangeTitleAnimate={this.onChangeValue('carouselTitleAnimate')}
       carouselOnChangeTitleDuration={this.onChangeValue('carouselTitleDuration')}
       carouselOnChangeTitleFontFamily={this.onChangeValue('carouselTitleFontFamily')}
@@ -470,6 +492,9 @@ componentWillReceiveProps(nextProps){
       carouselOnChangeTitleFontStyle={this.onChangeValue('carouselTitleFontStyle')}
       carouselOnChangeTitleStatus={this.onChangeValue('carouselTitleStatus')}
       carouselOnChangeTitleColor={this.onChangeColor('carouselTitleColor')}
+
+      carouselOnChangeDescription={this.onChangeValue('carouselDescription')}
+      carouselOnChangeDescriptionPosition={this.onChangeValue('carouselDescriptionPosition')}
       carouselOnChangeDescriptionAnimate={this.onChangeValue('carouselDescriptionAnimate')}
       carouselOnChangeDescriptionDuration={this.onChangeValue('carouselDescriptionDuration')}
       carouselOnChangeDescriptionFontFamily={this.onChangeValue('carouselDescriptionFontFamily')}
@@ -509,6 +534,7 @@ componentWillReceiveProps(nextProps){
     galleryTitleFontStyle={this.state.galleryTitleFontStyle}
     galleryTitleStatus={this.state.galleryTitleStatus}
     galleryTitleColor={this.state.galleryTitleColor}
+    galleryTitlePosition={this.state.galleryTitlePosition} 
 
     galleryBackgroundOnChangeColor={this.onChangeColor('galleryBackgroundColor')}
     galleryTitleOnChange={this.onChangeValue('galleryTitle')} 
@@ -518,9 +544,11 @@ componentWillReceiveProps(nextProps){
     galleryTitleOnChangeFontWeight={this.onChangeValue('galleryTitleFontWeight')}
     galleryTitleOnChangeFontStyle={this.onChangeValue('galleryTitleFontStyle')}             
     galleryTitleOnChangeStatus={this.onChangeValue('galleryTitleStatus')}
+    galleryTitleOnChangePosition={this.onChangeValue('galleryTitlePosition')}
     galleryTitleOnChangeColor={this.onChangeColor('galleryTitleColor')}
 
     galleryDescription={this.state.galleryDescription}  
+    galleryDescriptionPosition={this.state.galleryDescriptionPosition}  
     galleryDescriptionAnimate={this.state.galleryDescriptionAnimate} 
     galleryDescriptionDuration={this.state.galleryDescriptionDuration}   
     galleryDescriptionFontFamily={this.state.galleryDescriptionFontFamily}
@@ -531,6 +559,7 @@ componentWillReceiveProps(nextProps){
     galleryDescriptionColor={this.state.galleryDescriptionColor}
 
     galleryDescriptionOnChange={this.onChangeValue('galleryDescription')} 
+    galleryDescriptionOnChangePosition={this.onChangeValue('galleryDescriptionPosition')} 
     galleryDescriptionOnChangeAnimate={this.onChangeValue('galleryDescriptionAnimate')}             
     galleryDescriptionOnChangeDuration={this.onChangeValue('galleryDescriptionDuration')}            
     galleryDescriptionOnChangeFontFamily={this.onChangeValue('galleryDescriptionFontFamily')}
@@ -542,8 +571,6 @@ componentWillReceiveProps(nextProps){
     />
     
     }
-
-    
     let footerInput ;
     if( this.state.footer !== "none"){
     footerInput=<FooterInput
@@ -607,16 +634,12 @@ componentWillReceiveProps(nextProps){
               onClick={this.handleDrawerOpen}
               className={classNames(classes.menuButton, this.state.open && classes.hide)}
             >
-              <MenuIcon />
+            <MenuIcon />
             </IconButton>
             <Typography variant="title"  className={classes.grow} >
               CMS PROJECT
             </Typography>
-
-            <Typography color="inherit" className={classes.grow} >
-
-            </Typography>
-            <Typography variant="title" style={{color:"#000000"}} >
+            <Typography variant="title" style={{fontSize:'1vw',color:"#000000"}} >
               Welcome : {this.props.user}
             </Typography>
             <Avatar alt="Remy Sharp" src={this.props.photoURL? this.props.photoURL:avatarImage} className={classes.bigAvatar} />
@@ -689,6 +712,7 @@ componentWillReceiveProps(nextProps){
               heroTitleFontStyle={this.state.heroTitleFontStyle}
               heroTitleStatus={this.state.heroTitleStatus} 
               heroTitleColor={this.state.heroTitleColor}
+              heroTitlePosition={this.state.heroTitlePosition}  
 
               heroDescription={this.state.heroDescription}
               heroDescriptionAnimate={this.state.heroDescriptionAnimate}
@@ -699,8 +723,10 @@ componentWillReceiveProps(nextProps){
               heroDescriptionFontStyle={this.state.heroDescriptionFontStyle}
               heroDescriptionStatus={this.state.heroDescriptionStatus}
               heroDescriptionColor={this.state.heroDescriptionColor}
+              heroDescriptionPosition={this.state.heroDescriptionPosition}
 
               heroButton={this.state.heroButton} 
+              heroButtonPosition={this.state.heroButtonPosition} 
               heroButtonSelected={this.state.heroButtonSelected}
               heroButtonAnimate={this.state.heroButtonAnimate} 
               heroButtonDuration={this.state.heroButtonDuration} 
@@ -730,6 +756,7 @@ componentWillReceiveProps(nextProps){
               carouselVertical={this.state.carouselVertical}
               carouselTitle={this.state.carouselTitle}
               carouselDescription={this.state.carouselDescription}
+              carouselTitlePosition={this.state.carouselTitlePosition}
               carouselTitleAnimate={this.state.carouselTitleAnimate}
               carouselTitleDuration={this.state.carouselTitleDuration}
               carouselTitleFontFamily={this.state.carouselTitleFontFamily}
@@ -746,6 +773,7 @@ componentWillReceiveProps(nextProps){
               carouselDescriptionFontStyle={this.state.carouselDescriptionFontStyle}
               carouselDescriptionStatus={this.state.carouselDescriptionStatus}
               carouselDescriptionColor={this.state.carouselDescriptionColor}
+              carouselDescriptionPosition={this.state.carouselDescriptionPosition}
 
               galleryContent={this.state.galleryContent}
               galleryBackgroundColor={this.state.galleryBackgroundColor}
@@ -758,6 +786,7 @@ componentWillReceiveProps(nextProps){
               galleryTitleFontStyle={this.state.galleryTitleFontStyle}
               galleryTitleStatus={this.state.galleryTitleStatus}
               galleryTitleColor={this.state.galleryTitleColor}
+              galleryTitlePosition={this.state.galleryTitlePosition}  
           
               galleryDescription={this.state.galleryDescription}  
               galleryDescriptionAnimate={this.state.galleryDescriptionAnimate} 
@@ -768,6 +797,7 @@ componentWillReceiveProps(nextProps){
               galleryDescriptionFontStyle={this.state.galleryDescriptionFontStyle}
               galleryDescriptionStatus={this.state.galleryDescriptionStatus}
               galleryDescriptionColor={this.state.galleryDescriptionColor}
+              galleryDescriptionPosition={this.state.galleryDescriptionPosition} 
 
               footerContent={this.state.footerContent}
               footerTitle={this.state.footerTitle}

@@ -52,7 +52,8 @@ class IN extends React.Component {
   if( this.props.Hero === "HeroNo1"){
     Hero = <HeroNo1
     heroImagePick={this.props.heroImagePick}
-    heroTitle={this.props.heroTitle} 
+    heroTitle={this.props.heroTitle}
+    heroTitlePosition={this.props.heroTitlePosition} 
     heroTitleAnimate={this.props.heroTitleAnimate}
     heroTitleDuration={this.props.heroTitleDuration}
     heroTitleFontFamily={this.props.heroTitleFontFamily} 
@@ -63,6 +64,7 @@ class IN extends React.Component {
     heroTitleColor={this.props.heroTitleColor}
 
     heroDescription={this.props.heroDescription}
+    heroDescriptionPosition={this.props.heroDescriptionPosition}
     heroDescriptionDuration= {this.props.heroDescriptionDuration}
     heroDescriptionFontFamily={this.props.heroDescriptionFontFamily}
     heroDescriptionFontSize={this.props.heroDescriptionFontSize}
@@ -73,6 +75,7 @@ class IN extends React.Component {
     heroDescriptionColor={this.props.heroDescriptionColor}
     
     heroButton={this.props.heroButton} 
+    heroButtonPosition={this.props.heroButtonPosition} 
     heroButtonSelected={this.props.heroButtonSelected}
     heroButtonAnimate={this.props.heroButtonAnimate} 
     heroButtonDuration={this.props.heroButtonDuration} 
@@ -99,6 +102,7 @@ class IN extends React.Component {
     herobackgroundColor={this.props.herobackgroundColor}
     heroImagePick={this.props.heroImagePick}
     heroTitle={this.props.heroTitle} 
+    heroTitlePosition={this.props.heroTitlePosition} 
     heroTitleAnimate={this.props.heroTitleAnimate}
     heroTitleDuration={this.props.heroTitleDuration}
     heroTitleFontFamily={this.props.heroTitleFontFamily} 
@@ -117,8 +121,10 @@ class IN extends React.Component {
     heroDescriptionStatus={this.props.heroDescriptionStatus}
     heroDescriptionAnimate={this.props.heroDescriptionAnimate} 
     heroDescriptionColor={this.props.heroDescriptionColor}
+    heroDescriptionPosition={this.props.heroDescriptionPosition}
 
     heroButton={this.props.heroButton} 
+    heroButtonPosition={this.props.heroButtonPosition} 
     heroButtonSelected={this.props.heroButtonSelected}
     heroButtonAnimate={this.props.heroButtonAnimate} 
     heroButtonDuration={this.props.heroButtonDuration} 
@@ -146,6 +152,7 @@ class IN extends React.Component {
     herobackgroundColor={this.props.herobackgroundColor}
     heroImagePick={this.props.heroImagePick}
     heroTitle={this.props.heroTitle} 
+    heroTitlePosition={this.props.heroTitlePosition} 
     heroTitleAnimate={this.props.heroTitleAnimate}
     heroTitleDuration={this.props.heroTitleDuration}
     heroTitleFontFamily={this.props.heroTitleFontFamily} 
@@ -164,8 +171,10 @@ class IN extends React.Component {
     heroDescriptionStatus={this.props.heroDescriptionStatus}
     heroDescriptionAnimate={this.props.heroDescriptionAnimate} 
     heroDescriptionColor={this.props.heroDescriptionColor}
+    heroDescriptionPosition={this.props.heroDescriptionPosition}
 
     heroButton={this.props.heroButton} 
+    heroButtonPosition={this.props.heroButtonPosition} 
     heroButtonSelected={this.props.heroButtonSelected}
     heroButtonAnimate={this.props.heroButtonAnimate} 
     heroButtonDuration={this.props.heroButtonDuration} 
@@ -199,6 +208,7 @@ class IN extends React.Component {
     carouselVertical={this.props.carouselVertical}
     carouselTitle={this.props.carouselTitle}
     carouselDescription={this.props.carouselDescription}
+    carouselTitlePosition={this.props.carouselTitlePosition}
     carouselTitleAnimate={this.props.carouselTitleAnimate}
     carouselTitleDuration={this.props.carouselTitleDuration}
     carouselTitleFontFamily={this.props.carouselTitleFontFamily}
@@ -215,6 +225,7 @@ class IN extends React.Component {
     carouselDescriptionFontStyle={this.props.carouselDescriptionFontStyle}
     carouselDescriptionStatus={this.props.carouselDescriptionStatus}
     carouselDescriptionColor={this.props.carouselDescriptionColor}
+    carouselDescriptionPosition={this.props.carouselDescriptionPosition}
     />
   }
   if( this.props.Carousel === "CarouselNo2"){
@@ -228,6 +239,7 @@ class IN extends React.Component {
     carouselVertical={this.props.carouselVertical}
     carouselTitle={this.props.carouselTitle}
     carouselDescription={this.props.carouselDescription}
+    carouselTitlePosition={this.props.carouselTitlePosition}
     carouselTitleAnimate={this.props.carouselTitleAnimate}
     carouselTitleDuration={this.props.carouselTitleDuration}
     carouselTitleFontFamily={this.props.carouselTitleFontFamily}
@@ -244,6 +256,7 @@ class IN extends React.Component {
     carouselDescriptionFontStyle={this.props.carouselDescriptionFontStyle}
     carouselDescriptionStatus={this.props.carouselDescriptionStatus}
     carouselDescriptionColor={this.props.carouselDescriptionColor}
+    carouselDescriptionPosition={this.props.carouselDescriptionPosition}
     />
   }
 
@@ -261,7 +274,8 @@ class IN extends React.Component {
   galleryTitleFontStyle={this.props.galleryTitleFontStyle}
   galleryTitleStatus={this.props.galleryTitleStatus}
   galleryTitleColor={this.props.galleryTitleColor}
-
+  galleryTitlePosition={this.props.galleryTitlePosition}  
+ 
   galleryDescription={this.props.galleryDescription}  
   galleryDescriptionAnimate={this.props.galleryDescriptionAnimate} 
   galleryDescriptionDuration={this.props.galleryDescriptionDuration}   
@@ -271,6 +285,7 @@ class IN extends React.Component {
   galleryDescriptionFontStyle={this.props.galleryDescriptionFontStyle}
   galleryDescriptionStatus={this.props.galleryDescriptionStatus}
   galleryDescriptionColor={this.props.galleryDescriptionColor}
+  galleryDescriptionPosition={this.props.galleryDescriptionPosition} 
   />
   }
   if( this.props.Gallery === "GalleryNo2"){
@@ -287,7 +302,8 @@ class IN extends React.Component {
     galleryTitleFontStyle={this.props.galleryTitleFontStyle}
     galleryTitleStatus={this.props.galleryTitleStatus}
     galleryTitleColor={this.props.galleryTitleColor}
-  
+    galleryTitlePosition={this.props.galleryTitlePosition}  
+    
     galleryDescription={this.props.galleryDescription}  
     galleryDescriptionAnimate={this.props.galleryDescriptionAnimate} 
     galleryDescriptionDuration={this.props.galleryDescriptionDuration}   
@@ -297,6 +313,7 @@ class IN extends React.Component {
     galleryDescriptionFontStyle={this.props.galleryDescriptionFontStyle}
     galleryDescriptionStatus={this.props.galleryDescriptionStatus}
     galleryDescriptionColor={this.props.galleryDescriptionColor}
+    galleryDescriptionPosition={this.props.galleryDescriptionPosition}  
     />
   }
   if( this.props.Gallery === "GalleryNo3"){
@@ -313,7 +330,8 @@ class IN extends React.Component {
     galleryTitleFontStyle={this.props.galleryTitleFontStyle}
     galleryTitleStatus={this.props.galleryTitleStatus}
     galleryTitleColor={this.props.galleryTitleColor}
-  
+    galleryTitlePosition={this.props.galleryTitlePosition}  
+      
     galleryDescription={this.props.galleryDescription}  
     galleryDescriptionAnimate={this.props.galleryDescriptionAnimate} 
     galleryDescriptionDuration={this.props.galleryDescriptionDuration}   
@@ -323,6 +341,7 @@ class IN extends React.Component {
     galleryDescriptionFontStyle={this.props.galleryDescriptionFontStyle}
     galleryDescriptionStatus={this.props.galleryDescriptionStatus}
     galleryDescriptionColor={this.props.galleryDescriptionColor}
+    galleryDescriptionPosition={this.props.galleryDescriptionPosition}
     />
   }
 

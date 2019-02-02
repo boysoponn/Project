@@ -12,6 +12,7 @@ class InputText extends React.Component {
         displayAnimate={this.props.displayAnimate}
         animate={this.props.animate} 
         duration={this.props.duration} 
+        position={this.props.position}
         FontFamily={this.props.FontFamily}
         FontSize={this.props.FontSize}
         FontWeight={this.props.FontWeight}
@@ -24,6 +25,7 @@ class InputText extends React.Component {
         onChangeFontWeight={this.props.onChangeFontWeight}
         onChangeFontStyle={this.props.onChangeFontStyle}
         onChangeStatus={this.props.onChangeStatus}
+        onChangePosition={this.props.onChangePosition}
         color={this.props.color}
         onChange={this.props.onChangeColor}
         displayAnimate={this.props.displayAnimate}
