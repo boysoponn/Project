@@ -135,7 +135,7 @@ height: 100%;
 overflow: hidden; 
 margin:0;
 position:relative;
-z-index:1;
+z-index:2;
 `;
 
 const Iframe = styled.iframe`

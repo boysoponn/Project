@@ -55,8 +55,8 @@
   transform: translate(0%, -50%);
   width: 100%;
   text-align: center;
-  /* font-size: calc(2vw + 10px); */
   font-weight: 200;
+  visibility: hidden;
 }
 .nav__list-item {
   position: relative;
@@ -91,9 +91,11 @@
 .body.nav-active .menu-icon__line-right {
   transform: translateX(-2px) rotate(45deg);
 }
-.body.nav-active .nav {
+.body.nav-active .nav__content {
   visibility: visible;
-  z-index: 2;
+}
+.body.nav-active .nav {
+  z-index: 3;
 }
 .body.nav-active .nav:before, .body.nav-active .nav:after {
   transform: translateX(0%) translateY(0%);

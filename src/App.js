@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
+import styled from 'styled-components'
 import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import exmessage from './components/ex-message';
-import Member from './components/Member';
-import Cms from './components/CMS';
-import Cdd from './components/template/Carousel/CarouselNo2';
-import AppWithConnect from './components/header';
+import CMS from './components/CMS';
+import Header from './components/header';
+import Homepage from './components/homepage';
 import config from './config'
 import { connect } from 'react-redux'
 import {login,loginEmail,photoURL} from './components/actions'
-
 
 class App extends Component {
   state = {
@@ -47,42 +46,47 @@ class App extends Component {
     this.props.dispatch(login(this.state.username));
     this.props.dispatch(photoURL(this.state.photoURL));
     const user = this.state.username;
-    function withRestriction(WrappedComponent) {
-      return class RestrictedComponent extends React.Component {
-        render() {
-          if (user ==="") {
-             return <Redirect to='/login' />
-          }else{
-           return <WrappedComponent {...this.props} />
-          }  
-        }
-      }
-    }
-    const CMSWithRestriction = withRestriction(Cms);
+    // function withRestriction(WrappedComponent) {
+    //   return class RestrictedComponent extends React.Component {
+    //     render() {
+    //       if (user ==="") {
+    //          return <Redirect to='/login' />
+    //       }else{
+    //        return <WrappedComponent {...this.props} />
+    //       }  
+    //     }
+    //   }
+    // }
+    // const CMSWithRestriction = withRestriction(Cms);
 
-function withRestriction2(WrappedComponent2) {
-  return class RestrictedComponent extends React.Component {
-    render() {
-      if (user !== "") {
-         return <Redirect to='/cms' />
-      }else{
-       return <WrappedComponent2 {...this.props} />
-      }  
-    }
-  }
-}
-const LoginWithRestriction = withRestriction2(Member);
+// function withRestriction2(WrappedComponent2) {
+//   return class RestrictedComponent extends React.Component {
+//     render() {
+//       if (user !== "") {
+//          return <Redirect to='/cms' />
+//       }else{
+//        return <WrappedComponent2 {...this.props} />
+//       }  
+//     }
+//   }
+// }
+// const LoginWithRestriction = withRestriction2(Member);
     return (
+      <Body>
+        {window.location.pathname === '/'?
+      <Header/>:null
+        }
       <Router>
         <div> 
-          <Route exact path="/" component={LoginWithRestriction} />
-          <Route path="/login" component={LoginWithRestriction} />   
-          <Route path="/message" component={exmessage} /> 
-          <Route path="/cms" component={CMSWithRestriction} />   
-          <Route path="/header" component={AppWithConnect} /> 
+      {this.props.user !== ''?
+          <Route path="/cms" component={CMS} />   
+          :null
+      } 
+          <Route exact path="/" component={Homepage} /> 
           <Route path="/Cdd" component={Cdd} />                
         </div>
       </Router>
+      </Body>
     );
    }
   }
@@ -90,3 +94,11 @@ const LoginWithRestriction = withRestriction2(Member);
     user: state.user ,
   })
   export default connect(mapStateToProps)(App);
+
+const Body = styled.div`
+  height: 100vh;
+  overflow: hidden; 
+  margin:0;
+  background-color:#fff;
+  background-size: cover;
+`;
