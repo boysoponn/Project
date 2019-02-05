@@ -82,8 +82,7 @@ class App extends Component {
           <Route path="/cms" component={CMS} />   
           :null
       } 
-          <Route exact path="/" component={Homepage} /> 
-          <Route path="/Cdd" component={Cdd} />                
+          <Route exact path="/" component={Homepage} />               
         </div>
       </Router>
       </Body>
