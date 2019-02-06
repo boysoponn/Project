@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { Redirect} from 'react-router-dom';
+import { Link} from 'react-router-dom';
 class AppWithConnect extends React.Component {
     constructor(props){
         super(props);
@@ -9,21 +9,12 @@ class AppWithConnect extends React.Component {
           user:false
         }
     }
-  GoCms=()=>{
-    this.setState({user:true})
-  }
-  Redirect=()=>{
-    if (this.state.user) {
-      return <Redirect to='/cms' />
-    }
-  }
 render() {
     return (
             <Text>
-              {this.Redirect()}
                 <H1>Projectcms</H1>
                 <P>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</P>
-                <Button onClick={this.GoCms} className='fillRight'>Getting Started</Button>
+                <Link to="/cms" className='fillRight'>Getting Started</Link>
             </Text>
     )}}
 

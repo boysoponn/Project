@@ -13,7 +13,7 @@ import { connect } from 'react-redux'
 const styles = theme => ({
     button:{
         padding:'0.2vw',
-        fontSize: '0.1vw'
+        fontSize: '0.8vw'
     },
 });
 class AppWithConnect extends React.Component {

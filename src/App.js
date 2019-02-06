@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import styled from 'styled-components'
-import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
+import { BrowserRouter as  Router, Route, Redirect} from 'react-router-dom';
 import exmessage from './components/ex-message';
 import CMS from './components/CMS';
 import Header from './components/header';
@@ -42,49 +42,48 @@ class App extends Component {
   }
 
   render() {
+    console.log(window.location.pathname)
     this.props.dispatch(loginEmail(this.state.email));
     this.props.dispatch(login(this.state.username));
     this.props.dispatch(photoURL(this.state.photoURL));
     const user = this.state.username;
-    // function withRestriction(WrappedComponent) {
+
+    function withRestriction(WrappedComponent) {
+      return class RestrictedComponent extends React.Component {
+        render() {
+          if (user ==="") {
+             return <Redirect to='/' />
+          }else{
+           return <WrappedComponent {...this.props} />
+          }  
+        }
+      }
+    }
+    const CMSWithRestriction = withRestriction(CMS);
+
+    // function showNav(Nav) {
     //   return class RestrictedComponent extends React.Component {
     //     render() {
     //       if (user ==="") {
-    //          return <Redirect to='/login' />
+    //         return <Nav {...this.props} />
     //       }else{
-    //        return <WrappedComponent {...this.props} />
+    //         return null;
     //       }  
     //     }
     //   }
     // }
-    // const CMSWithRestriction = withRestriction(Cms);
+    // const Header = showNav(Header);
 
-// function withRestriction2(WrappedComponent2) {
-//   return class RestrictedComponent extends React.Component {
-//     render() {
-//       if (user !== "") {
-//          return <Redirect to='/cms' />
-//       }else{
-//        return <WrappedComponent2 {...this.props} />
-//       }  
-//     }
-//   }
-// }
-// const LoginWithRestriction = withRestriction2(Member);
     return (
       <Body>
-        {window.location.pathname === '/'?
-      <Header/>:null
-        }
+         <Header/>
       <Router>
         <div> 
-      {this.props.user !== ''?
-          <Route path="/cms" component={CMS} />   
-          :null
-      } 
+          <Route path="/cms" component={CMSWithRestriction}/>
           <Route exact path="/" component={Homepage} />               
         </div>
       </Router>
+
       </Body>
     );
    }
