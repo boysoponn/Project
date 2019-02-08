@@ -28,6 +28,7 @@ import BlockInput from './template/blockInput';
 import Popup from './template/popup'
 import Avatar from '@material-ui/core/Avatar';
 import avatarImage from './image/avatar.png'
+
 const drawerWidth = 320;
 
 const styles = theme => ({
@@ -623,7 +624,9 @@ componentWillReceiveProps(nextProps){
     // if (!this.state.isLoaded) return null;
     
     return (
+      <div>  
       <div className={classes.root} >
+
         <AppBar
           position="absolute"
           className={classNames(classes.appBar, this.state.open && classes.appBarShift)}
@@ -823,6 +826,7 @@ componentWillReceiveProps(nextProps){
             />       
         </main>
       </div>
+      </div>   
     );
   }
 }

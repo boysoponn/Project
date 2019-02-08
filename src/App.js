@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import styled from 'styled-components'
 import { BrowserRouter as  Router, Route, Redirect} from 'react-router-dom';
-import exmessage from './components/ex-message';
 import CMS from './components/CMS';
 import Header from './components/header';
 import Homepage from './components/homepage';
 import config from './config'
 import { connect } from 'react-redux'
 import {login,loginEmail,photoURL} from './components/actions'
-
+import Metadata from './components/metadata';
 class App extends Component {
   state = {
     authenticated: false,
@@ -42,7 +41,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(window.location.pathname)
     this.props.dispatch(loginEmail(this.state.email));
     this.props.dispatch(login(this.state.username));
     this.props.dispatch(photoURL(this.state.photoURL));
@@ -75,8 +73,17 @@ class App extends Component {
     // const Header = showNav(Header);
 
     return (
-      <Body>
-         <Header/>
+      <div>
+               <Metadata
+      title='CMS'
+      description="cms for you"
+      og_image="https://i.ytimg.com/vi/jDpgnQcHeMI/hqdefault.jpg"
+      og_url="https://www.projectcms.tk/"
+      og_title="i love you cms"
+      og_description="boy sopon is coming"
+      />
+      <Body>    
+        <Header/>
       <Router>
         <div> 
           <Route path="/cms" component={CMSWithRestriction}/>
@@ -85,6 +92,7 @@ class App extends Component {
       </Router>
 
       </Body>
+      </div>
     );
    }
   }
