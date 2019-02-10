@@ -1,26 +1,9 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Facebook from '../../image/facebook.png';
-import Youtube from '../../image/youtube.png';
-import Twitter from '../../image/twitter.png';
-import Grid from '@material-ui/core/Grid';
-import ScrollAnimation from 'react-animate-on-scroll';
-import styled from 'styled-components'
-
+import './../tamplateCSS/menubar.css';
+import { Link} from 'react-router-dom';
 
 const styles = theme => ({
-  root: {
-    // height:'100%'
-  },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-  img:{
-    width:40,
-    padding:5
-  }
 });
 
 
@@ -58,44 +41,36 @@ constructor(props){
       padding:' 0 50 0 50',
       wordWrap: 'break-word'
   };
-    const { classes} = this.props;
+    const { classNamees} = this.props;
     return (
-      <div className={classes.root}>
-      <Grid style={content}container spacing={24}>
-      <Grid item xs={3}>  
-        <a href="#"><img className={classes.img}  src={Facebook} alt="Facebook" /></a>
-        <a href="#"><img className={classes.img}  src={Youtube} alt="Youtube"/></a>
-        <a href="#"><img className={classes.img}  src={Twitter} alt="Twitter"/></a>
-        </Grid>
-        <Grid item xs={9}>
-          <ScrollAnimation style={title} className={this.props.footerTitleAnimate} >
-            {this.props.footerTitle}
-            </ScrollAnimation> 
-            <ScrollAnimation style={description} className={this.props.footerDescriptionAnimate} >
-            {this.props.footerDescription}
-          </ScrollAnimation> 
-          <div style={{display:'inline'}}>
-          {this.props.footerContent.map((footer)=>
-          // {footer.link  ?
-           <a href={footer.link} target={footer.target} 
-           style={{
-             padding:5,
-             color:footer.Color,
-             animationDuration: footer.Duration,
-             fontFamily:footer.FontFamily,
-             fontSize:footer.FontSize,
-             fontWeight:footer.FontWeight,
-             fontStyle:footer.FontStyle,
-             display:footer.Status
-          }}>
-          {footer.label}</a>
-          //  :
-          //  <a>{footer.label}</a>
-          //   }
-          )}
-          </div>
-        </Grid>
-      </Grid>
+      <div classNameName='footer1'>
+        <footer className="flex-rw">
+          <section className="footer-social-section flex-rw">
+              <span className="footer-social-overlap footer-social-connect">
+              CONNECT US
+              </span>
+              <span className="footer-social-overlap footer-social-icons-wrapper">
+              <a href="https://www.pinterest.com/paviliongift/" className="generic-anchor" target="_blank" title="Pinterest" itemprop="significantLink"><i className="fa fa-pinterest"></i></a>
+              <a href="https://www.facebook.com/paviliongift" className="generic-anchor" target="_blank" title="Facebook" itemprop="significantLink"><i className="fa fa-facebook"></i></a>
+              <a href="https://twitter.com/PavilionGiftCo" className="generic-anchor" target="_blank" title="Twitter" itemprop="significantLink"><i className="fa fa-twitter"></i></a>
+              <a href="http://instagram.com/paviliongiftcompany" className="generic-anchor" target="_blank" title="Instagram" itemprop="significantLink"><i className="fa fa-instagram"></i></a>
+              <a href="https://www.youtube.com/channel/UCYgUODvd0qXbu_LkUWpTVEg" className="generic-anchor" target="_blank" title="Youtube" itemprop="significantLink"><i className="fa fa-youtube"></i></a>
+              <a href="https://plus.google.com/+Paviliongift/posts" className="generic-anchor" target="_blank" title="Google Plus" itemprop="significantLink"><i className="fa fa-google-plus"></i></a>
+              </span>
+          </section>
+          <section className="footer-bottom-section flex-rw">
+            <div className="footer-bottom-wrapper">   
+              <p>2015 Pavilion in</p>
+            </div>
+            <div className="footer-bottom-wrapper">
+              {this.props.footerContent.map((footer)=>
+                footer.link.search("http") === -1?
+                  <Link to={footer.link} target={footer.linkTarget}  className="generic-anchor">{footer.label}<span> | </span></Link>  
+                  :<a href={footer.link} target={footer.linkTarget}  className="generic-anchor">{footer.label}<span> | </span></a>  
+                )}
+            </div>
+          </section>
+        </footer>
     </div>
     );
   }

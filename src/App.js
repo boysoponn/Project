@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import styled from 'styled-components'
 import { BrowserRouter as  Router, Route, Redirect} from 'react-router-dom';
-import { withRouter, Link} from 'react-router-dom';
-import exmessage from './components/ex-message';
 import CMS from './components/CMS';
 import Header from './components/header';
 import ggg from './components/ggg';
@@ -11,7 +9,7 @@ import Homepage from './components/homepage';
 import config from './config'
 import { connect } from 'react-redux'
 import {login,loginEmail,photoURL} from './components/actions'
-
+import Metadata from './components/metadata';
 class App extends Component {
   state = {
     authenticated: false,
