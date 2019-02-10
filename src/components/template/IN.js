@@ -1,19 +1,20 @@
 import React from 'react';
 import '../../css/animate.min.css';
-import HeroNo1 from './Hero/HeroNo1'
-import HeroNo2 from './Hero/HeroNo2'
-import HeroNo3 from './Hero/HeroNo3'
-import MenubarNo1 from './Menubar/menubarNo1'
-import MenubarNo2 from './Menubar/menubarNo2'
-import MenubarNo3 from './Menubar/menubarNo3'
+import HeroNo1 from './Hero/HeroNo1';
+import HeroNo2 from './Hero/HeroNo2';
+import HeroNo3 from './Hero/HeroNo3';
+import MenubarNo1 from './Menubar/menubarNo1';
+import MenubarNo2 from './Menubar/menubarNo2';
+import MenubarNo3 from './Menubar/menubarNo3';
 // import WelcomeNo1 from './Welcome/WelcomeNo1'
 // import WelcomeNo2 from './Welcome/WelcomeNo2'
-import CarouselNo1 from './Carousel/CarouselNo1'
-import CarouselNo2 from './Carousel/CarouselNo2'
-import GalleryNo1 from './Gallery/GalleryNo1'
-import GalleryNo2 from './Gallery/GalleryNo2'
-import GalleryNo3 from './Gallery/GalleryNo3'
-import FooterNo1 from './Footer/FooterNo1'
+import CarouselNo1 from './Carousel/CarouselNo1';
+import CarouselNo2 from './Carousel/CarouselNo2';
+import GalleryNo1 from './Gallery/GalleryNo1';
+import GalleryNo2 from './Gallery/GalleryNo2';
+import GalleryNo3 from './Gallery/GalleryNo3';
+import GalleryNo4 from './Gallery/GalleryNo4';
+import FooterNo1 from './Footer/FooterNo1';
 
 class IN extends React.Component {
 
@@ -319,6 +320,34 @@ class IN extends React.Component {
   if( this.props.Gallery === "GalleryNo3"){
     Gallery =
     <GalleryNo3
+    galleryContent={this.props.galleryContent}
+    galleryBackgroundColor={this.props.galleryBackgroundColor}
+    galleryTitle={this.props.galleryTitle}  
+    galleryTitleAnimate={this.props.galleryTitleAnimate} 
+    galleryTitleDuration={this.props.galleryTitleDuration}   
+    galleryTitleFontFamily={this.props.galleryTitleFontFamily}
+    galleryTitleFontSize={this.props.galleryTitleFontSize}
+    galleryTitleFontWeight={this.props.galleryTitleFontWeight}
+    galleryTitleFontStyle={this.props.galleryTitleFontStyle}
+    galleryTitleStatus={this.props.galleryTitleStatus}
+    galleryTitleColor={this.props.galleryTitleColor}
+    galleryTitlePosition={this.props.galleryTitlePosition}  
+      
+    galleryDescription={this.props.galleryDescription}  
+    galleryDescriptionAnimate={this.props.galleryDescriptionAnimate} 
+    galleryDescriptionDuration={this.props.galleryDescriptionDuration}   
+    galleryDescriptionFontFamily={this.props.galleryDescriptionFontFamily}
+    galleryDescriptionFontSize={this.props.galleryDescriptionFontSize}
+    galleryDescriptionFontWeight={this.props.galleryDescriptionFontWeight}
+    galleryDescriptionFontStyle={this.props.galleryDescriptionFontStyle}
+    galleryDescriptionStatus={this.props.galleryDescriptionStatus}
+    galleryDescriptionColor={this.props.galleryDescriptionColor}
+    galleryDescriptionPosition={this.props.galleryDescriptionPosition}
+    />
+  }
+  if( this.props.Gallery === "GalleryNo4"){
+    Gallery =
+    <GalleryNo4
     galleryContent={this.props.galleryContent}
     galleryBackgroundColor={this.props.galleryBackgroundColor}
     galleryTitle={this.props.galleryTitle}  

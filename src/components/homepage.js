@@ -2,20 +2,124 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { Link} from 'react-router-dom';
+import  firebase from 'firebase';
+import LoginTemplate from './loginTemplate';
+import config from '../config';
+
 class AppWithConnect extends React.Component {
     constructor(props){
         super(props);
         this.state={
-          user:false
+          user:false,
+          login:false,
         }
+    }
+    onChangeTrue=name=>()=>{
+      this.setState({
+          [name]:true
+      })
+    }
+    onChangeFalse=name=>()=>{
+      this.setState({
+          [name]:false
+      })
+    }
+    onChangeValue=name=>(e)=> {
+      this.setState({
+        [name]: e.target.value
+      });
+    } 
+    closePopup=()=>{
+      if(this.props.user!==''){this.setState({login:false})}
+    }   
+    signin=(e)=> { 
+      e.preventDefault(); 
+      config.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((user) => {
+        this.setState({login:false})
+      })
+      .catch(function(error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+
+        if (errorCode === 'auth/wrong-password') {
+            alert('Wrong password.');
+        } else {
+            alert(errorMessage);         
+        }
+        console.log(error);
+    });
+    }
+    loginGmail = () => {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        config.auth().signInWithPopup(provider).then(function(result) {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = result.credential.accessToken;
+        // The signed-in user info.
+        var user = result.user;
+        // ...
+        this.props.history.push('/');
+        }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+        });
+        this.setState({login:false})
+    }
+    loginFacebook = () => {
+        var provider = new firebase.auth.FacebookAuthProvider();
+        config.auth().signInWithPopup(provider).then(function(result) {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = result.credential.accessToken;
+        // The signed-in user info.
+        var user = result.user;
+        // ...
+        }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+        });
+        this.setState({login:false})
+    }
+    loginTwitter=()=>{
+        alert("coming soon")
     }
 render() {
     return (
+      <div>
             <Text>
                 <H1>Projectcms</H1>
                 <P>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</P>
-                <Link to="/cms" className='fillRight'>Getting Started</Link>
+                {this.props.user===""?
+                <Button className='fillRight' onClick={this.onChangeTrue('login')}>Getting Started</Button>
+                : <Link to="/cms"><Button className='fillRight'>Getting Started</Button></Link>
+                }
             </Text>
+            <LoginTemplate
+            open={this.state.login}
+            onClose={this.onChangeFalse('login')}
+            label='SIGN IN'
+            submit={this.signin}
+            social={true}
+            facebook={this.loginFacebook}
+            google={this.loginGmail}
+            twitter={this.loginTwitter}
+            labelButton='SUBMIT'
+            textField=  {[
+                        {_key:1,label:'Email',type:'email',value:this.state.email,onChange:this.onChangeValue('email')},
+                        {_key:2,label:'Password',type:'password',value:this.state.password,onChange:this.onChangeValue('password')}
+                        ]}
+            />
+      </div>
     )}}
 
     const mapStateToProps = state => ({

@@ -62,6 +62,11 @@ constructor(props){
     return (
       <div className={classes.root}>
       <Grid style={content}container spacing={24}>
+      <Grid item xs={3}>  
+        <a href="#"><img className={classes.img}  src={Facebook} alt="Facebook" /></a>
+        <a href="#"><img className={classes.img}  src={Youtube} alt="Youtube"/></a>
+        <a href="#"><img className={classes.img}  src={Twitter} alt="Twitter"/></a>
+        </Grid>
         <Grid item xs={9}>
           <ScrollAnimation style={title} className={this.props.footerTitleAnimate} >
             {this.props.footerTitle}
@@ -89,11 +94,6 @@ constructor(props){
           //   }
           )}
           </div>
-        </Grid>
-        <Grid item xs={3}>  
-        <a href="#"><img className={classes.img}  src={Facebook} alt="Facebook" /></a>
-        <a href="#"><img className={classes.img}  src={Youtube} alt="Youtube"/></a>
-        <a href="#"><img className={classes.img}  src={Twitter} alt="Twitter"/></a>
         </Grid>
       </Grid>
     </div>

@@ -268,6 +268,15 @@ class ButtonForNewTab extends React.Component {
               image={GalleryNo3}
               />
             </Grid>
+            <Grid item  sm={6} md={4} lg={3}>
+              <RadioButtons
+              selectedValue={this.props.selectedGallery}
+              handleChange={this.props.handleChangeGallery}
+              value={this.props.valueGallery5}
+              label='Gallery 4'
+              image={Footer}
+              />
+            </Grid>
           </Grid>
           </List>
           

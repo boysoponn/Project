@@ -714,6 +714,7 @@ class TabWebsite extends React.Component {
       valueGallery2="GalleryNo1"
       valueGallery3="GalleryNo2"
       valueGallery4="GalleryNo3"
+      valueGallery5="GalleryNo4"
       selectedFooter={this.state.selectedFooter}
       handleChangeFooter={this.onChangeValue('selectedFooter')}
       valueFooter1="none"
@@ -758,6 +759,7 @@ class TabWebsite extends React.Component {
       valueGallery2="GalleryNo1"
       valueGallery3="GalleryNo2"
       valueGallery4="GalleryNo3"
+      valueGallery5="GalleryNo4"
       selectedFooter={this.state.selectedFooter}
       handleChangeFooter={this.onChangeValue('selectedFooter')}
       valueFooter1="none"

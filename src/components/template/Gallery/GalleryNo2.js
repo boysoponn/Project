@@ -11,7 +11,7 @@ class GalleryNo2 extends React.Component {
       }
   render() {
 	const background={
-		padding: '2.5% 5% 10% 5%',
+		padding: '2.5% 10% 10% ',
 		backgroundColor:this.props.galleryBackgroundColor,
 		position:'relative',
 	  }

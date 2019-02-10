@@ -11,7 +11,7 @@ class GalleryNo2 extends React.Component {
       }
   render() {
 	const background={
-		padding: '2.5% 10% 10% ',
+		padding: '2.5% 5% 10% 5%',
 		backgroundColor:this.props.galleryBackgroundColor,
 		position:'relative',
 	  }
@@ -47,7 +47,7 @@ class GalleryNo2 extends React.Component {
 			<Grid>
 				{this.props.galleryContent.map((post) => 
 			
-					<Figure width='48%' className={'effect-'+post.galleryHover}>	
+					<Figure width='23%' className={'effect-'+post.galleryHover}>	
 						<Img Src={"url("+post.image+")"}/>
 						<Figcaption>
 							<div>

@@ -11,7 +11,7 @@ class GalleryNo2 extends React.Component {
       }
   render() {
 	const background={
-		padding:'2.5% 10% 10% 10%',
+		padding: '2.5% 10% 10% ',
 		backgroundColor:this.props.galleryBackgroundColor,
 		position:'relative',
 	  }
@@ -46,8 +46,9 @@ class GalleryNo2 extends React.Component {
 			</Content> 
 			<Grid>
 				{this.props.galleryContent.map((post) => 
-					<Figure className={'effect-'+post.galleryHover}>	
-						<Img src={post.image} key={post._key} alt={"item"+post._key}/>
+			
+					<Figure width='98%' className={'effect-'+post.galleryHover}>	
+						<Img Src={"url("+post.image+")"}/>
 						<Figcaption>
 							<div>
 								<H2
@@ -70,6 +71,7 @@ class GalleryNo2 extends React.Component {
 							{post.link === '#'? null:<A href={post.link} target={post.linkTarget}></A>}
 						</Figcaption>			
 					</Figure>
+					
 				)}
 			</Grid>
 		</div>
@@ -82,6 +84,7 @@ export default GalleryNo2;
 const Content = styled.div`
 padding-bottom:5%;
 `; 
+
 const Grid = styled.div`
 position: relative;
 margin: 0 auto;
@@ -91,25 +94,26 @@ text-align: center;
 display: inline-block;
 width:100%;
 `; 
+
 const Figure = styled.figure`
 position: relative;
 float: left;
 overflow: hidden;
 margin: 10px 1%;
-height: 360px;
-// width: ${props => props.width};
+width: ${props => props.width};
+height: 500px;
 text-align: center;
 cursor: pointer;
 `;
 
-const Img = styled.img`
+const Img = styled.div`
+background-image:${props => props.Src};
 position: relative;
-display: block;
-height: 100%;
-// width: 100%;
-// opacity: 0.8;
+height: 100%; 
+background-position: center;
+background-repeat: no-repeat;
+background-size:  cover;
 `;
-
 const Figcaption = styled.figcaption`
 padding: 2em;
 color: #fff;
@@ -162,3 +166,4 @@ display: ${props => props.status};
 font-family: ${props => props.family};
 font-style:${props => props.fontStyle};
 `;
+

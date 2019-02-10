@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import styled from 'styled-components'
 import { BrowserRouter as  Router, Route, Redirect} from 'react-router-dom';
+import { withRouter, Link} from 'react-router-dom';
 import exmessage from './components/ex-message';
 import CMS from './components/CMS';
 import Header from './components/header';
+import ggg from './components/ggg';
 import Homepage from './components/homepage';
 import config from './config'
 import { connect } from 'react-redux'
@@ -17,6 +19,7 @@ class App extends Component {
     email:"",
     photoURL:''
   };
+
 
   componentDidMount() {
     config.auth().onAuthStateChanged((authenticated) => {
@@ -42,7 +45,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(window.location.pathname)
     this.props.dispatch(loginEmail(this.state.email));
     this.props.dispatch(login(this.state.username));
     this.props.dispatch(photoURL(this.state.photoURL));
@@ -61,26 +63,28 @@ class App extends Component {
     }
     const CMSWithRestriction = withRestriction(CMS);
 
-    // function showNav(Nav) {
-    //   return class RestrictedComponent extends React.Component {
-    //     render() {
-    //       if (user ==="") {
-    //         return <Nav {...this.props} />
-    //       }else{
-    //         return null;
-    //       }  
-    //     }
-    //   }
-    // }
-    // const Header = showNav(Header);
+    function showNav(Nav) {
+      return class showNav extends React.Component {
+        render() {
+          console.log(this.props.location.pathname);
+          if (this.props.location.pathname === "/") {
+            return <Nav {...this.props} />
+          }else{
+            return null;
+          }  
+        }
+      }
+    }
+    const Navbar = showNav(Header);
 
     return (
       <Body>
-         <Header/>
-      <Router>
-        <div> 
-          <Route path="/cms" component={CMSWithRestriction}/>
-          <Route exact path="/" component={Homepage} />               
+      <Router> 
+        <div>        
+          <Route exact path="/"  component={Navbar} /> 
+          <Route exact path="/"  component={Homepage} />  
+          <Route path="/cms"     component={CMSWithRestriction}/>
+          <Route path="/ggg"     component={ggg} />               
         </div>
       </Router>
 

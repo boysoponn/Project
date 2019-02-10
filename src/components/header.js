@@ -9,6 +9,7 @@ import ExitIcon from '@material-ui/icons/ExitToApp';
 import Button from '@material-ui/core/Button';
 import { withStyles  } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom';
 
 const styles = theme => ({
     button:{
@@ -124,6 +125,7 @@ class AppWithConnect extends React.Component {
     }
     logout =() => {config.auth().signOut();window.location.reload(); };
 render() {
+    console.log(this.props.location.pathname)
     const { classes } = this.props;
     return (
         <div>
@@ -192,7 +194,7 @@ const mapStateToProps = state => ({
     user:state.user,
     photoURL:state.photoURL
     })
-export default connect(mapStateToProps)(withStyles(styles)(AppWithConnect));
+export default withRouter(connect(mapStateToProps)(withStyles(styles)(AppWithConnect)));
 
 const Nav = styled.div`
 height: 20vh;
