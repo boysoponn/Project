@@ -26,7 +26,7 @@ constructor(props){
         <div className="nav">
             <div className="nav__content">
                 <ul className="nav__list">
-                {this.props.menubarContent.map((menubar) =>
+                {this.props.menubarItem.map((menubar) =>
                     menubar.link.search("http") === -1?
                     <li style={{fontSize:'calc(2vw + '+ menubar.FontSize+'px)',}} className={"nav__list-item"+active}><Link to={menubar.link} target={menubar.linkTarget}
                     style={{

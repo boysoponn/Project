@@ -130,9 +130,10 @@ class CMS extends React.Component {
     gallery:'none',
     menubar:'none',
     footer:'none',
-    footerContent:[],
+    footerItem:[],
+    footerSocial:[],
     carouselContent:[],
-    menubarContent:[],
+    menubarItem:[],
     galleryContent:[],
     openHeader:false,
     undefinedOneTab:true
@@ -155,31 +156,32 @@ firstTabs=()=>{
       }
     });
   
-    let global = config.database().ref('global/'+this.props.email+'/content');
+    let global = config.database().ref('global/'+this.props.email+'/footerContent');
     global.on('value', async (snapshot) => { 
     const snapshotValue = snapshot.val(); 
     let data = _(snapshotValue).value();
     if(data !== null){this.setState({
-      footerTitle:data.footerTitle,
-      footerDescription:data.footerDescription,
-      footerbackgroundColor:data.footerbackgroundColor,
-      footerTitleAnimate:data.footerTitleAnimate,
-      footerTitleDuration:data.footerTitleDuration,
-      footerTitleFontFamily:data.footerTitleFontFamily,
-      footerTitleFontSize:data.footerTitleFontSize,
-      footerTitleFontWeight:data.footerTitleFontWeight,
-      footerTitleFontStyle:data.footerTitleFontStyle,
-      footerTitleStatus:data.footerTitleStatus,
-      footerTitleColor:data.footerTitleColor,
+      footerTitle:data.title,
+      footerDescription:data.description,
+      footerPosition:data.position,
+      footerbackgroundColor:data.backgroundColor,
+      footerTitleAnimate:data.titleAnimate,
+      footerTitleDuration:data.titleDuration,
+      footerTitleFontFamily:data.titleFontFamily,
+      footerTitleFontSize:data.titleFontSize,
+      footerTitleFontWeight:data.titleFontWeight,
+      footerTitleFontStyle:data.titleFontStyle,
+      footerTitleStatus:data.titleStatus,
+      footerTitleColor:data.titleColor,
   
-      footerDescriptionAnimate:data.footerDescriptionAnimate,
-      footerDescriptionDuration:data.footerDescriptionDuration,
-      footerDescriptionFontFamily:data.footerDescriptionFontFamily,
-      footerDescriptionFontSize:data.footerDescriptionFontSize,
-      footerDescriptionFontWeight:data.footerDescriptionFontWeight,
-      footerDescriptionFontStyle:data.footerDescriptionFontStyle,
-      footerDescriptionStatus:data.footerDescriptionStatus,
-      footerDescriptionColor:data.footerDescriptionColor,
+      footerDescriptionAnimate:data.descriptionAnimate,
+      footerDescriptionDuration:data.descriptionDuration,
+      footerDescriptionFontFamily:data.descriptionFontFamily,
+      footerDescriptionFontSize:data.descriptionFontSize,
+      footerDescriptionFontWeight:data.descriptionFontWeight,
+      footerDescriptionFontStyle:data.descriptionFontStyle,
+      footerDescriptionStatus:data.descriptionStatus,
+      footerDescriptionColor:data.descriptionColor,
     })}});
   }
 
@@ -313,24 +315,29 @@ componentWillReceiveProps(nextProps){
     const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev;}, []); 
     this.setState({galleryContent:snapshotArr}); });
 
-  let globalContent = config.database().ref('global/'+this.props.email+'/menubarContent/');
-  globalContent.on('value', async (snapshot) => { 
+  let menubarItem = config.database().ref('global/'+this.props.email+'/menubarItem/');
+  menubarItem.on('value', async (snapshot) => { 
     const snapshotValue2 = snapshot.val(); 
     const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev; }, []); 
-    this.setState({ menubarContent:snapshotArr});});
+    this.setState({ menubarItem:snapshotArr});});
 
-  let footerContent = config.database().ref('global/'+this.props.email+'/footerContent/');
-  footerContent.on('value', async (snapshot) => { 
+  let footerItem = config.database().ref('global/'+this.props.email+'/footerItem/');
+  footerItem.on('value', async (snapshot) => { 
     const snapshotValue2 = snapshot.val(); 
     const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev; }, []); 
-    this.setState({ footerContent:snapshotArr});});
+    this.setState({ footerItem:snapshotArr});});
+
+  let footerSocial = config.database().ref('global/'+this.props.email+'/footerSocial/');
+  footerSocial.on('value', async (snapshot) => { 
+    const snapshotValue2 = snapshot.val(); 
+    const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev; }, []); 
+    this.setState({ footerSocial:snapshotArr});});
   
-    let global = config.database().ref('global/'+this.props.email+'/');
-    global.on('value', async (snapshot) => { 
+  let global = config.database().ref('global/'+this.props.email+'/');
+  global.on('value', async (snapshot) => { 
     const snapshotValue = snapshot.val(); 
     let data = _(snapshotValue).value();
-    if(data !== null){this.setState({menubarLogo:data.menubarLogo.image ,menubarbackgroundColor:data.menubarSetting.menubarbackgroundColor})}});
-}
+    if(data !== null){this.setState({menubarLogo:data.menubarLogo.image ,menubarbackgroundColor:data.menubarSetting.menubarbackgroundColor,})}});}
 
   popupLogout = () => {this.setState({ popupLogout: true });};
   popupLogoutClose = () => {this.setState({ popupLogout: false });};
@@ -513,7 +520,7 @@ componentWillReceiveProps(nextProps){
       menubar={this.state.menubar}
       menubarLogo={this.state.menubarLogo}
       menubarbackgroundColor={this.state.menubarbackgroundColor}
-      menubarContent={this.state.menubarContent}
+      menubarItem={this.state.menubarItem}
       linkLogo={this.props.linkLogo}
       onChangeLinkLogo={this.onChangeChecked('linkLogo')}
       linkLogoTarget={this.props.linkLogoTarget}
@@ -575,10 +582,12 @@ componentWillReceiveProps(nextProps){
     let footerInput ;
     if( this.state.footer !== "none"){
     footerInput=<FooterInput
-    footerContent={this.state.footerContent}
-
+    footer={this.state.footer}
+    footerItem={this.state.footerItem}
+    footerSocial={this.state.footerSocial}
     footerTitle={this.state.footerTitle}
     footerDescription={this.state.footerDescription}
+    footerPosition={this.state.footerPosition}
     footerbackgroundColor={this.state.footerbackgroundColor}
     footerTitleAnimate={this.state.footerTitleAnimate}
     footerTitleDuration={this.state.footerTitleDuration}
@@ -590,6 +599,7 @@ componentWillReceiveProps(nextProps){
     footerTitleColor={this.state.footerTitleColor}
 
     footerbackgroundOnChangeColor={this.onChangeColor('footerbackgroundColor')}
+    footerPositionOnChange={this.onChangeValue('footerPosition')}
     footerTitleOnChange={this.onChangeValue('footerTitle')}
     footerTitleOnChangeAnimate={this.onChangeValue('footerTitleAnimate')}
     footerTitleOnChangeDuration={this.onChangeValue('footerTitleDuration')}         
@@ -702,7 +712,7 @@ componentWillReceiveProps(nextProps){
             
               menubarLogo={this.state.menubarLogo}
               menubarbackgroundColor={this.state.menubarbackgroundColor}
-              menubarContent={this.state.menubarContent}   
+              menubarItem={this.state.menubarItem}   
               herobackgroundColor={this.state.herobackgroundColor}
               heroBackgroundImage={this.state.heroBackgroundImage}
               heroYoutubeID={this.state.heroYoutubeID}
@@ -802,9 +812,11 @@ componentWillReceiveProps(nextProps){
               galleryDescriptionColor={this.state.galleryDescriptionColor}
               galleryDescriptionPosition={this.state.galleryDescriptionPosition} 
 
-              footerContent={this.state.footerContent}
+              footerItem={this.state.footerItem}
+              footerSocial={this.state.footerSocial}
               footerTitle={this.state.footerTitle}
               footerDescription={this.state.footerDescription}
+              footerPosition={this.state.footerPosition}
               footerbackgroundColor={this.state.footerbackgroundColor}
               footerTitleAnimate={this.state.footerTitleAnimate}
               footerTitleDuration={this.state.footerTitleDuration}

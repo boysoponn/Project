@@ -39,7 +39,7 @@ class AlertDialogSlide extends React.Component {
       />
       <div>
         <Dialog
-          open={this.props.open}
+          open={this.props.open?this.props.open:false}
           TransitionComponent={Transition}
           keepMounted
           onClose={this.props.close}

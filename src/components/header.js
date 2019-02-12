@@ -125,7 +125,6 @@ class AppWithConnect extends React.Component {
     }
     logout =() => {config.auth().signOut();window.location.reload(); };
 render() {
-    console.log(this.props.location.pathname)
     const { classes } = this.props;
     return (
         <div>

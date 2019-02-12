@@ -1,9 +1,8 @@
-@import url('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
+@import url('//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 body { 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 
 .menu-icon {
   height: 30px;
@@ -152,27 +151,16 @@ body {
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
-  height: 100%;
 }
 
 a {
   text-decoration: none;
-}
-.generic-anchor {
-  color: #8db9ed;
-}
-.generic-anchor:visited {
-  color: #8db9ed;
-}
-.generic-anchor:hover {
-  color: #ccc;
 }
 .flex-rw {
   display: flex;
   flex-flow: row wrap;
 }
 footer {
-  background: #373737;
   margin-top: auto;
   width: 100%;
 }
@@ -182,6 +170,7 @@ footer {
   justify-content: space-around;
   position: relative;
   margin-top: 5px;
+  padding:20px;
 }
 .footer-social-section::after {
   content: "";
@@ -195,14 +184,12 @@ footer {
 .footer-social-overlap {
   position: relative;
   z-index: 2;
-  background: #373737;
   padding: 0 20px;
 }
 .footer-social-connect {
   display: flex;
   align-items: center;
   font: 3.5em "Oswald", sans-serif;
-  color: #fff;
 }
 .footer-social-small {
   font-size: 0.6em;
@@ -216,9 +203,10 @@ footer {
 }
 .footer-bottom-section {
   width: 100%;
-  padding: 10px;
+  padding: 20px;
   border-top: 1px solid #ccc;
   margin-top: 10px;
+
 }
 .footer-bottom-section > div:first-child {
   margin-right: auto;

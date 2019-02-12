@@ -14,7 +14,7 @@ constructor(props){
       <Header color={this.props.menubarbackgroundColor}>
       <Navbar >
         <Nav >
-          {this.props.menubarContent.map((menubar)=>
+          {this.props.menubarItem.map((menubar)=>
           <Item key={menubar._key}>
             {menubar.link === ''?
             <A            

@@ -267,15 +267,16 @@ class NestedList extends React.Component {
             Carousel Setting
             </Button>
             <Popover
+              className={classes.popover}
               open={open}
               anchorEl={anchorEl}
               onClose={this.handleClose}
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center',
+                vertical: 'top',
+                horizontal: 'right',
               }}
               transformOrigin={{
-                vertical: 'top',
+                vertical: 'bottom',
                 horizontal: 'left',
               }}
             >
@@ -370,7 +371,7 @@ class NestedList extends React.Component {
             </DialogTitle> 
             <ListItem>
             <InputText
-              displayAnimate='none'
+              displayAnimate={true}
               Label="Title"
               value={this.state.carouselTitle}
               FontFamily={this.state.carouselTitleFontFamily}
@@ -390,7 +391,7 @@ class NestedList extends React.Component {
               </ListItem>
               <ListItem> 
             <InputTextarea
-              displayAnimate='none'
+              displayAnimate={true}
               label="description"
               value={this.state.carouselDescription}
               FontFamily={this.state.carouselDescriptionFontFamily}

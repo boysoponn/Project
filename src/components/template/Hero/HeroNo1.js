@@ -24,7 +24,7 @@ class HeroNo1 extends React.Component {
         position:'relative',
     };
     const content={
-        padding: '20% 10% 10%',
+        padding: '15% 10% 10%',
     };
     const title ={
         color:this.props.heroTitleColor,

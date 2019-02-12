@@ -384,7 +384,7 @@ class NestedList extends React.Component {
                     FontStyle={this.state.galleryTitleFontStyle}
                     Status={this.state.galleryTitleStatus}
                     color={this.state.galleryTitleColor}
-                    displayAnimate ={'none'}
+                    displayAnimate ={true}
                     onChange={this.onChangeValue('galleryTitle')}  
                     onChangeAnimate={this.onChangeValue('galleryTitleAnimate')}              
                     onChangeDuration={this.onChangeValue('galleryTitleDuration')}            
@@ -408,7 +408,7 @@ class NestedList extends React.Component {
                     FontStyle={this.state.galleryDescriptionFontStyle}
                     Status={this.state.galleryDescriptionStatus}
                     color={this.state.galleryDescriptionColor}
-                    displayAnimate ={'none'}
+                    displayAnimate ={true}
                     onChange={this.onChangeValue('galleryDescription')}  
                     onChangeAnimate={this.onChangeValue('galleryDescriptionAnimate')}              
                     onChangeDuration={this.onChangeValue('galleryDescriptionDuration')}            

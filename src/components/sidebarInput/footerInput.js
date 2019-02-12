@@ -21,10 +21,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/AddCircle';
 import ChooseLink from './itemInput/chooseLink';
 import InputTextarea from './itemInput/inputTextarea';
-import ModalPictureGlobal from './itemInput/modalPictureGlobal';
 import PickColor from './itemInput/pickColor'
+import Dropdown from './itemInput/dropdown'
 // import Selection from './itemInput/selection';
-import _ from 'lodash';
 import InputText from './itemInput/inputText';
 
 function Transition(props) {
@@ -36,6 +35,9 @@ const styles = theme => ({
     width: '100%',
     maxWidth: 550,
     backgroundColor: theme.palette.background.paper,
+  },
+  popover:{
+    height:300
   },
   button: {
     width:130
@@ -81,12 +83,12 @@ class CarouselInput extends React.Component {
     link:'',
     key:'',
     label:'',
-    groupData:[]
+    hover:''
     };  
   }
 
   save =  () => {
-    let dbCon = config.database().ref('global/'+this.props.email+'/footerContent/');
+    let dbCon = config.database().ref('global/'+this.props.email+'/footerItem/');
     dbCon.child(this.state.key).update({
       link:this.state.link,
       linkTarget:this.state.linkTarget,
@@ -103,13 +105,12 @@ class CarouselInput extends React.Component {
     alert("saved") 
   };
   delete = menubar => () =>{
-    let dbCon = config.database().ref('global/'+this.props.email+'/footerContent/');
+    let dbCon = config.database().ref('global/'+this.props.email+'/footerItem/');
     dbCon.child(menubar._key).remove();
   }
   addItem=()=>{
-    let dbCon = config.database().ref('global/'+this.props.email+'/footerContent/');
+    let dbCon = config.database().ref('global/'+this.props.email+'/footerItem/');
     dbCon.push({
-      typeGroup:false,
       label:'Link',
       link:'',
       linkTarget:'_blank',
@@ -121,14 +122,6 @@ class CarouselInput extends React.Component {
       FontStyle:'normal',
       Status:'block',
       Color:'#000000',
-      // group:{
-      //   link1:{
-      //     label:'Link',
-      //     link:'',
-      //     linkTarget:'_blank',
-      //     typeGroup:false
-      //   },
-      // }
     })  
   }
   OpenItem  = menubar => () =>{
@@ -138,7 +131,6 @@ class CarouselInput extends React.Component {
     link:menubar.link,
     key:menubar._key,
     label:menubar.label,
-    typeGroup:menubar.typeGroup,
     Animate:menubar.Animate,
     Duration:menubar.Duration,
     FontFamily:menubar.FontFamily,
@@ -148,20 +140,58 @@ class CarouselInput extends React.Component {
     Status:menubar.Status,
     Color:menubar.Color,
   });
-};
-onChangeTypeGroup=menubar=>(e)=>{
-  let dbCon = config.database().ref('global/'+this.props.email+'/footerContent');
-  dbCon.child(menubar._key).update({
-    typeGroup:e.target.checked ,
+  };
+
+  saveItemSocial =  () => {
+    let dbCon = config.database().ref('global/'+this.props.email+'/footerSocial/');
+    dbCon.child(this.state.key).update({
+      link:this.state.link,
+      linkTarget:this.state.linkTarget,
+      label:this.state.label,
+      FontSize:this.state.FontSize,
+      FontStyle:this.state.FontStyle,
+      Status:this.state.Status,
+      Color:this.state.Color,
+      hover:this.state.hover
+    });
+    alert("saved") 
+  };
+  deleteItemSocial = menubar => () =>{
+    let dbCon = config.database().ref('global/'+this.props.email+'/footerSocial/');
+    dbCon.child(menubar._key).remove();
+  }
+  addItemSocial=()=>{
+    let dbCon = config.database().ref('global/'+this.props.email+'/footerSocial/');
+    dbCon.push({
+      link:'#',
+      label:'far fa-sticky-note',
+      linkTarget:'_blank',
+      FontSize:'30',
+      FontStyle:'normal',
+      Status:'block',
+      Color:'#000000',
+      hover:'#ffffff'
+    })  
+  }
+  OpenItemSocial  = menubar => () =>{
+    this.setState({ 
+    openItemSocial: true ,
+    linkTarget:menubar.linkTarget,
+    link:menubar.link,
+    key:menubar._key,
+    label:menubar.label,
+    FontSize:menubar.FontSize,
+    FontStyle:menubar.FontStyle,
+    Status:menubar.Status,
+    Color:menubar.Color,
+    hover:menubar.hover
   });
- }
-  CloseItem = () => {this.setState({ openItem1: false });};
+  };
+
+  CloseItem =name=> () => {this.setState({ [name]: false });};
   handleClick = () => {this.setState(state => ({ open: !state.open }));};
-  handleClickOpen = (event) => {this.setState({ anchorEl: event.currentTarget, });};
-  handleClose = () => {this.setState({ anchorEl: null, });};
-  handleClickOpen2 = (event) => {this.setState({ anchorEl2: event.currentTarget, });};
-  handleClose2 = () => {this.setState({ anchorEl2: null, });};
-  handleClose3 = () => {this.setState({ anchorEl3: null, });};
+  handleClickOpen =name=> (event) => {this.setState({ [name]: event.currentTarget, });};
+  handleClose =name=> () => {this.setState({ [name]: null, });};
 
   onChangeColor = name=> (color) => {this.setState({  [name]: color.hex });};
   onChangeValue = name=> (e) => {this.setState({ [name]: e.target.value });};
@@ -169,9 +199,10 @@ onChangeTypeGroup=menubar=>(e)=>{
   render() {
     const pickColor={fontSize: '16px',marginLeft:10};
     const { classes } = this.props;
-    const { anchorEl,anchorEl2 } = this.state;
+    const { anchorEl,anchorEl2,anchorEl3 } = this.state;
     const open = Boolean(anchorEl);
     const open2 = Boolean(anchorEl2);
+    const open3 = Boolean(anchorEl3);
     return (
       <div className={classes.root} >
         <List disablePadding={true}>
@@ -183,38 +214,7 @@ onChangeTypeGroup=menubar=>(e)=>{
             {this.state.open ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding={false}>
-            <ListItem className={classes.nested}>
-            <Button variant="contained" onClick={this.handleClickOpen} component="span" color="secondary" >
-            Footer Setting
-            </Button>
-            <Popover
-              open={open}
-              anchorEl={anchorEl}
-              onClose={this.handleClose}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-            >
-             <ListItem>
-              <p style={pickColor}> Background Color&nbsp;&nbsp;&nbsp;</p>
-              <PickColor
-              padding="0"
-              width="80px"
-              height="20px"
-              color={this.props.footerbackgroundColor}
-              onChange={this.props.footerbackgroundOnChangeColor}
-              />
-            </ListItem>
-            </Popover>
-            </ListItem>
-            </List>
-            <List component="div" disablePadding={false}>
+            <List component="div" disablePadding={true}>
               <ListItem  className={classes.nested}>
               <InputText 
               Label="Title" 
@@ -236,11 +236,12 @@ onChangeTypeGroup=menubar=>(e)=>{
               onChangeStatus={this.props.footerTitleOnChangeStatus}
               color={this.props.footerTitleColor}
               onChangeColor={this.props.footerTitleOnChangeColor}
+              displayPosition={true}
               />
               </ListItem>
             </List>
 
-            <List component="div" disablePadding={false}>
+            <List component="div" disablePadding={true}>
               <ListItem  className={classes.nested}>
               <InputTextarea 
               label="Description" 
@@ -262,29 +263,76 @@ onChangeTypeGroup=menubar=>(e)=>{
               onChangeStatus={this.props.footerDescriptionOnChangeStatus}
               color={this.props.footerDescriptionColor}
               onChangeColor={this.props.footerDescriptionOnChangeColor}
+              displayPosition={true}
               />
               </ListItem>
             </List>
-
             <List component="div" disablePadding={false}>
             <ListItem className={classes.nested}>
-            <Button  variant="contained" onClick={this.handleClickOpen2} component="span" color="secondary" className={classes.button}>
-             Footer Items
+            <Button variant="contained" onClick={this.handleClickOpen('anchorEl')} component="span" color="secondary" >
+            Footer Setting
             </Button>
             <Popover
-              open={open2}
-              anchorEl={anchorEl2}
-              onClose={this.handleClose2}
+              className={classes.popover}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={this.handleClose('anchorEl')}
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center',
+                vertical: 'top',
+                horizontal: 'right',
               }}
               transformOrigin={{
-                vertical: 'top',
+                vertical: 'bottom',
                 horizontal: 'left',
               }}
             >
-            {this.props.footerContent.map((menubar => (
+             <ListItem>
+              <p style={pickColor}> Background Color&nbsp;&nbsp;&nbsp;</p>
+              <PickColor
+              padding="0"
+              width="80px"
+              height="20px"
+              color={this.props.footerbackgroundColor}
+              onChange={this.props.footerbackgroundOnChangeColor}
+              />
+            </ListItem>
+            {this.props.footer=== 'footerNo1' ? null :
+            <ListItem>
+              <Dropdown
+                label='position'
+                value={this.props.footerPosition}
+                onChange={this.props.footerPositionOnChange}
+                choice = {[
+                  {_key:'1',value: 'center' , label: 'Center'},
+                  {_key:'2',value: 'right', label: 'Right'},
+                  {_key:'3',value: 'left', label: 'Left'}
+                ]}
+              />
+            </ListItem>
+            }
+            </Popover>
+            </ListItem>
+            </List>
+            <List component="div" disablePadding={false}>
+            <ListItem className={classes.nested}>
+            <Button  variant="contained" onClick={this.handleClickOpen('anchorEl2')} component="span" color="secondary" className={classes.button}>
+             Footer Items
+            </Button>
+            <Popover
+              className={classes.popover}
+              open={open2}
+              anchorEl={anchorEl2}
+              onClose={this.handleClose('anchorEl2')}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+            >
+            {this.props.footerItem.map((menubar => (
             <ListItem key={menubar._key}>
              <Button  variant="contained" onClick={this.OpenItem(menubar)} component="span" color="secondary" className={classes.button}>{menubar.label}</Button>
             <DeleteIcon  onClick={this.delete(menubar)} className={classes.rightIcon}/>
@@ -296,27 +344,19 @@ onChangeTypeGroup=menubar=>(e)=>{
               ADD
               <AddIcon className={classes.rightIcon} />
             </Button>
-            </ListItem>        
-            
+            </ListItem>           
             <Dialog
               maxWidth="lg"
               open={this.state.openItem1}
               TransitionComponent={Transition}
-              onClose={this.CloseItem}
+              onClose={this.CloseItem('openItem1')}
             >
             <DialogTitle>
-            Item
-            {this.state.typeGroup === false ?
+            Item         
             <Button variant="contained" color="secondary" onClick={this.save} className={classes.save} >
               SAVE
             <SaveIcon className={classes.rightIcon} />
             </Button>
-            :
-            <Button variant="contained" color="secondary" onClick={this.saveInGroup} className={classes.save} >
-              SAVE
-            <SaveIcon className={classes.rightIcon} />
-            </Button>
-            }
             </DialogTitle> 
               <List>
               <ListItem>
@@ -332,7 +372,7 @@ onChangeTypeGroup=menubar=>(e)=>{
               FontStyle={this.state.FontStyle}
               Status={this.state.Status}
               color={this.state.Color}
-              displayAnimate ={'none'}
+              displayAnimate ={true}
 
               onChange={this.onChangeValue('label')}
               onChangeAnimate={this.onChangeValue('Animate')}           
@@ -343,6 +383,92 @@ onChangeTypeGroup=menubar=>(e)=>{
               onChangeFontStyle={this.onChangeValue('FontStyle')}              
               onChangeStatus={this.onChangeValue('Status')}
               onChangeColor={this.onChangeColor('Color')}
+              />
+              </ListItem>
+              <ListItem>
+              <ChooseLink
+                  value={this.state.link}
+                  onChange={this.onChangeValue('link')}
+                  target={this.state.linkTarget}
+                  onChangeTarget={this.onChangeValue('linkTarget')}
+              />
+              </ListItem>
+              </List>
+              </Dialog>
+            </Popover>
+            </ListItem>           
+            </List>
+            <List component="div" disablePadding={false}>
+            <ListItem className={classes.nested}>
+            <Button  variant="contained" onClick={this.handleClickOpen('anchorEl3')} component="span" color="secondary" className={classes.button}>
+             Footer social
+            </Button>
+            <Popover
+              className={classes.popover}
+              open={open3}
+              anchorEl={anchorEl3}
+              onClose={this.handleClose('anchorEl3')}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+            >
+            {this.props.footerSocial.map((menubar => (
+            <ListItem key={menubar._key}>
+             <Button  variant="contained" onClick={this.OpenItemSocial(menubar)} component="span" color="secondary" className={classes.button}>{menubar.label}</Button>
+            <DeleteIcon  onClick={this.deleteItemSocial(menubar)} className={classes.rightIcon}/>
+            </ListItem>
+             )))}  
+
+             <ListItem>
+            <Button variant="contained"  onClick={this.addItemSocial} component="span" color="secondary" className={classes.paper}>
+              ADD
+              <AddIcon className={classes.rightIcon} />
+            </Button>
+            </ListItem>           
+            <Dialog
+              maxWidth="lg"
+              open={this.state.openItemSocial}
+              TransitionComponent={Transition}
+              onClose={this.CloseItem('openItemSocial')}
+            >
+            <DialogTitle>
+            Item         
+            <Button variant="contained" color="secondary" onClick={this.saveItemSocial} className={classes.save} >
+              SAVE
+            <SaveIcon className={classes.rightIcon} />
+            </Button>
+            </DialogTitle> 
+              <List>
+              <ListItem>
+              <InputText 
+              Label="Label" 
+              value={this.state.label}  
+              color={this.state.Color}
+              FontSize={this.state.FontSize}
+              FontStyle={this.state.FontStyle}
+              Status={this.state.Status}
+              color={this.state.Color}
+              hoverColor={this.state.hover}
+              displayAnimate ={true}
+              displayFontFamily={true}
+              displayPosition={true}
+              displayFontWeight={true}
+              showHoverColor={true}
+              linkTo={'https://fontawesome.com/icons?d=gallery'}
+              showLinkTo={true}
+
+              onChange={this.onChangeValue('label')}
+              onChangeFontSize={this.onChangeValue('FontSize')}                           
+              onChangeFontWeight={this.onChangeValue('hover')}
+              onChangeFontStyle={this.onChangeValue('FontStyle')}              
+              onChangeStatus={this.onChangeValue('Status')}
+              onChangeColor={this.onChangeColor('Color')}
+              onChangeHoverColor={this.onChangeColor('hover')}
               />
               </ListItem>
               <ListItem>

@@ -184,30 +184,32 @@ class TabWebsite extends React.Component {
         },
         menubarSetting:{
           menubarbackgroundColor:'#ffffff',
+          
          },
-        content:{
-        footerTitle:'Title',
-        footerDescription:'Description',
-        footerbackgroundColor:'#b5b5b5',
-        footerTitleAnimate:'none',
-        footerTitleDuration:'1s',
-        footerTitleFontFamily:'Roboto Mono',
-        footerTitleFontSize:'30',
-        footerTitleFontWeight:'400',
-        footerTitleFontStyle:'normal',
-        footerTitleStatus:'block',
-        footerTitleColor:'#ffffff',
-    
-        footerDescriptionAnimate:'none',
-        footerDescriptionDuration:'1s',
-        footerDescriptionFontFamily:'Roboto Mono',
-        footerDescriptionFontSize:'20',
-        footerDescriptionFontWeight:'400',
-        footerDescriptionFontStyle:'normal',
-        footerDescriptionStatus:'block',
-        footerDescriptionColor:'#ffffff',
+        footerContent:{
+          title:'Title',
+          description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+          backgroundColor:'#b5b5b5',
+          position:'center',
+          titleAnimate:'none',
+          titleDuration:'1s',
+          titleFontFamily:'Roboto Mono',
+          titleFontSize:'25',
+          titleFontWeight:'400',
+          titleFontStyle:'normal',
+          titleStatus:'block',
+          titleColor:'#ffffff',
+      
+          descriptionAnimate:'none',
+          descriptionDuration:'1s',
+          descriptionFontFamily:'Roboto Mono',
+          descriptionFontSize:'11',
+          descriptionFontWeight:'400',
+          descriptionFontStyle:'normal',
+          descriptionStatus:'block',
+          descriptionColor:'#ffffff',
         },
-        menubarContent:{
+        menubarItem:{
           Link1:{
             typeGroup:false,
             label:'Link',
@@ -223,9 +225,8 @@ class TabWebsite extends React.Component {
             Color:'#000000',
           }
         },
-        footerContent:{
+        footerItem:{
           Link1:{
-            typeGroup:false,
             label:'Link',
             link:'#',
             linkTarget:'_blank',
@@ -237,6 +238,18 @@ class TabWebsite extends React.Component {
             FontStyle:'normal',
             Status:'block',
             Color:'#000000',
+          }
+        },
+        footerSocial:{
+          Link1:{
+            label:'far fa-sticky-note',
+            link:'#',
+            linkTarget:'_blank',
+            FontSize:'30',
+            FontStyle:'normal',
+            Status:'block',
+            Color:'#000000',
+            hover:'#ffffff'
           }
         },
     });  
@@ -613,27 +626,27 @@ class TabWebsite extends React.Component {
       menubarSetting:{
         menubarbackgroundColor:this.props.menubarbackgroundColor
       },  
-      content:{
-      footerTitle:this.props.footerTitle,
-      footerDescription:this.props.footerDescription,
-      footerbackgroundColor:this.props.footerbackgroundColor,
-      footerTitleAnimate:this.props.footerTitleAnimate,
-      footerTitleDuration:this.props.footerTitleDuration,
-      footerTitleFontFamily:this.props.footerTitleFontFamily,
-      footerTitleFontSize:this.props.footerTitleFontSize,
-      footerTitleFontWeight:this.props.footerTitleFontWeight,
-      footerTitleFontStyle:this.props.footerTitleFontStyle,
-      footerTitleStatus:this.props.footerTitleStatus,
-      footerTitleColor:this.props.footerTitleColor,
-  
-      footerDescriptionAnimate:this.props.footerDescriptionAnimate,
-      footerDescriptionDuration:this.props.footerDescriptionDuration,
-      footerDescriptionFontFamily:this.props.footerDescriptionFontFamily,
-      footerDescriptionFontSize:this.props.footerDescriptionFontSize,
-      footerDescriptionFontWeight:this.props.footerDescriptionFontWeight,
-      footerDescriptionFontStyle:this.props.footerDescriptionFontStyle,
-      footerDescriptionStatus:this.props.footerDescriptionStatus,
-      footerDescriptionColor:this.props.footerDescriptionColor,
+      footerContent:{
+      title:this.props.footerTitle,
+      description:this.props.footerDescription,
+      backgroundColor:this.props.footerbackgroundColor,
+      position:this.props.footerPosition,
+      titleAnimate:this.props.footerTitleAnimate,
+      titleDuration:this.props.footerTitleDuration,
+      titleFontFamily:this.props.footerTitleFontFamily,
+      titleFontSize:this.props.footerTitleFontSize,
+      titleFontWeight:this.props.footerTitleFontWeight,
+      titleFontStyle:this.props.footerTitleFontStyle,
+      titleStatus:this.props.footerTitleStatus,
+      titleColor:this.props.footerTitleColor,
+      descriptionAnimate:this.props.footerDescriptionAnimate,
+      descriptionDuration:this.props.footerDescriptionDuration,
+      descriptionFontFamily:this.props.footerDescriptionFontFamily,
+      descriptionFontSize:this.props.footerDescriptionFontSize,
+      descriptionFontWeight:this.props.footerDescriptionFontWeight,
+      descriptionFontStyle:this.props.footerDescriptionFontStyle,
+      descriptionStatus:this.props.footerDescriptionStatus,
+      descriptionColor:this.props.footerDescriptionColor,
       }
     })
     this.setState({popupSave:false,messageSaveOpen:true});
@@ -816,7 +829,7 @@ class TabWebsite extends React.Component {
 
               menubarLogo={this.props.menubarLogo}
               menubarbackgroundColor={this.props.menubarbackgroundColor}
-              menubarContent={this.props.menubarContent}
+              menubarItem={this.props.menubarItem}
               heroYoutubeID={this.props.heroYoutubeID}
               herobackgroundColor={this.props.herobackgroundColor}
               heroImagePick={this.props.heroBackgroundImage}
@@ -916,9 +929,11 @@ class TabWebsite extends React.Component {
               galleryDescriptionColor={this.props.galleryDescriptionColor}
               galleryDescriptionPosition={this.props.galleryDescriptionPosition} 
 
-              footerContent={this.props.footerContent}
+              footerItem={this.props.footerItem}
+              footerSocial={this.props.footerSocial}
               footerTitle={this.props.footerTitle}
               footerDescription={this.props.footerDescription}
+              footerPosition={this.props.footerPosition}
               footerbackgroundColor={this.props.footerbackgroundColor}
               footerTitleAnimate={this.props.footerTitleAnimate}
               footerTitleDuration={this.props.footerTitleDuration}

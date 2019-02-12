@@ -15,6 +15,8 @@ import GalleryNo2 from './Gallery/GalleryNo2';
 import GalleryNo3 from './Gallery/GalleryNo3';
 import GalleryNo4 from './Gallery/GalleryNo4';
 import FooterNo1 from './Footer/FooterNo1';
+import FooterNo2 from './Footer/FooterNo2';
+import FooterNo3 from './Footer/FooterNo3';
 
 class IN extends React.Component {
 
@@ -31,7 +33,7 @@ class IN extends React.Component {
 
   if( this.props.Menubar === "MenubarNo1"){
   menubar=<MenubarNo1
-  menubarContent={this.props.menubarContent}
+  menubarItem={this.props.menubarItem}
   menubarbackgroundColor={this.props.menubarbackgroundColor}
   />
   }
@@ -39,14 +41,14 @@ class IN extends React.Component {
     menubar=<MenubarNo2
     menubarbackgroundColor={this.props.menubarbackgroundColor}
     menubarLogo={this.props.menubarLogo}
-    menubarContent={this.props.menubarContent}
+    menubarItem={this.props.menubarItem}
     />
   }
   if( this.props.Menubar === "MenubarNo3"){
     menubar=<MenubarNo3
     menubarbackgroundColor={this.props.menubarbackgroundColor}
     menubarLogo={this.props.menubarLogo}
-    menubarContent={this.props.menubarContent}
+    menubarItem={this.props.menubarItem}
     />
   }
 
@@ -376,10 +378,11 @@ class IN extends React.Component {
 
   if( this.props.Footer === "FooterNo1"){
   Footer=<FooterNo1
-  footerContent={this.props.footerContent}
-
+  footerItem={this.props.footerItem}
+  footerSocial={this.props.footerSocial}
   footerTitle={this.props.footerTitle}
   footerDescription={this.props.footerDescription}
+  footerPosition={this.props.footerPosition}
   footerbackgroundColor={this.props.footerbackgroundColor}
   footerTitleAnimate={this.props.footerTitleAnimate}
   footerTitleDuration={this.props.footerTitleDuration}
@@ -399,6 +402,60 @@ class IN extends React.Component {
   footerDescriptionStatus={this.props.footerDescriptionStatus}
   footerDescriptionColor={this.props.footerDescriptionColor}
   />
+  }
+  if( this.props.Footer === "FooterNo2"){
+    Footer=<FooterNo2
+    footerItem={this.props.footerItem}
+    footerSocial={this.props.footerSocial}
+    footerTitle={this.props.footerTitle}
+    footerDescription={this.props.footerDescription}
+    footerPosition={this.props.footerPosition}
+    footerbackgroundColor={this.props.footerbackgroundColor}
+    footerTitleAnimate={this.props.footerTitleAnimate}
+    footerTitleDuration={this.props.footerTitleDuration}
+    footerTitleFontFamily={this.props.footerTitleFontFamily}
+    footerTitleFontSize={this.props.footerTitleFontSize}
+    footerTitleFontWeight={this.props.footerTitleFontWeight}
+    footerTitleFontStyle={this.props.footerTitleFontStyle}
+    footerTitleStatus={this.props.footerTitleStatus}
+    footerTitleColor={this.props.footerTitleColor}
+  
+    footerDescriptionAnimate={this.props.footerDescriptionAnimate}
+    footerDescriptionDuration={this.props.footerDescriptionDuration}
+    footerDescriptionFontFamily={this.props.footerDescriptionFontFamily}
+    footerDescriptionFontSize={this.props.footerDescriptionFontSize}
+    footerDescriptionFontWeight={this.props.footerDescriptionFontWeight}
+    footerDescriptionFontStyle={this.props.footerDescriptionFontStyle}
+    footerDescriptionStatus={this.props.footerDescriptionStatus}
+    footerDescriptionColor={this.props.footerDescriptionColor}
+    />
+  }
+  if( this.props.Footer === "FooterNo3"){
+      Footer=<FooterNo3
+      footerItem={this.props.footerItem}
+      footerSocial={this.props.footerSocial}
+      footerTitle={this.props.footerTitle}
+      footerDescription={this.props.footerDescription}
+      footerPosition={this.props.footerPosition}
+      footerbackgroundColor={this.props.footerbackgroundColor}
+      footerTitleAnimate={this.props.footerTitleAnimate}
+      footerTitleDuration={this.props.footerTitleDuration}
+      footerTitleFontFamily={this.props.footerTitleFontFamily}
+      footerTitleFontSize={this.props.footerTitleFontSize}
+      footerTitleFontWeight={this.props.footerTitleFontWeight}
+      footerTitleFontStyle={this.props.footerTitleFontStyle}
+      footerTitleStatus={this.props.footerTitleStatus}
+      footerTitleColor={this.props.footerTitleColor}
+    
+      footerDescriptionAnimate={this.props.footerDescriptionAnimate}
+      footerDescriptionDuration={this.props.footerDescriptionDuration}
+      footerDescriptionFontFamily={this.props.footerDescriptionFontFamily}
+      footerDescriptionFontSize={this.props.footerDescriptionFontSize}
+      footerDescriptionFontWeight={this.props.footerDescriptionFontWeight}
+      footerDescriptionFontStyle={this.props.footerDescriptionFontStyle}
+      footerDescriptionStatus={this.props.footerDescriptionStatus}
+      footerDescriptionColor={this.props.footerDescriptionColor}
+      />
   }
 return (
       <div style={{height:'100%'}}> 

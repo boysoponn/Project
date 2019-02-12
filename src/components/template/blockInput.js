@@ -8,14 +8,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import Slide from '@material-ui/core/Slide';
 import ContentIcon from '@material-ui/icons/VerticalSplit';
 import FooterIcon from '@material-ui/icons/CallToAction';
 import HeaderIcon from '@material-ui/icons/OpenInBrowser';
 
-function Transition(props) {
-  return <Slide direction="right" {...props} />;
-}
 const styles = theme => ({
   root: {
     width: '100%',

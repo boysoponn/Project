@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
 import styled from 'styled-components'
 import { BrowserRouter as  Router, Route, Redirect} from 'react-router-dom';
 import CMS from './components/CMS';
@@ -64,7 +63,6 @@ class App extends Component {
     function showNav(Nav) {
       return class showNav extends React.Component {
         render() {
-          console.log(this.props.location.pathname);
           if (this.props.location.pathname === "/") {
             return <Nav {...this.props} />
           }else{
@@ -76,6 +74,15 @@ class App extends Component {
     const Navbar = showNav(Header);
 
     return (
+      <div>
+        <Metadata
+          title="CMS"
+          description="CMS love all"
+          og_title="boy sopon CMS"
+          og_description="CMS love you"
+          og_url="https://www.projectcms.tk/"
+          og_image="https://upload.wikimedia.org/wikipedia/en/a/ae/Love_TV_Logo.png"
+        />
       <Body>
       <Router> 
         <div>        
@@ -87,6 +94,7 @@ class App extends Component {
       </Router>
 
       </Body>
+      </div>
     );
    }
   }

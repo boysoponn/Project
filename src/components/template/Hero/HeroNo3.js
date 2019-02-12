@@ -15,12 +15,7 @@ class HeroNo1 extends React.Component {
   }
 
   render() {
-    const background ={
-        backgroundImage:"url("+this.props.heroImagePick+")",
-        backgroundSize:'cover',
-        height:'100%',
-        margin:0,
-    };
+
     const title ={
         color:this.props.heroTitleColor,
         opacity: 1,

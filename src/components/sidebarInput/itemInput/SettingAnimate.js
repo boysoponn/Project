@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Settings from '@material-ui/icons/PlayCircleOutline';
 import SettingsFonts from '@material-ui/icons/SettingsOutlined';
+import LinkTo from '@material-ui/icons/LaunchOutlined';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -87,24 +88,12 @@ class SettingAnimate extends React.Component {
     const { anchorEl,anchorEl2 } = this.state;
     const open = Boolean(anchorEl);
     const open2 = Boolean(anchorEl2);
-    let displayAnimate;
-    let displayFont;
-    if(this.props.displayFont === 'block'){
-      displayFont = {display:'block'}
-    }else if(this.props.displayFont === 'none'){
-      displayFont = {display:'none'}
-    }
-    if(this.props.displayAnimate === 'block'){
-      displayAnimate = {display:'block'}
-    }else if(this.props.displayAnimate === 'none'){
-      displayAnimate = {display:'none'}
-    }
-    
+
     return (
       
       <div className={classes.full}>
-
-        <div className={classes.left} style={displayFont}>
+        {this.props.displayFont ? null:
+        <div className={classes.left} >
             <SettingsFonts className={classes.button} onClick={this.handleClick} />
             <Popover
               open={open}
@@ -135,7 +124,7 @@ class SettingAnimate extends React.Component {
                     </Select>
                     </FormControl>
                 </form>
-
+                {this.props.displayFontFamily ? null:
                 <form className={classes} autoComplete="off">
                     <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="age-simple">Font</InputLabel>
@@ -152,7 +141,7 @@ class SettingAnimate extends React.Component {
                     </Select>
                     </FormControl>
                 </form>         
-
+                }
                 <form className={classes} autoComplete="off">
                     <FormControl  className={classes.formControl}>  
                       <InputLabel
@@ -176,7 +165,7 @@ class SettingAnimate extends React.Component {
                       />
                     </FormControl>
                     </form>
-
+                    {this.props.displayPosition ? null:
                     <Dropdown
                       label='position'
                       value={this.props.position}
@@ -187,10 +176,11 @@ class SettingAnimate extends React.Component {
                         {_key:'3',value: 'left', label: 'Left'}
                       ]}
                     />
-                    
+                    }
                     </Grid>
 
                     <Grid item xs={6}>
+                    {this.props.displayFontWeight ? null:
                     <form className={classes} autoComplete="off">
                     <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="age-simple">Font Weight</InputLabel>
@@ -207,7 +197,7 @@ class SettingAnimate extends React.Component {
                     </Select>
                     </FormControl>
                     </form>
-               
+                    }
                     <form className={classes} autoComplete="off">
                     <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="age-simple">Font Style</InputLabel>
@@ -229,14 +219,28 @@ class SettingAnimate extends React.Component {
                     height="14px"
                     padding="5px"
                     color={this.props.color}
-                    onChange={this.props.onChange}
+                    onChange={this.props.onChangeColor}
                     />
                     </div>
+                    {!this.props.showHoverColor ? null:
+                    <div className={classes.formControl}>
+                    <label className={classes.label}>Font Hover Color</label>
+                    <PickColor
+                    width="100px"
+                    height="14px"
+                    padding="5px"
+                    color={this.props.hoverColor}
+                    onChange={this.props.onChangeHoverColor}
+                    />
+                    </div>
+                    }
                   </Grid>
                 </Grid>
               </Popover>   
       </div>
-      <div className={classes.right} style={displayAnimate}>
+      }
+      {this.props.displayAnimate ? null:
+      <div className={classes.right} >
             <Settings className={classes.button} root='outline' onClick={this.handleClick2} />
             <Popover
               open={open2}
@@ -378,6 +382,12 @@ class SettingAnimate extends React.Component {
                     </form>     
               </Popover>
             </div>
+            }
+            {!this.props.showLinkTo ? null:
+             <div className={classes.left} >
+                <a style={{color: 'rgba(0, 0, 0, 0.65)'}} href={this.props.linkTo} target="_blank" ><LinkTo className={classes.button} root='outline' /></a>
+            </div>
+            }
       </div>
     );
   }

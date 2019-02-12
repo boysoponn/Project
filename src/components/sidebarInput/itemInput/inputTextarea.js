@@ -17,6 +17,9 @@ class InputTextarea extends React.Component {
       <SettingAnimate 
         displayFont={this.props.displayFont}
         displayAnimate={this.props.displayAnimate}
+        displayFontFamily={this.props.displayFontFamily}
+        displayPosition={this.props.displayPosition}
+        displayFontWeight={this.props.displayFontWeight}
         animate={this.props.animate} 
         duration={this.props.duration} 
         FontFamily={this.props.FontFamily}
@@ -34,7 +37,12 @@ class InputTextarea extends React.Component {
         onChangeStatus={this.props.onChangeStatus}
         onChangePosition={this.props.onChangePosition}
         color={this.props.color}
-        onChange={this.props.onChangeColor}
+        onChangeColor={this.props.onChangeColor}
+        hoverColor={this.props.hoverColor}
+        onChangeHoverColor={this.props.onChangeHoverColor}
+        showHoverColor={this.props.showHoverColor}
+        linkTo={this.props.linkTo}
+        showLinkTo={this.props.showLinkTo}
         />
         <FormControl className={classes.margin}>
         <TextField
