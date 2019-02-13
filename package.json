@@ -17,6 +17,7 @@
     "react-animate-on-scroll": "^2.1.5",
     "react-color": "^2.14.1",
     "react-dom": "^16.4.2",
+    "react-google-recaptcha": "^1.0.5",
     "react-meta-tags": "^0.7.3",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
