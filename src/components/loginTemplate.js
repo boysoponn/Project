@@ -7,6 +7,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import styled from 'styled-components'
 import Social from './template/buttonSocial';
 import ReCAPTCHA from "react-google-recaptcha";
+import Slide from '@material-ui/core/Slide';
+
+function Transition(props) {
+  return <Slide direction="up" {...props} />;
+}
 
 class FormDialog extends React.Component {
   state = {
@@ -15,24 +20,18 @@ class FormDialog extends React.Component {
 
 
   render() {
-    function onChange(value) {
-      console.log("Captcha value:", value);
-    }
     const recaptchaRef = React.createRef();
     return (
       
         <Dialog
+          TransitionComponent={Transition}
           open={this.props.open}
           onClose={this.props.onClose}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle  id="form-dialog-title">{this.props.label}</DialogTitle>
           <form onSubmit={this.props.submit}>
-          <ReCAPTCHA
-        ref={recaptchaRef}
-        sitekey="6LdRLpEUAAAAAGX-vss-WN3KL0Xoifa6FFewGxn3"
-        onChange={onChange}
-      />
+
           <DialogContent style={{paddingTop:0}}>
           {this.props.textField.map((data) => 
             <TextField
@@ -49,6 +48,12 @@ class FormDialog extends React.Component {
               onChange={data.onChange}
             />
           )}
+           {this.props.recaptcha?
+          <ReCAPTCHA
+            ref={recaptchaRef}
+            sitekey="6LdRLpEUAAAAAGX-vss-WN3KL0Xoifa6FFewGxn3"
+            onChange={this.props.onChange}
+          />:null}
           <Content style={{paddingTop:20}}>
             <Button  color="primary" type="submit">{this.props.labelButton}</Button>
           </Content>

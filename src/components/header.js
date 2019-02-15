@@ -25,6 +25,8 @@ class AppWithConnect extends React.Component {
             email:"developers@mail.com",
             login:false,
             register:false,
+            recaptcha:false,
+            valueRecaptcha:''
         }
     }
     onChangeTrue=name=>()=>{
@@ -44,23 +46,44 @@ class AppWithConnect extends React.Component {
     } 
     closePopup=()=>{
         if(this.props.user!==''){this.setState({login:false})}
-    }   
-    signin=(e)=> { 
-      e.preventDefault(); 
-      config.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((user) => {
-        this.setState({login:false})
-      })
-      .catch(function(error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-    
-        if (errorCode === 'auth/wrong-password') {
-            alert('Wrong password.');
-        } else {
-            alert(errorMessage);         
+    }  
+    onChangeRecaptcha=(value)=> {
+        this.setState({valueRecaptcha:value})
+        if(this.state.valueRecaptcha !==''){
+            this.signin();
         }
-        console.log(error);
-    });
+    }
+    onChangeRecaptcha2=(value)=> {
+        this.setState({valueRecaptcha:value})
+        if(this.state.valueRecaptcha !==''){
+            this.signUp();
+        }
+    }
+    clickSubmit=(e)=>{
+        e.preventDefault(); 
+        this.setState({recaptcha:true});
+    } 
+    signin=()=> { 
+        config.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
+            this.setState({
+                login:false,
+            })
+        })
+        .catch(function(error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+        
+            if (errorCode === 'auth/wrong-password') {
+                alert('Wrong password.');
+            } else {
+                alert(errorMessage);         
+            }
+            console.log(error);
+        });
+        this.setState({
+            recaptcha:false,
+            valueRecaptcha:'',
+        })
     }
     loginGmail = () => {
         var provider = new firebase.auth.GoogleAuthProvider();
@@ -106,10 +129,11 @@ class AppWithConnect extends React.Component {
     loginTwitter=()=>{
         alert("coming soon")
     }
-    signUp=(e)=>{
-        e.preventDefault();  
+    signUp=()=>{
         config.auth().createUserWithEmailAndPassword(this.state.email,this.state.password).then(function(user) {      
-          alert("สมัครเรียบร้อย");
+            this.setState({
+                register:false,
+            })
         }, function(error) {
           // Handle Errors here.
           var errorCode = error.code;
@@ -118,13 +142,22 @@ class AppWithConnect extends React.Component {
           if (errorCode === 'auth/weak-password') {
               alert('The password is too weak.');
           } else {
-              console.error(error);
+              alert(error);
           }
           // [END_EXCLUDE]
       });
+      this.setState({
+        recaptcha:false,
+        valueRecaptcha:'',
+        password:"",
+        email:"",
+    })
     }
     logout =() => {config.auth().signOut();window.location.reload(); };
+    
+
 render() {
+
     const { classes } = this.props;
     return (
         <div>
@@ -163,9 +196,11 @@ render() {
             </Nav>
             <LoginTemplate
             open={this.state.login}
+            recaptcha={this.state.recaptcha}
+            onChange={this.onChangeRecaptcha}
             onClose={this.onChangeFalse('login')}
             label='SIGN IN'
-            submit={this.signin}
+            submit={this.clickSubmit}
             social={true}
             facebook={this.loginFacebook}
             google={this.loginGmail}
@@ -177,10 +212,12 @@ render() {
                         ]}
             />
             <LoginTemplate
+            recaptcha={this.state.recaptcha}
+            onChange={this.onChangeRecaptcha2}
             open={this.state.register}
             onClose={this.onChangeFalse('register')}
             label='REGISTER'
-            submit={this.signup}
+            submit={this.clickSubmit}
             labelButton='SUBMIT'
             textField=  {[
                         {_key:1,label:'Email',type:'email',value:this.state.email,onChange:this.onChangeValue('email')},
