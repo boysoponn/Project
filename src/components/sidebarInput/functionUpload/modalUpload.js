@@ -32,9 +32,6 @@ const styles = theme => ({
 class ModalUpload extends React.Component {
   constructor(props){
     super(props);
-    this.handleChangeUploadPicture = this.handleChangeUploadPicture.bind(this);
-    this.handleUploadPicture = this.handleUploadPicture.bind(this);
-    this.handleClose = this.handleClose.bind(this);
     this.state = {
     open: false,
     image: [],
@@ -61,7 +58,7 @@ class ModalUpload extends React.Component {
     });
   };
   
-  handleChangeUploadPicture(e) {
+  handleChangeUploadPicture=(e)=> {
     if (e.target.files.length > 0) {
     let row=0;
     let images = [];
@@ -78,7 +75,7 @@ class ModalUpload extends React.Component {
     }
   }
 
-  handleUploadPicture (e){
+  handleUploadPicture=(e)=>{
     if(this.state.image !== [] ){ 
       let row=0; 
       while(row<this.state.Howmany){  
@@ -91,13 +88,8 @@ class ModalUpload extends React.Component {
       row++;
       }
       }
-      this.setState({
-        Howmany:0,
-        image: [],
-        imageName:[],
-      });
       this.handleClose();
-      alert("Uploaded");  
+      alert("Uploading close and open again");  
   }
   
 
@@ -137,7 +129,7 @@ const ModalUploadWrapped = withStyles(styles)(ModalUpload);
 const mapStateToProps = state => ({
   tabs: state.tabs ,
   user:state.user,
-  email:state.email
+  email:state.email,
 })
 
 export default connect(mapStateToProps)(ModalUploadWrapped);

@@ -1,4 +1,4 @@
-export default (state = 'null', { type, tab }) => {
+export default (state = false, { type, tab }) => {
     switch (type) {
       case 'checkTab':
         return state =tab

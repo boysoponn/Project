@@ -14,7 +14,7 @@ class HeroNo2 extends React.Component {
 
   render() {
     const background ={
-        backgroundImage:"url("+this.props.heroImagePick+")",
+        backgroundImage:"url("+this.props.heroBackgroundImage+")",
         backgroundSize:'cover',
         height: '100%',
         backgroundPosition: 'center center',
@@ -23,7 +23,7 @@ class HeroNo2 extends React.Component {
         position:'relative',
     };
     const content={
-      padding: '20% 10% 10%',
+      padding: '15% 10% 10%',
     };
     const title ={
       color:this.props.heroTitleColor,
@@ -35,6 +35,7 @@ class HeroNo2 extends React.Component {
       fontStyle:this.props.heroTitleFontStyle,
       display:this.props.heroTitleStatus,
       textAlign: this.props.heroTitlePosition,
+      paddingBottom:'2%'
   };
   const description={
       opacity: 1,
@@ -45,7 +46,8 @@ class HeroNo2 extends React.Component {
       fontWeight:this.props.heroDescriptionFontWeight,
       fontStyle:this.props.heroDescriptionFontStyle,
       display:this.props.heroDescriptionStatus,
-      textAlign: this.props.heroDescriptionPosition,    
+      textAlign: this.props.heroDescriptionPosition,
+      paddingBottom:'2%'    
   };
   const buttonAnimate={
     opacity: 1,

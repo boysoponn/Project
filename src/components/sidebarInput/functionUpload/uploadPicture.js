@@ -28,7 +28,7 @@ class UploadPicture extends React.Component {
     <div>
       <div>
       {this.props.label.map((imageName) => {
-          return <div><h1>{imageName}</h1></div> 
+          return <div><p key={imageName._key}>{imageName}</p></div> 
         })}
       </div>
       <input

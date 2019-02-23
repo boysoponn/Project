@@ -79,6 +79,7 @@ class NestedList extends React.Component {
     image: null,
     open1: false,
     openItem1:false,
+    anchorEl2:null
     };  
   }
 
@@ -172,20 +173,18 @@ class NestedList extends React.Component {
   };
   onChangeFalse= name=>()=>{this.setState({[name]:false})};
   handleClick = () => {this.setState(state => ({ open: !state.open }));};
-  handleClickOpen = (event) => {this.setState({ anchorEl: event.currentTarget, });};
-  handleClose = () => {this.setState({ anchorEl: null, });};
+  handleClickOpen =name=> (event) => {this.setState({ [name]: event.currentTarget, });};
+  handleClose =name=> () => {this.setState({ [name]: null, });};
   CloseItem = () => {this.setState({ openItem1: false });};
   onChangeValue = name=> (e) => {this.setState({ [name]: e.target.value });};
   onChangeColor = name=> (color) => {this.setState({  [name]: color.hex });};
   
   render() {
     const { classes } = this.props;
-    const { anchorEl } = this.state;
+    const { anchorEl,anchorEl2 } = this.state;
     const open1 = Boolean(anchorEl);
-    const pickColor={
-      fontSize: '16px',
-      marginLeft:10
-    };
+    const open2 = Boolean(anchorEl2);
+    const pickColor={fontSize: '14px',marginLeft:10,margin: 0};
     
     return (
       <div className={classes.root} >
@@ -216,18 +215,6 @@ class NestedList extends React.Component {
           </ListItem>
 
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>    
-            <List component="div" disablePadding={false}>
-                <ListItem>
-                  <p style={pickColor}> Background Color&nbsp;&nbsp;&nbsp;</p>
-                  <PickColor
-                  padding="0"
-                  width="80px"
-                  height="20px"
-                  color={this.props.galleryBackgroundColor}
-                  onChange={this.props.galleryBackgroundOnChangeColor}
-                  />
-                </ListItem>
-              </List> 
             <List component="div" disablePadding={false}>
               <ListItem  className={classes.nested}>
               <InputText 
@@ -281,16 +268,50 @@ class NestedList extends React.Component {
               onChangeColor={this.props.galleryDescriptionOnChangeColor}
               />
               </ListItem>
+              
+              <List component="div" disablePadding={false}>
+            <ListItem className={classes.nested}>
+            <Button variant="contained" onClick={this.handleClickOpen('anchorEl2')} component="span" color="secondary" >
+            Cover Setting
+            </Button>
+            <Popover
+              className={classes.popover}
+              open={open2}
+              anchorEl={anchorEl2}
+              onClose={this.handleClose('anchorEl2')}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+            >
+            <ListItem>
+              <p style={pickColor}> Background Color&nbsp;&nbsp;&nbsp;</p>
+              <PickColor
+              padding="0"
+              width="80px"
+              height="20px"
+              color={this.props.galleryBackgroundColor}
+              onChange={this.props.galleryBackgroundOnChangeColor}
+              />
+              </ListItem>
+            </Popover>
+            </ListItem>
+            </List>
+
             </List>
           <ListItem className={classes.nested}>
-            <Button  variant="contained" onClick={this.handleClickOpen} component="span" color="secondary" className={classes.button}>
+            <Button  variant="contained" onClick={this.handleClickOpen('anchorEl')} component="span" color="secondary" className={classes.button}>
              gallery Items
             </Button>
             <Popover
               className={classes.popover}
               open={open1}
               anchorEl={anchorEl}
-              onClose={this.handleClose}
+              onClose={this.handleClose('anchorEl')}
               anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'right',

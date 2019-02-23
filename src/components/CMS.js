@@ -136,7 +136,7 @@ class CMS extends React.Component {
     menubarItem:[],
     galleryContent:[],
     openHeader:false,
-    undefinedOneTab:true
+    undefinedOneTab:false
   };
 }
 
@@ -145,44 +145,19 @@ componentDidMount(){
 }
 
 firstTabs=()=>{
-  let carouselItems = config.database().ref('project/'+this.props.email);
-  carouselItems.on('value', async (snapshot) => { 
+  let searchData = config.database().ref('project/'+this.props.email);
+  searchData.on('value', async (snapshot) => { 
     const snapshotValue2 = snapshot.val(); 
     const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev;}, []); 
   
     if(snapshotArr[0] !== undefined){
-      this.props.dispatch(checkTab(snapshotArr[0]._key)); this.setState({undefinedOneTab:false})}
-      else{ this.setState({undefinedOneTab:true})
-      }
+       this.setState({undefinedOneTab:false})
+      this.props.tabs===false?this.props.dispatch(checkTab(snapshotArr[0]._key)):this.props.dispatch(checkTab(this.props.tabs));
+    }else{
+      this.setState({undefinedOneTab:true})
+    }
     });
   
-    let global = config.database().ref('global/'+this.props.email+'/footerContent');
-    global.on('value', async (snapshot) => { 
-    const snapshotValue = snapshot.val(); 
-    let data = _(snapshotValue).value();
-    if(data !== null){this.setState({
-      footerTitle:data.title,
-      footerDescription:data.description,
-      footerPosition:data.position,
-      footerbackgroundColor:data.backgroundColor,
-      footerTitleAnimate:data.titleAnimate,
-      footerTitleDuration:data.titleDuration,
-      footerTitleFontFamily:data.titleFontFamily,
-      footerTitleFontSize:data.titleFontSize,
-      footerTitleFontWeight:data.titleFontWeight,
-      footerTitleFontStyle:data.titleFontStyle,
-      footerTitleStatus:data.titleStatus,
-      footerTitleColor:data.titleColor,
-  
-      footerDescriptionAnimate:data.descriptionAnimate,
-      footerDescriptionDuration:data.descriptionDuration,
-      footerDescriptionFontFamily:data.descriptionFontFamily,
-      footerDescriptionFontSize:data.descriptionFontSize,
-      footerDescriptionFontWeight:data.descriptionFontWeight,
-      footerDescriptionFontStyle:data.descriptionFontStyle,
-      footerDescriptionStatus:data.descriptionStatus,
-      footerDescriptionColor:data.descriptionColor,
-    })}});
   }
 
 componentWillReceiveProps(nextProps){
@@ -298,7 +273,7 @@ componentWillReceiveProps(nextProps){
           // isLoaded: false
         }); 
       }else{
-          this.setState({undefinedOneTab:true,menubar:'none',footer:'none'})        
+          this.setState({menubar:'none',footer:'none'})        
       }
   });
 
@@ -337,7 +312,37 @@ componentWillReceiveProps(nextProps){
   global.on('value', async (snapshot) => { 
     const snapshotValue = snapshot.val(); 
     let data = _(snapshotValue).value();
-    if(data !== null){this.setState({menubarLogo:data.menubarLogo.image ,menubarbackgroundColor:data.menubarSetting.menubarbackgroundColor,})}});}
+    if(data !== null){this.setState({menubarLogo:data.menubarLogo.image ,menubarbackgroundColor:data.menubarSetting.menubarbackgroundColor,})}});
+  
+    let footerContent = config.database().ref('global/'+this.props.email+'/footerContent');
+    footerContent.on('value', async (snapshot) => { 
+    const snapshotValue = snapshot.val(); 
+    let data = _(snapshotValue).value();
+    if(data !== null){this.setState({
+      footerTitle:data.title,
+      footerDescription:data.description,
+      footerPosition:data.position,
+      footerbackgroundColor:data.backgroundColor,
+      footerTitleAnimate:data.titleAnimate,
+      footerTitleDuration:data.titleDuration,
+      footerTitleFontFamily:data.titleFontFamily,
+      footerTitleFontSize:data.titleFontSize,
+      footerTitleFontWeight:data.titleFontWeight,
+      footerTitleFontStyle:data.titleFontStyle,
+      footerTitleStatus:data.titleStatus,
+      footerTitleColor:data.titleColor,
+  
+      footerDescriptionAnimate:data.descriptionAnimate,
+      footerDescriptionDuration:data.descriptionDuration,
+      footerDescriptionFontFamily:data.descriptionFontFamily,
+      footerDescriptionFontSize:data.descriptionFontSize,
+      footerDescriptionFontWeight:data.descriptionFontWeight,
+      footerDescriptionFontStyle:data.descriptionFontStyle,
+      footerDescriptionStatus:data.descriptionStatus,
+      footerDescriptionColor:data.descriptionColor,
+    })}});
+  
+  }
 
   popupLogout = () => {this.setState({ popupLogout: true });};
   popupLogoutClose = () => {this.setState({ popupLogout: false });};
@@ -354,21 +359,7 @@ componentWillReceiveProps(nextProps){
     if( this.state.hero !== "none"){
     heroInput =
       <HeroInput 
-      hero={this.state.hero}
-      heroYoutubeID={this.state.heroYoutubeID}
-      herobackgroundColor={this.state.herobackgroundColor}
-      heroImagePick={this.state.heroBackgroundImage}
-      heroTitle={this.state.heroTitle}             
-      heroTitleAnimate={this.state.heroTitleAnimate} 
-      heroTitleDuration={this.state.heroTitleDuration} 
-      heroTitleFontFamily={this.state.heroTitleFontFamily}
-      heroTitleFontSize={this.state.heroTitleFontSize}
-      heroTitleFontWeight={this.state.heroTitleFontWeight}
-      heroTitleFontStyle={this.state.heroTitleFontStyle}
-      heroTitleStatus={this.state.heroTitleStatus} 
-      heroTitleColor={this.state.heroTitleColor}
-      heroTitlePosition={this.state.heroTitlePosition} 
-
+      {...this.state}
       heroOnChangeYoutubeID={this.onChangeValue('heroYoutubeID')}
       herobackgroundOnChangeColor={this.onChangeColor('herobackgroundColor')}
       heroTitleOnChange={this.onChangeValue('heroTitle')}
@@ -382,17 +373,6 @@ componentWillReceiveProps(nextProps){
       heroTitleOnChangeColor={this.onChangeColor('heroTitleColor')}
       heroTitleOnChangePosition={this.onChangeValue('heroTitlePosition')}
 
-      heroDescription={this.state.heroDescription}
-      heroDescriptionAnimate={this.state.heroDescriptionAnimate}
-      heroDescriptionDuration={this.state.heroDescriptionDuration} 
-      heroDescriptionFontFamily= {this.state.heroDescriptionFontFamily}
-      heroDescriptionFontSize={this.state.heroDescriptionFontSize}
-      heroDescriptionFontWeight={this.state.heroDescriptionFontWeight}
-      heroDescriptionFontStyle={this.state.heroDescriptionFontStyle}
-      heroDescriptionStatus={this.state.heroDescriptionStatus}
-      heroDescriptionColor={this.state.heroDescriptionColor}
-      heroDescriptionPosition={this.state.heroDescriptionPosition}
-
       heroDescriptionOnChange={this.onChangeValue('heroDescription')}
       heroDescriptionOnChangeAnimate={this.onChangeValue('heroDescriptionAnimate')}
       heroDescriptionOnChangeDuration={this.onChangeValue('heroDescriptionDuration')}        
@@ -403,28 +383,6 @@ componentWillReceiveProps(nextProps){
       heroDescriptionOnChangeStatus={this.onChangeValue('heroDescriptionStatus')}
       heroDescriptionOnChangeColor={this.onChangeColor('heroDescriptionColor')}
       heroDescriptionOnChangePosition={this.onChangeValue('heroDescriptionPosition')}
-
-      heroButton={this.state.heroButton} 
-      heroButtonPosition={this.state.heroButtonPosition} 
-      heroButtonSelected={this.state.heroButtonSelected}
-      heroButtonAnimate={this.state.heroButtonAnimate} 
-      heroButtonDuration={this.state.heroButtonDuration} 
-      heroButtonFontFamily={this.state.heroButtonFontFamily}
-      heroButtonFontSize={this.state.heroButtonFontSize}
-      heroButtonFontWeight={this.state.heroButtonFontWeight}
-      heroButtonFontStyle={this.state.heroButtonFontStyle}
-      heroButtonStatus={this.state.heroButtonStatus}
-      heroButtonColor={this.state.heroButtonColor}
-      heroButtonSwapColor={this.state.heroButtonSwapColor}
-      heroButtonSwap={this.state.heroButtonSwap}
-      heroButtonLink={this.state.heroButtonLink}
-      heroButtonLinkTarget={this.state.heroButtonLinkTarget}
-      heroButtonRadius={this.state.heroButtonRadius}
-      heroButtonBGColor={this.state.heroButtonBGColor}
-      heroButtonHBGColor={this.state.heroButtonHBGColor}
-      heroButtonBDColor={this.state.heroButtonBDColor}
-      heroButtonHBDColor={this.state.heroButtonHBDColor}
-      heroButtonHoverColor={this.state.heroButtonHoverColor}
               
       heroButtonOnChangeHoverColor={this.onChangeColor('heroButtonHoverColor')}
       heroButtonOnChangeHBDColor={this.onChangeColor('heroButtonHBDColor')}
@@ -453,36 +411,7 @@ componentWillReceiveProps(nextProps){
     if( this.state.carousel !== "none"){
       carouselInput =            
       <CarouselInput
-      carouselContent={this.state.carouselContent}
-      carouselSpeed={this.state.carouselSpeed}
-      carouselPauseOnHover={this.state.carouselPauseOnHover}
-      carouselDots={this.state.carouselDots}
-      carouselAutoplay={this.state.carouselAutoplay}
-      carouselVertical={this.state.carouselVertical}
-      carouselBackgroundColor={this.state.carouselBackgroundColor}
-
-      carouselTitle={this.state.carouselTitle}
-      carouselTitleAnimate={this.state.carouselTitleAnimate}
-      carouselTitleDuration={this.state.carouselTitleDuration}
-      carouselTitleFontFamily={this.state.carouselTitleFontFamily}
-      carouselTitleFontSize={this.state.carouselTitleFontSize}
-      carouselTitleFontWeight={this.state.carouselTitleFontWeight}
-      carouselTitleFontStyle={this.state.carouselTitleFontStyle}
-      carouselTitleStatus={this.state.carouselTitleStatus}
-      carouselTitleColor={this.state.carouselTitleColor}
-      carouselTitlePosition={this.state.carouselTitlePosition}
-
-      carouselDescription={this.state.carouselDescription}
-      carouselDescriptionAnimate={this.state.carouselDescriptionAnimate}
-      carouselDescriptionDuration={this.state.carouselDescriptionDuration}
-      carouselDescriptionFontFamily={this.state.carouselDescriptionFontFamily}
-      carouselDescriptionFontSize={this.state.carouselDescriptionFontSize}
-      carouselDescriptionFontWeight={this.state.carouselDescriptionFontWeight}
-      carouselDescriptionFontStyle={this.state.carouselDescriptionFontStyle}
-      carouselDescriptionStatus={this.state.carouselDescriptionStatus}
-      carouselDescriptionColor={this.state.carouselDescriptionColor}
-      carouselDescriptionPosition={this.state.carouselDescriptionPosition}
-
+      {...this.state}
       carouselOnChangeBackgroundColor={this.onChangeColor('carouselBackgroundColor')}
       carouselOnChangePauseOnHover={this.onChangeChecked('carouselPauseOnHover')}
       carouselOnChangeAutoplay={this.onChangeChecked('carouselAutoplay')}
@@ -517,13 +446,8 @@ componentWillReceiveProps(nextProps){
     let menubarInput; 
     if( this.state.menubar !== "none"){
       menubarInput= <MenubarInput
-      menubar={this.state.menubar}
-      menubarLogo={this.state.menubarLogo}
-      menubarbackgroundColor={this.state.menubarbackgroundColor}
-      menubarItem={this.state.menubarItem}
-      linkLogo={this.props.linkLogo}
+      {...this.state}
       onChangeLinkLogo={this.onChangeChecked('linkLogo')}
-      linkLogoTarget={this.props.linkLogoTarget}
       onChangeLinkLogoTarget={this.onChangeChecked('linkLogoTarget')}
       menubarbackgroundOnChangeColor={this.onChangeColor('menubarbackgroundColor')}
     />
@@ -531,18 +455,7 @@ componentWillReceiveProps(nextProps){
     let galleryInput ;
     if( this.state.gallery !== "none"){
     galleryInput = <GalleryInput
-    galleryContent={this.state.galleryContent}
-    galleryBackgroundColor={this.state.galleryBackgroundColor}
-    galleryTitle={this.state.galleryTitle}  
-    galleryTitleAnimate={this.state.galleryTitleAnimate} 
-    galleryTitleDuration={this.state.galleryTitleDuration}   
-    galleryTitleFontFamily={this.state.galleryTitleFontFamily}
-    galleryTitleFontSize={this.state.galleryTitleFontSize}
-    galleryTitleFontWeight={this.state.galleryTitleFontWeight}
-    galleryTitleFontStyle={this.state.galleryTitleFontStyle}
-    galleryTitleStatus={this.state.galleryTitleStatus}
-    galleryTitleColor={this.state.galleryTitleColor}
-    galleryTitlePosition={this.state.galleryTitlePosition} 
+    {...this.state}
 
     galleryBackgroundOnChangeColor={this.onChangeColor('galleryBackgroundColor')}
     galleryTitleOnChange={this.onChangeValue('galleryTitle')} 
@@ -554,17 +467,6 @@ componentWillReceiveProps(nextProps){
     galleryTitleOnChangeStatus={this.onChangeValue('galleryTitleStatus')}
     galleryTitleOnChangePosition={this.onChangeValue('galleryTitlePosition')}
     galleryTitleOnChangeColor={this.onChangeColor('galleryTitleColor')}
-
-    galleryDescription={this.state.galleryDescription}  
-    galleryDescriptionPosition={this.state.galleryDescriptionPosition}  
-    galleryDescriptionAnimate={this.state.galleryDescriptionAnimate} 
-    galleryDescriptionDuration={this.state.galleryDescriptionDuration}   
-    galleryDescriptionFontFamily={this.state.galleryDescriptionFontFamily}
-    galleryDescriptionFontSize={this.state.galleryDescriptionFontSize}
-    galleryDescriptionFontWeight={this.state.galleryDescriptionFontWeight}
-    galleryDescriptionFontStyle={this.state.galleryDescriptionFontStyle}
-    galleryDescriptionStatus={this.state.galleryDescriptionStatus}
-    galleryDescriptionColor={this.state.galleryDescriptionColor}
 
     galleryDescriptionOnChange={this.onChangeValue('galleryDescription')} 
     galleryDescriptionOnChangePosition={this.onChangeValue('galleryDescriptionPosition')} 
@@ -582,21 +484,7 @@ componentWillReceiveProps(nextProps){
     let footerInput ;
     if( this.state.footer !== "none"){
     footerInput=<FooterInput
-    footer={this.state.footer}
-    footerItem={this.state.footerItem}
-    footerSocial={this.state.footerSocial}
-    footerTitle={this.state.footerTitle}
-    footerDescription={this.state.footerDescription}
-    footerPosition={this.state.footerPosition}
-    footerbackgroundColor={this.state.footerbackgroundColor}
-    footerTitleAnimate={this.state.footerTitleAnimate}
-    footerTitleDuration={this.state.footerTitleDuration}
-    footerTitleFontFamily={this.state.footerTitleFontFamily}
-    footerTitleFontSize={this.state.footerTitleFontSize}
-    footerTitleFontWeight={this.state.footerTitleFontWeight}
-    footerTitleFontStyle={this.state.footerTitleFontStyle}
-    footerTitleStatus={this.state.footerTitleStatus}
-    footerTitleColor={this.state.footerTitleColor}
+    {...this.state}
 
     footerbackgroundOnChangeColor={this.onChangeColor('footerbackgroundColor')}
     footerPositionOnChange={this.onChangeValue('footerPosition')}
@@ -609,15 +497,6 @@ componentWillReceiveProps(nextProps){
     footerTitleOnChangeFontStyle={this.onChangeValue('footerTitleFontStyle')}
     footerTitleOnChangeStatus={this.onChangeValue('footerTitleStatus')}
     footerTitleOnChangeColor={this.onChangeColor('footerTitleColor')}
-
-    footerDescriptionAnimate={this.state.footerDescriptionAnimate}
-    footerDescriptionDuration={this.state.footerDescriptionDuration}
-    footerDescriptionFontFamily={this.state.footerDescriptionFontFamily}
-    footerDescriptionFontSize={this.state.footerDescriptionFontSize}
-    footerDescriptionFontWeight={this.state.footerDescriptionFontWeight}
-    footerDescriptionFontStyle={this.state.footerDescriptionFontStyle}
-    footerDescriptionStatus={this.state.footerDescriptionStatus}
-    footerDescriptionColor={this.state.footerDescriptionColor}
 
     footerDescriptionOnChange={this.onChangeValue('footerDescription')}
     footerDescriptionOnChangeAnimate={this.onChangeValue('footerDescriptionAnimate')}
@@ -662,8 +541,8 @@ componentWillReceiveProps(nextProps){
             <Popup
               open={this.state.popupLogout}
               close={this.popupLogoutClose}
-              title="Are you sure Logout"
-              description="eeeeeeeeeeeeee"
+              title="Logout"
+              description="Are you sure Logout"
               yes={this.logout}
               no={this.popupLogoutClose}
             />
@@ -709,132 +588,7 @@ componentWillReceiveProps(nextProps){
             <TabWebsite   
               path={this.state.path}
               undefinedOneTab={this.state.undefinedOneTab}
-            
-              menubarLogo={this.state.menubarLogo}
-              menubarbackgroundColor={this.state.menubarbackgroundColor}
-              menubarItem={this.state.menubarItem}   
-              herobackgroundColor={this.state.herobackgroundColor}
-              heroBackgroundImage={this.state.heroBackgroundImage}
-              heroYoutubeID={this.state.heroYoutubeID}
-              heroTitle={this.state.heroTitle}             
-              heroTitleAnimate={this.state.heroTitleAnimate} 
-              heroTitleDuration={this.state.heroTitleDuration} 
-              heroTitleFontFamily={this.state.heroTitleFontFamily}
-              heroTitleFontSize={this.state.heroTitleFontSize}
-              heroTitleFontWeight={this.state.heroTitleFontWeight}
-              heroTitleFontStyle={this.state.heroTitleFontStyle}
-              heroTitleStatus={this.state.heroTitleStatus} 
-              heroTitleColor={this.state.heroTitleColor}
-              heroTitlePosition={this.state.heroTitlePosition}  
-
-              heroDescription={this.state.heroDescription}
-              heroDescriptionAnimate={this.state.heroDescriptionAnimate}
-              heroDescriptionDuration={this.state.heroDescriptionDuration} 
-              heroDescriptionFontFamily= {this.state.heroDescriptionFontFamily}
-              heroDescriptionFontSize={this.state.heroDescriptionFontSize}
-              heroDescriptionFontWeight={this.state.heroDescriptionFontWeight}
-              heroDescriptionFontStyle={this.state.heroDescriptionFontStyle}
-              heroDescriptionStatus={this.state.heroDescriptionStatus}
-              heroDescriptionColor={this.state.heroDescriptionColor}
-              heroDescriptionPosition={this.state.heroDescriptionPosition}
-
-              heroButton={this.state.heroButton} 
-              heroButtonPosition={this.state.heroButtonPosition} 
-              heroButtonSelected={this.state.heroButtonSelected}
-              heroButtonAnimate={this.state.heroButtonAnimate} 
-              heroButtonDuration={this.state.heroButtonDuration} 
-              heroButtonFontFamily={this.state.heroButtonFontFamily}
-              heroButtonFontSize={this.state.heroButtonFontSize}
-              heroButtonFontWeight={this.state.heroButtonFontWeight}
-              heroButtonFontStyle={this.state.heroButtonFontStyle}
-              heroButtonStatus={this.state.heroButtonStatus}
-              heroButtonColor={this.state.heroButtonColor}
-              heroButtonSwapColor={this.state.heroButtonSwapColor}
-              heroButtonSwap={this.state.heroButtonSwap}
-              heroButtonLink={this.state.heroButtonLink}
-              heroButtonLinkTarget={this.state.heroButtonLinkTarget}
-              heroButtonRadius={this.state.heroButtonRadius}
-              heroButtonBGColor={this.state.heroButtonBGColor}
-              heroButtonHBGColor={this.state.heroButtonHBGColor}
-              heroButtonBDColor={this.state.heroButtonBDColor}
-              heroButtonHBDColor={this.state.heroButtonHBDColor}
-              heroButtonHoverColor={this.state.heroButtonHoverColor}
-                      
-              carouselBackgroundColor={this.state.carouselBackgroundColor}
-              carouselContent={this.state.carouselContent}
-              carouselSpeed={this.state.carouselSpeed}
-              carouselPauseOnHover={this.state.carouselPauseOnHover}
-              carouselDots={this.state.carouselDots}
-              carouselAutoplay={this.state.carouselAutoplay}
-              carouselVertical={this.state.carouselVertical}
-              carouselTitle={this.state.carouselTitle}
-              carouselDescription={this.state.carouselDescription}
-              carouselTitlePosition={this.state.carouselTitlePosition}
-              carouselTitleAnimate={this.state.carouselTitleAnimate}
-              carouselTitleDuration={this.state.carouselTitleDuration}
-              carouselTitleFontFamily={this.state.carouselTitleFontFamily}
-              carouselTitleFontSize={this.state.carouselTitleFontSize}
-              carouselTitleFontWeight={this.state.carouselTitleFontWeight}
-              carouselTitleFontStyle={this.state.carouselTitleFontStyle}
-              carouselTitleStatus={this.state.carouselTitleStatus}
-              carouselTitleColor={this.state.carouselTitleColor}
-              carouselDescriptionAnimate={this.state.carouselDescriptionAnimate}
-              carouselDescriptionDuration={this.state.carouselDescriptionDuration}
-              carouselDescriptionFontFamily={this.state.carouselDescriptionFontFamily}
-              carouselDescriptionFontSize={this.state.carouselDescriptionFontSize}
-              carouselDescriptionFontWeight={this.state.carouselDescriptionFontWeight}
-              carouselDescriptionFontStyle={this.state.carouselDescriptionFontStyle}
-              carouselDescriptionStatus={this.state.carouselDescriptionStatus}
-              carouselDescriptionColor={this.state.carouselDescriptionColor}
-              carouselDescriptionPosition={this.state.carouselDescriptionPosition}
-
-              galleryContent={this.state.galleryContent}
-              galleryBackgroundColor={this.state.galleryBackgroundColor}
-              galleryTitle={this.state.galleryTitle}  
-              galleryTitleAnimate={this.state.galleryTitleAnimate} 
-              galleryTitleDuration={this.state.galleryTitleDuration}   
-              galleryTitleFontFamily={this.state.galleryTitleFontFamily}
-              galleryTitleFontSize={this.state.galleryTitleFontSize}
-              galleryTitleFontWeight={this.state.galleryTitleFontWeight}
-              galleryTitleFontStyle={this.state.galleryTitleFontStyle}
-              galleryTitleStatus={this.state.galleryTitleStatus}
-              galleryTitleColor={this.state.galleryTitleColor}
-              galleryTitlePosition={this.state.galleryTitlePosition}  
-          
-              galleryDescription={this.state.galleryDescription}  
-              galleryDescriptionAnimate={this.state.galleryDescriptionAnimate} 
-              galleryDescriptionDuration={this.state.galleryDescriptionDuration}   
-              galleryDescriptionFontFamily={this.state.galleryDescriptionFontFamily}
-              galleryDescriptionFontSize={this.state.galleryDescriptionFontSize}
-              galleryDescriptionFontWeight={this.state.galleryDescriptionFontWeight}
-              galleryDescriptionFontStyle={this.state.galleryDescriptionFontStyle}
-              galleryDescriptionStatus={this.state.galleryDescriptionStatus}
-              galleryDescriptionColor={this.state.galleryDescriptionColor}
-              galleryDescriptionPosition={this.state.galleryDescriptionPosition} 
-
-              footerItem={this.state.footerItem}
-              footerSocial={this.state.footerSocial}
-              footerTitle={this.state.footerTitle}
-              footerDescription={this.state.footerDescription}
-              footerPosition={this.state.footerPosition}
-              footerbackgroundColor={this.state.footerbackgroundColor}
-              footerTitleAnimate={this.state.footerTitleAnimate}
-              footerTitleDuration={this.state.footerTitleDuration}
-              footerTitleFontFamily={this.state.footerTitleFontFamily}
-              footerTitleFontSize={this.state.footerTitleFontSize}
-              footerTitleFontWeight={this.state.footerTitleFontWeight}
-              footerTitleFontStyle={this.state.footerTitleFontStyle}
-              footerTitleStatus={this.state.footerTitleStatus}
-              footerTitleColor={this.state.footerTitleColor}
-          
-              footerDescriptionAnimate={this.state.footerDescriptionAnimate}
-              footerDescriptionDuration={this.state.footerDescriptionDuration}
-              footerDescriptionFontFamily={this.state.footerDescriptionFontFamily}
-              footerDescriptionFontSize={this.state.footerDescriptionFontSize}
-              footerDescriptionFontWeight={this.state.footerDescriptionFontWeight}
-              footerDescriptionFontStyle={this.state.footerDescriptionFontStyle}
-              footerDescriptionStatus={this.state.footerDescriptionStatus}
-              footerDescriptionColor={this.state.footerDescriptionColor}
+              {...this.state}
             />       
         </main>
       </div>
@@ -853,7 +607,6 @@ const mapStateToProps = state => ({
   url: state.urlImage ,
   user:state.user,
   email:state.email,
-  chooseTemplate:state.chooseTemplate,
   photoURL:state.photoURL
 })
 

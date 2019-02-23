@@ -26,7 +26,7 @@ class HeroNo1 extends React.Component {
         fontStyle:this.props.heroTitleFontStyle,
         display:this.props.heroTitleStatus,
         textAlign: this.props.heroTitlePosition,
-        
+        paddingBottom:'2%'    
     };
     const description={
         opacity: 1,
@@ -38,6 +38,7 @@ class HeroNo1 extends React.Component {
         fontStyle:this.props.heroDescriptionFontStyle,
         display:this.props.heroDescriptionStatus,
         textAlign: this.props.heroDescriptionPosition,
+        paddingBottom:'2%'
     };
     const buttonAnimate={
       opacity: 1,
@@ -122,7 +123,7 @@ height:100%;
 width:100%;
 position:absolute;
 z-index:5;
-padding: 20% 10% 10%;
+padding: 15% 10% 10%;
 `;
 
 const BG = styled.div`

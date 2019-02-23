@@ -163,10 +163,7 @@ class NestedList extends React.Component {
     const { anchorEl,anchorEl2 } = this.state;
     const open = Boolean(anchorEl);
     const open2 = Boolean(anchorEl2);
-    const pickColor={
-      fontSize: '16px',
-      marginLeft:10
-    };
+    const pickColor={fontSize: '14px',marginLeft:10,margin: 0};
     return (
       <div className={classes.root} >
         <Message
@@ -195,18 +192,6 @@ class NestedList extends React.Component {
             {this.state.open ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding={false}>
-                <ListItem>
-                  <p style={pickColor}> Background Color&nbsp;&nbsp;&nbsp;</p>
-                  <PickColor
-                  padding="0"
-                  width="80px"
-                  height="20px"
-                  color={this.props.carouselBackgroundColor}
-                  onChange={this.props.carouselOnChangeBackgroundColor}
-                  />
-                </ListItem>
-              </List> 
             <List component="div" disablePadding={false}>
               <ListItem  className={classes.nested}>
               <InputText 
@@ -280,6 +265,16 @@ class NestedList extends React.Component {
                 horizontal: 'left',
               }}
             >
+                <ListItem>
+                  <p style={pickColor}> Background Color&nbsp;&nbsp;&nbsp;</p>
+                  <PickColor
+                  padding="0"
+                  width="80px"
+                  height="20px"
+                  color={this.props.carouselBackgroundColor}
+                  onChange={this.props.carouselOnChangeBackgroundColor}
+                  />
+                </ListItem>
             <ListItem>
               <Dropdown 
                 label='Speed'
@@ -292,31 +287,28 @@ class NestedList extends React.Component {
                 ]}
               />
             </ListItem>
-              <ListItem >
+            <ListItem>
                 <Selection
                 value={this.props.carouselVertical}
                 onChange={this.props.carouselOnChangeVertical}
                 labelTrue="Vertical"
                 labelFalse="Horizotal"
                 />
-              </ListItem >
-              <ListItem >
+
                 <Selection
                 value={this.props.carouselAutoplay}
                 onChange={this.props.carouselOnChangeAutoplay}
                 labelTrue="Autoplay"
                 labelFalse="Not autoplay"
                 />
-              </ListItem>
-              <ListItem >
+
                 <Selection
                 value={this.props.carouselPauseOnHover}
                 onChange={this.props.carouselOnChangePauseOnHover}
                 labelTrue="Pause on hover"
                 labelFalse="Not pause on hover"
                 />
-              </ListItem>
-              <ListItem >
+
                 <Selection
                 value={this.props.carouselDots}
                 onChange={this.props.carouselOnChangeDots}
@@ -434,7 +426,7 @@ const mapStateToProps = state => ({
   urlImage: state.urlImage ,
   tabs:state.tabs,
   user:state.user,
-  email:state.email
+  email:state.email,
 })
 export default connect(mapStateToProps)(withStyles(styles)(NestedList));
 

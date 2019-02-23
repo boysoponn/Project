@@ -43,11 +43,11 @@ class GalleryNo2 extends React.Component {
 			<Content>
 			<ScrollAnimation style={title} className={this.props.galleryTitleAnimate} >{this.props.galleryTitle}</ScrollAnimation> 
 			<ScrollAnimation style={description} className={this.props.galleryDescriptionAnimate}>{this.props.galleryDescription}</ScrollAnimation> 
-			</Content> 
+			</Content>
 			<Grid>
 				{this.props.galleryContent.map((post) => 
 			
-					<Figure width='31.3%' className={'effect-'+post.galleryHover}>	
+					<Figure width='48%' className={'effect-'+post.galleryHover} key={post._key}>	
 						<Img Src={"url("+post.image+")"}/>
 						<Figcaption>
 							<div>
@@ -104,6 +104,9 @@ width: ${props => props.width};
 height: 500px;
 text-align: center;
 cursor: pointer;
+@media screen and (max-width: 1024px) {
+	width: 98%;
+}
 `;
 
 const Img = styled.div`

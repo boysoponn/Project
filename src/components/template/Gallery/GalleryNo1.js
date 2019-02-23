@@ -47,7 +47,7 @@ class GalleryNo2 extends React.Component {
 			<Grid>
 				{this.props.galleryContent.map((post) => 
 			
-					<Figure width='98%' className={'effect-'+post.galleryHover}>	
+					<Figure width='98%' className={'effect-'+post.galleryHover} key={post._key}>	
 						<Img Src={"url("+post.image+")"}/>
 						<Figcaption>
 							<div>

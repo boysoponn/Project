@@ -9,7 +9,7 @@ import ExitIcon from '@material-ui/icons/ExitToApp';
 import Button from '@material-ui/core/Button';
 import { withStyles  } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom';
+import { withRouter,Link } from 'react-router-dom';
 
 const styles = theme => ({
     button:{
@@ -127,13 +127,30 @@ class AppWithConnect extends React.Component {
         this.setState({login:false})
     }
     loginTwitter=()=>{
+        // var provider = new firebase.auth.TwitterAuthProvider();
+        // firebase.auth().signInWithPopup(provider).then(function(result) {
+        //     // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
+        //     // You can use these server side with your app's credentials to access the Twitter API.
+        //     var token = result.credential.accessToken;
+        //     var secret = result.credential.secret;
+        //     // The signed-in user info.
+        //     var user = result.user;
+        //     // ...
+        //   }).catch(function(error) {
+        //     // Handle Errors here.
+        //     var errorCode = error.code;
+        //     var errorMessage = error.message;
+        //     // The email of the user's account used.
+        //     var email = error.email;
+        //     // The firebase.auth.AuthCredential type that was used.
+        //     var credential = error.credential;
+        //     // ...
+        //   });
+        // this.setState({login:false})
         alert("coming soon")
     }
     signUp=()=>{
         config.auth().createUserWithEmailAndPassword(this.state.email,this.state.password).then(function(user) {      
-            this.setState({
-                register:false,
-            })
         }, function(error) {
           // Handle Errors here.
           var errorCode = error.code;
@@ -142,16 +159,10 @@ class AppWithConnect extends React.Component {
           if (errorCode === 'auth/weak-password') {
               alert('The password is too weak.');
           } else {
-              alert(error);
+              alert(errorMessage);
           }
           // [END_EXCLUDE]
       });
-      this.setState({
-        recaptcha:false,
-        valueRecaptcha:'',
-        password:"",
-        email:"",
-    })
     }
     logout =() => {config.auth().signOut();window.location.reload(); };
     
@@ -190,7 +201,10 @@ render() {
                         <A>Tutorial</A>
                     </Content>
                     <Content>
-                        <A>Getting Started</A>
+                        { !this.props.user ? <A onClick={this.onChangeTrue('login')}>Getting Started</A>
+                        :
+                        <Link to="/cms" style={{color:'#000',fontSize:'0.8vw'}}>Getting Started</Link>
+                        }
                     </Content>
                 </All>
             </Nav>
@@ -268,3 +282,4 @@ color:#000;
 font-size:1vw;
 font-weight: 500;
 `;
+

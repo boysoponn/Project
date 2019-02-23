@@ -47,7 +47,7 @@ class GalleryNo2 extends React.Component {
 			<Grid>
 				{this.props.galleryContent.map((post) => 
 			
-					<Figure width='23%' className={'effect-'+post.galleryHover}>	
+					<Figure width='23%' className={'effect-'+post.galleryHover} key={post._key}>	
 						<Img Src={"url("+post.image+")"}/>
 						<Figcaption>
 							<div>
@@ -104,6 +104,9 @@ width: ${props => props.width};
 height: 500px;
 text-align: center;
 cursor: pointer;
+@media screen and (max-width: 1024px) {
+	width: 98%;
+}
 `;
 
 const Img = styled.div`

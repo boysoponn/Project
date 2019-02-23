@@ -15,18 +15,22 @@ import CreateIcon from '@material-ui/icons/Create';
 import Text from '../sidebarInput/itemInput/Text';
 import Grid from '@material-ui/core/Grid';
 import None from '../image/none.jpg'
-import Cover1 from '../image/cover.jpg'
+import Cover1 from '../image/cover1.jpg'
 import Cover2 from '../image/cover2.jpg'
-import Cover3 from '../image/comingsoon.jpg'
+import Cover3 from '../image/cover3.jpg'
 import GalleryNo1 from '../image/gallery1.jpg'
 import GalleryNo2 from '../image/gallery2.jpg'
 import GalleryNo3 from '../image/gallery3.jpg'
+import GalleryNo4 from '../image/gallery4.jpg'
 import Menu1 from '../image/menu1.jpg'
-import Menu2 from '../image/comingsoon.jpg'
-import Menu3 from '../image/comingsoon.jpg'
-import Footer from '../image/comingsoon.jpg'
+import Menu2 from '../image/menu2.jpg'
+import Menu3 from '../image/menu3.jpg'
+import Footer1 from '../image/footer1.jpg'
+import Footer2 from '../image/footer2.jpg'
+import Footer3 from '../image/footer3.jpg'
 import ImageSilde from '../image/imagesilde.jpg'
-import ImageSilde2 from '../image/comingsoon.jpg'
+import ImageSilde2 from '../image/imagesilde2.jpg'
+import ImageSilde3 from '../image/imagesilde3.jpg'
 
 
 const styles = {
@@ -226,6 +230,15 @@ class ButtonForNewTab extends React.Component {
               image={ImageSilde2}
               />
             </Grid>
+            <Grid item  sm={6} md={4} lg={3}>
+              <RadioButtons
+              selectedValue={this.props.selectedCarousel}
+              handleChange={this.props.handleChangeCarousel}
+              value={this.props.valueCarousel4}
+              label='Image Silde 3'
+              image={ImageSilde3}
+              />
+            </Grid>
           </Grid>
           </List>       
 
@@ -274,7 +287,7 @@ class ButtonForNewTab extends React.Component {
               handleChange={this.props.handleChangeGallery}
               value={this.props.valueGallery5}
               label='Gallery 4'
-              image={Footer}
+              image={GalleryNo4}
               />
             </Grid>
           </Grid>
@@ -298,7 +311,7 @@ class ButtonForNewTab extends React.Component {
                 handleChange={this.props.handleChangeFooter}
                 value={this.props.valueFooter2}
                 label='Footer 1'
-                image={Footer}
+                image={Footer1}
               />
             </Grid>
             <Grid item  sm={6} md={4} lg={3}>
@@ -307,7 +320,7 @@ class ButtonForNewTab extends React.Component {
                 handleChange={this.props.handleChangeFooter}
                 value={this.props.valueFooter3}
                 label='Footer 2'
-                image={Footer}
+                image={Footer2}
               />
             </Grid>
             <Grid item  sm={6} md={4} lg={3}>
@@ -316,7 +329,7 @@ class ButtonForNewTab extends React.Component {
                 handleChange={this.props.handleChangeFooter}
                 value={this.props.valueFooter4}
                 label='Footer 3'
-                image={Footer}
+                image={Footer3}
               />
             </Grid>
           </Grid>

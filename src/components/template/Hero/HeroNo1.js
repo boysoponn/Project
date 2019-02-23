@@ -16,8 +16,9 @@ class HeroNo1 extends React.Component {
   }
 
   render() {
+
     const background ={
-        backgroundImage:"url("+this.props.heroImagePick+")",
+        backgroundImage:"url("+this.props.heroBackgroundImage+")",
         backgroundSize:'cover',
         height:'100%',
         margin:0,
@@ -36,6 +37,7 @@ class HeroNo1 extends React.Component {
         fontStyle:this.props.heroTitleFontStyle,
         display:this.props.heroTitleStatus,
         textAlign: this.props.heroTitlePosition,
+        paddingBottom:'2%'
     };
     const description={
         opacity: 1,
@@ -47,6 +49,7 @@ class HeroNo1 extends React.Component {
         fontStyle:this.props.heroDescriptionFontStyle,
         display:this.props.heroDescriptionStatus,
         textAlign: this.props.heroDescriptionPosition,
+        paddingBottom:'2%'
     };
     const buttonAnimate={
       opacity: 1,

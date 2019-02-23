@@ -1,4 +1,4 @@
-export default (state = "null", { type, user }) => {
+export default (state = "", { type, user }) => {
     switch (type) {
       case 'login':
         return state = user

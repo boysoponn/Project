@@ -34,8 +34,11 @@ const styles = theme => ({
   rightIcon: {
     marginLeft:5,
   },
-
-
+  buttoncenter: {
+    margin: '1% 40%',
+    width: '20%',
+    fontSize: '0.8vw'
+  },
 });
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -276,7 +279,7 @@ class TabWebsite extends React.Component {
       contact : this.state.selectedContact,
       heroContent: {  
         backgroundColor:'#000000',  
-        image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Fbusiness-2884023_1920.jpg?alt=media&token=f9810600-21b1-423a-8950-6e4f1d13a8e8',
+        image:'https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Fbusinessman-sitting-alone-at-the-desk-in-the-dark-office-drinking-coffee-from-disposal-cup-and-typing-on-the-computer_snjpx-dy__F0000.png?alt=media&token=24836bad-1eb4-4348-8aa9-ec3dd7295efd',
         youtubeID:'6lt2JfJdGSY',
         title:'Title',
         titleAnimate:'none',
@@ -509,7 +512,7 @@ class TabWebsite extends React.Component {
 
 
   deletePage=()=>{
-    this.props.dispatch(checkTab('null'));
+    this.props.dispatch(checkTab(false));
     let dbCon = config.database().ref('project/'+this.props.email+'/');
     dbCon.child(this.props.tabs).remove();
     this.setState({popupDelete:false,messageDeleteOpen:true});
@@ -662,8 +665,8 @@ class TabWebsite extends React.Component {
       <Popup
       open={this.state.popupSave}
       close={this.popupClose('popupSave')}
-      title="Are you sure save"
-      description="eeeeeeeeeeeeeeee"
+      title="Save"
+      description="Are you sure save"
       yes={this.save}
       no={this.popupClose('popupSave')}
       message="Page Saved"
@@ -673,8 +676,8 @@ class TabWebsite extends React.Component {
       <Popup
       open={this.state.popupDelete}
       close={this.popupClose('popupDelete')}
-      title="Are you sure delete"
-      description="eeeeeeeeeeeeee"
+      title="Delete"
+      description="Are you sure delete"
       yes={this.deletePage}
       no={this.popupClose('popupDelete')}
       message="Page Deteled"
@@ -682,7 +685,7 @@ class TabWebsite extends React.Component {
       messageClose={this.popupClose('messageDeleteOpen')}
       />
       {this.props.undefinedOneTab === true?
-      <Button variant="contained" color="secondary" className={classes.button} onClick={this.addGlobal}>Start Your Project</Button>
+      <Button variant="contained" color="secondary" className={classes.buttoncenter} onClick={this.addGlobal}>Start Project</Button>
       :
       <Button variant="contained" color="secondary" onClick={this.popup('popupSave')} className={classes.button}>
         SAVE
@@ -785,9 +788,9 @@ class TabWebsite extends React.Component {
       <Button variant="contained" color="secondary" className={classes.button} onClick={this.popup('popupDelete')}>Delete
       <DeleteIcon className={classes.rightIcon}/>
       </Button>
-      <Button variant="contained" color="secondary" style={{float:'right'}} className={classes.button} ><a href={'https://webshow-efb30.firebaseapp.com'+this.props.path} style={{color:'#ffffff'}} target="_blank">Preview</a>
-      <PreviewIcon className={classes.rightIcon}/>
-      </Button>
+      <a href={'https://webshow-efb30.firebaseapp.com'+this.props.path} style={{color:'#ffffff'}} target="_blank"><Button variant="contained" color="secondary" style={{float:'right'}} className={classes.button} >
+      Preview<PreviewIcon className={classes.rightIcon}/>
+      </Button></a>
       </div>
       :null
       }
@@ -826,132 +829,7 @@ class TabWebsite extends React.Component {
               Gallery={New.gallery}  
               Menubar={New.menubar}
               Footer={New.footer}
-
-              menubarLogo={this.props.menubarLogo}
-              menubarbackgroundColor={this.props.menubarbackgroundColor}
-              menubarItem={this.props.menubarItem}
-              heroYoutubeID={this.props.heroYoutubeID}
-              herobackgroundColor={this.props.herobackgroundColor}
-              heroImagePick={this.props.heroBackgroundImage}
-              heroTitle={this.props.heroTitle} 
-              heroTitleAnimate={this.props.heroTitleAnimate}
-              heroTitleDuration={this.props.heroTitleDuration}
-              heroTitleFontFamily={this.props.heroTitleFontFamily} 
-              heroTitleFontSize={this.props.heroTitleFontSize}
-              heroTitleFontWeight={this.props.heroTitleFontWeight}
-              heroTitleFontStyle={this.props.heroTitleFontStyle}
-              heroTitleStatus={this.props.heroTitleStatus}
-              heroTitleColor={this.props.heroTitleColor}
-              heroTitlePosition={this.props.heroTitlePosition}
-
-              heroDescription={this.props.heroDescription}
-              heroDescriptionDuration= {this.props.heroDescriptionDuration}
-              heroDescriptionFontFamily={this.props.heroDescriptionFontFamily}
-              heroDescriptionFontSize={this.props.heroDescriptionFontSize}
-              heroDescriptionFontWeight={this.props.heroDescriptionFontWeight}
-              heroDescriptionFontStyle={this.props.heroDescriptionFontStyle}
-              heroDescriptionStatus={this.props.heroDescriptionStatus}
-              heroDescriptionAnimate={this.props.heroDescriptionAnimate} 
-              heroDescriptionColor={this.props.heroDescriptionColor}
-              heroDescriptionPosition={this.props.heroDescriptionPosition}
-
-              heroButton={this.props.heroButton} 
-              heroButtonPosition={this.props.heroButtonPosition} 
-              heroButtonSelected={this.props.heroButtonSelected}
-              heroButtonAnimate={this.props.heroButtonAnimate} 
-              heroButtonDuration={this.props.heroButtonDuration} 
-              heroButtonFontFamily={this.props.heroButtonFontFamily}
-              heroButtonFontSize={this.props.heroButtonFontSize}
-              heroButtonFontWeight={this.props.heroButtonFontWeight}
-              heroButtonFontStyle={this.props.heroButtonFontStyle}
-              heroButtonStatus={this.props.heroButtonStatus}
-              heroButtonColor={this.props.heroButtonColor}
-              heroButtonSwapColor={this.props.heroButtonSwapColor}
-              heroButtonSwap={this.props.heroButtonSwap}
-              heroButtonLink={this.props.heroButtonLink}
-              heroButtonLinkTarget={this.props.heroButtonLinkTarget}
-              heroButtonRadius={this.props.heroButtonRadius}
-              heroButtonBGColor={this.props.heroButtonBGColor}
-              heroButtonHBGColor={this.props.heroButtonHBGColor}
-              heroButtonBDColor={this.props.heroButtonBDColor}
-              heroButtonHBDColor={this.props.heroButtonHBDColor}
-              heroButtonHoverColor={this.props.heroButtonHoverColor}
-
-              carouselBackgroundColor={this.props.carouselBackgroundColor}
-              carouselContent={this.props.carouselContent}
-              carouselSpeed={this.props.carouselSpeed}
-              carouselPauseOnHover={this.props.carouselPauseOnHover}
-              carouselDots={this.props.carouselDots}
-              carouselAutoplay={this.props.carouselAutoplay}
-              carouselVertical={this.props.carouselVertical}
-              carouselTitle={this.props.carouselTitle}
-              carouselDescription={this.props.carouselDescription}
-              carouselTitleAnimate={this.props.carouselTitleAnimate}
-              carouselTitleDuration={this.props.carouselTitleDuration}
-              carouselTitleFontFamily={this.props.carouselTitleFontFamily}
-              carouselTitleFontSize={this.props.carouselTitleFontSize}
-              carouselTitleFontWeight={this.props.carouselTitleFontWeight}
-              carouselTitleFontStyle={this.props.carouselTitleFontStyle}
-              carouselTitleStatus={this.props.carouselTitleStatus}
-              carouselTitleColor={this.props.carouselTitleColor}
-              carouselTitlePosition={this.props.carouselTitlePosition}
-              carouselDescriptionAnimate={this.props.carouselDescriptionAnimate}
-              carouselDescriptionDuration={this.props.carouselDescriptionDuration}
-              carouselDescriptionFontFamily={this.props.carouselDescriptionFontFamily}
-              carouselDescriptionFontSize={this.props.carouselDescriptionFontSize}
-              carouselDescriptionFontWeight={this.props.carouselDescriptionFontWeight}
-              carouselDescriptionFontStyle={this.props.carouselDescriptionFontStyle}
-              carouselDescriptionStatus={this.props.carouselDescriptionStatus}
-              carouselDescriptionColor={this.props.carouselDescriptionColor}
-              carouselDescriptionPosition={this.props.carouselDescriptionPosition}
-
-              galleryContent={this.props.galleryContent}
-              galleryBackgroundColor={this.props.galleryBackgroundColor}
-              galleryTitle={this.props.galleryTitle}  
-              galleryTitleAnimate={this.props.galleryTitleAnimate} 
-              galleryTitleDuration={this.props.galleryTitleDuration}   
-              galleryTitleFontFamily={this.props.galleryTitleFontFamily}
-              galleryTitleFontSize={this.props.galleryTitleFontSize}
-              galleryTitleFontWeight={this.props.galleryTitleFontWeight}
-              galleryTitleFontStyle={this.props.galleryTitleFontStyle}
-              galleryTitleStatus={this.props.galleryTitleStatus}
-              galleryTitleColor={this.props.galleryTitleColor}
-              galleryTitlePosition={this.props.galleryTitlePosition} 
-          
-              galleryDescription={this.props.galleryDescription}  
-              galleryDescriptionAnimate={this.props.galleryDescriptionAnimate} 
-              galleryDescriptionDuration={this.props.galleryDescriptionDuration}   
-              galleryDescriptionFontFamily={this.props.galleryDescriptionFontFamily}
-              galleryDescriptionFontSize={this.props.galleryDescriptionFontSize}
-              galleryDescriptionFontWeight={this.props.galleryDescriptionFontWeight}
-              galleryDescriptionFontStyle={this.props.galleryDescriptionFontStyle}
-              galleryDescriptionStatus={this.props.galleryDescriptionStatus}
-              galleryDescriptionColor={this.props.galleryDescriptionColor}
-              galleryDescriptionPosition={this.props.galleryDescriptionPosition} 
-
-              footerItem={this.props.footerItem}
-              footerSocial={this.props.footerSocial}
-              footerTitle={this.props.footerTitle}
-              footerDescription={this.props.footerDescription}
-              footerPosition={this.props.footerPosition}
-              footerbackgroundColor={this.props.footerbackgroundColor}
-              footerTitleAnimate={this.props.footerTitleAnimate}
-              footerTitleDuration={this.props.footerTitleDuration}
-              footerTitleFontFamily={this.props.footerTitleFontFamily}
-              footerTitleFontSize={this.props.footerTitleFontSize}
-              footerTitleFontWeight={this.props.footerTitleFontWeight}
-              footerTitleFontStyle={this.props.footerTitleFontStyle}
-              footerTitleStatus={this.props.footerTitleStatus}
-              footerTitleColor={this.props.footerTitleColor}
-          
-              footerDescriptionAnimate={this.props.footerDescriptionAnimate}
-              footerDescriptionDuration={this.props.footerDescriptionDuration}
-              footerDescriptionFontFamily={this.props.footerDescriptionFontFamily}
-              footerDescriptionFontSize={this.props.footerDescriptionFontSize}
-              footerDescriptionFontWeight={this.props.footerDescriptionFontWeight}
-              footerDescriptionFontStyle={this.props.footerDescriptionFontStyle}
-              footerDescriptionStatus={this.props.footerDescriptionStatus}
-              footerDescriptionColor={this.props.footerDescriptionColor}
+              {...this.props}
             />
             </div>
           )))}   

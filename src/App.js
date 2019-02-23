@@ -8,7 +8,7 @@ import Homepage from './components/homepage';
 import config from './config'
 import { connect } from 'react-redux'
 import {login,loginEmail,photoURL} from './components/actions'
-import Metadata from './components/metadata';
+
 class App extends Component {
   state = {
     authenticated: false,
@@ -75,14 +75,6 @@ class App extends Component {
 
     return (
       <div>
-        <Metadata
-          title="CMS"
-          description="CMS love all"
-          og_title="boy sopon CMS"
-          og_description="CMS love you"
-          og_url="https://www.projectcms.tk/"
-          og_image="https://upload.wikimedia.org/wikipedia/en/a/ae/Love_TV_Logo.png"
-        />
       <Body>
       <Router> 
         <div>        

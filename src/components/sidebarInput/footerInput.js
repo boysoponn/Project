@@ -197,7 +197,7 @@ class CarouselInput extends React.Component {
   onChangeValue = name=> (e) => {this.setState({ [name]: e.target.value });};
 
   render() {
-    const pickColor={fontSize: '16px',marginLeft:10};
+    const pickColor={fontSize: '14px',marginLeft:10,margin: 0};
     const { classes } = this.props;
     const { anchorEl,anchorEl2,anchorEl3 } = this.state;
     const open = Boolean(anchorEl);

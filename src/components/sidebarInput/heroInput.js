@@ -15,7 +15,9 @@ import ModalChooseImage from './itemInput/modalPicture';
 import InputButton from './itemInput/inputButton';
 import PickColor from './itemInput/pickColor'
 import { connect } from 'react-redux'
-import {chooseTemplate} from './../../components/actions'
+import Button from '@material-ui/core/Button';
+import Popover from '@material-ui/core/Popover';
+// import {chooseTemplate} from './../../components/actions'
 import Text from './itemInput/Text'
 const styles = theme => ({
   root: {
@@ -26,6 +28,9 @@ const styles = theme => ({
   nested: {
     paddingLeft: theme.spacing.unit * 4,
   },
+  popover:{
+    height:300
+  },
 });
 
 class NestedList extends React.Component {
@@ -34,27 +39,28 @@ class NestedList extends React.Component {
     this.state = {
     open: false,
     image: null,
+    anchorEl:null
     };  
   }
-  componentWillReceiveProps(nextProps){
-    if(nextProps.chooseTemplate==='hero'){
-      this.setState({open:true})
-      this.props.dispatch(chooseTemplate(null));
-    }
-  }
+  // componentWillReceiveProps(nextProps){
+  //   if(nextProps.chooseTemplate==='hero'){
+  //     this.setState({open:true})
+  //     this.props.dispatch(chooseTemplate(null));
+  //   }
+  // }
 
   handleClick = () => {
     this.setState(state => ({ open: !state.open }));
   };
   
+  open=name=>(e)=>{this.setState({[name]:e.currentTarget})}
+  close=name=>()=>{this.setState({[name]:null})}
 
   render() {
-
+    const { anchorEl } = this.state;
+    const open = Boolean(anchorEl);
     const { classes } = this.props;
-    const pickColor={
-      fontSize: '16px',
-      marginLeft:10
-    };
+    const pickColor={fontSize: '14px',marginLeft:10,margin: 0};
 
     return (
       <div className={classes.root} >
@@ -67,21 +73,6 @@ class NestedList extends React.Component {
             {this.state.open ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
-          {this.props.hero === 'HeroNo2'?
-            <List component="div" disablePadding={false}>
-                <ListItem>
-                  <p style={pickColor}> Background Color&nbsp;&nbsp;&nbsp;</p>
-                  <PickColor
-                  padding="0"
-                  width="80px"
-                  height="20px"
-                  color={this.props.herobackgroundColor}
-                  onChange={this.props.herobackgroundOnChangeColor}
-                  />
-                </ListItem>
-            </List> 
-            :null
-          }
             <List component="div" disablePadding={false}>
               <ListItem  className={classes.nested}>
               <InputText 
@@ -109,8 +100,7 @@ class NestedList extends React.Component {
               />
               </ListItem>
             </List>
-          </Collapse>
-          <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+          
             <List component="div" disablePadding={false}>
               <ListItem  className={classes.nested}>
               <InputTextarea 
@@ -138,8 +128,7 @@ class NestedList extends React.Component {
               />
               </ListItem>
             </List>
-          </Collapse>
-          <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+
             <List component="div" disablePadding={false}>
               <ListItem className={classes.nested}>
               <InputButton
@@ -200,8 +189,7 @@ class NestedList extends React.Component {
               />
               </ListItem>
             </List>
-          </Collapse>
-          <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+
             <List component="div" disablePadding={false}>
               <ListItem className={classes.nested}>
               {this.props.hero === 'HeroNo3'?
@@ -212,12 +200,47 @@ class NestedList extends React.Component {
               />
               :
               <ModalChooseImage
-              imagePick={this.props.heroImagePick}
+              imagePick={this.props.heroBackgroundImage}
               path="/heroContent"
               />
               }
               </ListItem>
             </List>
+          {this.props.hero === 'HeroNo2'?
+          <List component="div" disablePadding={false}>
+            <ListItem className={classes.nested}>
+            <Button variant="contained" onClick={this.open('anchorEl')} component="span" color="secondary" >
+            Cover Setting
+            </Button>
+            <Popover
+              className={classes.popover}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={this.close('anchorEl')}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+            >
+             <ListItem>
+              <p style={pickColor}> Background Color&nbsp;&nbsp;&nbsp;</p>
+              <PickColor
+              padding="0"
+              width="80px"
+              height="20px"
+              color={this.props.herobackgroundColor}
+              onChange={this.props.herobackgroundOnChangeColor}
+              />
+            </ListItem>
+            </Popover>
+            </ListItem>
+            </List>         
+                 :null
+            }      
           </Collapse>
         </List>
       </div>
