@@ -534,16 +534,16 @@ class TabWebsite extends React.Component {
   }
   submitCreateProject=(e)=>{
     e.preventDefault();     
-    this.props.dispatch(project(this.state.project));
+    this.props.dispatch(project(this.state.project.replace(/ /g,'-')));
     this.setState({createProject:false});
     this.createProjectName();
   }
 
   createProjectName=()=>{ 
   let dbCon = config.database().ref('production/');
-  dbCon.child(this.state.project).set(this.props.email); 
+  dbCon.child(this.state.project.replace(/ /g,'-')).set(this.props.email); 
   let project = config.database().ref('project owner/');
-  project.child(this.props.email).set(this.state.project);     
+  project.child(this.props.email).set(this.state.project.replace(/ /g,'-'));     
   }
   save=()=>{
     let dbCon = config.database().ref('project/'+this.props.email+'/'+this.props.tabs);

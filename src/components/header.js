@@ -21,8 +21,8 @@ class AppWithConnect extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            password:"developers",
-            email:"developers@mail.com",
+            password:"",
+            email:"",
             login:false,
             register:false,
             recaptcha:false,

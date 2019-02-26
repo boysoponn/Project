@@ -46,7 +46,9 @@ class App extends Component {
     let dbCon = config.database().ref('project owner/'+this.state.email);
     dbCon.on('value', async (snapshot) => { 
     const snapshotValue = snapshot.val(); 
-    this.props.dispatch(project(snapshotValue))
+    if(snapshotValue!==null){
+    this.props.dispatch(project(snapshotValue))      
+    }
   }) 
 }
   }

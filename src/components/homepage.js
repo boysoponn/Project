@@ -13,8 +13,8 @@ class AppWithConnect extends React.Component {
           user:false,
           login:false,
           recaptcha:false,
-          password:"developers",
-          email:"developers@mail.com",
+          password:"",
+          email:"",
           valueRecaptcha:''
         }
     }    
