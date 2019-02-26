@@ -14,6 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import SettingProject from '@material-ui/icons/SettingsOutlined';
 import Button from '@material-ui/core/Button';
 import ExitIcon from '@material-ui/icons/ExitToApp';
 import TabWebsite from './template/tab'
@@ -23,11 +24,13 @@ import CarouselInput from './sidebarInput/carouselInput';
 import MenubarInput from './sidebarInput/menubarInput';
 import GalleryInput from './sidebarInput/galleryInput';
 import FooterInput from './sidebarInput/footerInput';
-import { checkTab} from './actions';
+import { checkTab,project} from './actions';
 import BlockInput from './template/blockInput';
 import Popup from './template/popup'
 import Avatar from '@material-ui/core/Avatar';
 import avatarImage from './image/avatar.png'
+import CreateProject from './loginTemplate'
+import {Helmet} from "react-helmet";
 
 const drawerWidth = 320;
 
@@ -109,7 +112,7 @@ const styles = theme => ({
   grow: {
     flexGrow: 1,
     fontSize:'1vw',
-    color:"#000000"
+    color:"#000000",
   },
   rightIcon: {
     marginLeft: theme.spacing.unit,
@@ -135,28 +138,31 @@ class CMS extends React.Component {
     carouselContent:[],
     menubarItem:[],
     galleryContent:[],
+    font:[],
     openHeader:false,
-    undefinedOneTab:false
+    undefinedOneTab:false,
+    createProject:false
   };
-}
+  }
 
 componentDidMount(){
   this.firstTabs();
 }
 
 firstTabs=()=>{
+  
   let searchData = config.database().ref('project/'+this.props.email);
   searchData.on('value', async (snapshot) => { 
     const snapshotValue2 = snapshot.val(); 
     const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev;}, []); 
   
     if(snapshotArr[0] !== undefined){
-       this.setState({undefinedOneTab:false})
-      this.props.tabs===false?this.props.dispatch(checkTab(snapshotArr[0]._key)):this.props.dispatch(checkTab(this.props.tabs));
-    }else{
-      this.setState({undefinedOneTab:true})
-    }
-    });
+      this.setState({undefinedOneTab:false})
+     this.props.tabs===false?this.props.dispatch(checkTab(snapshotArr[0]._key)):this.props.dispatch(checkTab(this.props.tabs));
+   }else{
+     this.setState({undefinedOneTab:true})
+   }
+   });
   
   }
 
@@ -167,7 +173,7 @@ componentWillReceiveProps(nextProps){
   let data = _(snapshotValue).value();
   if(data !== null){
         this.setState({
-          path:data.path,
+          pathName:data.pathName,
           hero:data.hero,
           carousel:data.carousel,
           gallery:data.gallery,
@@ -307,12 +313,19 @@ componentWillReceiveProps(nextProps){
     const snapshotValue2 = snapshot.val(); 
     const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev; }, []); 
     this.setState({ footerSocial:snapshotArr});});
+
+  let font = config.database().ref('global/'+this.props.email+'/font/');
+  font.on('value', async (snapshot) => { 
+    const snapshotValue2 = snapshot.val(); 
+    const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev; }, []); 
+    this.setState({ font:snapshotArr});});
+  
   
   let global = config.database().ref('global/'+this.props.email+'/');
   global.on('value', async (snapshot) => { 
     const snapshotValue = snapshot.val(); 
     let data = _(snapshotValue).value();
-    if(data !== null){this.setState({menubarLogo:data.menubarLogo.image ,menubarbackgroundColor:data.menubarSetting.menubarbackgroundColor,})}});
+    if(data !== null){this.setState({menubarLogo:data.menubarLogo.image ,menubarbackgroundColor:data.menubarSetting.menubarbackgroundColor})}});
   
     let footerContent = config.database().ref('global/'+this.props.email+'/footerContent');
     footerContent.on('value', async (snapshot) => { 
@@ -343,6 +356,28 @@ componentWillReceiveProps(nextProps){
     })}});
   
   }
+  createProject=()=>{
+    this.setState({createProject:true})
+  }
+  submitCreateProject=(e)=>{
+    e.preventDefault();        
+    this.setState({createProject:false});
+    if(this.props.project !== ""){
+      config.database().ref('production/'+this.props.project).remove();
+    }
+      let dbCon = config.database().ref('production/');
+      dbCon.child(this.state.project).set(this.props.email); 
+      let project = config.database().ref('project owner/');
+      project.child(this.props.email).set(this.state.project);   
+
+    this.createProjectName();
+  }
+
+  createProjectName=()=>{ 
+    this.props.dispatch(project(this.state.project));
+    this.props.dispatch(checkTab(false));
+
+  }
 
   popupLogout = () => {this.setState({ popupLogout: true });};
   popupLogoutClose = () => {this.setState({ popupLogout: false });};
@@ -352,7 +387,7 @@ componentWillReceiveProps(nextProps){
   onChangeColor = name=> (color) => {this.setState({  [name]: color.hex });};
   onChangeChecked = name=> (e) => {this.setState({  [name]: e.target.checked });};  
   onChangeValue = name=> (e) => {this.setState({ [name]: e.target.value });};
-
+  popupClose = name=> () => {this.setState({ [name]: false });};
   render() {
     const { classes, theme } = this.props;
     let heroInput;
@@ -513,7 +548,24 @@ componentWillReceiveProps(nextProps){
     // if (!this.state.isLoaded) return null;
     
     return (
-      <div>  
+      <div> 
+      <Helmet>
+      <title>{this.props.project}</title>
+      {this.state.font.map((font => (
+        font.font ==='none'?null:
+      <link rel="stylesheet" key={font._key} href={"https://fonts.googleapis.com/css?family="+font.font}/>
+      )))}
+      </Helmet>
+      <CreateProject
+            open={this.state.createProject}
+            onClose={this.popupClose('createProject')}
+            label={this.props.project!==""?'Edit Project Name':'Create Project Name'}
+            submit={this.submitCreateProject}
+            labelButton='SUBMIT'
+            textField=  {[
+                        {_key:1,label:'Project Name',type:'text',value:this.state.project,onChange:this.onChangeValue('project')}
+                        ]}
+      /> 
       <div className={classes.root} >
 
         <AppBar
@@ -527,9 +579,10 @@ componentWillReceiveProps(nextProps){
               className={classNames(classes.menuButton, this.state.open && classes.hide)}
             >
             <MenuIcon />
-            </IconButton>
+            </IconButton>   
             <Typography variant="title"  className={classes.grow} >
-              CMS PROJECT
+            <SettingProject style={{fontSize:'1vw',cursor: 'pointer',marginRight: '0.5vw'}} onClick={this.createProject}/>
+              Project : {this.props.project}
             </Typography>
             <Typography variant="title" style={{fontSize:'1vw',color:"#000000"}} >
               Welcome : {this.props.user}
@@ -585,8 +638,7 @@ componentWillReceiveProps(nextProps){
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} /> 
-            <TabWebsite   
-              path={this.state.path}
+            <TabWebsite    
               undefinedOneTab={this.state.undefinedOneTab}
               {...this.state}
             />       
@@ -607,7 +659,8 @@ const mapStateToProps = state => ({
   url: state.urlImage ,
   user:state.user,
   email:state.email,
-  photoURL:state.photoURL
+  photoURL:state.photoURL,
+  project:state.project
 })
 
 export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(CMS));

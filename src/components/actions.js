@@ -27,3 +27,8 @@ export const photoURL = (photoURL) => ({
   photoURL
 })
 
+export const project = (project) => ({
+  type: 'project',
+  project
+})
+

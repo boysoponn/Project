@@ -196,6 +196,7 @@ class NestedList extends React.Component {
               <ListItem  className={classes.nested}>
               <InputText 
               Label="Title" 
+              font={this.props.font}
               value={this.props.carouselTitle}  
               animate={this.props.carouselTitleAnimate} 
               onChange={this.props.carouselOnChangeTitle} 
@@ -224,6 +225,7 @@ class NestedList extends React.Component {
               <InputTextarea 
               label="Description" 
               value={this.props.carouselDescription}  
+              font={this.props.font}
               animate={this.props.carouselDescriptionAnimate} 
               onChange={this.props.carouselOnChangeDescription} 
               duration={this.props.carouselDescriptionDuration}   
@@ -366,6 +368,7 @@ class NestedList extends React.Component {
               displayAnimate={true}
               Label="Title"
               value={this.state.carouselTitle}
+              font={this.props.font}
               FontFamily={this.state.carouselTitleFontFamily}
               FontSize={this.state.carouselTitleFontSize}
               FontWeight={this.state.carouselTitleFontWeight}
@@ -385,6 +388,7 @@ class NestedList extends React.Component {
             <InputTextarea
               displayAnimate={true}
               label="description"
+              font={this.props.font}
               value={this.state.carouselDescription}
               FontFamily={this.state.carouselDescriptionFontFamily}
               FontSize={this.state.carouselDescriptionFontSize}

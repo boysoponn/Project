@@ -13,8 +13,23 @@ import Input from '@material-ui/core/Input';
 import Popover from '@material-ui/core/Popover';
 import PickColor from './pickColor'
 import Dropdown from './dropdown'
+import Text from './Text'
 import Grid from '@material-ui/core/Grid';
+import config from '../../../config';
+import DeleteIcon from '@material-ui/icons/Delete';
+import SaveIcon from '@material-ui/icons/Save';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/AddCircle';
+import Slide from '@material-ui/core/Slide';
+import { connect } from 'react-redux'
 
+function Transition(props) {
+  return <Slide direction="right" {...props} />;
+}
 const styles = theme => ({
   label:{
     color:'#757575',
@@ -37,7 +52,24 @@ const styles = theme => ({
     '&:hover': {
       cursor: 'pointer',
     },
-  }
+  },
+   paper: {
+    width:200
+  },
+  popover:{
+    height:300
+  },
+  rightIcon: {
+    marginLeft:5,
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
+  save:{
+    width: 100,
+    marginRight: 5,
+    float:'right',
+  },
 });
 
 const MenuProps = {
@@ -55,50 +87,67 @@ class SettingAnimate extends React.Component {
             open2: false,
             anchorEl: null,
             anchorEl2: null,
+            anchorEl3: null,
+            openFont:false
         };
       }
 
 
-      handleClick = event => {
+      handleClick =name=> event => {
         this.setState({
-          anchorEl: event.currentTarget,
+          [name]: event.currentTarget,
         });
       };
     
-      handleClose = () => {
+      handleClose =name=> () => {
         this.setState({
-          anchorEl: null,
-        });
-      };
-      handleClick2 = event => {
-        this.setState({
-          anchorEl2: event.currentTarget,
-        });
-      };
-    
-      handleClose2 = () => {
-        this.setState({
-          anchorEl2: null,
+          [name]: null,
         });
       };
 
-
+      save =  () => {
+        let dbCon = config.database().ref('global/'+this.props.email+'/font/');
+        dbCon.child(this.state.key).update({
+          font:this.state.font,
+        });
+        alert("saved") 
+      };
+      delete = font => () =>{
+        let dbCon = config.database().ref('global/'+this.props.email+'/font');
+        dbCon.child(font._key).remove();
+      }
+      addItem=()=>{
+        let dbCon = config.database().ref('global/'+this.props.email+'/font');
+        dbCon.push({
+          font:'none',
+        })  
+      }
+      OpenItem  = font => () =>{
+        this.setState({ 
+        openFont: true ,
+        font:font.font,
+        key:font._key
+      });
+      };
+      CloseItem =name=> () => {this.setState({ [name]: false });};
+      onChangeValue = name=> (e) => {this.setState({ [name]: e.target.value });};
   render() {
     const { classes } = this.props;
-    const { anchorEl,anchorEl2 } = this.state;
+    const { anchorEl,anchorEl2,anchorEl3} = this.state;
     const open = Boolean(anchorEl);
     const open2 = Boolean(anchorEl2);
+    const open3 = Boolean(anchorEl3);
 
     return (
       
       <div className={classes.full}>
         {this.props.displayFont ? null:
         <div className={classes.left} >
-            <SettingsFonts className={classes.button} onClick={this.handleClick} />
+            <SettingsFonts className={classes.button} onClick={this.handleClick('anchorEl')} />
             <Popover
               open={open}
               anchorEl={anchorEl}
-              onClose={this.handleClose}
+              onClose={this.handleClose('anchorEl')}
               anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'center',
@@ -134,10 +183,12 @@ class SettingAnimate extends React.Component {
                         onChange={this.props.onChangeFontFamily}
                         MenuProps={MenuProps}
                     >   
-                        <MenuItem value={'Notable'}>Notable</MenuItem>
-                        <MenuItem value={'Roboto Mono'}>Roboto Mono</MenuItem>
-                        <MenuItem value={'Montserrat'}>Montserrat</MenuItem>
-                        <MenuItem value={'Unlock'}>Unlock</MenuItem>
+                    {this.props.font?
+                    this.props.font.map((font => (
+                    font.font==='none'?null:
+                        <MenuItem key={font._key} value={font.font}>{font.font}</MenuItem>
+                    )))
+                  :null}
                     </Select>
                     </FormControl>
                 </form>         
@@ -165,7 +216,7 @@ class SettingAnimate extends React.Component {
                       />
                     </FormControl>
                     </form>
-                    {this.props.displayPosition ? null:
+                    {!this.props.position ? null:
                     <Dropdown
                       label='position'
                       value={this.props.position}
@@ -234,6 +285,68 @@ class SettingAnimate extends React.Component {
                     />
                     </div>
                     }
+                      {this.props.font?
+                      <ListItem style={{padding: '24 24 0 0'}}>
+                      <Button  variant="contained" onClick={this.handleClick('anchorEl3')} component="span" color="secondary" className={classes.button}>
+                      Add Fontfamily
+                      </Button>
+                      <Popover
+                        className={classes.popover}
+                        open={open3}
+                        anchorEl={anchorEl3}
+                        onClose={this.handleClose('anchorEl3')}
+                        anchorOrigin={{
+                          vertical: 'top',
+                          horizontal: 'right',
+                        }}
+                        transformOrigin={{
+                          vertical: 'bottom',
+                          horizontal: 'left',
+                        }}
+                      >
+                      
+                      {this.props.font.map((font => (
+                      <ListItem key={font._key}>
+                      <Button  variant="contained" onClick={this.OpenItem(font)} component="span" color="secondary" className={classes.button}>{font.font}</Button>
+                      <DeleteIcon  onClick={this.delete(font)} className={classes.rightIcon}/>
+                      </ListItem>
+                      )))}  
+
+                      <ListItem>
+                      <Button variant="contained"  onClick={this.addItem} component="span" color="secondary" className={classes.paper}>
+                        ADD
+                        <AddIcon className={classes.rightIcon} />
+                      </Button>
+                      </ListItem>           
+                      <Dialog
+                        maxWidth="lg"
+                        open={this.state.openFont}
+                        TransitionComponent={Transition}
+                        onClose={this.CloseItem('openFont')}
+                      >
+                      <DialogTitle>
+                      Item         
+                      <Button variant="contained" color="secondary" onClick={this.save} className={classes.save} >
+                        SAVE
+                      <SaveIcon className={classes.rightIcon} />
+                      </Button>
+                      </DialogTitle> 
+                        <List>
+                        <ListItem>
+                        <Text 
+                        label="font" 
+                        value={this.state.font}  
+                        onChange={this.onChangeValue('font')}
+                        />
+                        <div className={classes.left} >
+                          <a style={{color: 'rgba(0, 0, 0, 0.65)'}} href="https://fonts.google.com/" target="_blank" ><LinkTo className={classes.button} root='outline' /></a>
+                        </div>
+                        </ListItem>
+                        </List>
+                        </Dialog>
+                      </Popover>
+                    </ListItem>   
+                    :null}        
                   </Grid>
                 </Grid>
               </Popover>   
@@ -241,11 +354,11 @@ class SettingAnimate extends React.Component {
       }
       {this.props.displayAnimate ? null:
       <div className={classes.right} >
-            <Settings className={classes.button} root='outline' onClick={this.handleClick2} />
+            <Settings className={classes.button} root='outline' onClick={this.handleClick('anchorEl2')} />
             <Popover
               open={open2}
               anchorEl={anchorEl2}
-              onClose={this.handleClose2}
+              onClose={this.handleClose('anchorEl2')}
               anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'center',
@@ -388,6 +501,7 @@ class SettingAnimate extends React.Component {
                 <a style={{color: 'rgba(0, 0, 0, 0.65)'}} href={this.props.linkTo} target="_blank" ><LinkTo className={classes.button} root='outline' /></a>
             </div>
             }
+
       </div>
     );
   }
@@ -396,5 +510,7 @@ class SettingAnimate extends React.Component {
 SettingAnimate.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-
-export default withStyles(styles)(SettingAnimate);
+const mapStateToProps = state => ({
+  email: state.email ,
+})
+export default  connect(mapStateToProps)(withStyles(styles)(SettingAnimate));

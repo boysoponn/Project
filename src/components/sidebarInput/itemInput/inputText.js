@@ -30,13 +30,13 @@ class InputText extends React.Component {
         onChangeColor={this.props.onChangeColor}
         displayAnimate={this.props.displayAnimate}
         displayFontFamily={this.props.displayFontFamily}
-        displayPosition={this.props.displayPosition}
         displayFontWeight={this.props.displayFontWeight}
         hoverColor={this.props.hoverColor}
         onChangeHoverColor={this.props.onChangeHoverColor}
         showHoverColor={this.props.showHoverColor}
         linkTo={this.props.linkTo}
         showLinkTo={this.props.showLinkTo}
+        font={this.props.font}
         />
         <Text
         type="text"

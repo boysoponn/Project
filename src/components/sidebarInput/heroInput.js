@@ -77,6 +77,7 @@ class NestedList extends React.Component {
               <ListItem  className={classes.nested}>
               <InputText 
               Label="Title" 
+              font={this.props.font}
               value={this.props.heroTitle}  
               animate={this.props.heroTitleAnimate} 
               onChange={this.props.heroTitleOnChange} 
@@ -105,6 +106,7 @@ class NestedList extends React.Component {
               <ListItem  className={classes.nested}>
               <InputTextarea 
               label="Description" 
+              font={this.props.font}
               value={this.props.heroDescription}  
               animate={this.props.heroDescriptionAnimate} 
               onChange={this.props.heroDescriptionOnChange} 
@@ -133,6 +135,7 @@ class NestedList extends React.Component {
               <ListItem className={classes.nested}>
               <InputButton
               label="Label Button"
+              font={this.props.font}
               button={this.props.heroButton}
               buttonColor={this.props.heroButtonColor}
               buttonSwapColor={this.props.heroButtonSwapColor}

@@ -197,9 +197,9 @@ render() {
                     <Content>
                         <A onClick={this.onChangeTrue('register')}>Register</A>
                     </Content> 
-                    <Content>
+                    {/* <Content>
                         <A>Tutorial</A>
-                    </Content>
+                    </Content> */}
                     <Content>
                         { !this.props.user ? <A onClick={this.onChangeTrue('login')}>Getting Started</A>
                         :

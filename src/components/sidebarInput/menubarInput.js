@@ -327,6 +327,7 @@ onChangeTypeGroup=menubar=>(e)=>{
               <ListItem>
               <InputText 
               Label="Label" 
+              font={this.props.font}
               value={this.state.label}  
               color={this.state.Color}
               animate={this.state.Animate} 

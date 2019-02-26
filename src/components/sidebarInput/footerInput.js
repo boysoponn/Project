@@ -218,6 +218,7 @@ class CarouselInput extends React.Component {
               <ListItem  className={classes.nested}>
               <InputText 
               Label="Title" 
+              font={this.props.font}
               value={this.props.footerTitle}  
               animate={this.props.footerTitleAnimate} 
               onChange={this.props.footerTitleOnChange} 
@@ -236,7 +237,6 @@ class CarouselInput extends React.Component {
               onChangeStatus={this.props.footerTitleOnChangeStatus}
               color={this.props.footerTitleColor}
               onChangeColor={this.props.footerTitleOnChangeColor}
-              displayPosition={true}
               />
               </ListItem>
             </List>
@@ -245,6 +245,7 @@ class CarouselInput extends React.Component {
               <ListItem  className={classes.nested}>
               <InputTextarea 
               label="Description" 
+              font={this.props.font}
               value={this.props.footerDescription}  
               animate={this.props.footerDescriptionAnimate} 
               onChange={this.props.footerDescriptionOnChange} 
@@ -263,7 +264,6 @@ class CarouselInput extends React.Component {
               onChangeStatus={this.props.footerDescriptionOnChangeStatus}
               color={this.props.footerDescriptionColor}
               onChangeColor={this.props.footerDescriptionOnChangeColor}
-              displayPosition={true}
               />
               </ListItem>
             </List>
@@ -362,6 +362,7 @@ class CarouselInput extends React.Component {
               <ListItem>
               <InputText 
               Label="Label" 
+              font={this.props.font}
               value={this.state.label}  
               color={this.state.Color}
               animate={this.state.Animate} 
@@ -456,7 +457,6 @@ class CarouselInput extends React.Component {
               hoverColor={this.state.hover}
               displayAnimate ={true}
               displayFontFamily={true}
-              displayPosition={true}
               displayFontWeight={true}
               showHoverColor={true}
               linkTo={'https://fontawesome.com/icons?d=gallery'}

@@ -14,9 +14,10 @@ import Tab from '@material-ui/core/Tab';
 import IN from './IN'
 import ButtonForNewTab from './buttonForNew'
 import { connect } from 'react-redux'
-import { checkTab} from '../actions'
+import { checkTab,project} from '../actions'
 import SaveIcon from '@material-ui/icons/Save';
 import Popup from './popup';
+import CreateProject from '../loginTemplate'
 
 const styles = theme => ({
   button:{
@@ -61,13 +62,15 @@ class TabWebsite extends React.Component {
         selectedGallery:'none',
         selectedWelcome:'none',
         selectedContact:'none',
+        createProject:false
       };   
     }
 
   componentDidMount=()=> {
     this.getData();
   }
-    getData=()=>{
+
+  getData=()=>{
       let new1=[];
       let new2=[];
       const app = config.database().ref('project/'+this.props.email+'/');
@@ -99,7 +102,7 @@ class TabWebsite extends React.Component {
       news:newConcat
     })
   });
-};
+  };
 
   setNullValue=()=>{
     this.setState({
@@ -152,12 +155,11 @@ class TabWebsite extends React.Component {
   saveEdit=()=>{
     if(this.state.namePage){
       let pathUpper =this.state.namePage;
-      let pathLower =pathUpper.toLowerCase();
+      let pathLower =pathUpper.toLowerCase().replace(/ /g,'-');
       let dbCon = config.database().ref('project/'+this.props.email+'/'+this.props.tabs);
       dbCon.update({
       pageName: this.state.namePage,
       pathName: pathLower,
-      path: "/"+this.props.email+"/"+pathLower,
       hero: this.state.selectedHero,
       carousel: this.state.selectedCarousel,
       welcome: this.state.selectedWelcome,
@@ -187,7 +189,6 @@ class TabWebsite extends React.Component {
         },
         menubarSetting:{
           menubarbackgroundColor:'#ffffff',
-          
          },
         footerContent:{
           title:'Title',
@@ -211,6 +212,17 @@ class TabWebsite extends React.Component {
           descriptionFontStyle:'normal',
           descriptionStatus:'block',
           descriptionColor:'#ffffff',
+        },
+        font:{
+          font1:{
+            font:'Notable'
+          },
+          font2:{
+            font:'Roboto Mono'
+          },
+          font3:{
+            font:'Montserrat'
+          },
         },
         menubarItem:{
           Link1:{
@@ -262,13 +274,12 @@ class TabWebsite extends React.Component {
   addNewTab=()=>{
     if(this.state.namePage){
       let pathUpper =this.state.namePage;
-      let pathLower =pathUpper.toLowerCase();
+      let pathLower =pathUpper.toLowerCase().replace(/ /g,'-');
       let dbCon = config.database().ref('project/'+this.props.email+'/');
       dbCon.push({
       key:this.state.num,
       pageName: this.state.namePage,
       pathName:pathLower,
-      path: "/"+this.props.email+"/"+pathLower,
       menubar:this.state.selectedMenubar,
       footer:this.state.selectedFooter,
       hero: this.state.selectedHero,
@@ -518,6 +529,22 @@ class TabWebsite extends React.Component {
     this.setState({popupDelete:false,messageDeleteOpen:true});
   };
 
+  createProject=()=>{
+    this.setState({createProject:true})
+  }
+  submitCreateProject=(e)=>{
+    e.preventDefault();     
+    this.props.dispatch(project(this.state.project));
+    this.setState({createProject:false});
+    this.createProjectName();
+  }
+
+  createProjectName=()=>{ 
+  let dbCon = config.database().ref('production/');
+  dbCon.child(this.state.project).set(this.props.email); 
+  let project = config.database().ref('project owner/');
+  project.child(this.props.email).set(this.state.project);     
+  }
   save=()=>{
     let dbCon = config.database().ref('project/'+this.props.email+'/'+this.props.tabs);
     dbCon.update({
@@ -684,8 +711,25 @@ class TabWebsite extends React.Component {
       messageOpen={this.state.messageDeleteOpen}
       messageClose={this.popupClose('messageDeleteOpen')}
       />
+      <CreateProject
+            open={this.state.createProject}
+            onClose={this.popupClose('createProject')}
+            label='Create Project Name'
+            submit={this.submitCreateProject}
+            labelButton='SUBMIT'
+            textField=  {[
+                        {_key:1,label:'Project Name',type:'text',value:this.state.project,onChange:this.onChangeValue('project')}
+                        ]}
+      />
+
       {this.props.undefinedOneTab === true?
+      <div>
+      {this.props.project === ''?
+      <Button variant="contained" color="secondary" className={classes.buttoncenter} onClick={this.createProject}>Create Project Name</Button>
+      :
       <Button variant="contained" color="secondary" className={classes.buttoncenter} onClick={this.addGlobal}>Start Project</Button>
+      }
+      </div>
       :
       <Button variant="contained" color="secondary" onClick={this.popup('popupSave')} className={classes.button}>
         SAVE
@@ -788,7 +832,7 @@ class TabWebsite extends React.Component {
       <Button variant="contained" color="secondary" className={classes.button} onClick={this.popup('popupDelete')}>Delete
       <DeleteIcon className={classes.rightIcon}/>
       </Button>
-      <a href={'https://webshow-efb30.firebaseapp.com'+this.props.path} style={{color:'#ffffff'}} target="_blank"><Button variant="contained" color="secondary" style={{float:'right'}} className={classes.button} >
+      <a href={'https://webshow-efb30.firebaseapp.com'+'/'+this.props.project+'/'+this.props.pathName} style={{color:'#ffffff'}} target="_blank"><Button variant="contained" color="secondary" style={{float:'right'}} className={classes.button} >
       Preview<PreviewIcon className={classes.rightIcon}/>
       </Button></a>
       </div>
@@ -848,7 +892,8 @@ TabWebsite.propTypes = {
 const mapStateToPropsTabs = state => ({
   tabs: state.tabs ,
   user:state.user,
-  email:state.email
+  email:state.email,
+  project:state.project
 })
 
 export default connect(mapStateToPropsTabs)(withStyles(styles, { withTheme: true })(TabWebsite));

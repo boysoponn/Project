@@ -168,6 +168,7 @@ class InputButton extends React.Component {
     return (
       <div>
       <SettingAnimate 
+        font={this.props.font}
         animate={this.props.animate} 
         duration={this.props.duration} 
         FontFamily={this.props.FontFamily}
@@ -176,6 +177,7 @@ class InputButton extends React.Component {
         FontStyle={this.props.FontStyle}
         Status={this.props.Status}
         position={this.props.position}
+        onChangeColor={this.props.buttonOnChangeColor}
         onChangeFontFamily={this.props.buttonOnChangeFontFamily}
         onChangeFontSize={this.props.buttonOnChangeFontSize}
         onChangeDuration={this.props.buttonOnChangeDuration} 

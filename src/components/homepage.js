@@ -12,8 +12,22 @@ class AppWithConnect extends React.Component {
         this.state={
           user:false,
           login:false,
+          recaptcha:false,
+          password:"developers",
+          email:"developers@mail.com",
+          valueRecaptcha:''
         }
+    }    
+    onChangeRecaptcha=(value)=> {
+      this.setState({valueRecaptcha:value})
+      if(this.state.valueRecaptcha !==''){
+          this.signin();
+      }
     }
+    clickSubmit=(e)=>{
+    e.preventDefault(); 
+    this.setState({recaptcha:true});
+    } 
     onChangeTrue=name=>()=>{
       this.setState({
           [name]:true
@@ -33,14 +47,15 @@ class AppWithConnect extends React.Component {
       if(this.props.user!==''){this.setState({login:false})}
     }   
     signin=(e)=> { 
-      e.preventDefault(); 
-      config.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((user) => {
-        this.setState({login:false})
-      })
-      .catch(function(error) {
+      config.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
+        this.setState({
+            login:false,
+        })
+    })
+    .catch(function(error) {
         var errorCode = error.code;
         var errorMessage = error.message;
-
+    
         if (errorCode === 'auth/wrong-password') {
             alert('Wrong password.');
         } else {
@@ -48,6 +63,10 @@ class AppWithConnect extends React.Component {
         }
         console.log(error);
     });
+    this.setState({
+        recaptcha:false,
+        valueRecaptcha:'',
+    })
     }
     loginGmail = () => {
         var provider = new firebase.auth.GoogleAuthProvider();
@@ -93,11 +112,12 @@ class AppWithConnect extends React.Component {
     loginTwitter=()=>{
         alert("coming soon")
     }
+
 render() {
     return (
       <div>
             <Text>
-                <H1>Projectcms</H1>
+                <H1>ProjectCMS</H1>
                 <P>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</P>
                 {this.props.user===""?
                 <Button className='fillRight' onClick={this.onChangeTrue('login')}>Getting Started</Button>
@@ -106,9 +126,11 @@ render() {
             </Text>
             <LoginTemplate
             open={this.state.login}
+            recaptcha={this.state.recaptcha}
+            onChange={this.onChangeRecaptcha}
             onClose={this.onChangeFalse('login')}
             label='SIGN IN'
-            submit={this.signin}
+            submit={this.clickSubmit}
             social={true}
             facebook={this.loginFacebook}
             google={this.loginGmail}

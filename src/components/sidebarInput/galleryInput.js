@@ -218,7 +218,8 @@ class NestedList extends React.Component {
             <List component="div" disablePadding={false}>
               <ListItem  className={classes.nested}>
               <InputText 
-              Label="Title" 
+              Label="Title"
+              font={this.props.font} 
               value={this.props.galleryTitle}  
               animate={this.props.galleryTitleAnimate} 
               onChange={this.props.galleryTitleOnChange} 
@@ -246,6 +247,7 @@ class NestedList extends React.Component {
               <ListItem  className={classes.nested}>
               <InputTextarea 
               label="Description" 
+              font={this.props.font}
               value={this.props.galleryDescription}  
               animate={this.props.galleryDescriptionAnimate} 
               onChange={this.props.galleryDescriptionOnChange} 
@@ -396,6 +398,7 @@ class NestedList extends React.Component {
                   <ListItem>
                     <InputText 
                     Label="Title" 
+                    font={this.props.font}
                     value={this.state.galleryTitle}  
                     animate={this.state.galleryTitleAnimate} 
                     duration={this.state.galleryTitleDuration}   
@@ -420,6 +423,7 @@ class NestedList extends React.Component {
                   <ListItem>
                     <InputTextarea
                     label="Description" 
+                    font={this.props.font}
                     value={this.state.galleryDescription}  
                     animate={this.state.galleryDescriptionAnimate} 
                     duration={this.state.galleryDescriptionDuration}   

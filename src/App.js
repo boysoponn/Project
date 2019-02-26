@@ -7,14 +7,15 @@ import ggg from './components/ggg';
 import Homepage from './components/homepage';
 import config from './config'
 import { connect } from 'react-redux'
-import {login,loginEmail,photoURL} from './components/actions'
-
+import {login,loginEmail,photoURL,project} from './components/actions'
+import {Helmet} from "react-helmet";
 class App extends Component {
   state = {
     authenticated: false,
     username:"",
     email:"",
-    photoURL:''
+    photoURL:'',
+    project:''
   };
 
 
@@ -40,11 +41,22 @@ class App extends Component {
       }));      
     }); 
   }
-
+  componentDidUpdate(){
+    if(this.state.email !== "" && this.props.project == ""){
+    let dbCon = config.database().ref('project owner/'+this.state.email);
+    dbCon.on('value', async (snapshot) => { 
+    const snapshotValue = snapshot.val(); 
+    this.props.dispatch(project(snapshotValue))
+  }) 
+}
+  }
   render() {
+    if(this.state.authenticated){
+    
     this.props.dispatch(loginEmail(this.state.email));
     this.props.dispatch(login(this.state.username));
     this.props.dispatch(photoURL(this.state.photoURL));
+    }
     const user = this.state.username;
 
     function withRestriction(WrappedComponent) {
@@ -72,7 +84,6 @@ class App extends Component {
       }
     }
     const Navbar = showNav(Header);
-
     return (
       <div>
       <Body>
@@ -84,7 +95,6 @@ class App extends Component {
           <Route path="/ggg"     component={ggg} />               
         </div>
       </Router>
-
       </Body>
       </div>
     );
@@ -92,6 +102,7 @@ class App extends Component {
   }
   const mapStateToProps = state => ({
     user: state.user ,
+    project:state.project
   })
   export default connect(mapStateToProps)(App);
 

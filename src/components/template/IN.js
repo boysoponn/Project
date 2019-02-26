@@ -8,6 +8,7 @@ import MenubarNo2 from './Menubar/menubarNo2';
 import MenubarNo3 from './Menubar/menubarNo3';
 import CarouselNo1 from './Carousel/CarouselNo1';
 import CarouselNo2 from './Carousel/CarouselNo2';
+import CarouselNo3 from './Carousel/CarouselNo3';
 import GalleryNo1 from './Gallery/GalleryNo1';
 import GalleryNo2 from './Gallery/GalleryNo2';
 import GalleryNo3 from './Gallery/GalleryNo3';
@@ -68,6 +69,12 @@ class IN extends React.Component {
   }
   if( this.props.Carousel === "CarouselNo2"){
     Carousel = <CarouselNo2
+    {...this.props}
+    />
+  }
+
+  if( this.props.Carousel === "CarouselNo3"){
+    Carousel = <CarouselNo3
     {...this.props}
     />
   }
