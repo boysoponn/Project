@@ -39,12 +39,7 @@ class UploadPicture extends React.Component {
         id="contained-button-file"
         multiple
       />   
-      <label htmlFor="contained-button-file">
-      <Button variant="contained" component="span" className={classes.button}>
-          Upload
-        </Button>
-      </label>
-      <Button variant="contained" component="span" className={classes.button} onClick={this.props.onClick}>
+      <Button variant="contained" color="secondary" component="span" className={classes.button} onClick={this.props.onClick}>
           OK
       </Button>
     </div>

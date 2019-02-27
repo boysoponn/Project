@@ -248,7 +248,6 @@ onChangeTypeGroup=menubar=>(e)=>{
           <List component="div" disablePadding={false}>
               <ListItem className={classes.nested}>
               <ModalPictureGlobal
-              label='Should use Image height 80px'
               imagePick={this.props.menubarLogo}
               path="/menubarLogo"
               />

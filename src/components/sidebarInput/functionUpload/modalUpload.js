@@ -24,6 +24,10 @@ const styles = theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,  
   },
+  input: {
+    marginTop:10,
+    display:'none',
+  },
   rightIcon: {
     marginLeft: theme.spacing.unit,
   },
@@ -39,6 +43,7 @@ class ModalUpload extends React.Component {
     Howmany:0,
     };  
   }
+
   handleOpen = () => {
     this.setState({ 
       open: true,
@@ -74,13 +79,17 @@ class ModalUpload extends React.Component {
     });
     }
   }
-
   handleUploadPicture=(e)=>{
     if(this.state.image !== [] ){ 
       let row=0; 
+      let Howmany=this.state.Howmany;
       while(row<this.state.Howmany){  
         const image = this.state.image[row] ; 
-        config.storage().ref(`${this.props.email}/${this.state.imageName[row]}`).put(image);
+        config.storage().ref(`${this.props.email}/${this.state.imageName[row]}`).put(image).then(function() {
+        if(row=Howmany){
+          alert("suscess")
+        }
+        });
       let dbCon = config.database().ref('image/'+this.props.email);
       dbCon.push({
         imageName:this.state.imageName[row],
@@ -89,7 +98,6 @@ class ModalUpload extends React.Component {
       }
       }
       this.handleClose();
-      alert("Uploading close and open again");  
   }
   
 
@@ -97,10 +105,20 @@ class ModalUpload extends React.Component {
     const { classes } = this.props;
     return (
       <div className={this.props.className}>
-        <Button variant="contained" onClick={this.handleOpen} component="span" color="secondary" className={classes.button}>
-        Upload
-        <CloudUploadIcon className={classes.rightIcon} />
-        </Button>
+      <input
+        type="file" 
+        onChange={this.handleChangeUploadPicture}
+        accept="image/*"
+        className={classes.input}
+        id="contained-button-file"
+        multiple
+      /> 
+        <label htmlFor="contained-button-file">
+          <Button variant="contained" onClick={this.handleOpen} component="span" color="secondary" className={classes.button}>
+          Upload
+          <CloudUploadIcon className={classes.rightIcon} />
+          </Button>
+        </label>
         <Modal
           className={classes.modal}
           open={this.state.open}
@@ -108,7 +126,6 @@ class ModalUpload extends React.Component {
         >
           <div className={classes.paper}>
           <UploadPicture 
-              onChange={this.handleChangeUploadPicture} 
               onClick={this.handleUploadPicture}
               label={this.state.imageName}
               url={this.state.url}

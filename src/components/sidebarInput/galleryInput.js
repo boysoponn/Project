@@ -453,9 +453,6 @@ class NestedList extends React.Component {
                       onChangeTarget={this.onChangeValue('galleryLinkTarget')}
                     />
                   </ListItem>
-                  <ListItem>
-                    <p>*Should use image 350x300px</p>
-                  </ListItem>
               </Grid>
             </Grid>
             </Dialog>

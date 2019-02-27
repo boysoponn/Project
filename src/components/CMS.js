@@ -582,7 +582,7 @@ componentWillReceiveProps(nextProps){
             </IconButton>   
             <Typography variant="title"  className={classes.grow} >
             <SettingProject style={{fontSize:'1vw',cursor: 'pointer',marginRight: '0.5vw'}} onClick={this.createProject}/>
-              Project : {this.props.project}
+              Project : {this.props.project.replace(/-/g,' ')}
             </Typography>
             <Typography variant="title" style={{fontSize:'1vw',color:"#000000"}} >
               Welcome : {this.props.user}
