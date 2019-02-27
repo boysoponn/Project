@@ -387,6 +387,7 @@ componentWillReceiveProps(nextProps){
   onChangeColor = name=> (color) => {this.setState({  [name]: color.hex });};
   onChangeChecked = name=> (e) => {this.setState({  [name]: e.target.checked });};  
   onChangeValue = name=> (e) => {this.setState({ [name]: e.target.value });};
+  onChangeProject = name=> (e) => {this.setState({ [name]: e.target.value.replace(/[`~!@#$%^&*()_|+\-=÷¿?;:'",.<>\{\}\[\]\\\/]/gi,'')})};
   popupClose = name=> () => {this.setState({ [name]: false });};
   render() {
     const { classes, theme } = this.props;
@@ -563,7 +564,7 @@ componentWillReceiveProps(nextProps){
             submit={this.submitCreateProject}
             labelButton='SUBMIT'
             textField=  {[
-                        {_key:1,label:'Project Name',type:'text',value:this.state.project,onChange:this.onChangeValue('project')}
+                        {_key:1,label:'Project Name',type:'text',value:this.state.project,onChange:this.onChangeProject('project')}
                         ]}
       /> 
       <div className={classes.root} >

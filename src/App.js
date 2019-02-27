@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { BrowserRouter as  Router, Route, Redirect} from 'react-router-dom';
 import CMS from './components/CMS';
 import Header from './components/header';
-import ggg from './components/ggg';
 import Homepage from './components/homepage';
 import config from './config'
 import { connect } from 'react-redux'
@@ -93,8 +92,7 @@ class App extends Component {
         <div>        
           <Route exact path="/"  component={Navbar} /> 
           <Route exact path="/"  component={Homepage} />  
-          <Route path="/cms"     component={CMSWithRestriction}/>
-          <Route path="/ggg"     component={ggg} />               
+          <Route path="/cms"     component={CMSWithRestriction}/>            
         </div>
       </Router>
       </Body>

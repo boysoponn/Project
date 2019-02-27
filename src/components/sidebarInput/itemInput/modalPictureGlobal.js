@@ -101,7 +101,6 @@ class ModalPictureGlobal extends React.Component {
     dbCon.update({
       image:image.imageName,
     }); 
-    console.log(image.imageName)
   };
 
   handleOpen () {

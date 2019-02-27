@@ -26,7 +26,6 @@ class MessageList extends Component {
     this.setState({
       messages: messages
     });
-    console.log(this.state.messages)
   }
   
   render() {

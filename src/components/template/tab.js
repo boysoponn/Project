@@ -685,6 +685,7 @@ class TabWebsite extends React.Component {
   inputPageName=()=>{
    alert("Please input page name")
   }
+  onChangeProject = name=> (e) => {this.setState({ [name]: e.target.value.replace(/[`~!@#$%^&*()_|+\-=÷¿?;:'",.<>\{\}\[\]\\\/]/gi,'')})};
   render() {
     const { classes, theme } = this.props;
     return (
@@ -718,7 +719,7 @@ class TabWebsite extends React.Component {
             submit={this.submitCreateProject}
             labelButton='SUBMIT'
             textField=  {[
-                        {_key:1,label:'Project Name',type:'text',value:this.state.project,onChange:this.onChangeValue('project')}
+                        {_key:1,label:'Project Name',type:'text',value:this.state.project,onChange:this.onChangeProject('project')}
                         ]}
       />
 

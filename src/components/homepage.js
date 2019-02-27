@@ -61,7 +61,6 @@ class AppWithConnect extends React.Component {
         } else {
             alert(errorMessage);         
         }
-        console.log(error);
     });
     this.setState({
         recaptcha:false,
