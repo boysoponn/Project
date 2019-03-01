@@ -23,9 +23,10 @@ class HeroNo1 extends React.Component {
         height:'100%',
         margin:0,
         position:'relative',
+        backgroundPosition: 'center center'
     };
     const content={
-        padding: '15% 10% 10%',
+        padding: '25vh 10% 10%',
     };
     const title ={
         color:this.props.heroTitleColor,

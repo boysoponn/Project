@@ -23,7 +23,7 @@ class HeroNo2 extends React.Component {
         position:'relative',
     };
     const content={
-      padding: '15% 10% 10%',
+      padding: '25vh 10% 10%',
     };
     const title ={
       color:this.props.heroTitleColor,

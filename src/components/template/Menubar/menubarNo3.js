@@ -28,7 +28,7 @@ constructor(props){
                 <ul className="nav__list">
                 {this.props.menubarItem.map((menubar) =>
                     menubar.link.search("http") === -1?
-                    <li key={menubar._key} style={{fontSize:'calc(2vw + '+ menubar.FontSize+'px)',}} className={"nav__list-item"+active}><Link to={menubar.link} target={menubar.linkTarget}
+                    <li key={menubar._key} style={{fontSize:'calc('+menubar.FontSize+ 'vw / 10 )',}} className={"nav__list-item"+active}><Link to={menubar.link} target={menubar.linkTarget}
                     style={{
                         color:menubar.Color,
                         fontFamily:menubar.FontFamily,
@@ -37,7 +37,7 @@ constructor(props){
                      }}>
                     {menubar.label}</Link></li>
                     : 
-                    <li key={menubar._key} style={{fontSize:'calc(2vw + '+ menubar.FontSize+'px)'}} className={"nav__list-item"+active}><a href={menubar.link} target={menubar.linkTarget}
+                    <li key={menubar._key} style={{fontSize:'calc('+menubar.FontSize+ 'vw / 10 )'}} className={"nav__list-item"+active}><a href={menubar.link} target={menubar.linkTarget}
                     style={{
                         color:menubar.Color,
                         fontFamily:menubar.FontFamily,

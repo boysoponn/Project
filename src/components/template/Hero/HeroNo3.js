@@ -123,7 +123,7 @@ height:100%;
 width:100%;
 position:absolute;
 z-index:5;
-padding: 15% 10% 10%;
+padding: 25vh 10% 10%;
 `;
 
 const BG = styled.div`
