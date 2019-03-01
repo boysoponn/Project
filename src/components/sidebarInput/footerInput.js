@@ -25,6 +25,7 @@ import PickColor from './itemInput/pickColor'
 import Dropdown from './itemInput/dropdown'
 // import Selection from './itemInput/selection';
 import InputText from './itemInput/inputText';
+import Message from './itemInput/messageWarning';
 
 function Transition(props) {
   return <Slide direction="right" {...props} />;
@@ -102,11 +103,17 @@ class CarouselInput extends React.Component {
       Status:this.state.Status,
       Color:this.state.Color,
     });
-    alert("saved") 
+    this.setState({
+      openItem1:null,
+      messageSave:true
+    })
   };
   delete = menubar => () =>{
     let dbCon = config.database().ref('global/'+this.props.email+'/footerItem/');
     dbCon.child(menubar._key).remove();
+    this.setState({
+      messageDelete:true
+    }) 
   }
   addItem=()=>{
     let dbCon = config.database().ref('global/'+this.props.email+'/footerItem/');
@@ -123,6 +130,9 @@ class CarouselInput extends React.Component {
       Status:'block',
       Color:'#000000',
     })  
+    this.setState({
+      messageAdd:true
+    })
   }
   OpenItem  = menubar => () =>{
     this.setState({ 
@@ -154,11 +164,17 @@ class CarouselInput extends React.Component {
       Color:this.state.Color,
       hover:this.state.hover
     });
-    alert("saved") 
+    this.setState({
+      openItemSocial:null,
+      messageSave:true
+    }) 
   };
   deleteItemSocial = menubar => () =>{
     let dbCon = config.database().ref('global/'+this.props.email+'/footerSocial/');
     dbCon.child(menubar._key).remove();
+    this.setState({
+      messageDelete:true
+    })
   }
   addItemSocial=()=>{
     let dbCon = config.database().ref('global/'+this.props.email+'/footerSocial/');
@@ -172,6 +188,9 @@ class CarouselInput extends React.Component {
       Color:'#000000',
       hover:'#ffffff'
     })  
+    this.setState({
+      messageAdd:true
+    })
   }
   OpenItemSocial  = menubar => () =>{
     this.setState({ 
@@ -192,7 +211,7 @@ class CarouselInput extends React.Component {
   handleClick = () => {this.setState(state => ({ open: !state.open }));};
   handleClickOpen =name=> (event) => {this.setState({ [name]: event.currentTarget, });};
   handleClose =name=> () => {this.setState({ [name]: null, });};
-
+  onChangeFalse= name=>()=>{this.setState({[name]:false})};
   onChangeColor = name=> (color) => {this.setState({  [name]: color.hex });};
   onChangeValue = name=> (e) => {this.setState({ [name]: e.target.value });};
 
@@ -205,6 +224,12 @@ class CarouselInput extends React.Component {
     const open3 = Boolean(anchorEl3);
     return (
       <div className={classes.root} >
+        <Message
+        {...this.state}
+        messageSaveClose={this.onChangeFalse('messageSave')}
+        messageAddClose={this.onChangeFalse('messageAdd')}
+        messageDeleteClose={this.onChangeFalse('messageDelete')}
+        />
         <List disablePadding={true}>
           <ListItem button onClick={this.handleClick}>
             <ListItemIcon>
@@ -332,19 +357,18 @@ class CarouselInput extends React.Component {
                 horizontal: 'left',
               }}
             >
+            <ListItem>
+            <Button variant="contained"  onClick={this.addItem} component="span" color="secondary" className={classes.paper}>
+              ADD
+              <AddIcon className={classes.rightIcon} />
+            </Button>
+            </ListItem>  
             {this.props.footerItem.map((menubar => (
             <ListItem key={menubar._key}>
              <Button  variant="contained" onClick={this.OpenItem(menubar)} component="span" color="secondary" className={classes.button}>{menubar.label}</Button>
             <DeleteIcon  onClick={this.delete(menubar)} className={classes.rightIcon}/>
             </ListItem>
-             )))}  
-
-             <ListItem>
-            <Button variant="contained"  onClick={this.addItem} component="span" color="secondary" className={classes.paper}>
-              ADD
-              <AddIcon className={classes.rightIcon} />
-            </Button>
-            </ListItem>           
+             )))}           
             <Dialog
               maxWidth="lg"
               open={this.state.openItem1}
@@ -417,20 +441,19 @@ class CarouselInput extends React.Component {
                 vertical: 'bottom',
                 horizontal: 'left',
               }}
-            >
+            >             
+            <ListItem>
+            <Button variant="contained"  onClick={this.addItemSocial} component="span" color="secondary" className={classes.paper}>
+              ADD
+              <AddIcon className={classes.rightIcon} />
+            </Button>
+            </ListItem> 
             {this.props.footerSocial.map((menubar => (
             <ListItem key={menubar._key}>
              <Button  variant="contained" onClick={this.OpenItemSocial(menubar)} component="span" color="secondary" className={classes.button}>{menubar.label}</Button>
             <DeleteIcon  onClick={this.deleteItemSocial(menubar)} className={classes.rightIcon}/>
             </ListItem>
              )))}  
-
-             <ListItem>
-            <Button variant="contained"  onClick={this.addItemSocial} component="span" color="secondary" className={classes.paper}>
-              ADD
-              <AddIcon className={classes.rightIcon} />
-            </Button>
-            </ListItem>           
             <Dialog
               maxWidth="lg"
               open={this.state.openItemSocial}

@@ -25,7 +25,8 @@ import AddIcon from '@material-ui/icons/AddCircle';
 import PickColor from './itemInput/pickColor'
 import InputText from './itemInput/inputText';
 import InputTextarea from './itemInput/inputTextarea';
-import Message from './../template/snackbar';
+import Message from './itemInput/messageWarning';
+
 
 function Transition(props) {
   return <Slide direction="right" {...props} />;
@@ -100,7 +101,7 @@ class NestedList extends React.Component {
       descriptionStatus:this.state.carouselDescriptionStatus,
       descriptionColor:this.state.carouselDescriptionColor,
     });
-    this.setState({messageSave:true})
+    this.setState({messageSave:true,anchorEl2:false})
   };
   delete = carousel => () =>{
     let dbCon = config.database().ref('project/'+this.props.email+'/'+this.props.tabs+"/carouselContent/");
@@ -167,21 +168,10 @@ class NestedList extends React.Component {
     return (
       <div className={classes.root} >
         <Message
-        message='Item Saved'
-        messageOpen={this.state.messageSave}
-        messageClose={this.onChangeFalse('messageSave')}
-        />
-        <Message
-        message='Item Deleted'
-        variant='error'
-        messageOpen={this.state.messageDelete}
-        messageClose={this.onChangeFalse('messageDelete')}
-        />
-        <Message
-        message='Item Added'
-        variant='warning'
-        messageOpen={this.state.messageAdd}
-        messageClose={this.onChangeFalse('messageAdd')}
+        {...this.state}
+        messageSaveClose={this.onChangeFalse('messageSave')}
+        messageAddClose={this.onChangeFalse('messageAdd')}
+        messageDeleteClose={this.onChangeFalse('messageDelete')}
         />
         <List disablePadding={true}>
           <ListItem button onClick={this.handleClick}>

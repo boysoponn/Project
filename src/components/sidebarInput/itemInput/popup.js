@@ -21,7 +21,7 @@ button:{
   width: 100,
 },
 GroupButton:{
-  width:500,
+  margin: '0 50 30',
   textAlign: 'center',
   display: 'block' 
 },

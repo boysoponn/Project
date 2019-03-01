@@ -22,7 +22,7 @@ constructor(props){
       <Navbar >
       <Moblie>
       <div className={"body"+active}>
-        <div className="menu-icon" style={{left:'unset',right:50}}onClick={this.handleClick}>
+        <div className="menu-icon" style={{left:'unset',right:50,top:'2vh'}}onClick={this.handleClick}>
             <span style={{backgroundColor:'#000'}} className={"menu-icon__line menu-icon__line-left"+active}></span>
             <span style={{backgroundColor:'#000'}} className={"menu-icon__line"+active}></span>
             <span style={{backgroundColor:'#000'}} className={"menu-icon__line menu-icon__line-right"+active}></span>

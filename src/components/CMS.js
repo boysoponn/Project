@@ -26,7 +26,7 @@ import GalleryInput from './sidebarInput/galleryInput';
 import FooterInput from './sidebarInput/footerInput';
 import { checkTab,project} from './actions';
 import BlockInput from './template/blockInput';
-import Popup from './template/popup'
+import Popup from './sidebarInput/itemInput/popup'
 import Avatar from '@material-ui/core/Avatar';
 import avatarImage from './image/avatar.png'
 import CreateProject from './loginTemplate'
@@ -127,7 +127,7 @@ class CMS extends React.Component {
   super(props);
   this.state = {
     // isLoaded: false,
-    open: true,
+    open: false,
     hero:'none',
     carousel:'none',
     gallery:'none',

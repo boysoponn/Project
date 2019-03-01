@@ -25,6 +25,7 @@ import PickColor from './itemInput/pickColor'
 // import Selection from './itemInput/selection';
 import _ from 'lodash';
 import InputText from './itemInput/inputText';
+import Message from './itemInput/messageWarning';
 
 function Transition(props) {
   return <Slide direction="right" {...props} />;
@@ -55,6 +56,9 @@ const styles = theme => ({
   },
   nested: {
     paddingLeft: theme.spacing.unit * 4,
+  },
+  popover:{
+    height:400
   },
   imgitem:{
     width:200,
@@ -99,34 +103,15 @@ class CarouselInput extends React.Component {
       Status:this.state.Status,
       Color:this.state.Color,
     });
-    alert("saved") 
+    this.setState({messageSave:true,openItem1:false})
   };
-  saveInGroup =  () => {
-    let dbCon = config.database().ref('global/'+this.props.email+'/menubarItem/'+this.state.keys+'/group');
-    dbCon.child(this.state.key).update({
-      link:this.state.link,
-      linkTarget:this.state.linkTarget,
-      label:this.state.label,
-    });
-    alert("saved") 
-  };
+
   delete = menubar => () =>{
     let dbCon = config.database().ref('global/'+this.props.email+'/menubarItem/');
     dbCon.child(menubar._key).remove();
+    this.setState({messageDelete:true})
   }
-  deleteInGroup = menubar => () =>{
-    let dbCon = config.database().ref('global/'+this.props.email+'/menubarItem/'+this.state.keys+'/group');
-    dbCon.child(menubar._key).remove();
-  }
-  addItemLittle= () => {
-    let dbCon = config.database().ref('global/'+this.props.email+'/menubarItem/'+this.state.keys+'/group');
-    dbCon.push({
-          label:'Link',
-          link:'',
-          linkTarget:'_blank',
-          typeGroup:true
-    }) 
-  }
+
   addItem=()=>{
     let dbCon = config.database().ref('global/'+this.props.email+'/menubarItem/');
     dbCon.push({
@@ -142,15 +127,8 @@ class CarouselInput extends React.Component {
       FontStyle:'normal',
       Status:'block',
       Color:'#000000',
-      // group:{
-      //   link1:{
-      //     label:'Link',
-      //     link:'',
-      //     linkTarget:'_blank',
-      //     typeGroup:false
-      //   },
-      // }
     })  
+    this.setState({messageAdd:true})
   }
   OpenItem  = menubar => () =>{
     this.setState({ 
@@ -182,16 +160,9 @@ onChangeTypeGroup=menubar=>(e)=>{
   handleClose = () => {this.setState({ anchorEl: null, });};
   handleClickOpen2 = (event) => {this.setState({ anchorEl2: event.currentTarget, });};
   handleClose2 = () => {this.setState({ anchorEl2: null, });};
-  handleClickOpen3 = menubar => (event) => {
-    let global = config.database().ref('global/'+this.props.email+'/menubarItem/'+menubar._key+'/group');
-    global.on('value', async (snapshot) => { 
-    const snapshotValue2 = snapshot.val(); 
-    const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => { prev.push({_key: cur,...snapshotValue2[cur]});return prev;}, []); 
-    this.setState({groupData:snapshotArr,});});
-    this.setState({anchorEl3: event.currentTarget,keys:menubar._key,typeGroup:menubar.typeGroup});};
   handleClose3 = () => {this.setState({ anchorEl3: null, });};
 
-
+  onChangeFalse= name=>()=>{this.setState({[name]:false})};
   onChangeColor = name=> (color) => {this.setState({  [name]: color.hex });};
   onChangeValue = name=> (e) => {this.setState({ [name]: e.target.value });};
 
@@ -204,6 +175,12 @@ onChangeTypeGroup=menubar=>(e)=>{
     const open3 = Boolean(anchorEl3);
     return (
       <div className={classes.root} >
+        <Message
+        {...this.state}
+        messageSaveClose={this.onChangeFalse('messageSave')}
+        messageAddClose={this.onChangeFalse('messageAdd')}
+        messageDeleteClose={this.onChangeFalse('messageDelete')}
+        /> 
         <List disablePadding={true}>
           <ListItem button onClick={this.handleClick}>
             <ListItemIcon>
@@ -269,38 +246,32 @@ onChangeTypeGroup=menubar=>(e)=>{
              Menubar Items
             </Button>
             <Popover
+              className={classes.popover}
               open={open2}
               anchorEl={anchorEl2}
               onClose={this.handleClose2}
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center',
+                vertical: 'top',
+                horizontal: 'right',
               }}
               transformOrigin={{
-                vertical: 'top',
+                vertical: 'bottom',
                 horizontal: 'left',
               }}
             >
+            <ListItem>
+            <Button variant="contained"  onClick={this.addItem} component="span" color="secondary" className={classes.paper}>
+              ADD
+              <AddIcon className={classes.rightIcon} />
+            </Button>
+            </ListItem> 
             {this.props.menubarItem.map((menubar => (
-              menubar.typeGroup === false ? 
             <ListItem key={menubar._key}>
              <Button  variant="contained" onClick={this.OpenItem(menubar)} component="span" color="secondary" className={classes.button}>{menubar.label}</Button>
             <DeleteIcon  onClick={this.delete(menubar)} className={classes.rightIcon}/>
             {/* <Selection value={menubar.typeGroup}labelTrue='Group 'labelFalse='Not Group'onClick={this.onChangeTypeGroup(menubar)}/> */}
             </ListItem>
-            :
-            <ListItem key={menubar._key}>
-             <Button  variant="contained" onClick={this.handleClickOpen3(menubar)} component="span" color="secondary" className={classes.button}>{menubar.label}</Button>
-               <DeleteIcon  onClick={this.delete(menubar)} className={classes.rightIcon}/>
-               {/* <Selection value={menubar.typeGroup}labelTrue='Group 'labelFalse='Not Group'onClick={this.onChangeTypeGroup(menubar)}/> */}
-            </ListItem> 
-             )))}    
-             <ListItem>
-            <Button variant="contained"  onClick={this.addItem} component="span" color="secondary" className={classes.paper}>
-              ADD
-              <AddIcon className={classes.rightIcon} />
-            </Button>
-            </ListItem>        
+             )))}           
             
             <Dialog
               maxWidth="lg"
@@ -310,17 +281,11 @@ onChangeTypeGroup=menubar=>(e)=>{
             >
             <DialogTitle>
             Item
-            {this.state.typeGroup === false ?
+            
             <Button variant="contained" color="secondary" onClick={this.save} className={classes.save} >
               SAVE
             <SaveIcon className={classes.rightIcon} />
             </Button>
-            :
-            <Button variant="contained" color="secondary" onClick={this.saveInGroup} className={classes.save} >
-              SAVE
-            <SaveIcon className={classes.rightIcon} />
-            </Button>
-            }
             </DialogTitle> 
               <List>
               <ListItem>
@@ -360,32 +325,6 @@ onChangeTypeGroup=menubar=>(e)=>{
               </ListItem>
               </List>
               </Dialog>
-                 <Popover
-              open={open3}
-              anchorEl={anchorEl3}
-              onClose={this.handleClose3}
-              anchorOrigin={{
-                vertical: 'center',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'center',
-                horizontal: 'left',
-              }}
-            >
-              {this.state.groupData.map((menubar => (
-                <ListItem key={menubar._key}>
-                 <Button  variant="contained" onClick={this.OpenItem(menubar)} component="span" color="secondary" className={classes.button}>{menubar.label}</Button>
-                <DeleteIcon  onClick={this.deleteInGroup(menubar)} className={classes.rightIcon}/>
-                </ListItem>
-                 )))}
-            <ListItem>
-            <Button variant="contained"  onClick={this.addItemLittle} component="span" color="secondary" className={classes.paper}>
-              ADD
-              <AddIcon className={classes.rightIcon} />
-            </Button>
-            </ListItem>
-                 </Popover>
             </Popover>
             </ListItem>           
             </List>

@@ -26,7 +26,7 @@ import Grid from '@material-ui/core/Grid';
 import ChooseLink from './itemInput/chooseLink';
 import SaveIcon from '@material-ui/icons/Save';
 import Dropdown from './itemInput/dropdown';
-import Message from './../template/snackbar';
+import Message from './itemInput/messageWarning';
 
 function Transition(props) {
   return <Slide direction="right" {...props} />;
@@ -169,7 +169,7 @@ class NestedList extends React.Component {
     linkTarget:this.state.galleryLinkTarget,
     galleryHover:this.state.galleryHover
   });
-  this.setState({messageSave:true})
+  this.setState({messageSave:true,openItem1:false})
   };
   onChangeFalse= name=>()=>{this.setState({[name]:false})};
   handleClick = () => {this.setState(state => ({ open: !state.open }));};
@@ -189,21 +189,10 @@ class NestedList extends React.Component {
     return (
       <div className={classes.root} >
         <Message
-        message='Item Saved'
-        messageOpen={this.state.messageSave}
-        messageClose={this.onChangeFalse('messageSave')}
-        />
-        <Message
-        message='Item Deleted'
-        variant='error'
-        messageOpen={this.state.messageDelete}
-        messageClose={this.onChangeFalse('messageDelete')}
-        />
-        <Message
-        message='Item Added'
-        variant='warning'
-        messageOpen={this.state.messageAdd}
-        messageClose={this.onChangeFalse('messageAdd')}
+        {...this.state}
+        messageSaveClose={this.onChangeFalse('messageSave')}
+        messageAddClose={this.onChangeFalse('messageAdd')}
+        messageDeleteClose={this.onChangeFalse('messageDelete')}
         />
         <List disablePadding={true}>
           <ListItem button onClick={this.handleClick}>
@@ -322,19 +311,19 @@ class NestedList extends React.Component {
                 vertical: 'bottom',
                 horizontal: 'left',
               }}
-            >
+            >             
+            <ListItem>
+            <Button variant="contained"  onClick={this.addItem} component="span" color="secondary" className={classes.paper}>
+              ADD
+              <AddIcon className={classes.rightIcon} />
+            </Button>
+            </ListItem>
             {this.props.galleryContent.map((gallery => (
             <ListItem key={gallery._key}>
             <img src={gallery.image} alt="item"className={classes.imgitem} onClick={this.OpenItem(gallery)}/>
             <DeleteIcon  onClick={this.delete(gallery)} className={classes.rightIcon}/>
             </ListItem>
              )))} 
-             <ListItem>
-            <Button variant="contained"  onClick={this.addItem} component="span" color="secondary" className={classes.paper}>
-              ADD
-              <AddIcon className={classes.rightIcon} />
-            </Button>
-            </ListItem>
             <Dialog
               maxWidth="xl"
               open={this.state.openItem1}
