@@ -148,14 +148,13 @@ width: 177.77777778vh;
 
 const ChoiceButton = styled.button`
   position: relative;
-  height: 60px;
-  width: 200px;
+  width:  15vw;
   margin: 10px 7px;
-  padding: 5px 5px;
+  padding: 1.1vw;
   font-style:${props=> props.FontStyle}
   font-family:${props => props.FontFamily};
   font-weight: ${props => props.FontWeight};
-  font-size: ${props => props.FontSize};
+  font-size: calc(${props => props.FontSize}vw / 15 );
   letter-spacing: 2px;
   color: ${props => props.buttonColor};
   border: 2px ${props => props.buttonBDColor} solid;
