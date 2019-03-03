@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Settings from '@material-ui/icons/PlayCircleOutline';
 import SettingsFonts from '@material-ui/icons/SettingsOutlined';
+import Font from '@material-ui/icons/FontDownload';
 import LinkTo from '@material-ui/icons/LaunchOutlined';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -288,7 +289,8 @@ class SettingAnimate extends React.Component {
                       {this.props.font?
                       <ListItem style={{padding: '24 24 0 0'}}>
                       <Button  variant="contained" onClick={this.handleClick('anchorEl3')} component="span" color="secondary" className={classes.button}>
-                      Add Fontfamily
+                      Add Font
+                      <Font className={classes.rightIcon}/>
                       </Button>
                       <Popover
                         className={classes.popover}

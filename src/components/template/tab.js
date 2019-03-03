@@ -869,7 +869,7 @@ class TabWebsite extends React.Component {
             </ListItem>
 
             <ListItem>
-              <a href={'https://webshow-efb30.firebaseapp.com'+'/'+this.props.project+'/'+this.props.pathName} style={{color:'#ffffff'}} target="_blank"><Button variant="contained" color="secondary" style={{float:'right'}} className={classes.button} >
+              <a href={'https://yoursitecms.tk'+'/'+this.props.project+'/'+this.props.pathName} style={{color:'#ffffff'}} target="_blank"><Button variant="contained" color="secondary" style={{float:'right'}} className={classes.button} >
               Preview<PreviewIcon className={classes.rightIcon}/>
               </Button></a>
             </ListItem>
@@ -974,7 +974,7 @@ class TabWebsite extends React.Component {
             <Button variant="contained" color="secondary" className={classes.button} onClick={this.popup('popupDelete')}>Delete
             <DeleteIcon className={classes.rightIcon}/>
             </Button>
-            <a href={'https://webshow-efb30.firebaseapp.com'+'/'+this.props.project+'/'+this.props.pathName} style={{color:'#ffffff'}} target="_blank"><Button variant="contained" color="secondary" style={{float:'right'}} className={classes.button} >
+            <a href={'https://yoursitecms.tk'+'/'+this.props.project+'/'+this.props.pathName} style={{color:'#ffffff'}} target="_blank"><Button variant="contained" color="secondary" style={{float:'right'}} className={classes.button} >
             Preview<PreviewIcon className={classes.rightIcon}/>
             </Button></a>
             </Desktop>

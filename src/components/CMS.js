@@ -382,8 +382,8 @@ componentWillReceiveProps(nextProps){
   popupLogout = () => {this.setState({ popupLogout: true });};
   popupLogoutClose = () => {this.setState({ popupLogout: false });};
   logout =() => {config.auth().signOut();window.location.reload(); };
-  handleDrawerOpen = () => {this.setState({ open: true ,});}
-  handleDrawerClose = () => {this.setState({  open: false ,});};
+  handleDrawerOpen = () => {this.setState({ open: true ,openHeader:true});}
+  handleDrawerClose = () => {this.setState({  open: false ,openHeader:false});};
   onChangeColor = name=> (color) => {this.setState({  [name]: color.hex });};
   onChangeChecked = name=> (e) => {this.setState({  [name]: e.target.checked });};  
   onChangeValue = name=> (e) => {this.setState({ [name]: e.target.value });};

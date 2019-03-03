@@ -62,7 +62,7 @@ class NestedList extends React.Component {
     return (
       <div className={classes.root} >
         <List disablePadding={true}>
-          <ListItem button onClick={this.handleClick}>
+          <ListItem button onClick={this.props.open?this.handleClick:null}>
             <ListItemIcon>
               {this.props.label === 'Footer'?
                 <FooterIcon />
@@ -76,7 +76,7 @@ class NestedList extends React.Component {
             <ListItemText inset primary={this.props.label} />
             {this.state.open ?  <ExpandLess /> : <ExpandMore />}
           </ListItem>
-
+          {this.props.open?
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>    
             <List component="div" disablePadding={false}>
             {this.props.content1 ?
@@ -99,6 +99,7 @@ class NestedList extends React.Component {
             }
               </List>       
           </Collapse>
+          :null}
         </List>
       </div>
     );

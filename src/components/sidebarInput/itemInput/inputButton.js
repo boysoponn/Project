@@ -19,18 +19,24 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Popover from '@material-ui/core/Popover';
 import ChooseLink from './chooseLink';
+// import SettingsButton from '@material-ui/icons/SettingsApplications';
 
 function Transition(props) {
   return <Slide direction="right" {...props} />;
 }
 
 const styles = theme => ({
+    rightIcon: {
+      marginLeft:5,
+      '&:hover': {
+        cursor: 'pointer',
+      },
+    },
     popoverHeight:{
       height:500
     },
     button: {
         marginTop:10,
-        width:130
        },
     buttonSetting:{
       width:170,
@@ -198,6 +204,7 @@ class InputButton extends React.Component {
         <div>
         <Button variant="contained" onClick={this.handleClickOpen} component="span" color="secondary" className={classes.button}>
         Setting Button
+        {/* <SettingsButton className={classes.rightIcon}  /> */}
         </Button>
         <Dialog
           maxWidth="lg"
