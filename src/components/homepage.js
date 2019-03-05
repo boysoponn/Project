@@ -5,7 +5,9 @@ import { Link} from 'react-router-dom';
 import  firebase from 'firebase';
 import LoginTemplate from './loginTemplate';
 import config from '../config';
-
+import Lottie from 'react-lottie';
+import * as animationData from './dataHome.json';
+import Header from './header';
 class AppWithConnect extends React.Component {
     constructor(props){
         super(props);
@@ -113,8 +115,18 @@ class AppWithConnect extends React.Component {
     }
 
 render() {
+  const defaultOptions = {
+    loop: true,
+    autoplay: true, 
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
+    }
+  }
     return (
-      <div>
+    <div> 
+  
+      <Header /> 
             <Text>
                 <H1>ProjectCMS</H1>
                 <P>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</P>
@@ -123,6 +135,7 @@ render() {
                 : <Link to="/cms"><Button className='fillRight'>Getting Started</Button></Link>
                 }
             </Text>
+ 
             <LoginTemplate
             open={this.state.login}
             recaptcha={this.state.recaptcha}
@@ -153,6 +166,8 @@ const Text = styled.div`
 text-align: center;
 color: #000;
 padding:0 5vw;
+// position:absolute;
+// margin-top:20vh;
 `;
 
 const H1 = styled.h1`

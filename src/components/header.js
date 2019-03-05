@@ -10,6 +10,8 @@ import Button from '@material-ui/core/Button';
 import { withStyles  } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import { withRouter,Link } from 'react-router-dom';
+import * as animationData from './dataHome.json';
+import Lottie from 'react-lottie';
 
 const styles = theme => ({
     button:{
@@ -167,12 +169,29 @@ class AppWithConnect extends React.Component {
     
 
 render() {
-
+    const defaultOptions = {
+        loop: true,
+        autoplay: true, 
+        animationData: animationData,
+        rendererSettings: {
+          preserveAspectRatio: 'xMidYMid slice'
+        }
+      }
     const { classes } = this.props;
     return (
-        <div>
-            <Nav >
-            <Img src="https://www.freelogodesign.org/Content/img/logo-ex-7.png"/>
+        <div style={{position:'relative'}}>
+            <Nav style={{position:'absolute'}}>
+                <All>
+                <Content2>
+                    <A onClick={this.onChangeTrue('register')}>Register</A>
+                </Content2>
+                <Content2>
+                    { !this.props.user ? <A onClick={this.onChangeTrue('login')}>Getting Started</A>
+                    :
+                    <Link to="/cms" style={{color:'#000',fontSize:'0.8vw'}}>Getting Started</Link>
+                    }
+                </Content2>
+                </All>
                 {this.props.user ?
                 <All2> 
                     <Content> 
@@ -181,9 +200,9 @@ render() {
                     <Content> 
                         <Avatar alt="Remy Sharp" src={this.props.photoURL? this.props.photoURL:avatarImage}  />
                     </Content> 
-                    <Content2> 
+                    <Content> 
                         <P>{this.props.user}</P>
-                    </Content2> 
+                    </Content> 
                 </All2>
                 :
                 <All2>
@@ -192,21 +211,11 @@ render() {
                     </Content>  
                 </All2>
                 }                 
-                <All>
-                    <Content>
-                        <A onClick={this.onChangeTrue('register')}>Register</A>
-                    </Content> 
-                    {/* <Content>
-                        <A>Tutorial</A>
-                    </Content> */}
-                    <Content>
-                        { !this.props.user ? <A onClick={this.onChangeTrue('login')}>Getting Started</A>
-                        :
-                        <Link to="/cms" style={{color:'#000',fontSize:'0.8vw'}}>Getting Started</Link>
-                        }
-                    </Content>
-                </All>
             </Nav>
+            <Lottie options={defaultOptions}
+              height={'100vh'}
+              style={{position:'absolute'}}
+            />
             <LoginTemplate
             open={this.state.login}
             recaptcha={this.state.recaptcha}
@@ -246,30 +255,34 @@ const mapStateToProps = state => ({
 export default withRouter(connect(mapStateToProps)(withStyles(styles)(AppWithConnect)));
 
 const Nav = styled.div`
-height: 20vh;
-position:relative;
+position: absolute;
 padding: 2vh 5vh;
+width: 100%;
+z-index: 1;
 `;
 
 const Img = styled.img`
-height: 10vw;
-position: absolute;
+height:100%;
 `;
 const All = styled.div`
-float: right;
-width: 100%;
+float: left;
+width: 50%;
 `;
 const All2 = styled.div`
-float: right;
-width: 100%;
+float: left;
+width: 50%;
 `;
 const Content = styled.div`
 float: right;
 padding: 1vh 2vh;
 `;
 const Content2 = styled.div`
-float: right;
-padding-top: 1vh;
+float: left;
+display: flex;
+justify-items: center;
+height: 5vh;
+padding: 2vh;
+align-items: center;
 `;
 const A = styled.a`
 color:#000;

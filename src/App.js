@@ -61,7 +61,7 @@ class App extends Component {
     const user = this.state.username;
 
     function withRestriction(WrappedComponent) {
-      return class RestrictedComponent extends React.Component {
+      return class RestrictedComponent extends React.Component { 
         render() {
           if (user ==="") {
              return <Redirect to='/' />
@@ -90,7 +90,6 @@ class App extends Component {
       <Body>
       <Router> 
         <div>        
-          <Route exact path="/"  component={Navbar} /> 
           <Route exact path="/"  component={Homepage} />  
           <Route path="/cms"     component={CMSWithRestriction}/>            
         </div>

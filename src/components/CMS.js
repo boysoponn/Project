@@ -140,6 +140,8 @@ class CMS extends React.Component {
     galleryContent:[],
     font:[],
     openHeader:false,
+    openContent:false,
+    openFooter:false,
     undefinedOneTab:false,
     createProject:false
   };
@@ -378,12 +380,12 @@ componentWillReceiveProps(nextProps){
     this.props.dispatch(checkTab(false));
 
   }
-
+  openClose =id=> () => {this.setState({open:true,[id.name]:!id.state})};
   popupLogout = () => {this.setState({ popupLogout: true });};
   popupLogoutClose = () => {this.setState({ popupLogout: false });};
   logout =() => {config.auth().signOut();window.location.reload(); };
-  handleDrawerOpen = () => {this.setState({ open: true ,openHeader:true});}
-  handleDrawerClose = () => {this.setState({  open: false ,openHeader:false});};
+  handleDrawerOpen = () => {this.setState({ open: true });}
+  handleDrawerClose = () => {this.setState({  open: false ,openHeader:false,openContent:false,openFooter:false,});};
   onChangeColor = name=> (color) => {this.setState({  [name]: color.hex });};
   onChangeChecked = name=> (e) => {this.setState({  [name]: e.target.checked });};  
   onChangeValue = name=> (e) => {this.setState({ [name]: e.target.value });};
@@ -618,19 +620,22 @@ componentWillReceiveProps(nextProps){
           <Divider />
             <List disablePadding={true}>
             <BlockInput
+            blockInput={this.openClose({name:'openHeader',state:this.state.openHeader})}
             open={this.state.openHeader}
             label='Header'
             content1={menubarInput}
             />
             <BlockInput
-            open={this.state.openHeader}
+            blockInput={this.openClose({name:'openContent',state:this.state.openContent})}
+            open={this.state.openContent}
             label='Content'
             content1={heroInput}
             content2={carouselInput}
             content3={galleryInput}
             />
             <BlockInput
-            open={this.state.openHeader}
+            blockInput={this.openClose({name:'openFooter',state:this.state.openFooter})}
+            open={this.state.openFooter}
             label='Footer'
             content1={footerInput}
             />
