@@ -5,8 +5,6 @@ import { Link} from 'react-router-dom';
 import  firebase from 'firebase';
 import LoginTemplate from './loginTemplate';
 import config from '../config';
-import Lottie from 'react-lottie';
-import * as animationData from './dataHome.json';
 import Header from './header';
 class AppWithConnect extends React.Component {
     constructor(props){
@@ -115,17 +113,8 @@ class AppWithConnect extends React.Component {
     }
 
 render() {
-  const defaultOptions = {
-    loop: true,
-    autoplay: true, 
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice'
-    }
-  }
     return (
     <div> 
-  
       <Header /> 
             <Text>
                 <H1>ProjectCMS</H1>
@@ -135,7 +124,7 @@ render() {
                 : <Link to="/cms"><Button className='fillRight'>Getting Started</Button></Link>
                 }
             </Text>
- 
+
             <LoginTemplate
             open={this.state.login}
             recaptcha={this.state.recaptcha}
@@ -165,35 +154,35 @@ export default connect(mapStateToProps)(AppWithConnect);
 const Text = styled.div`
 text-align: center;
 color: #000;
-padding:0 5vw;
-// position:absolute;
-// margin-top:20vh;
+padding:10vh 5vw 15vh;
 `;
 
 const H1 = styled.h1`
 font-size: 7vw;
-color: #000;
+color: #313030;
+font-weight: bolder;
+font-family:Roboto;
 `;
 
 const P = styled.p`
 text-align: center;
-color: #000;
+color: #313030;
 font-size: 1vw;
+font-weight: bold;
+font-family:Roboto;
 `;
 
 const Button = styled.button`
   position: relative;
-  height: 60px;
-  width: 200px;
-  margin: 30px 7px;
-  padding: 5px 5px;
-//   font-style:${props=> props.FontStyle}
-//   font-family:${props => props.FontFamily};
-//   font-weight: ${props => props.FontWeight};
-//   font-size: ${props => props.FontSize};
+  width: 15vw;
+  font-size: 1vw;
+  font-weight: 400;
+  font-family:Roboto;
+  margin-top: 10vh;
+  padding: 1.5vw 0.5vw;
   letter-spacing: 2px;
   color: black;
-  border: 2px  solid;
+  border: 3px  solid #313030;
   border-radius: 20px;
   text-transform: uppercase;
   outline: 0;
@@ -206,10 +195,6 @@ const Button = styled.button`
   -ms-transition:     0.09s ease-in;
   -moz-transition:    0.09s ease-in;
   -webkit-transition: 0.09s ease-in;
-  :hover{
-    border: 2px ${props => props.buttonHBDColor} solid; 
-    color:${props => props.buttonHoverColor}
-  }
   .fillRight&{
     :hover {
       color: white;
@@ -217,7 +202,7 @@ const Button = styled.button`
     :before {
       content: "";
       position: absolute;
-      background: black;
+      background: #313030;
       bottom: 0;
       left:0 ;
       right: 100%;

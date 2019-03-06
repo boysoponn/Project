@@ -87,14 +87,12 @@ class App extends Component {
     const Navbar = showNav(Header);
     return (
       <div>
-      <Body>
       <Router> 
         <div>        
           <Route exact path="/"  component={Homepage} />  
           <Route path="/cms"     component={CMSWithRestriction}/>            
         </div>
       </Router>
-      </Body>
       </div>
     );
    }
@@ -105,10 +103,4 @@ class App extends Component {
   })
   export default connect(mapStateToProps)(App);
 
-const Body = styled.div`
-  height: 100vh;
-  overflow: hidden; 
-  margin:0;
-  background-color:#fff;
-  background-size: cover;
-`;
+

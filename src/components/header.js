@@ -18,6 +18,15 @@ const styles = theme => ({
         padding:'0.2vw',
         fontSize: '0.8vw'
     },
+    GettingStarted:{
+        color:'#464646',
+        fontSize:'1vw',
+        fontWeight: 500,
+        '&:hover': {
+            cursor: 'pointer',
+            color:'#000'
+          },
+      }
 });
 class AppWithConnect extends React.Component {
     constructor(props){
@@ -55,7 +64,7 @@ class AppWithConnect extends React.Component {
             this.signin();
         }
     }
-    onChangeRecaptcha2=(value)=> {
+    onChangeRecaptchA=(value)=> {
         this.setState({valueRecaptcha:value})
         if(this.state.valueRecaptcha !==''){
             this.signUp();
@@ -172,28 +181,32 @@ render() {
     const defaultOptions = {
         loop: true,
         autoplay: true, 
+        isStopped:false,
         animationData: animationData,
         rendererSettings: {
           preserveAspectRatio: 'xMidYMid slice'
         }
       }
+
     const { classes } = this.props;
     return (
-        <div style={{position:'relative'}}>
-            <Nav style={{position:'absolute'}}>
+        <div style={{position:'relative',height: '100vh',backgroundColor:'#f8f8f8'}}>
+            <Nav style={{position:'absolute',height: '100%'}}>
                 <All>
+                <Content2><Logo>ProjectCMS</Logo></Content2>
+                <Content2><A>|</A></Content2>
                 <Content2>
-                    <A onClick={this.onChangeTrue('register')}>Register</A>
-                </Content2>
-                <Content2>
-                    { !this.props.user ? <A onClick={this.onChangeTrue('login')}>Getting Started</A>
+                    { !this.props.user ? <A onClick={this.onChangeTrue('login')}> Getting Started</A>
                     :
-                    <Link to="/cms" style={{color:'#000',fontSize:'0.8vw'}}>Getting Started</Link>
+                    <Link to="/cms"><A>Getting Started</A></Link>
                     }
                 </Content2>
-                </All>
+                <Content2><A>|</A></Content2>
+                <Content2>
+                    <A onClick={this.onChangeTrue('register')}>Register</A>
+                </Content2> 
                 {this.props.user ?
-                <All2> 
+                <div>
                     <Content> 
                         <Button variant="contained" color="secondary" className={classes.button} onClick={this.logout}>Logout<ExitIcon className={classes.rightIcon}/></Button>
                     </Content> 
@@ -203,17 +216,15 @@ render() {
                     <Content> 
                         <P>{this.props.user}</P>
                     </Content> 
-                </All2>
+                </div>
                 :
-                <All2>
                     <Content> 
                         <Button variant="contained" color="primary" className={classes.button} onClick={this.onChangeTrue('login')}>Login<ExitIcon className={classes.rightIcon}/></Button>
                     </Content>  
-                </All2>
-                }                 
+                }  
+                 </All>               
             </Nav>
             <Lottie options={defaultOptions}
-              height={'100vh'}
               style={{position:'absolute'}}
             />
             <LoginTemplate
@@ -235,7 +246,7 @@ render() {
             />
             <LoginTemplate
             recaptcha={this.state.recaptcha}
-            onChange={this.onChangeRecaptcha2}
+            onChange={this.onChangeRecaptchA}
             open={this.state.register}
             onClose={this.onChangeFalse('register')}
             label='REGISTER'
@@ -256,42 +267,54 @@ export default withRouter(connect(mapStateToProps)(withStyles(styles)(AppWithCon
 
 const Nav = styled.div`
 position: absolute;
-padding: 2vh 5vh;
+padding: 2.5vh 2vw;
 width: 100%;
 z-index: 1;
 `;
 
-const Img = styled.img`
-height:100%;
-`;
 const All = styled.div`
 float: left;
-width: 50%;
-`;
-const All2 = styled.div`
-float: left;
-width: 50%;
+width: 100%;
 `;
 const Content = styled.div`
 float: right;
-padding: 1vh 2vh;
+padding: 0.5vw;
+display: flex;
+justify-content: center;
+height: 5vh;
+align-items: center;
 `;
 const Content2 = styled.div`
 float: left;
 display: flex;
-justify-items: center;
-height: 5vh;
-padding: 2vh;
+justify-content: center;
 align-items: center;
+height: 5vh;
+padding: 0.5vw;
+
 `;
-const A = styled.a`
+const A = styled.p`
+color:#464646;
+font-size:1vw
+font-weight: 500;
+display: flex;
+justify-content: center;
+align-items: center;
+:hover {
+    color: #000;
+    cursor:pointer;
+  }
+`;
+const Logo = styled.p`
 color:#000;
-font-size:0.8vw
+font-size:1.5vw;
+font-weight: bolder;
 `;
 
 const P = styled.p`
-color:#000;
+color:#464646;
 font-size:1vw;
+margin-top:1vh;
 font-weight: 500;
 `;
 
