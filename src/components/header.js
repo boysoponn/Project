@@ -309,6 +309,9 @@ const Logo = styled.p`
 color:#000;
 font-size:1.5vw;
 font-weight: bolder;
+:hover {
+    cursor:default;
+  }
 `;
 
 const P = styled.p`

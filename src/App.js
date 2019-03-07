@@ -7,7 +7,6 @@ import Homepage from './components/homepage';
 import config from './config'
 import { connect } from 'react-redux'
 import {login,loginEmail,photoURL,project} from './components/actions'
-import {Helmet} from "react-helmet";
 class App extends Component {
   state = {
     authenticated: false,
