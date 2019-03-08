@@ -88,6 +88,7 @@ class App extends Component {
       <div>
       <Router> 
         <div>        
+          <Route exact path="/"  component={Navbar} /> 
           <Route exact path="/"  component={Homepage} />  
           <Route path="/cms"     component={CMSWithRestriction}/>            
         </div>
