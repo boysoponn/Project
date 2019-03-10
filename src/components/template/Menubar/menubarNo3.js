@@ -18,9 +18,9 @@ constructor(props){
     return (
     <div className={"body"+active}>
         <div className="menu-icon" onClick={this.handleClick}>
-            <span className={"menu-icon__line menu-icon__line-left"+active}></span>
-            <span className={"menu-icon__line"+active}></span>
-            <span className={"menu-icon__line menu-icon__line-right"+active}></span>
+            <span style={{backgroundColor:this.props.menubarbackgroundColor}} className={"menu-icon__line menu-icon__line-left"+active}></span>
+            <span style={{backgroundColor:this.props.menubarbackgroundColor}} className={"menu-icon__line"+active}></span>
+            <span style={{backgroundColor:this.props.menubarbackgroundColor}} className={"menu-icon__line menu-icon__line-right"+active}></span>
         </div>
     
         <div className="nav">

@@ -209,7 +209,7 @@ onChangeTypeGroup=menubar=>(e)=>{
               }}
             >
             <ListItem>
-              <p style={pickColor}> Background Color&nbsp;&nbsp;&nbsp;</p>
+              {this.props.menubar==="MenubarNo3"? <p style={pickColor}> Menubar Color&nbsp;&nbsp;&nbsp;</p>:<p style={pickColor}>Background Color&nbsp;&nbsp;&nbsp;</p>}
               <PickColor
               padding="0"
               width="80px"

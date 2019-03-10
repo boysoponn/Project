@@ -20,6 +20,8 @@ import SaveIcon from '@material-ui/icons/Save';
 import Popup from '../sidebarInput/itemInput/popup'
 import CreateProject from './../loginTemplate'
 import styled from 'styled-components'
+import AddIcon from '@material-ui/icons/AddCircle';
+import EditIcon from '@material-ui/icons/Create';
 import Popover from '@material-ui/core/Popover';
 import ListItem from '@material-ui/core/ListItem';
 const styles = theme => ({
@@ -55,6 +57,7 @@ class TabWebsite extends React.Component {
         value: 0,
         num:1,
         news:[],
+        anchorEl:null,
         open:false,
         openEdit:false,
         selectedFooter:'none',
@@ -142,21 +145,21 @@ class TabWebsite extends React.Component {
     });
     this.setState({
       openEdit:true,
-      anchorEl:null
+      anchorEl2: null
     });
   };
 
   handleCloseEdit = () => {this.setState({ openEdit: false});this.setNullValue();};
-  handleOpen = () => {this.setState({ open: true ,anchorEl:null});};
+  handleOpen = () => {this.setState({ open: true ,anchorEl2: null});};
   handleClose = () => {this.setState({ open: false,}); this.setNullValue();};  
   onChangeValue = name=> (e) => {this.setState({ [name]: e.target.value });};
   onChangeName=(e)=>{this.setState({ namePage: e.target.value});};
   handleChange = (event, value) => {this.setState({ value });};
   handleChangeIndex = index => {this.setState({ value: index });};
-  popup = name=> () => {this.setState({ [name]: true ,anchorEl:null});};
+  popup = name=> () => {this.setState({ [name]: true,anchorEl2: null});};
   popupClose = name=> () => {this.setState({ [name]: false });};
-  popoverOpen =name=> (event) => {this.setState({ [name]: event.currentTarget, });};
-  popoverClose =name=> () => {this.setState({ [name]: null, });};
+  popoverOpen = (event) => {this.setState({ anchorEl2: event.currentTarget, });};
+  popoverClose = () => {this.setState({ anchorEl2: null, });};
   saveEdit=()=>{
     if(this.state.namePage){
       let pathUpper =this.state.namePage;
@@ -193,7 +196,7 @@ class TabWebsite extends React.Component {
          image: "https://firebasestorage.googleapis.com/v0/b/cms-project-35e34.appspot.com/o/Default%2Flogo2.png?alt=media&token=9921fb9f-f0b0-4d97-bfd1-41195d22d594",
         },
         menubarSetting:{
-          menubarbackgroundColor:'#ffffff',
+          menubarbackgroundColor:'#d5d5d5',
          },
         footerContent:{
           title:'Title',
@@ -548,7 +551,7 @@ class TabWebsite extends React.Component {
   let dbCon = config.database().ref('production/');
   dbCon.child(this.state.project.replace(/ /g,'-')).set(this.props.email); 
   let project = config.database().ref('project owner/');
-  project.child(this.props.email).set(this.state.project.replace(/ /g,'-'));     
+  project.child(this.props.email).set(this.state.project.replace(/ /g,'-'));  
   }
   save=()=>{
     let dbCon = config.database().ref('project/'+this.props.email+'/'+this.props.tabs);
@@ -693,8 +696,8 @@ class TabWebsite extends React.Component {
   onChangeProject = name=> (e) => {this.setState({ [name]: e.target.value.replace(/[`~!@#$%^&*()_|+\-=÷¿?;:'",.<>\{\}\[\]\\\/]/gi,'')})};
   render() {
     const { classes, theme } = this.props;
-    const { anchorEl} = this.state;
-    const open = Boolean(anchorEl);
+    const { anchorEl2} = this.state;
+    const open2 = Boolean(anchorEl2);
     return (
     <div>
       <Popup
@@ -729,258 +732,149 @@ class TabWebsite extends React.Component {
                         {_key:1,label:'Project Name',type:'text',value:this.state.project,onChange:this.onChangeProject('project')}
                         ]}
       />
-
-      {this.props.undefinedOneTab === true?
-      <div>
       {this.props.project === ''?
       <Button variant="contained" color="secondary" className={classes.buttoncenter} onClick={this.createProject}>Create Project Name</Button>
       :
+      this.props.undefinedOneTab == true?
       <Button variant="contained" color="secondary" className={classes.buttoncenter} onClick={this.addGlobal}>Start Project</Button>
+      :null
       }
-      </div>
-      :
+      {this.props.undefinedOneTab !== true?
+      <Moblie>
+      <Button variant="contained" onClick={this.popoverOpen} component="span" color="secondary" >Page <SettingIcon className={classes.rightIcon} /></Button>
+      <Popover
+        className={classes.popover}
+        open={open2}
+        anchorEl={anchorEl2}
+        onClose={this.popoverClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+      <ListItem>
+      <Button variant="contained" color="secondary" onClick={this.handleOpen} className={classes.button}>Add<AddIcon className={classes.rightIcon} /></Button>
+      </ListItem>
+      <ListItem>
+      <Button variant="contained" color="secondary" onClick={this.handleOpenEdit} className={classes.button}>Edit<EditIcon className={classes.rightIcon} /></Button>
+      </ListItem>
+      <ListItem>
+      <Button variant="contained" color="secondary" onClick={this.popup('popupSave')} className={classes.button}>SAVE<SaveIcon className={classes.rightIcon} /></Button>
+      </ListItem>
+      <ListItem>
+      <Button variant="contained" color="secondary" className={classes.button} onClick={this.popup('popupDelete')}>Delete<DeleteIcon className={classes.rightIcon}/></Button>
+      </ListItem>
+      <ListItem>
+      <a href={'https://yoursitecms.tk'+'/'+this.props.project+'/'+this.props.pathName} style={{color:'#ffffff'}} target="_blank"><Button variant="contained" color="secondary" style={{float:'right'}} className={classes.button} >Preview<PreviewIcon className={classes.rightIcon}/></Button></a>
+      </ListItem>
+      </Popover>
+      </Moblie>
+      :null}
+      <Desktop>
+      <ButtonForNewTab
+      undefinedOneTab={this.props.undefinedOneTab}
+      icon="add"
+      labelbox="Create page"
+      labelButton="ADD"
+      onClickSave={this.state.namePage? this.addNewTab:this.inputPageName}
+      handleClose={this.handleClose}
+      handleOpen={this.handleOpen}
+      open={this.state.open}
+      onClose={this.handleClose}
+      TransitionComponent={Transition}
+      onChangeName={this.onChangeName}
+      valueName={this.state.namePage}
+      selectedMenubar={this.state.selectedMenubar}
+      handleChangeMenubar={this.onChangeValue('selectedMenubar')}
+      valueMenubar1="none"
+      valueMenubar2="MenubarNo1"
+      valueMenubar3="MenubarNo2"
+      valueMenubar4="MenubarNo3"
+      selectedHero={this.state.selectedHero}
+      handleChangeHero={this.onChangeValue('selectedHero')}
+      valueHero1="none"
+      valueHero2="HeroNo1"
+      valueHero3="HeroNo2"
+      valueHero4="HeroNo3"
+      selectedCarousel={this.state.selectedCarousel}
+      handleChangeCarousel={this.onChangeValue('selectedCarousel')}
+      valueCarousel1="none"
+      valueCarousel2="CarouselNo1"
+      valueCarousel3="CarouselNo2"
+      valueCarousel4="CarouselNo3"
+      selectedGallery={this.state.selectedGallery}
+      handleChangeGallery={this.onChangeValue('selectedGallery')}
+      valueGallery1="none"
+      valueGallery2="GalleryNo1"
+      valueGallery3="GalleryNo2"
+      valueGallery4="GalleryNo3"
+      valueGallery5="GalleryNo4"
+      selectedFooter={this.state.selectedFooter}
+      handleChangeFooter={this.onChangeValue('selectedFooter')}
+      valueFooter1="none"
+      valueFooter2="FooterNo1"
+      valueFooter3="FooterNo2"
+      valueFooter4="FooterNo3"
+      />
+      <ButtonForNewTab
+      undefinedOneTab={this.props.undefinedOneTab}
+      icon="edit"
+      labelbox="Edit page"
+      labelButton="Edit"
+      onClickSave={this.state.namePage? this.saveEdit:this.inputPageName}
+      handleClose={this.handleCloseEdit}
+      handleOpen={this.handleOpenEdit}
+      open={this.state.openEdit}
+      onClose={this.handleCloseEdit}
+      TransitionComponent={Transition}
+      onChangeName={this.onChangeName}
+      valueName={this.state.namePage}
+      selectedMenubar={this.state.selectedMenubar}
+      handleChangeMenubar={this.onChangeValue('selectedMenubar')}
+      valueMenubar1="none"
+      valueMenubar2="MenubarNo1"
+      valueMenubar3="MenubarNo2"
+      valueMenubar4="MenubarNo3"
+      selectedHero={this.state.selectedHero}
+      handleChangeHero={this.onChangeValue('selectedHero')}
+      valueHero1="none"
+      valueHero2="HeroNo1"
+      valueHero3="HeroNo2"
+      valueHero4="HeroNo3"
+      selectedCarousel={this.state.selectedCarousel}
+      handleChangeCarousel={this.onChangeValue('selectedCarousel')}
+      valueCarousel1="none"
+      valueCarousel2="CarouselNo1"
+      valueCarousel3="CarouselNo2"
+      valueCarousel4="CarouselNo3"
+      selectedGallery={this.state.selectedGallery}
+      handleChangeGallery={this.onChangeValue('selectedGallery')}
+      valueGallery1="none"
+      valueGallery2="GalleryNo1"
+      valueGallery3="GalleryNo2"
+      valueGallery4="GalleryNo3"
+      valueGallery5="GalleryNo4"
+      selectedFooter={this.state.selectedFooter}
+      handleChangeFooter={this.onChangeValue('selectedFooter')}
+      valueFooter1="none"
+      valueFooter2="FooterNo1"
+      valueFooter3="FooterNo2"
+      valueFooter4="FooterNo3"
+      />
+      {this.props.undefinedOneTab !== true?
       <div>
-        <Moblie>
-            <Button variant="contained" onClick={this.popoverOpen('anchorEl')} component="span" color="secondary" >
-              Page 
-              <SettingIcon className={classes.rightIcon} />
-            </Button>
-            <Popover
-              className={classes.popover}
-              open={open}
-              anchorEl={anchorEl}
-              onClose={this.popoverClose('anchorEl')}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-            >
-            <ListItem>
-            <Button variant="contained" color="secondary" onClick={this.popup('popupSave')} className={classes.button}>
-              SAVE
-              <SaveIcon className={classes.rightIcon} />
-            </Button>
-            </ListItem>
-
-            <ListItem>
-              <ButtonForNewTab
-              undefinedOneTab={this.props.undefinedOneTab}
-              icon="add"
-              labelbox="Create page"
-              labelButton="ADD"
-              onClickSave={this.state.namePage? this.addNewTab:this.inputPageName}
-              handleClose={this.handleClose}
-              handleOpen={this.handleOpen}
-              open={this.state.open}
-              onClose={this.handleClose}
-              TransitionComponent={Transition}
-              onChangeName={this.onChangeName}
-              valueName={this.state.namePage}
-              selectedMenubar={this.state.selectedMenubar}
-              handleChangeMenubar={this.onChangeValue('selectedMenubar')}
-              valueMenubar1="none"
-              valueMenubar2="MenubarNo1"
-              valueMenubar3="MenubarNo2"
-              valueMenubar4="MenubarNo3"
-              selectedHero={this.state.selectedHero}
-              handleChangeHero={this.onChangeValue('selectedHero')}
-              valueHero1="none"
-              valueHero2="HeroNo1"
-              valueHero3="HeroNo2"
-              valueHero4="HeroNo3"
-              selectedCarousel={this.state.selectedCarousel}
-              handleChangeCarousel={this.onChangeValue('selectedCarousel')}
-              valueCarousel1="none"
-              valueCarousel2="CarouselNo1"
-              valueCarousel3="CarouselNo2"
-              valueCarousel4="CarouselNo3"
-              selectedGallery={this.state.selectedGallery}
-              handleChangeGallery={this.onChangeValue('selectedGallery')}
-              valueGallery1="none"
-              valueGallery2="GalleryNo1"
-              valueGallery3="GalleryNo2"
-              valueGallery4="GalleryNo3"
-              valueGallery5="GalleryNo4"
-              selectedFooter={this.state.selectedFooter}
-              handleChangeFooter={this.onChangeValue('selectedFooter')}
-              valueFooter1="none"
-              valueFooter2="FooterNo1"
-              valueFooter3="FooterNo2"
-              valueFooter4="FooterNo3"
-              />
-            </ListItem>
-            
-            <ListItem>
-            <ButtonForNewTab
-              undefinedOneTab={this.props.undefinedOneTab}
-              icon="edit"
-              labelbox="Edit page"
-              labelButton="Edit"
-              onClickSave={this.state.namePage? this.saveEdit:this.inputPageName}
-              handleClose={this.handleCloseEdit}
-              handleOpen={this.handleOpenEdit}
-              open={this.state.openEdit}
-              onClose={this.handleCloseEdit}
-              TransitionComponent={Transition}
-              onChangeName={this.onChangeName}
-              valueName={this.state.namePage}
-              selectedMenubar={this.state.selectedMenubar}
-              handleChangeMenubar={this.onChangeValue('selectedMenubar')}
-              valueMenubar1="none"
-              valueMenubar2="MenubarNo1"
-              valueMenubar3="MenubarNo2"
-              valueMenubar4="MenubarNo3"
-              selectedHero={this.state.selectedHero}
-              handleChangeHero={this.onChangeValue('selectedHero')}
-              valueHero1="none"
-              valueHero2="HeroNo1"
-              valueHero3="HeroNo2"
-              valueHero4="HeroNo3"
-              selectedCarousel={this.state.selectedCarousel}
-              handleChangeCarousel={this.onChangeValue('selectedCarousel')}
-              valueCarousel1="none"
-              valueCarousel2="CarouselNo1"
-              valueCarousel3="CarouselNo2"
-              valueCarousel4="CarouselNo3"
-              selectedGallery={this.state.selectedGallery}
-              handleChangeGallery={this.onChangeValue('selectedGallery')}
-              valueGallery1="none"
-              valueGallery2="GalleryNo1"
-              valueGallery3="GalleryNo2"
-              valueGallery4="GalleryNo3"
-              valueGallery5="GalleryNo4"
-              selectedFooter={this.state.selectedFooter}
-              handleChangeFooter={this.onChangeValue('selectedFooter')}
-              valueFooter1="none"
-              valueFooter2="FooterNo1"
-              valueFooter3="FooterNo2"
-              valueFooter4="FooterNo3"
-              />
-            </ListItem>
-
-            <ListItem>
-              <Button variant="contained" color="secondary" className={classes.button} onClick={this.popup('popupDelete')}>Delete
-              <DeleteIcon className={classes.rightIcon}/>
-              </Button>
-            </ListItem>
-
-            <ListItem>
-              <a href={'https://yoursitecms.tk'+'/'+this.props.project+'/'+this.props.pathName} style={{color:'#ffffff'}} target="_blank"><Button variant="contained" color="secondary" style={{float:'right'}} className={classes.button} >
-              Preview<PreviewIcon className={classes.rightIcon}/>
-              </Button></a>
-            </ListItem>
-            </Popover>
-            </Moblie>
-            <Desktop>
-            <Button variant="contained" color="secondary" onClick={this.popup('popupSave')} className={classes.button}>
-              SAVE
-              <SaveIcon className={classes.rightIcon} />
-            </Button>
-            
-            <ButtonForNewTab
-            undefinedOneTab={this.props.undefinedOneTab}
-            icon="add"
-            labelbox="Create page"
-            labelButton="ADD"
-            onClickSave={this.state.namePage? this.addNewTab:this.inputPageName}
-            handleClose={this.handleClose}
-            handleOpen={this.handleOpen}
-            open={this.state.open}
-            onClose={this.handleClose}
-            TransitionComponent={Transition}
-            onChangeName={this.onChangeName}
-            valueName={this.state.namePage}
-            selectedMenubar={this.state.selectedMenubar}
-            handleChangeMenubar={this.onChangeValue('selectedMenubar')}
-            valueMenubar1="none"
-            valueMenubar2="MenubarNo1"
-            valueMenubar3="MenubarNo2"
-            valueMenubar4="MenubarNo3"
-            selectedHero={this.state.selectedHero}
-            handleChangeHero={this.onChangeValue('selectedHero')}
-            valueHero1="none"
-            valueHero2="HeroNo1"
-            valueHero3="HeroNo2"
-            valueHero4="HeroNo3"
-            selectedCarousel={this.state.selectedCarousel}
-            handleChangeCarousel={this.onChangeValue('selectedCarousel')}
-            valueCarousel1="none"
-            valueCarousel2="CarouselNo1"
-            valueCarousel3="CarouselNo2"
-            valueCarousel4="CarouselNo3"
-            selectedGallery={this.state.selectedGallery}
-            handleChangeGallery={this.onChangeValue('selectedGallery')}
-            valueGallery1="none"
-            valueGallery2="GalleryNo1"
-            valueGallery3="GalleryNo2"
-            valueGallery4="GalleryNo3"
-            valueGallery5="GalleryNo4"
-            selectedFooter={this.state.selectedFooter}
-            handleChangeFooter={this.onChangeValue('selectedFooter')}
-            valueFooter1="none"
-            valueFooter2="FooterNo1"
-            valueFooter3="FooterNo2"
-            valueFooter4="FooterNo3"
-            />
-            <ButtonForNewTab
-            undefinedOneTab={this.props.undefinedOneTab}
-            icon="edit"
-            labelbox="Edit page"
-            labelButton="Edit"
-            onClickSave={this.state.namePage? this.saveEdit:this.inputPageName}
-            handleClose={this.handleCloseEdit}
-            handleOpen={this.handleOpenEdit}
-            open={this.state.openEdit}
-            onClose={this.handleCloseEdit}
-            TransitionComponent={Transition}
-            onChangeName={this.onChangeName}
-            valueName={this.state.namePage}
-            selectedMenubar={this.state.selectedMenubar}
-            handleChangeMenubar={this.onChangeValue('selectedMenubar')}
-            valueMenubar1="none"
-            valueMenubar2="MenubarNo1"
-            valueMenubar3="MenubarNo2"
-            valueMenubar4="MenubarNo3"
-            selectedHero={this.state.selectedHero}
-            handleChangeHero={this.onChangeValue('selectedHero')}
-            valueHero1="none"
-            valueHero2="HeroNo1"
-            valueHero3="HeroNo2"
-            valueHero4="HeroNo3"
-            selectedCarousel={this.state.selectedCarousel}
-            handleChangeCarousel={this.onChangeValue('selectedCarousel')}
-            valueCarousel1="none"
-            valueCarousel2="CarouselNo1"
-            valueCarousel3="CarouselNo2"
-            valueCarousel4="CarouselNo3"
-            selectedGallery={this.state.selectedGallery}
-            handleChangeGallery={this.onChangeValue('selectedGallery')}
-            valueGallery1="none"
-            valueGallery2="GalleryNo1"
-            valueGallery3="GalleryNo2"
-            valueGallery4="GalleryNo3"
-            valueGallery5="GalleryNo4"
-            selectedFooter={this.state.selectedFooter}
-            handleChangeFooter={this.onChangeValue('selectedFooter')}
-            valueFooter1="none"
-            valueFooter2="FooterNo1"
-            valueFooter3="FooterNo2"
-            valueFooter4="FooterNo3"
-            />
-            <Button variant="contained" color="secondary" className={classes.button} onClick={this.popup('popupDelete')}>Delete
-            <DeleteIcon className={classes.rightIcon}/>
-            </Button>
-            <a href={'https://yoursitecms.tk'+'/'+this.props.project+'/'+this.props.pathName} style={{color:'#ffffff'}} target="_blank"><Button variant="contained" color="secondary" style={{float:'right'}} className={classes.button} >
-            Preview<PreviewIcon className={classes.rightIcon}/>
-            </Button></a>
-            </Desktop>
+      <Button variant="contained" color="secondary" onClick={this.popup('popupSave')} className={classes.button}>SAVE<SaveIcon className={classes.rightIcon} /></Button>
+      <Button variant="contained" color="secondary" className={classes.button} onClick={this.popup('popupDelete')}>Delete<DeleteIcon className={classes.rightIcon}/></Button>
+      <a href={'https://yoursitecms.tk'+'/'+this.props.project+'/'+this.props.pathName} style={{color:'#ffffff'}} target="_blank"><Button variant="contained" color="secondary" style={{float:'right'}} className={classes.button} >Preview<PreviewIcon className={classes.rightIcon}/></Button></a>
       </div>
+      :null
       }
-      
+      </Desktop>
+
 
       {this.props.undefinedOneTab !== true?
       <div className={classes.root}>
@@ -1040,7 +934,6 @@ const mapStateToPropsTabs = state => ({
 })
 
 export default connect(mapStateToPropsTabs)(withStyles(styles, { withTheme: true })(TabWebsite));
-
 const Desktop = styled.div`
   display:block;
 @media screen and (max-width: 600px) {

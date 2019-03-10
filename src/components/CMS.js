@@ -142,7 +142,7 @@ class CMS extends React.Component {
     openHeader:false,
     openContent:false,
     openFooter:false,
-    undefinedOneTab:false,
+    undefinedOneTab:true,
     createProject:false
   };
   }

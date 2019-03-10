@@ -5,7 +5,7 @@ import { Link} from 'react-router-dom';
 import  firebase from 'firebase';
 import LoginTemplate from './loginTemplate';
 import config from '../config';
-import Header from './header';
+
 class AppWithConnect extends React.Component {
     constructor(props){
         super(props);
