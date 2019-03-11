@@ -179,7 +179,7 @@ class CarouselInput extends React.Component {
   addItemSocial=()=>{
     let dbCon = config.database().ref('global/'+this.props.email+'/footerSocial/');
     dbCon.push({
-      link:'#',
+      link:'',
       label:'far fa-sticky-note',
       linkTarget:'_blank',
       FontSize:'30',

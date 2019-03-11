@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import styled from 'styled-components'
 import { BrowserRouter as  Router, Route, Redirect} from 'react-router-dom';
 import CMS from './components/CMS';
 import Header from './components/header';
@@ -51,8 +50,7 @@ class App extends Component {
 }
   }
   render() {
-    if(this.state.authenticated){
-    
+    if(this.state.authenticated){ 
     this.props.dispatch(loginEmail(this.state.email));
     this.props.dispatch(login(this.state.username));
     this.props.dispatch(photoURL(this.state.photoURL));
@@ -88,7 +86,6 @@ class App extends Component {
       <div>
       <Router> 
         <div>        
-          <Route exact path="/"  component={Navbar} /> 
           <Route exact path="/"  component={Homepage} />  
           <Route path="/cms"     component={CMSWithRestriction}/>            
         </div>

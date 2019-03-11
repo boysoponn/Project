@@ -31,8 +31,9 @@ constructor(props){
             <div className="nav__content">
                 <ul className="nav__list">
                 {this.props.menubarItem.map((menubar) =>
-                    menubar.link.search("http") === -1?
-                    <li key={menubar._key} style={{fontSize:'calc('+menubar.FontSize+ 'vw / 10 )',}} className={"nav__list-item"+active}><Link to={menubar.link} target={menubar.linkTarget}
+                    menubar.link  || menubar.link !== "#" ?
+                    menubar.link.search("http") === -1 && menubar.linkTarget !== '_blank'?
+                    <li key={menubar._key} style={{fontSize:'calc('+menubar.FontSize+ 'vw / 10 )',}} className={"nav__list-item"+active}><Link to={menubar.link}
                     style={{
                         color:menubar.Color,
                         fontFamily:menubar.FontFamily,
@@ -49,6 +50,15 @@ constructor(props){
                         fontStyle:menubar.FontStyle,
                     }}>
                     {menubar.label}</a></li> 
+                    :
+                    <li key={menubar._key} style={{fontSize:'calc('+menubar.FontSize+ 'vw / 10 )'}} className={"nav__list-item"+active}><a 
+                    style={{
+                        color:menubar.Color,
+                        fontFamily:menubar.FontFamily,
+                        fontWeight:menubar.FontWeight,
+                        fontStyle:menubar.FontStyle,
+                    }}>
+                    {menubar.label}</a></li> 
                     )}
                 </ul>
             </div>
@@ -58,21 +68,9 @@ constructor(props){
         <Nav >
           {this.props.menubarItem.map((menubar)=>
           <Item key={menubar._key}>
-            {menubar.link === ''?
-            <A            
-            style={{
-              padding:5,
-              color:menubar.Color,
-              animationDuration: menubar.Duration,
-              fontFamily:menubar.FontFamily,
-              fontSize:'calc('+menubar.FontSize+ 'vw / 15 )',
-              fontWeight:menubar.FontWeight,
-              fontStyle:menubar.FontStyle,
-              display:menubar.Status
-           }}>{menubar.label}</A>
-            :
-            menubar.link.search("http") === -1?
-            <A2><Link to={menubar.link} target={menubar.linkTarget} 
+            {menubar.link  && menubar.link !== "#" ?
+            menubar.link.search("http") === -1 && menubar.linkTarget !== '_blank'?
+            <A2><Link to={menubar.link}  
             style={{
               padding:5,
               color:menubar.Color,
@@ -97,6 +95,18 @@ constructor(props){
               display:menubar.Status
            }}
             >{menubar.label}</A>
+            :
+            <A            
+            style={{
+              padding:5,
+              color:menubar.Color,
+              animationDuration: menubar.Duration,
+              fontFamily:menubar.FontFamily,
+              fontSize:'calc('+menubar.FontSize+ 'vw / 15 )',
+              fontWeight:menubar.FontWeight,
+              fontStyle:menubar.FontStyle,
+              display:menubar.Status
+           }}>{menubar.label}</A>
           }
           </Item> 
           )}

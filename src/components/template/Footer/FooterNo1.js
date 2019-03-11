@@ -3,9 +3,6 @@ import './../tamplateCSS/menubar.css';
 import { Link} from 'react-router-dom';
 import styled from 'styled-components'
 
-const styles = theme => ({
-});
-
 
 class FooterNo1 extends React.Component {
 constructor(props){
@@ -51,11 +48,27 @@ constructor(props){
               <span style={content} className="footer-social-overlap footer-social-icons-wrapper">
               {this.props.footerSocial.map((footer)=>
                 footer.Status === 'none' ? null:
+                footer.link  && footer.link !=="#" ?
+                footer.link.search("http") === -1 && footer.linkTarget !== '_blank'?
+                <Link to={footer.link} className="generic-anchor" key={footer._key} ><I className={footer.label}
+                color={footer.Color}
+                FontStyle={footer.FontStyle}
+                FontSize={'calc('+footer.FontSize+ 'vw / 15 )'}
+                hover={footer.hover}
+                ></I></Link>
+                :
                 <a href={footer.link} className="generic-anchor" key={footer._key} target={footer.linkTarget} ><I className={footer.label}
                   color={footer.Color}
                   FontStyle={footer.FontStyle}
                   FontSize={'calc('+footer.FontSize+ 'vw / 15 )'}
                   hover={footer.hover}
+                ></I></a>
+                :
+                <a className="generic-anchor" key={footer._key} ><I className={footer.label}
+                color={footer.Color}
+                FontStyle={footer.FontStyle}
+                FontSize={'calc('+footer.FontSize+ 'vw / 15 )'}
+                hover={footer.hover}
                 ></I></a>
               )}
               </span>
@@ -66,8 +79,9 @@ constructor(props){
             </div>
             <div className="footer-bottom-wrapper">
               {this.props.footerItem.map((footer)=>
-                footer.link.search("http") === -1?
-                  <Link to={footer.link} target={footer.linkTarget} key={footer._key}  className="generic-anchor"
+                  footer.link  && footer.link !=="#" ?
+                  footer.link.search("http") === -1 && footer.linkTarget !== '_blank'?
+                  <Link to={footer.link} key={footer._key}  className="generic-anchor"
                   style={{
                     color:footer.Color,
                     fontFamily:footer.FontFamily,
@@ -77,6 +91,14 @@ constructor(props){
                  }}
                   >{footer.label}{this.props.footerItem.length===1?null:<span> | </span>}</Link>  
                   :<a href={footer.link} target={footer.linkTarget} key={footer._key}  className="generic-anchor"
+                  style={{
+                    color:footer.Color,
+                    fontFamily:footer.FontFamily,
+                    fontWeight:footer.FontWeight,
+                    fontStyle:footer.FontStyle,
+                 }}
+                  >{footer.label}{this.props.footerItem.length===1?null:<span> | </span>}</a>  
+                  :<a key={footer._key}  className="generic-anchor"
                   style={{
                     color:footer.Color,
                     fontFamily:footer.FontFamily,

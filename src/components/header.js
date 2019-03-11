@@ -98,41 +98,18 @@ class AppWithConnect extends React.Component {
     loginGmail = () => {
         var provider = new firebase.auth.GoogleAuthProvider();
         config.auth().signInWithPopup(provider).then(function(result) {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        var token = result.credential.accessToken;
-        // The signed-in user info.
-        var user = result.user;
-        // ...
-        this.props.history.push('/');
         }).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
         var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        // ...
+            alert(errorMessage)
         });
         this.setState({login:false})
     }
     loginFacebook = () => {
         var provider = new firebase.auth.FacebookAuthProvider();
         config.auth().signInWithPopup(provider).then(function(result) {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        var token = result.credential.accessToken;
-        // The signed-in user info.
-        var user = result.user;
-        // ...
         }).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
         var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        // ...
+        alert(errorMessage)
         });
         this.setState({login:false})
     }
@@ -162,16 +139,13 @@ class AppWithConnect extends React.Component {
     signUp=()=>{
         config.auth().createUserWithEmailAndPassword(this.state.email,this.state.password).then(function(user) {      
         }, function(error) {
-          // Handle Errors here.
           var errorCode = error.code;
           var errorMessage = error.message;
-          // [START_EXCLUDE]
           if (errorCode === 'auth/weak-password') {
               alert('The password is too weak.');
           } else {
               alert(errorMessage);
           }
-          // [END_EXCLUDE]
       });
     }
     logout =() => {config.auth().signOut();window.location.reload(); };

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
 import '../tamplateCSS/hoverImage.css'
+import { Link} from 'react-router-dom';
 import ScrollAnimation from 'react-animate-on-scroll';
 
 class GalleryNo2 extends React.Component {
@@ -68,7 +69,12 @@ class GalleryNo2 extends React.Component {
 								fontStyle={post.descriptionFontStyle}
 								>{post.description}</P>
 							</div>
-							{post.link === '#'? null:<A href={post.link} target={post.linkTarget}></A>}
+							{post.link  && post.link !=="#" ? 
+							post.link.search("http") === -1 && post.linkTarget !== '_blank'?
+							<Link to={post.link}><A></A></Link>
+							:<A href={post.link} target={post.linkTarget}></A>
+							:null
+							}
 						</Figcaption>			
 					</Figure>
 					

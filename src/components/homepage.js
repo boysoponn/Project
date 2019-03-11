@@ -5,7 +5,8 @@ import { Link} from 'react-router-dom';
 import  firebase from 'firebase';
 import LoginTemplate from './loginTemplate';
 import config from '../config';
-
+import Header from './header';
+import { Preloader, Placeholder } from 'react-preloading-screen';
 class AppWithConnect extends React.Component {
     constructor(props){
         super(props);
@@ -70,41 +71,18 @@ class AppWithConnect extends React.Component {
     loginGmail = () => {
         var provider = new firebase.auth.GoogleAuthProvider();
         config.auth().signInWithPopup(provider).then(function(result) {
-        // // This gives you a Google Access Token. You can use it to access the Google API.
-        // var token = result.credential.accessToken;
-        // // The signed-in user info.
-        // var user = result.user;
-        // // ...
-        // this.props.history.push('/');
-        // }).catch(function(error) {
-        // // Handle Errors here.
-        // var errorCode = error.code;
-        // var errorMessage = error.message;
-        // // The email of the user's account used.
-        // var email = error.email;
-        // // The firebase.auth.AuthCredential type that was used.
-        // var credential = error.credential;
-        // // ...
+        }).catch(function(error) {
+        var errorMessage = error.message;
+        alert(errorMessage);
         });
         this.setState({login:false})
     }
     loginFacebook = () => {
         var provider = new firebase.auth.FacebookAuthProvider();
         config.auth().signInWithPopup(provider).then(function(result) {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        var token = result.credential.accessToken;
-        // The signed-in user info.
-        var user = result.user;
-        // ...
         }).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
         var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        // ...
+        alert(errorMessage);
         });
         this.setState({login:false})
     }
@@ -114,7 +92,10 @@ class AppWithConnect extends React.Component {
 
 render() {
     return (
-    <div> 
+    <Preloader fadeDuration={300}>
+    <div>
+        <Header/>
+        <div> 
             <Text>
                 <H1>ProjectCMS</H1>
                 <P>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</P>
@@ -142,6 +123,11 @@ render() {
                         ]}
             />
       </div>
+      </div>
+        <Placeholder>
+        <Preload><Span>Loading...</Span></Preload>
+        </Placeholder>
+    </Preloader>
     )}}
 
     const mapStateToProps = state => ({
@@ -149,6 +135,19 @@ render() {
     })
 
 export default connect(mapStateToProps)(AppWithConnect);
+
+const Preload = styled.div`
+background-color:#f8f8f8;
+height:100vh;
+width:100vw;
+`;
+
+const Span = styled.span`
+display:flex;
+justify-content: center;
+align-items: center;
+height:100%;
+`;
 
 const Text = styled.div`
 text-align: center;

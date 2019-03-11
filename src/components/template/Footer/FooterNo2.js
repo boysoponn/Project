@@ -50,8 +50,9 @@ constructor(props){
       <p style={description}>{this.props.footerDescription}</p>
             <div style={{margin: 0,paddingTop: '1%'}}>
               {this.props.footerItem.map((footer)=>
-                footer.link.search("http") === -1?
-                  <Link to={footer.link} target={footer.linkTarget} key={footer._key} 
+                footer.link  && footer.link !=="#" ?
+                footer.link.search("http") === -1 && footer.linkTarget !== '_blank'?
+                  <Link to={footer.link}  key={footer._key} 
                   style={{
                     color:footer.Color,
                     fontFamily:footer.FontFamily,
@@ -68,12 +69,34 @@ constructor(props){
                     fontStyle:footer.FontStyle,
                  }}
                   >{footer.label}{this.props.footerItem.length===1?null:<span> | </span>}</a>  
+                  :<a key={footer._key} 
+                  style={{
+                    color:footer.Color,
+                    fontFamily:footer.FontFamily,
+                    fontWeight:footer.FontWeight,
+                    fontStyle:footer.FontStyle,
+                 }}
+                  >{footer.label}{this.props.footerItem.length===1?null:<span> | </span>}</a> 
                 )}
             </div>
             <div>
             {this.props.footerSocial.map((footer)=>
                 footer.Status === 'none' ? null:
-                <a href={footer.link}  key={footer._key} target={footer.linkTarget} ><I className={footer.label}
+                footer.link  && footer.link !=="#" ?
+                footer.link.search("http") === -1 && footer.linkTarget !== '_blank'?
+                <Link to={footer.link}  key={footer._key}><I className={footer.label}
+                color={footer.Color}
+                FontStyle={footer.FontStyle}
+                FontSize={'calc('+footer.FontSize+ 'vw / 15 )'}
+                hover={footer.hover}
+                ></I></Link>
+                  :<a href={footer.link}  key={footer._key} target={footer.linkTarget} ><I className={footer.label}
+                  color={footer.Color}
+                  FontStyle={footer.FontStyle}
+                  FontSize={'calc('+footer.FontSize+ 'vw / 15 )'}
+                  hover={footer.hover}
+                ></I></a>
+                :<a key={footer._key} ><I className={footer.label}
                   color={footer.Color}
                   FontStyle={footer.FontStyle}
                   FontSize={'calc('+footer.FontSize+ 'vw / 15 )'}

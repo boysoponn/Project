@@ -110,7 +110,7 @@ class NestedList extends React.Component {
       descriptionFontStyle:'normal',
       descriptionStatus:'block',
       descriptionColor:'#ffffff',
-      link:'#',
+      link:'',
       linkTarget:'_blank',
       galleryHover:'sadie'
     })  

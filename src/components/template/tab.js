@@ -236,7 +236,7 @@ class TabWebsite extends React.Component {
           Link1:{
             typeGroup:false,
             label:'Link',
-            link:'#',
+            link:'',
             linkTarget:'_blank',
             Animate:'none',
             Duration:'1s',
@@ -251,7 +251,7 @@ class TabWebsite extends React.Component {
         footerItem:{
           Link1:{
             label:'Link',
-            link:'#',
+            link:'',
             linkTarget:'_blank',
             Animate:'none',
             Duration:'1s',
@@ -266,7 +266,7 @@ class TabWebsite extends React.Component {
         footerSocial:{
           Link1:{
             label:'far fa-sticky-note',
-            link:'#',
+            link:'',
             linkTarget:'_blank',
             FontSize:'30',
             FontStyle:'normal',
