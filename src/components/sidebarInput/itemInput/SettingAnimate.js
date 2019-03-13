@@ -306,20 +306,18 @@ class SettingAnimate extends React.Component {
                           horizontal: 'left',
                         }}
                       >
-                      
-                      {this.props.font.map((font => (
-                      <ListItem key={font._key}>
-                      <Button  variant="contained" onClick={this.OpenItem(font)} component="span" color="secondary" className={classes.button}>{font.font}</Button>
-                      <DeleteIcon  onClick={this.delete(font)} className={classes.rightIcon}/>
-                      </ListItem>
-                      )))}  
-
                       <ListItem>
                       <Button variant="contained"  onClick={this.addItem} component="span" color="secondary" className={classes.paper}>
                         ADD
                         <AddIcon className={classes.rightIcon} />
                       </Button>
-                      </ListItem>           
+                      </ListItem>                       
+                      {this.props.font.map((font => (
+                      <ListItem key={font._key}>
+                      <Button  variant="contained" onClick={this.OpenItem(font)} component="span" color="secondary" className={classes.button}>{font.font}</Button>
+                      <DeleteIcon  onClick={this.delete(font)} className={classes.rightIcon}/>
+                      </ListItem>
+                      )))}           
                       <Dialog
                         maxWidth="lg"
                         open={this.state.openFont}

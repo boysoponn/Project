@@ -755,15 +755,15 @@ class TabWebsite extends React.Component {
           vertical: 'bottom',
           horizontal: 'left',
         }}
-      >
+      >      
+      <ListItem>
+      <Button variant="contained" color="secondary" onClick={this.popup('popupSave')} className={classes.button}>SAVE<SaveIcon className={classes.rightIcon} /></Button>
+      </ListItem>
       <ListItem>
       <Button variant="contained" color="secondary" onClick={this.handleOpen} className={classes.button}>Add<AddIcon className={classes.rightIcon} /></Button>
       </ListItem>
       <ListItem>
       <Button variant="contained" color="secondary" onClick={this.handleOpenEdit} className={classes.button}>Edit<EditIcon className={classes.rightIcon} /></Button>
-      </ListItem>
-      <ListItem>
-      <Button variant="contained" color="secondary" onClick={this.popup('popupSave')} className={classes.button}>SAVE<SaveIcon className={classes.rightIcon} /></Button>
       </ListItem>
       <ListItem>
       <Button variant="contained" color="secondary" className={classes.button} onClick={this.popup('popupDelete')}>Delete<DeleteIcon className={classes.rightIcon}/></Button>
@@ -775,6 +775,10 @@ class TabWebsite extends React.Component {
       </Moblie>
       :null}
       <Desktop>
+      {this.props.undefinedOneTab !== true?
+      <Button variant="contained" color="secondary" onClick={this.popup('popupSave')} className={classes.button}>SAVE<SaveIcon className={classes.rightIcon} /></Button>
+      :null
+      }
       <ButtonForNewTab
       undefinedOneTab={this.props.undefinedOneTab}
       icon="add"
@@ -867,14 +871,12 @@ class TabWebsite extends React.Component {
       />
       {this.props.undefinedOneTab !== true?
       <div>
-      <Button variant="contained" color="secondary" onClick={this.popup('popupSave')} className={classes.button}>SAVE<SaveIcon className={classes.rightIcon} /></Button>
       <Button variant="contained" color="secondary" className={classes.button} onClick={this.popup('popupDelete')}>Delete<DeleteIcon className={classes.rightIcon}/></Button>
       <a href={'https://yoursitecms.tk'+'/'+this.props.project+'/'+this.props.pathName} style={{color:'#ffffff'}} target="_blank"><Button variant="contained" color="secondary" style={{float:'right'}} className={classes.button} >Preview<PreviewIcon className={classes.rightIcon}/></Button></a>
       </div>
       :null
       }
       </Desktop>
-
 
       {this.props.undefinedOneTab !== true?
       <div className={classes.root}>

@@ -167,13 +167,17 @@ render() {
         <div style={{position:'relative',height: '100vh',backgroundColor:'#f8f8f8'}}>
             <Nav style={{position:'absolute',height: '100%'}}>
                 <All>
-                <Content2><Logo>ProjectCMS</Logo></Content2>
+                <Content2><Link to="/"><Logo>ProjectCMS</Logo></Link></Content2>
                 <Content2><A>|</A></Content2>
                 <Content2>
                     { !this.props.user ? <A onClick={this.onChangeTrue('login')}> Getting Started</A>
                     :
                     <Link to="/cms"><A>Getting Started</A></Link>
                     }
+                </Content2>
+                <Content2><A>|</A></Content2>
+                <Content2>
+                    <Link to="/tutorial"><A>Tutorial</A></Link>
                 </Content2>
                 <Content2><A>|</A></Content2>
                 <Content2>
@@ -283,9 +287,6 @@ const Logo = styled.p`
 color:#000;
 font-size:1.5vw;
 font-weight: bolder;
-:hover {
-    cursor:default;
-  }
 `;
 
 const P = styled.p`

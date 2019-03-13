@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { BrowserRouter as  Router, Route, Redirect} from 'react-router-dom';
 import CMS from './components/CMS';
-import Header from './components/header';
 import Homepage from './components/homepage';
-import config from './config'
-import { connect } from 'react-redux'
-import {login,loginEmail,photoURL,project} from './components/actions'
+import config from './config';
+import Header from './components/header';
+import { connect } from 'react-redux';
+import {login,loginEmail,photoURL,project} from './components/actions';
+import Tutorial from './components/tutorial';
+
 class App extends Component {
   state = {
     authenticated: false,
@@ -73,7 +75,7 @@ class App extends Component {
     function showNav(Nav) {
       return class showNav extends React.Component {
         render() {
-          if (this.props.location.pathname === "/") {
+          if (this.props.location.pathname === "/" || this.props.location.pathname === "/tutorial") {
             return <Nav {...this.props} />
           }else{
             return null;
@@ -85,8 +87,9 @@ class App extends Component {
     return (
       <div>
       <Router> 
-        <div>        
+        <div>       
           <Route exact path="/"  component={Homepage} />  
+          <Route exact path="/tutorial"  component={Tutorial} />  
           <Route path="/cms"     component={CMSWithRestriction}/>            
         </div>
       </Router>
@@ -99,5 +102,4 @@ class App extends Component {
     project:state.project
   })
   export default connect(mapStateToProps)(App);
-
 

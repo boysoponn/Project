@@ -5,8 +5,8 @@ import { Link} from 'react-router-dom';
 import  firebase from 'firebase';
 import LoginTemplate from './loginTemplate';
 import config from '../config';
-import Header from './header';
 import { Preloader, Placeholder } from 'react-preloading-screen';
+import Header from './header';
 class AppWithConnect extends React.Component {
     constructor(props){
         super(props);
@@ -92,10 +92,9 @@ class AppWithConnect extends React.Component {
 
 render() {
     return (
-    <Preloader fadeDuration={300}>
-    <div>
-        <Header/>
+      <Preloader>
         <div> 
+          <Header/>
             <Text>
                 <H1>ProjectCMS</H1>
                 <P>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</P>
@@ -123,11 +122,10 @@ render() {
                         ]}
             />
       </div>
-      </div>
-        <Placeholder>
-        <Preload><Span>Loading...</Span></Preload>
-        </Placeholder>
-    </Preloader>
+              <Placeholder>
+              <Preload><Span>Loading...</Span></Preload>
+              </Placeholder>
+          </Preloader>
     )}}
 
     const mapStateToProps = state => ({
@@ -135,7 +133,6 @@ render() {
     })
 
 export default connect(mapStateToProps)(AppWithConnect);
-
 const Preload = styled.div`
 background-color:#f8f8f8;
 height:100vh;
