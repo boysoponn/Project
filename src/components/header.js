@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 import { withRouter,Link } from 'react-router-dom';
 import * as animationData from './dataHome.json';
 import Lottie from 'react-lottie';
-
+import { Preloader, Placeholder } from 'react-preloading-screen';
 const styles = theme => ({
     button:{
         padding:'0.2vw',
@@ -164,20 +164,21 @@ render() {
 
     const { classes } = this.props;
     return (
-        <div style={{position:'relative',height: '100vh',backgroundColor:'#f8f8f8'}}>
+        <Preloader>
+        <div style={{position:'relative',height:this.props.location.pathname==='/tutorial'?'10vh': '100vh',backgroundColor:'#f8f8f8'}}>
             <Nav style={{position:'absolute',height: '100%'}}>
                 <All>
-                <Content2><Link to="/"><Logo>ProjectCMS</Logo></Link></Content2>
+                <Content2><Link to="/" style={{textDecoration: 'none'}}><Logo>ProjectCMS</Logo></Link></Content2>
                 <Content2><A>|</A></Content2>
                 <Content2>
                     { !this.props.user ? <A onClick={this.onChangeTrue('login')}> Getting Started</A>
                     :
-                    <Link to="/cms"><A>Getting Started</A></Link>
+                    <Link to="/cms" style={{textDecoration: 'none'}}><A>Getting Started</A></Link>
                     }
                 </Content2>
                 <Content2><A>|</A></Content2>
                 <Content2>
-                    <Link to="/tutorial"><A>Tutorial</A></Link>
+                    <Link to="/tutorial" style={{textDecoration: 'none'}}><A>Tutorial</A></Link>
                 </Content2>
                 <Content2><A>|</A></Content2>
                 <Content2>
@@ -202,9 +203,11 @@ render() {
                 }  
                  </All>               
             </Nav>
+            {this.props.location.pathname==='/tutorial'?null:
             <Lottie options={defaultOptions}
               style={{position:'absolute'}}
             />
+            }
             <LoginTemplate
             open={this.state.login}
             recaptcha={this.state.recaptcha}
@@ -236,12 +239,29 @@ render() {
                         ]}
             />
         </div>
+        <Placeholder>
+        <Preload><Span>Loading...</Span></Preload>
+        </Placeholder>
+    </Preloader>
     )}}
 const mapStateToProps = state => ({
     user:state.user,
     photoURL:state.photoURL
     })
 export default withRouter(connect(mapStateToProps)(withStyles(styles)(AppWithConnect)));
+
+const Preload = styled.div`
+background-color:#f8f8f8;
+height:100vh;
+width:100vw;
+`;
+
+const Span = styled.span`
+display:flex;
+justify-content: center;
+align-items: center;
+height:100%;
+`;
 
 const Nav = styled.div`
 position: absolute;

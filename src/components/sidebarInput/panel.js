@@ -49,7 +49,11 @@ const ExpansionPanelDetails = withStyles(theme => ({
 
 const styles = theme => ({
   topic:{
-      fontSize: '1rem'
+      fontSize: '2rem'
+  },
+  tutorial:{
+    fontSize: '1.2rem',
+    fontWeight:'bold'
   },
   blockImg:{
     display: 'flex',
@@ -57,12 +61,28 @@ const styles = theme => ({
     justifyContent: 'center'
   },
   img:{
-    width:'50vw'
+    width:'40vw',
+    marginBottom:'1vh'
+  },
+  label:{
+    paddingTop:'2%',
+    '&:hover': {
+      cursor: 'pointer',
+      color:'#555'
+    },
+  },
+  content:{
+    fontSize:'1rem'
+  },
+  labelActive:{
+    paddingTop:'2%',
+    fontWeight:'500',
+    fontSize:'1rem'
   }
 });
 class CustomizedExpansionPanel extends React.Component {
   state = {
-    expanded: '',
+    expanded: '1',
   };
 
   handleChange = panel => (event, expanded) => {
@@ -70,22 +90,31 @@ class CustomizedExpansionPanel extends React.Component {
       expanded: expanded ? panel : false,
     });
   };
-
+  choose= data =>()=>{
+    this.setState({
+      expanded:data
+    })
+  }
   render() {
     const { expanded } = this.state;
     const { classes } = this.props;
     return (
       <div>
-     {this.props.panel.map((panel) => 
+        <div style={{width:'25%',float:'left',marginTop:'3vh',marginLeft:'2%'}}>
+          <Typography className={classes.tutorial}style={{marginTop:'2%',marginBottom:'2%'}}>Tutorial</Typography>
+        {this.props.panel.map((panel) => 
+          <Typography key={panel._key} onClick={this.choose(panel._key)} className={this.state.expanded===panel._key? classes.labelActive:classes.label}>{panel.label}</Typography>
+        )}
+        </div>
+      <div style={{width:'73%',float:'left',marginBottom:'5vh'}}>
+        {this.props.panel.map((panel) => 
         <ExpansionPanel
           square
-          key={panel._key}
+          key={1}
           expanded={expanded === panel._key}
           onChange={this.handleChange(panel._key)}
+          style={{border:'none'}}
         >
-          <ExpansionPanelSummary>
-          <Typography>{panel.label}</Typography>
-          </ExpansionPanelSummary>
           {panel.data.map((data) =>
           <div key={data._key}>
           {!data.topic?null:           
@@ -95,7 +124,7 @@ class CustomizedExpansionPanel extends React.Component {
           }
           {!data.content?null:
           <ExpansionPanelDetails >
-            <Typography>{data.content} {!data.link?null:<a href={data.link}>{data.linklabel}</a>}</Typography>
+            <Typography className={classes.content}>{data.content} {!data.link?null:<a href={data.link}>{data.linklabel}</a>}</Typography>
           </ExpansionPanelDetails>
           }
           {!data.img?null:
@@ -107,6 +136,7 @@ class CustomizedExpansionPanel extends React.Component {
           )}
         </ExpansionPanel>
      )}
+      </div>
       </div>
     );
   }

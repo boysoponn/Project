@@ -85,10 +85,10 @@ class App extends Component {
     }
     const Navbar = showNav(Header);
     return (
-      <div>
+      <div> 
       <Router> 
-        <div>       
-          <Route exact path="/"  component={Homepage} />  
+        <div> 
+          <Route component={Navbar} />       
           <Route exact path="/tutorial"  component={Tutorial} />  
           <Route path="/cms"     component={CMSWithRestriction}/>            
         </div>
