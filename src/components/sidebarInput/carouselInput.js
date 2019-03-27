@@ -26,7 +26,7 @@ import PickColor from './itemInput/pickColor'
 import InputText from './itemInput/inputText';
 import InputTextarea from './itemInput/inputTextarea';
 import Message from './itemInput/messageWarning';
-
+import {chooseTemplate} from '../actions';
 
 function Transition(props) {
   return <Slide direction="right" {...props} />;
@@ -150,7 +150,7 @@ class NestedList extends React.Component {
   });
 };
   CloseItem = () => {this.setState({ openItem1: false });};
-  handleClick = () => {this.setState(state => ({ open: !state.open }));};
+  handleClick = () => {if(this.props.chooseTemplate==='Carousel'){this.props.dispatch(chooseTemplate("null"))}else{this.props.dispatch(chooseTemplate('Carousel'))}};
   handleClickOpen = (event) => {this.setState({ anchorEl: event.currentTarget, });};
   handleClose = () => {this.setState({ anchorEl: null, });};
   handleClickOpen2 = (event) => {this.setState({ anchorEl2: event.currentTarget, });};
@@ -179,9 +179,9 @@ class NestedList extends React.Component {
               <InboxIcon />
             </ListItemIcon>
             <ListItemText inset primary="Image Slide" />
-            {this.state.open ? <ExpandLess /> : <ExpandMore />}
+            {this.props.chooseTemplate ==='Carousel'? <ExpandLess /> : <ExpandMore />}
           </ListItem>
-          <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+          <Collapse in={this.props.chooseTemplate ==='Carousel'?true:false} timeout="auto" unmountOnExit>
             <List component="div" disablePadding={false}>
               <ListItem  className={classes.nested}>
               <InputText 
@@ -421,6 +421,7 @@ const mapStateToProps = state => ({
   tabs:state.tabs,
   user:state.user,
   email:state.email,
+  chooseTemplate:state.chooseTemplate
 })
 export default connect(mapStateToProps)(withStyles(styles)(NestedList));
 

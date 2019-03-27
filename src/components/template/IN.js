@@ -16,9 +16,13 @@ import GalleryNo4 from './Gallery/GalleryNo4';
 import FooterNo1 from './Footer/FooterNo1';
 import FooterNo2 from './Footer/FooterNo2';
 import FooterNo3 from './Footer/FooterNo3';
+import { connect } from 'react-redux';
+import {chooseTemplate} from '../actions';
 
 class IN extends React.Component {
-
+  choose=name=>()=>{
+    this.props.dispatch(chooseTemplate(name))
+  }
   render() {
   const End={
     height:300,
@@ -121,17 +125,17 @@ class IN extends React.Component {
   }
 return (
       <div style={{height:'100%'}}> 
-      {menubar}  
-      {Hero}
-      {Carousel}
-      {Gallery}
-      {Footer}
+      <div onClick={this.choose('menubar')}>{menubar}  </div>
+      <div onClick={this.choose('Hero')}>{Hero}</div>
+      <div onClick={this.choose('Carousel')}>{Carousel}</div>
+      <div onClick={this.choose('Gallery')}>{Gallery}</div>
+      <div onClick={this.choose('Footer')}>{Footer}</div>
       <div style={End}></div>
       </div>
 );
   }
 }
-
-
-
-export default IN;
+const mapStateToProps = state => ({
+chooseTemplate:state.chooseTemplate
+})
+export default connect(mapStateToProps)(IN);

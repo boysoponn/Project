@@ -63,7 +63,6 @@ class NestedList extends React.Component {
                 :
                 <ContentIcon />
               }
-              
             </ListItemIcon>
             <ListItemText inset primary={this.props.label} />
             {this.props.open ?  <ExpandLess /> : <ExpandMore />}

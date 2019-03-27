@@ -26,6 +26,7 @@ import Dropdown from './itemInput/dropdown'
 // import Selection from './itemInput/selection';
 import InputText from './itemInput/inputText';
 import Message from './itemInput/messageWarning';
+import {chooseTemplate} from '../actions';
 
 function Transition(props) {
   return <Slide direction="right" {...props} />;
@@ -208,7 +209,7 @@ class CarouselInput extends React.Component {
   };
 
   CloseItem =name=> () => {this.setState({ [name]: false });};
-  handleClick = () => {this.setState(state => ({ open: !state.open }));};
+  handleClick = () => {if(this.props.chooseTemplate==='Footer'){this.props.dispatch(chooseTemplate("null"))}else{this.props.dispatch(chooseTemplate('Footer'))}};
   handleClickOpen =name=> (event) => {this.setState({ [name]: event.currentTarget, });};
   handleClose =name=> () => {this.setState({ [name]: null, });};
   onChangeFalse= name=>()=>{this.setState({[name]:false})};
@@ -236,9 +237,9 @@ class CarouselInput extends React.Component {
               <InboxIcon />
             </ListItemIcon>
             <ListItemText inset primary="Footer" />
-            {this.state.open ? <ExpandLess /> : <ExpandMore />}
+            {this.props.chooseTemplate ==='Footer'? <ExpandLess /> : <ExpandMore />}
           </ListItem>
-          <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+          <Collapse in={this.props.chooseTemplate ==='Footer'?true:false} timeout="auto" unmountOnExit>
             <List component="div" disablePadding={true}>
               <ListItem  className={classes.nested}>
               <InputText 
@@ -522,7 +523,8 @@ const mapStateToProps = state => ({
   urlImage: state.urlImage ,
   tabs:state.tabs,
   user:state.user,
-  email:state.email
+  email:state.email,
+  chooseTemplate:state.chooseTemplate
 })
 export default connect(mapStateToProps)(withStyles(styles)(CarouselInput));
 

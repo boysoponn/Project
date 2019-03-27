@@ -27,7 +27,7 @@ import ChooseLink from './itemInput/chooseLink';
 import SaveIcon from '@material-ui/icons/Save';
 import Dropdown from './itemInput/dropdown';
 import Message from './itemInput/messageWarning';
-
+import {chooseTemplate} from '../actions';
 function Transition(props) {
   return <Slide direction="right" {...props} />;
 }
@@ -172,7 +172,7 @@ class NestedList extends React.Component {
   this.setState({messageSave:true,openItem1:false})
   };
   onChangeFalse= name=>()=>{this.setState({[name]:false})};
-  handleClick = () => {this.setState(state => ({ open: !state.open }));};
+  handleClick = () => {if(this.props.chooseTemplate==='Gallery'){this.props.dispatch(chooseTemplate("null"))}else{this.props.dispatch(chooseTemplate('Gallery'))}};
   handleClickOpen =name=> (event) => {this.setState({ [name]: event.currentTarget, });};
   handleClose =name=> () => {this.setState({ [name]: null, });};
   CloseItem = () => {this.setState({ openItem1: false });};
@@ -200,10 +200,10 @@ class NestedList extends React.Component {
               <InboxIcon />
             </ListItemIcon>
             <ListItemText inset primary="Gallery" />
-            {this.state.open ? <ExpandLess /> : <ExpandMore />}
+            {this.props.chooseTemplate ==='Gallery'? <ExpandLess /> : <ExpandMore />}
           </ListItem>
 
-          <Collapse in={this.state.open} timeout="auto" unmountOnExit>    
+          <Collapse in={this.props.chooseTemplate ==='Gallery'?true:false} timeout="auto" unmountOnExit>    
             <List component="div" disablePadding={false}>
               <ListItem  className={classes.nested}>
               <InputText 
@@ -461,7 +461,8 @@ const mapStateToProps = state => ({
   urlImage: state.urlImage ,
   tabs:state.tabs,
   user:state.user,
-  email:state.email
+  email:state.email,
+  chooseTemplate:state.chooseTemplate
 })
 
 export default connect(mapStateToProps)(withStyles(styles)(NestedList));

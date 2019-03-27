@@ -17,7 +17,7 @@ import PickColor from './itemInput/pickColor'
 import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button';
 import Popover from '@material-ui/core/Popover';
-// import {chooseTemplate} from './../../components/actions'
+import {chooseTemplate} from '../actions';
 import Text from './itemInput/Text'
 const styles = theme => ({
   root: {
@@ -49,9 +49,7 @@ class NestedList extends React.Component {
   //   }
   // }
 
-  handleClick = () => {
-    this.setState(state => ({ open: !state.open }));
-  };
+  handleClick = () => {if(this.props.chooseTemplate==='Hero'){this.props.dispatch(chooseTemplate("null"))}else{this.props.dispatch(chooseTemplate('Hero'))}};
   
   open=name=>(e)=>{this.setState({[name]:e.currentTarget})}
   close=name=>()=>{this.setState({[name]:null})}
@@ -70,9 +68,9 @@ class NestedList extends React.Component {
               <InboxIcon />
             </ListItemIcon>
             <ListItemText inset primary="Cover" />
-            {this.state.open ? <ExpandLess /> : <ExpandMore />}
+            {this.props.chooseTemplate ==='Hero' ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
-          <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+          <Collapse in={this.props.chooseTemplate ==='Hero'?true:false} timeout="auto" unmountOnExit>
             <List component="div" disablePadding={false}>
               <ListItem  className={classes.nested}>
               <InputText 

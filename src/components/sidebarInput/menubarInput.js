@@ -26,6 +26,7 @@ import PickColor from './itemInput/pickColor'
 import _ from 'lodash';
 import InputText from './itemInput/inputText';
 import Message from './itemInput/messageWarning';
+import {chooseTemplate} from '../actions';
 
 function Transition(props) {
   return <Slide direction="right" {...props} />;
@@ -155,7 +156,7 @@ onChangeTypeGroup=menubar=>(e)=>{
   });
  }
   CloseItem = () => {this.setState({ openItem1: false });};
-  handleClick = () => {this.setState(state => ({ open: !state.open }));};
+  handleClick = () => {if(this.props.chooseTemplate==='menubar'){this.props.dispatch(chooseTemplate("null"))}else{this.props.dispatch(chooseTemplate('menubar'))}};
   handleClickOpen = (event) => {this.setState({ anchorEl: event.currentTarget, });};
   handleClose = () => {this.setState({ anchorEl: null, });};
   handleClickOpen2 = (event) => {this.setState({ anchorEl2: event.currentTarget, });};
@@ -187,9 +188,9 @@ onChangeTypeGroup=menubar=>(e)=>{
               <InboxIcon />
             </ListItemIcon>
             <ListItemText inset primary="Menubar" />
-            {this.state.open ? <ExpandLess /> : <ExpandMore />}
+            {this.props.chooseTemplate ==='menubar'? <ExpandLess /> : <ExpandMore />}
           </ListItem>
-          <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+          <Collapse in={this.props.chooseTemplate ==='menubar'?true:false} timeout="auto" unmountOnExit>
           <List component="div" disablePadding={false}>
             <ListItem className={classes.nested}>
             <Button variant="contained" onClick={this.handleClickOpen} component="span" color="secondary" >
@@ -343,7 +344,8 @@ const mapStateToProps = state => ({
   urlImage: state.urlImage ,
   tabs:state.tabs,
   user:state.user,
-  email:state.email
+  email:state.email,
+  chooseTemplate:state.chooseTemplate
 })
 export default connect(mapStateToProps)(withStyles(styles)(CarouselInput));
 
