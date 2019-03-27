@@ -71,8 +71,8 @@ class GalleryNo2 extends React.Component {
 							</div>
 							{post.link  && post.link !=="#" ? 
 							post.link.search("http") === -1 && post.linkTarget !== '_blank'?
-							<Link to={post.link}><A></A></Link>
-							:<A href={post.link} target={post.linkTarget}></A>
+							<Link><A></A></Link>
+							:<A></A>
 							:null
 							}
 						</Figcaption>			

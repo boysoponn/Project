@@ -50,7 +50,7 @@ constructor(props){
               {this.props.footerItem.map((footer)=>
                 footer.link  && footer.link !=="#" ?
                 footer.link.search("http") === -1 && footer.linkTarget !== '_blank'?
-                  <Link to={footer.link} key={footer._key}
+                  <Link key={footer._key}
                   style={{
                     color:footer.Color,
                     fontFamily:footer.FontFamily,
@@ -59,7 +59,7 @@ constructor(props){
                     fontSize:'calc('+footer.FontSize+ 'vw / 15 )',
                  }}
                   >{footer.label}{this.props.footerItem.length===1?null:<span> | </span>}</Link>  
-                  :<a href={footer.link} target={footer.linkTarget} key={footer._key}
+                  :<a key={footer._key}
                   style={{
                     color:footer.Color,
                     fontFamily:footer.FontFamily,
@@ -83,13 +83,13 @@ constructor(props){
                 footer.Status === 'none' ? null:
                 footer.link  && footer.link !=="#" ?
                 footer.link.search("http") === -1 && footer.linkTarget !== '_blank'?
-                <Link to={footer.link} style={{padding:'1%'}} key={footer._key} ><I className={footer.label}
+                <Link style={{padding:'1%'}} key={footer._key} ><I className={footer.label}
                 color={footer.Color}
                 FontStyle={footer.FontStyle}
                 FontSize={'calc('+footer.FontSize+ 'vw / 15 )'}
                 hover={footer.hover}
                 ></I></Link>
-                :<a href={footer.link} style={{padding:'1%'}} key={footer._key} target={footer.linkTarget} ><I className={footer.label}
+                :<a  style={{padding:'1%'}} key={footer._key}  ><I className={footer.label}
                 color={footer.Color}
                 FontStyle={footer.FontStyle}
                 FontSize={'calc('+footer.FontSize+ 'vw / 15 )'}

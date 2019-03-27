@@ -97,7 +97,7 @@ class HeroNo2 extends React.Component {
   if(this.props.heroButtonLink !== "#"){
     checkButton = 
     <ScrollAnimation style={buttonAnimate} className={this.props.heroButtonAnimate}>
-    <a href={this.props.heroButtonLink} target={this.props.heroButtonLinkTarget}>{button}</a>
+    <a>{button}</a>
     </ScrollAnimation > 
   }else{
     checkButton = 

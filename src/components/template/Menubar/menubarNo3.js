@@ -29,7 +29,7 @@ constructor(props){
                 {this.props.menubarItem.map((menubar) =>
                     menubar.link  && menubar.link !=="#" ?
                     menubar.link.search("http") === -1 && menubar.linkTarget !== '_blank'?
-                    <li key={menubar._key} style={{fontSize:'calc('+menubar.FontSize+ 'vw / 10 )',}} className={"nav__list-item"+active}><Link to={menubar.link}
+                    <li key={menubar._key} style={{fontSize:'calc('+menubar.FontSize+ 'vw / 10 )',}} className={"nav__list-item"+active}><Link 
                     style={{
                         color:menubar.Color,
                         fontFamily:menubar.FontFamily,
@@ -38,7 +38,7 @@ constructor(props){
                      }}>
                     {menubar.label}</Link></li>
                     : 
-                    <li key={menubar._key} style={{fontSize:'calc('+menubar.FontSize+ 'vw / 10 )'}} className={"nav__list-item"+active}><a href={menubar.link} target={menubar.linkTarget}
+                    <li key={menubar._key} style={{fontSize:'calc('+menubar.FontSize+ 'vw / 10 )'}} className={"nav__list-item"+active}><a 
                     style={{
                         color:menubar.Color,
                         fontFamily:menubar.FontFamily,

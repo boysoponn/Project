@@ -19,7 +19,7 @@ class Menubar extends React.Component {
         <Menu.Item key={menubar._key}>
           {menubar.link && menubar.link !=="#" ?
           menubar.link.search("http") === -1 && menubar.linkTarget !== '_blank'?
-          <Link to={menubar.link} rel="noopener noreferrer"
+          <Link  rel="noopener noreferrer"
           style={{
             color:menubar.Color,
             animationDuration: menubar.Duration,
@@ -31,7 +31,7 @@ class Menubar extends React.Component {
          }}
           >{menubar.label}</Link>
           :
-          <a href={menubar.link} target={menubar.linkTarget} rel="noopener noreferrer"
+          <a target={menubar.linkTarget} rel="noopener noreferrer"
           style={{
             color:menubar.Color,
             animationDuration: menubar.Duration,
