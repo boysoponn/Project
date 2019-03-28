@@ -31,6 +31,7 @@ import Avatar from '@material-ui/core/Avatar';
 import avatarImage from './image/avatar.png'
 import CreateProject from './loginTemplate'
 import {Helmet} from "react-helmet";
+import styled from 'styled-components'
 
 const drawerWidth = 320;
 
@@ -111,7 +112,7 @@ const styles = theme => ({
   },
   grow: {
     flexGrow: 1,
-    fontSize:'1vw',
+    fontSize:'1rem',
     color:"#000000",
   },
   rightIcon: {
@@ -570,7 +571,7 @@ componentWillReceiveProps(nextProps){
                         ]}
       /> 
       <div className={classes.root} >
-
+      <Desktop>
         <AppBar
           position="absolute"
           className={classNames(classes.appBar, this.state.open && classes.appBarShift)}
@@ -582,19 +583,48 @@ componentWillReceiveProps(nextProps){
               className={classNames(classes.menuButton, this.state.open && classes.hide)}
             >
             <MenuIcon />
-            </IconButton>   
-            <Typography variant="title"  className={classes.grow} >
-            <SettingProject style={{fontSize:'1vw',cursor: 'pointer',marginRight: '0.5vw'}} onClick={this.createProject}/>
+            </IconButton>    
+            <Typography variant="title"  className={classes.grow}>
+            <SettingProject style={{cursor: 'pointer',marginRight: '0.5vw',fontSize:'1rem'}} onClick={this.createProject}/>
               Project : {this.props.project.replace(/-/g,' ')}
             </Typography>
-            <Typography variant="title" style={{fontSize:'1vw',color:"#000000"}} >
+            <Typography variant="title" style={{fontSize:'1rem',color:"#000000"}} >
               Welcome : {this.props.user}
-            </Typography>
+            </Typography>            
             <Avatar alt="Remy Sharp" src={this.props.photoURL? this.props.photoURL:avatarImage} className={classes.bigAvatar} />
             <Button variant="contained" color="primary" className={classes.button} onClick={this.popupLogout}>Logout
             <ExitIcon className={classes.rightIcon}/>
             </Button>
-            <Popup
+          </Toolbar>            
+        </AppBar>
+        </Desktop>
+        <Mobile>
+        <AppBar
+          position="absolute"
+          className={classNames(classes.appBar, this.state.open && classes.appBarShift)}
+        >
+        {this.state.open?null:
+          <Toolbar>
+            <IconButton
+              aria-label="Open drawer"
+              onClick={this.handleDrawerOpen}
+              className={classNames( this.state.open && classes.hide)}
+            >
+            <MenuIcon />
+            </IconButton>    
+            <Typography variant="title"  className={classes.grow} style={{fontSize:'0.7rem'}}>
+            <SettingProject style={{cursor: 'pointer',marginRight: '0.5vw',fontSize:'0.7rem'}} onClick={this.createProject}/>
+              Project : {this.props.project.replace(/-/g,' ')}
+            </Typography>          
+            <Avatar alt="Remy Sharp" src={this.props.photoURL? this.props.photoURL:avatarImage} className={classes.bigAvatar} />
+            <Button variant="contained" color="primary" className={classes.button} onClick={this.popupLogout}>Logout
+            <ExitIcon className={classes.rightIcon}/>
+            </Button>
+          </Toolbar> 
+        }           
+        </AppBar>
+        </Mobile>
+          <Popup
               open={this.state.popupLogout}
               close={this.popupLogoutClose}
               title="Logout"
@@ -602,9 +632,6 @@ componentWillReceiveProps(nextProps){
               yes={this.logout}
               no={this.popupLogoutClose}
             />
-          </Toolbar>
-        </AppBar>
-
         <Drawer
           variant="permanent"
           classes={{
@@ -670,3 +697,17 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(CMS));
+
+const Desktop = styled.div`
+display:block;
+@media screen and (max-width: 600px) {
+	display: none;
+}
+`; 
+
+const Mobile = styled.div`
+display:none;
+@media screen and (max-width: 600px) {
+	display: block;
+}
+`;
