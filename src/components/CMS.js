@@ -24,7 +24,7 @@ import CarouselInput from './sidebarInput/carouselInput';
 import MenubarInput from './sidebarInput/menubarInput';
 import GalleryInput from './sidebarInput/galleryInput';
 import FooterInput from './sidebarInput/footerInput';
-import { checkTab,project} from './actions';
+import { checkTab,project,chooseTemplate} from './actions';
 import BlockInput from './template/blockInput';
 import Popup from './sidebarInput/itemInput/popup'
 import Avatar from '@material-ui/core/Avatar';
@@ -282,8 +282,6 @@ componentWillReceiveProps(nextProps){
           galleryDescriptionColor:data.galleryContent.descriptionColor,
           // isLoaded: false
         }); 
-      }else{
-          this.setState({menubar:'none',footer:'none'})        
       }
   });
 
@@ -382,17 +380,18 @@ componentWillReceiveProps(nextProps){
     this.props.dispatch(checkTab(false));
 
   }
-  openClose =id=> () => {this.setState({open:true,[id.name]:!id.state})};
+  openClose =id=> () => {this.setState({open:true,[id.name]:!id.state,[id.close1]:false,[id.close2]:false});this.props.dispatch(chooseTemplate("null"));};
   popupLogout = () => {this.setState({ popupLogout: true });};
   popupLogoutClose = () => {this.setState({ popupLogout: false });};
   logout =() => {config.auth().signOut();window.location.reload(); };
   handleDrawerOpen = () => {this.setState({ open: true });}
-  handleDrawerClose = () => {this.setState({  open: false ,openHeader:false,openContent:false,openFooter:false,});};
+  handleDrawerClose = () => {this.props.dispatch(chooseTemplate("null"));this.setState({  open: false ,openHeader:false,openContent:false,openFooter:false,});};
   onChangeColor = name=> (color) => {this.setState({  [name]: color.hex });};
   onChangeChecked = name=> (e) => {this.setState({  [name]: e.target.checked });};  
   onChangeValue = name=> (e) => {this.setState({ [name]: e.target.value });};
   onChangeProject = name=> (e) => {this.setState({ [name]: e.target.value.replace(/[`~!@#$%^&*()_|+\-=÷¿?;:'",.<>\{\}\[\]\\\/]/gi,'')})};
   popupClose = name=> () => {this.setState({ [name]: false });};
+  t=()=>{if(this.props.chooseTemplate!=="null"&&!this.state.open){this.setState({open:true})}}
   render() {
     const { classes, theme } = this.props;
     let heroInput;
@@ -554,6 +553,7 @@ componentWillReceiveProps(nextProps){
     
     return (
       <div> 
+        {this.t()}
       <Helmet>
       <title>{this.props.project}</title>
       {this.state.font.map((font => (
@@ -651,22 +651,22 @@ componentWillReceiveProps(nextProps){
           <Divider />
             <List disablePadding={true}>
             <BlockInput
-            blockInput={this.openClose({name:'openHeader',state:this.state.openHeader})}
-            open={this.state.openHeader}
+            blockInput={this.openClose({name:'openHeader',state:this.state.openHeader,close1:'openContent',close2:'openFooter'})}
+            open={this.props.chooseTemplate==="menubar"?true: this.state.openHeader?true:false}
             label='Header'
             content1={menubarInput}
             />
             <BlockInput
-            blockInput={this.openClose({name:'openContent',state:this.state.openContent})}
-            open={this.state.openContent}
+            blockInput={this.openClose({name:'openContent',state:this.state.openContent,close1:'openHeader',close2:'openFooter'})}
+            open={this.props.chooseTemplate==="Carousel" || this.props.chooseTemplate==="Hero" ||this.props.chooseTemplate==="Gallery"?true: this.state.openContent?true:false}
             label='Content'
             content1={heroInput}
             content2={carouselInput}
             content3={galleryInput}
             />
             <BlockInput
-            blockInput={this.openClose({name:'openFooter',state:this.state.openFooter})}
-            open={this.state.openFooter}
+            blockInput={this.openClose({name:'openFooter',state:this.state.openFooter,close1:'openContent',close2:'openHeader'})}
+            open={this.props.chooseTemplate==="Footer"?true: this.state.openFooter?true:false}
             label='Footer'
             content1={footerInput}
             />
@@ -697,7 +697,8 @@ const mapStateToProps = state => ({
   user:state.user,
   email:state.email,
   photoURL:state.photoURL,
-  project:state.project
+  project:state.project,
+  chooseTemplate:state.chooseTemplate
 })
 
 export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(CMS));

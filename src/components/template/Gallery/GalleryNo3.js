@@ -71,7 +71,7 @@ class GalleryNo2 extends React.Component {
 							</div>
 							{post.link  && post.link !=="#" ? 
 							post.link.search("http") === -1 && post.linkTarget !== '_blank'?
-							<Link ><A></A></Link>
+							<a ><A></A></a>
 							:<A></A>
 							:null
 							}

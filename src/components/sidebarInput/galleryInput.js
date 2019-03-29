@@ -263,7 +263,7 @@ class NestedList extends React.Component {
               <List component="div" disablePadding={false}>
             <ListItem className={classes.nested}>
             <Button variant="contained" onClick={this.handleClickOpen('anchorEl2')} component="span" color="secondary" >
-            Cover Setting
+            Gallery Setting
             </Button>
             <Popover
               className={classes.popover}
@@ -296,7 +296,7 @@ class NestedList extends React.Component {
             </List>
           <ListItem className={classes.nested}>
             <Button  variant="contained" onClick={this.handleClickOpen('anchorEl')} component="span" color="secondary" className={classes.button}>
-             gallery Items
+             Gallery Items
             </Button>
             <Popover
               className={classes.popover}

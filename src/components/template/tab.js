@@ -874,7 +874,7 @@ class TabWebsite extends React.Component {
       {this.props.undefinedOneTab !== true?
       <div>
       <Button variant="contained" color="secondary" className={classes.button} onClick={this.popup('popupDelete')}>Delete<DeleteIcon className={classes.rightIcon}/></Button>
-      <a href={'https://yoursitecms.tk'+'/'+this.props.project+'/'+this.props.pathName} style={{color:'#ffffff'}} target="_blank"><Button variant="contained" color="secondary" style={{float:'right'}} className={classes.button} >Your Page<PreviewIcon className={classes.rightIcon}/></Button></a>
+      <a href={'https://yoursitecms.tk'+'/'+this.props.project+'/'+this.props.pathName} style={{color:'#ffffff'}} target="_blank"><Button variant="contained" color="secondary" style={{float:'right',width:140}} className={classes.button} >Your Page<PreviewIcon className={classes.rightIcon}/></Button></a>
       </div>
       :null
       }
