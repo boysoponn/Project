@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import '../css/menu.css';
 import styled from 'styled-components'
 import  firebase from 'firebase';
 import LoginTemplate from './loginTemplate'
@@ -13,10 +14,10 @@ import { withRouter,Link } from 'react-router-dom';
 import * as animationData from './dataHome.json';
 import Lottie from 'react-lottie';
 import { Preloader, Placeholder } from 'react-preloading-screen';
+import { chooseTemplate,checkTab } from './actions';
 const styles = theme => ({
     button:{
-        padding:'0.2vw',
-        fontSize: '0.8vw'
+        width:'100px'
     },
     GettingStarted:{
         color:'#464646',
@@ -39,6 +40,10 @@ class AppWithConnect extends React.Component {
             recaptcha:false,
             valueRecaptcha:''
         }
+    }
+    componentDidMount(){
+        this.props.dispatch(checkTab(false));
+        this.props.dispatch(chooseTemplate("null"));
     }
     onChangeTrue=name=>()=>{
         this.setState({
@@ -168,6 +173,7 @@ render() {
         <div style={{position:'relative',height:this.props.location.pathname==='/tutorial'?'10vh': '100vh',backgroundColor:'#f8f8f8'}}>
             <Nav style={{position:'absolute',height: '100%'}}>
                 <All>
+                <NavDesktop>
                 <Content2><Link to="/" style={{textDecoration: 'none'}}><Logo>ProjectCMS</Logo></Link></Content2>
                 <Content2><A>|</A></Content2>
                 <Content2>
@@ -184,6 +190,7 @@ render() {
                 <Content2>
                     <A onClick={this.onChangeTrue('register')}>Register</A>
                 </Content2> 
+                </NavDesktop> 
                 {this.props.user ?
                 <div>
                     <Content> 
@@ -201,8 +208,27 @@ render() {
                         <Button variant="contained" color="primary" className={classes.button} onClick={this.onChangeTrue('login')}>Login<ExitIcon className={classes.rightIcon}/></Button>
                     </Content>  
                 }  
-                 </All>               
+                 </All>              
             </Nav>
+            <NavMobile>
+            <nav role="navigation">
+            <div id="menuToggle">
+                <input type="checkbox" />
+                <span></span>
+                <span></span>
+                <span></span>
+                <ul id="menu">
+                <Link to="/" ><li>ProjectCMS</li></Link>
+                { !this.props.user ? <a onClick={this.onChangeTrue('login')}><li> Getting Started</li></a>
+                :
+                <Link to="/cms" style={{textDecoration: 'none'}}><li>Getting Started</li></Link>
+                }
+                <Link to="/tutorial" style={{textDecoration: 'none'}}><li>Tutorial</li></Link>
+                <a onClick={this.onChangeTrue('register')}><li>Register</li></a>
+                </ul>
+            </div>
+            </nav>
+            </NavMobile>
             {this.props.location.pathname==='/tutorial'?null:
             <Lottie options={defaultOptions}
               style={{position:'absolute'}}
@@ -269,6 +295,18 @@ padding: 2.5vh 2vw;
 width: 100%;
 z-index: 1;
 `;
+const NavDesktop = styled.div`
+@media screen and (max-width: 600px) {
+	display: none;
+}
+`;
+const NavMobile = styled.div`
+display:none;
+position:absolute;
+@media screen and (max-width: 600px) {
+	display: block;
+}
+`;
 
 const All = styled.div`
 float: left;
@@ -314,5 +352,8 @@ color:#464646;
 font-size:1vw;
 margin-top:1vh;
 font-weight: 500;
+@media screen and (max-width: 600px) {
+	display: none;
+}
 `;
 

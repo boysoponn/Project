@@ -32,6 +32,7 @@ import avatarImage from './image/avatar.png'
 import CreateProject from './loginTemplate'
 import {Helmet} from "react-helmet";
 import styled from 'styled-components'
+import {Link } from 'react-router-dom';
 
 const drawerWidth = 320;
 
@@ -595,6 +596,9 @@ componentWillReceiveProps(nextProps){
             <Button variant="contained" color="primary" className={classes.button} onClick={this.popupLogout}>Logout
             <ExitIcon className={classes.rightIcon}/>
             </Button>
+            <Link to='/'><Button variant="contained" color="secondary" className={classes.button}>Home
+            <ExitIcon className={classes.rightIcon}/>
+            </Button></Link>
           </Toolbar>            
         </AppBar>
         </Desktop>

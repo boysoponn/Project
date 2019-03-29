@@ -24,6 +24,8 @@ import AddIcon from '@material-ui/icons/AddCircle';
 import EditIcon from '@material-ui/icons/Create';
 import Popover from '@material-ui/core/Popover';
 import ListItem from '@material-ui/core/ListItem';
+import {Link } from 'react-router-dom';
+import ExitIcon from '@material-ui/icons/ExitToApp';
 const styles = theme => ({
   button:{
     width: 100,
@@ -39,11 +41,6 @@ const styles = theme => ({
   },
   rightIcon: {
     marginLeft:5,
-  },
-  buttoncenter: {
-    margin: '1% 40%',
-    width: '20%',
-    fontSize: '0.8vw'
   },
 });
 function Transition(props) {
@@ -732,16 +729,21 @@ class TabWebsite extends React.Component {
                         {_key:1,label:'Project Name',type:'text',value:this.state.project,onChange:this.onChangeProject('project')}
                         ]}
       />
+      <Buttoncenter>
       {this.props.project === ''?
-      <Button variant="contained" color="secondary" className={classes.buttoncenter} onClick={this.createProject}>Create Project Name</Button>
+      <Button variant="contained" color="secondary" onClick={this.createProject}>Create Project Name</Button>
       :
       this.props.undefinedOneTab == true?
-      <Button variant="contained" color="secondary" className={classes.buttoncenter} onClick={this.addGlobal}>Start Project</Button>
+      <Button variant="contained" color="secondary" onClick={this.addGlobal}>Start Project</Button>
       :null
       }
+      </Buttoncenter>
       {this.props.undefinedOneTab !== true?
       <Moblie>
       <Button variant="contained" onClick={this.popoverOpen} component="span" color="secondary" >Page <SettingIcon className={classes.rightIcon} /></Button>
+      <Link to='/'><Button variant="contained" color="secondary" className={classes.button}>Home
+            <ExitIcon className={classes.rightIcon}/>
+      </Button></Link>
       <Popover
         className={classes.popover}
         open={open2}
@@ -949,4 +951,10 @@ const Moblie = styled.div`
     display:block;
     margin: 2vh 0 2vh;
   }
+`;
+
+const Buttoncenter = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
 `;
