@@ -98,6 +98,8 @@ class AppWithConnect extends React.Component {
         this.setState({
             recaptcha:false,
             valueRecaptcha:'',
+            password:'',
+            email:''
         })
     }
     loginGmail = () => {
@@ -142,16 +144,27 @@ class AppWithConnect extends React.Component {
         alert("coming soon")
     }
     signUp=()=>{
-        config.auth().createUserWithEmailAndPassword(this.state.email,this.state.password).then(function(user) {      
-        }, function(error) {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          if (errorCode === 'auth/weak-password') {
-              alert('The password is too weak.');
-          } else {
-              alert(errorMessage);
-          }
-      });
+        config.auth().createUserWithEmailAndPassword(this.state.email,this.state.password).then(() => {
+            this.setState({
+                register:false,
+            })
+        })
+        .catch(function(error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+        
+            if (errorCode === 'auth/wrong-password') {
+                alert('Wrong password.');
+            } else {
+                alert(errorMessage);         
+            }
+        });
+        this.setState({
+            recaptcha:false,
+            valueRecaptcha:'',
+            password:'',
+            email:''
+        })
     }
     logout =() => {config.auth().signOut();window.location.reload(); };
     
