@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as  Router, Route, Redirect} from 'react-router-dom';
 import CMS from './components/CMS';
-import Homepage from './components/homepage';
 import config from './config';
 import Header from './components/header';
 import { connect } from 'react-redux';

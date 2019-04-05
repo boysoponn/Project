@@ -10,14 +10,20 @@ import ExitIcon from '@material-ui/icons/ExitToApp';
 import Button from '@material-ui/core/Button';
 import { withStyles  } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
-import { withRouter,Link } from 'react-router-dom';
-import * as animationData from './dataHome.json';
+import { withRouter,Link,Redirect } from 'react-router-dom';
+import * as animationData from './data.json';
 import Lottie from 'react-lottie';
 import { Preloader, Placeholder } from 'react-preloading-screen';
 import { chooseTemplate,checkTab } from './actions';
 const styles = theme => ({
     button:{
         width:'100px'
+    },
+    button2:{
+        width:200,
+        position: 'absolute',
+        bottom: '15%',
+        zIndex:3
     },
     GettingStarted:{
         color:'#464646',
@@ -167,7 +173,8 @@ class AppWithConnect extends React.Component {
         })
     }
     logout =() => {config.auth().signOut();window.location.reload(); };
-    
+    gocms=()=>{this.setState({redirect:true})}
+    redirect=()=>{if(this.state.redirect){return <Redirect to='/cms'/>}}
 
 render() {
     const defaultOptions = {
@@ -183,7 +190,17 @@ render() {
     const { classes } = this.props;
     return (
         <Preloader>
+        
         <div style={{position:'relative',height:this.props.location.pathname==='/tutorial'?'10vh': '100vh',backgroundColor:'#f8f8f8'}}>
+        {this.redirect()}
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+        { this.props.location.pathname==='/tutorial'?null:
+        !this.props.user ?
+        <Button variant="contained" color="secondary" className={classes.button2} onClick={this.onChangeTrue('login')}>Getting Started</Button>
+        :
+        <Button variant="contained" color="primary" className={classes.button2} onClick={this.gocms}>Getting Started</Button>
+        }
+        </div> 
             <Nav style={{position:'absolute',height: '100%'}}>
                 <All>
                 <NavDesktop>
@@ -231,12 +248,12 @@ render() {
                 <span></span>
                 <span></span>
                 <ul id="menu">
-                <Link to="/" ><li>ProjectCMS</li></Link>
+                {this.props.location.pathname!=='/'?<Link to="/" ><li>ProjectCMS</li></Link>:null}
                 { !this.props.user ? <a onClick={this.onChangeTrue('login')}><li> Getting Started</li></a>
                 :
                 <Link to="/cms" style={{textDecoration: 'none'}}><li>Getting Started</li></Link>
                 }
-                <Link to="/tutorial" style={{textDecoration: 'none'}}><li>Tutorial</li></Link>
+                {this.props.location.pathname!=='/tutorial'?<Link to="/tutorial" style={{textDecoration: 'none'}}><li>Tutorial</li></Link>:null}
                 <a onClick={this.onChangeTrue('register')}><li>Register</li></a>
                 </ul>
             </div>
@@ -288,6 +305,7 @@ const mapStateToProps = state => ({
     photoURL:state.photoURL
     })
 export default withRouter(connect(mapStateToProps)(withStyles(styles)(AppWithConnect)));
+
 
 const Preload = styled.div`
 background-color:#f8f8f8;
