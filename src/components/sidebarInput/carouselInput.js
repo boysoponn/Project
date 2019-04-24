@@ -229,7 +229,7 @@ class NestedList extends React.Component {
               onChangeAnimate={this.props.carouselOnChangeDescriptionAnimate} 
               onChangePosition={this.props.carouselOnChangeDescriptionPosition}              
               onChangeDuration={this.props.carouselOnChangeDescriptionDuration}            
-              onChangeFontFamily={this.props.carouselnOnChangeDescriptioFontFamily}
+              onChangeFontFamily={this.props.carouselOnChangeDescriptionFontFamily}
               onChangeFontSize={this.props.carouselOnChangeDescriptionFontSize}                           
               onChangeFontWeight={this.props.carouselOnChangeDescriptionFontWeight}
               onChangeFontStyle={this.props.carouselOnChangeDescriptionFontStyle}              

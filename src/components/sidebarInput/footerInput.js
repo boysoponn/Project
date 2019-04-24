@@ -215,7 +215,14 @@ class CarouselInput extends React.Component {
   onChangeFalse= name=>()=>{this.setState({[name]:false})};
   onChangeColor = name=> (color) => {this.setState({  [name]: color.hex });};
   onChangeValue = name=> (e) => {this.setState({ [name]: e.target.value });};
-
+  onChangeValuelabel=(e)=>{
+    let replace = e.target.value.replace(/"/gi,'')
+    let replace2 = replace.replace("<i class=",'')
+    let replace3 = replace2.replace("></i>",'')
+    this.setState({
+      label:replace3
+    })
+  }
   render() {
     const pickColor={fontSize: '14px',marginLeft:10,margin: 0};
     const { classes } = this.props;
@@ -486,7 +493,7 @@ class CarouselInput extends React.Component {
               linkTo={'https://fontawesome.com/icons?d=gallery'}
               showLinkTo={true}
 
-              onChange={this.onChangeValue('label')}
+              onChange={this.onChangeValuelabel}
               onChangeFontSize={this.onChangeValue('FontSize')}                           
               onChangeFontWeight={this.onChangeValue('hover')}
               onChangeFontStyle={this.onChangeValue('FontStyle')}              
