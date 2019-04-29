@@ -154,12 +154,10 @@ componentDidMount(){
 }
 
 firstTabs=()=>{
-  
   let searchData = config.database().ref('project/'+this.props.email);
   searchData.on('value', async (snapshot) => { 
     const snapshotValue2 = snapshot.val(); 
     const snapshotArr = _.keys(snapshotValue2).reduce((prev, cur) => {prev.push({_key: cur,...snapshotValue2[cur]});return prev;}, []); 
-  
     if(snapshotArr[0] !== undefined){
       this.setState({undefinedOneTab:false})
      this.props.tabs===false?this.props.dispatch(checkTab(snapshotArr[0]._key)):this.props.dispatch(checkTab(this.props.tabs));
@@ -167,10 +165,9 @@ firstTabs=()=>{
      this.setState({undefinedOneTab:true})
    }
    });
-  
   }
 
-componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps){
   let app = config.database().ref('project/'+this.props.email+'/'+nextProps.tabs);
   app.on('value', async (snapshot) => { 
   const snapshotValue = snapshot.val(); 
@@ -358,11 +355,31 @@ componentWillReceiveProps(nextProps){
     })}});
   
   }
-  createProject=()=>{
-    this.setState({createProject:true})
+
+  checkProject=(e)=>{
+    e.preventDefault(); 
+    let i=0;
+    while (i < this.state.checkProject.length) {
+      if(this.state.checkProject[i].data===this.state.project.replace(/ /g,'-')){
+        alert("That project name is taken.Try another")
+      break;
+      }
+      i++;
+    }         
+    if(this.state.checkProject.length === i){
+        this.submitCreateProject();
+      }
   }
-  submitCreateProject=(e)=>{
-    e.preventDefault();        
+
+  createProject=()=>{
+    let dbCon = config.database().ref('production');
+    dbCon.on('value', async (snapshot) => { 
+    const snapshotValue = snapshot.val();
+    const snapshotArr = _.keys(snapshotValue).reduce((prev, cur) => {prev.push({data: cur});return prev;}, []); 
+    this.setState({createProject:true,checkProject:snapshotArr})
+    })
+  }
+  submitCreateProject=()=>{    
     this.setState({createProject:false});
     if(this.props.project !== ""){
       config.database().ref('production/'+this.props.project).remove();
@@ -371,14 +388,12 @@ componentWillReceiveProps(nextProps){
       dbCon.child(this.state.project.replace(/ /g,'-')).set(this.props.email); 
       let project = config.database().ref('project owner/');
       project.child(this.props.email).set(this.state.project.replace(/ /g,'-'));   
-
     this.createProjectName();
   }
 
   createProjectName=()=>{ 
     this.props.dispatch(project(this.state.project.replace(/ /g,'-')));
     this.props.dispatch(checkTab(false));
-
   }
   openClose =id=> () => {this.setState({open:true,[id.name]:!id.state,[id.close1]:false,[id.close2]:false});this.props.dispatch(chooseTemplate("null"));};
   popupLogout = () => {this.setState({ popupLogout: true });};
@@ -565,7 +580,7 @@ componentWillReceiveProps(nextProps){
             open={this.state.createProject}
             onClose={this.popupClose('createProject')}
             label={this.props.project!==""?'Edit Project Name':'Create Project Name'}
-            submit={this.submitCreateProject}
+            submit={this.checkProject}
             labelButton='SUBMIT'
             textField=  {[
                         {_key:1,label:'Project Name',type:'text',value:this.state.project,onChange:this.onChangeProject('project')}

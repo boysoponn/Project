@@ -91,7 +91,7 @@ class AppWithConnect extends React.Component {
                 login:false,
             })
         })
-        .catch(function(error) {
+        .catch((error)=> {
             var errorCode = error.code;
             var errorMessage = error.message;
         
@@ -100,17 +100,19 @@ class AppWithConnect extends React.Component {
             } else {
                 alert(errorMessage);         
             }
+            this.setState({
+               reset:true
+            }) 
         });
         this.setState({
             recaptcha:false,
             valueRecaptcha:'',
             password:'',
-            email:''
         })
     }
     loginGmail = () => {
         var provider = new firebase.auth.GoogleAuthProvider();
-        config.auth().signInWithPopup(provider).then(function(result) {
+        config.auth().signInWithPopup(provider).then(() => {
         }).catch(function(error) {
         var errorMessage = error.message;
             alert(errorMessage)
@@ -126,28 +128,13 @@ class AppWithConnect extends React.Component {
         });
         this.setState({login:false})
     }
-    loginTwitter=()=>{
-        // var provider = new firebase.auth.TwitterAuthProvider();
-        // firebase.auth().signInWithPopup(provider).then(function(result) {
-        //     // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
-        //     // You can use these server side with your app's credentials to access the Twitter API.
-        //     var token = result.credential.accessToken;
-        //     var secret = result.credential.secret;
-        //     // The signed-in user info.
-        //     var user = result.user;
-        //     // ...
-        //   }).catch(function(error) {
-        //     // Handle Errors here.
-        //     var errorCode = error.code;
-        //     var errorMessage = error.message;
-        //     // The email of the user's account used.
-        //     var email = error.email;
-        //     // The firebase.auth.AuthCredential type that was used.
-        //     var credential = error.credential;
-        //     // ...
-        //   });
-        // this.setState({login:false})
-        alert("coming soon")
+    resetpassword=()=>{
+        config.auth().sendPasswordResetEmail(this.state.email).then(function() {
+            alert("sended to your email")
+          }).catch(function(error) {
+            var errorMessage = error.message;
+            alert(errorMessage)
+          });
     }
     signUp=()=>{
         config.auth().createUserWithEmailAndPassword(this.state.email,this.state.password).then(() => {
@@ -158,7 +145,7 @@ class AppWithConnect extends React.Component {
         .catch(function(error) {
             var errorCode = error.code;
             var errorMessage = error.message;
-        
+            
             if (errorCode === 'auth/wrong-password') {
                 alert('Wrong password.');
             } else {
@@ -276,6 +263,9 @@ render() {
             google={this.loginGmail}
             twitter={this.loginTwitter}
             labelButton='SUBMIT'
+            email={this.state.reset}
+            labelButtonReset="Forget Password?"
+            onClickReset={this.resetpassword}
             textField=  {[
                         {_key:1,label:'Email',type:'email',value:this.state.email,onChange:this.onChangeValue('email')},
                         {_key:2,label:'Password',type:'password',value:this.state.password,onChange:this.onChangeValue('password')}

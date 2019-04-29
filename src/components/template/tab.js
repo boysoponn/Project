@@ -526,19 +526,36 @@ class TabWebsite extends React.Component {
     this.handleClose();
   };
 
-
   deletePage=()=>{
     this.props.dispatch(checkTab(false));
     let dbCon = config.database().ref('project/'+this.props.email+'/');
     dbCon.child(this.props.tabs).remove();
     this.setState({popupDelete:false,messageDeleteOpen:true});
   };
+  checkProject=(e)=>{
+    e.preventDefault(); 
+    let i=0;
+    while (i < this.state.checkProject.length) {
+      if(this.state.checkProject[i].data===this.state.project.replace(/ /g,'-')){
+      alert("That project name is taken.Try another")
+      break;
+      }
+      i++;
+    }         
+    if(this.state.checkProject.length === i){
+        this.submitCreateProject();
+      }
+  }
 
   createProject=()=>{
-    this.setState({createProject:true})
+    let dbCon = config.database().ref('production');
+    dbCon.on('value', async (snapshot) => { 
+    const snapshotValue = snapshot.val();
+    const snapshotArr = _.keys(snapshotValue).reduce((prev, cur) => {prev.push({data: cur});return prev;}, []); 
+    this.setState({createProject:true,checkProject:snapshotArr})
+    })
   }
-  submitCreateProject=(e)=>{
-    e.preventDefault();     
+  submitCreateProject=(e)=>{    
     this.props.dispatch(project(this.state.project.replace(/ /g,'-')));
     this.setState({createProject:false});
     this.createProjectName();
@@ -723,7 +740,7 @@ class TabWebsite extends React.Component {
             open={this.state.createProject}
             onClose={this.popupClose('createProject')}
             label='Create Project Name'
-            submit={this.submitCreateProject}
+            submit={this.checkProject}
             labelButton='SUBMIT'
             textField=  {[
                         {_key:1,label:'Project Name',type:'text',value:this.state.project,onChange:this.onChangeProject('project')}

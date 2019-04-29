@@ -86,9 +86,6 @@ class ModalUpload extends React.Component {
       while(row<this.state.Howmany){  
         const image = this.state.image[row] ; 
         config.storage().ref(`${this.props.email}/${this.state.imageName[row]}`).put(image).then(function() {
-        if(row=Howmany){
-          alert("suscess")
-        }
         });
       let dbCon = config.database().ref('image/'+this.props.email);
       dbCon.push({

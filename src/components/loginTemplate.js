@@ -1,4 +1,5 @@
 import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -8,6 +9,13 @@ import styled from 'styled-components'
 import Social from './template/buttonSocial';
 import ReCAPTCHA from "react-google-recaptcha";
 import Slide from '@material-ui/core/Slide';
+import Grid from '@material-ui/core/Grid';
+
+const styles = theme => ({
+  button:{
+  width:'90%'
+  }
+});
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -21,6 +29,7 @@ class FormDialog extends React.Component {
 
   render() {
     const recaptchaRef = React.createRef();
+    const { classes } = this.props;
     return (
       
         <Dialog
@@ -37,7 +46,6 @@ class FormDialog extends React.Component {
             <TextField
               style={{marginTop:30}}
               key={data._key}
-              autoFocus
               margin="dense"
               label={data.label}
               type={data.type}
@@ -54,14 +62,28 @@ class FormDialog extends React.Component {
             sitekey="6LdRLpEUAAAAAGX-vss-WN3KL0Xoifa6FFewGxn3"
             onChange={this.props.onChange}
           />:null}
-          <Content style={{paddingTop:20}}>
-            <Button  color="primary" type="submit">{this.props.labelButton}</Button>
+          <Content>
+            <Grid container  spacing={24}>
+                <Grid item xs={12} >
+                  <Button  variant="contained" color="primary" type="submit" className={classes.button}>{this.props.labelButton} </Button>
+                </Grid>
+                {!this.props.labelButtonReset?null:
+                <Grid item xs={12} >
+                  <Button  variant="contained" disabled={this.props.email?false:true}  onClick={this.props.onClickReset} className={classes.button} >{this.props.labelButtonReset}</Button>
+                </Grid>
+                }
+            </Grid>     
           </Content>
             {this.props.social === true ?
           <Content >
-            <Social onClick={this.props.facebook} social='facebook'/>
-            <Social onClick={this.props.google} social='google'/>
-            <Social onClick={this.props.twitter} social='twitter'/>
+            <Grid container  spacing={24}>
+              <Grid item xs={12} sm={6}>
+                <Social onClick={this.props.facebook} social='fab fa-facebook-f' text="facebook"/>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Social onClick={this.props.google} color="secondary" social='fab fa-google-plus' text="Gmail"/>
+              </Grid>
+            </Grid>
           </Content>
             :null}
           </DialogContent>
@@ -72,7 +94,7 @@ class FormDialog extends React.Component {
   }
 }
 
-export default  FormDialog; 
+export default  withStyles(styles)(FormDialog); 
 
 const Content = styled.div`
 text-align: center;
