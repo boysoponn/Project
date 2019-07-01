@@ -37,7 +37,7 @@ const styles = theme => ({
   },
   content:{
     backgroundColor:'#fff',
-    height:'100%',
+    height:'100vh',
   },
   rightIcon: {
     marginLeft:5,
